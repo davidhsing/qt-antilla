@@ -45,6 +45,7 @@ Please visit [Release](https://github.com/davidhsing/qt-antilla/releases) to dow
 ```shell
 git clone --recursive https://github.com/davidhsing/qt-antilla.git
 ```
+
 - Update
 ```shell
 git submodule update --remote --recursive
@@ -81,6 +82,7 @@ cmake -S . -B build -G "MinGW Makefiles"
 ```shell
 cmake --install --prefix <install_dir>
 ```
+
 The installation directory structure
 ```auto
 ──<install_dir>

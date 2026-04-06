@@ -15,22 +15,6 @@ Qt Qml 的 Ant 设计组件库
 
 </div>
 
-[win-badge]: https://img.shields.io/badge/Windows-passing-brightgreen?style=flat-square
-[linux-badge]: https://img.shields.io/badge/Linux-passing-brightgreen?style=flat-square
-[macos-badge]: https://img.shields.io/badge/MacOS-passing-brightgreen?style=flat-square
-[android-badge]: https://img.shields.io/badge/Android-passing-brightgreen?style=flat-square
-
-[issues-open-image]: https://img.shields.io/github/issues/davidhsing/qt-antilla?label=Issue&style=flat-square
-[issues-open-url]: https://github.com/davidhsing/qt-antilla/issues
-[issues-close-image]: https://img.shields.io/github/issues-closed/davidhsing/qt-antilla?color=brightgreen&label=Issue&style=flat-square
-[issues-close-url]: https://github.com/davidhsing/qt-antilla/issues?q=is%3Aissue%20state%3Aclosed
-
-[release-image]: https://img.shields.io/github/v/release/davidhsing/qt-antilla?label=Release&style=flat-square
-[release-url]: https://github.com/davidhsing/qt-antilla/releases
-
-[qqgroup-image]: https://img.shields.io/badge/QQGroup-490328047-f74658?style=flat-square
-[qqgroup-url]: https://qm.qq.com/q/cMNHn2tWeY
-
 <div align=center>
 
 ## 🌈 陈列室预览
@@ -63,6 +47,12 @@ Qt Qml 的 Ant 设计组件库
 ```shell
 git clone --recursive https://github.com/davidhsing/qt-antilla.git
 ```
+
+- 更新
+```shell
+git submodule update --remote --recursive
+```
+
 - 构建
 ```shell
 # 初始化 MSVC BuildTools
@@ -90,9 +80,10 @@ cmake -S . -B build -G "MinGW Makefiles"
 > - `plugin` 将构建在 `[QtDir]/[QtVersion]/[Kit]/qml/Antilla` 目录中。
 
 - 安装
-```cmake
+```shell
 cmake --install --prefix <install_dir>
 ```
+
 安装目录结构
 ```auto
 ──<install_dir>
