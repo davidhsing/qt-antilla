@@ -30,12 +30,6 @@ English | [中文](./README-zh_CN.md)
 - 💻 Based on Qml, completely cross-platform.
 - 🔧 Highly flexible delegate based component customization.
 
-## 🗺️ Roadmap
-
-The development plan can be found here: [Component Roadmap](https://github.com/davidhsing/qt-antilla/discussions/5).
-
-Anyone can discuss through issues, QQ groups, or WeChat groups, and ultimately meaningful components/functions will be added to the development plan.
-
 ## 🌐 Online wiki
 - [Antilla Online wiki (AI)](https://deepwiki.com/davidhsing/qt-antilla)
 

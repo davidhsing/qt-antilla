@@ -48,12 +48,6 @@ Qt Qml 的 Ant 设计组件库
 - 💻 基于Qml，完全跨平台.
 - 🔧 高度灵活的基于委托的组件定制.
 
-## 🗺️ 路线图
-
-开发计划可以在这里看到: [组件路线图](https://github.com/davidhsing/qt-antilla/discussions/5).
-
-任何人都可以通过 issue/qq群/wx群 进行讨论, 最终有意义的组件/功能将添加到开发计划.
-
 ## 🌐 在线 wiki
 - [Antilla 在线 wiki (AI)](https://deepwiki.com/davidhsing/qt-antilla)
 
