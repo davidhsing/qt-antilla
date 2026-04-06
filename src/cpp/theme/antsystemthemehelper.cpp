@@ -43,15 +43,15 @@ static inline bool initializeFunctionPointers() {
 # include <QPalette>
 #endif //Q_OS_WIN
 
-class HusSystemThemeHelperPrivate
+class AntSystemThemeHelperPrivate
 {
 public:
-    HusSystemThemeHelperPrivate(HusSystemThemeHelper *q) : q_ptr(q) { }
+    explicit AntSystemThemeHelperPrivate(AntSystemThemeHelper *q) : q_ptr(q) { }
 
-    Q_DECLARE_PUBLIC(HusSystemThemeHelper);
+    Q_DECLARE_PUBLIC(AntSystemThemeHelper);
 
     void _updateThemeColor() {
-        Q_Q(HusSystemThemeHelper);
+        Q_Q(AntSystemThemeHelper);
 
         auto nowThemeColor = q->getThemeColor();
         if (nowThemeColor != m_themeColor) {
@@ -61,7 +61,7 @@ public:
     }
 
     void _updateColorScheme() {
-        Q_Q(HusSystemThemeHelper);
+        Q_Q(AntSystemThemeHelper);
 
         auto nowColorScheme = q->getColorScheme() ;
         if (nowColorScheme != m_colorScheme) {
@@ -70,9 +70,9 @@ public:
         }
     }
 
-    HusSystemThemeHelper *q_ptr;
+    AntSystemThemeHelper *q_ptr;
     QColor m_themeColor;
-    HusSystemThemeHelper::ColorScheme m_colorScheme = HusSystemThemeHelper::ColorScheme::None;
+    AntSystemThemeHelper::ColorScheme m_colorScheme = AntSystemThemeHelper::ColorScheme::None;
 
     QBasicTimer m_timer;
 #ifdef Q_OS_WIN
@@ -81,11 +81,11 @@ public:
 #endif
 };
 
-HusSystemThemeHelper::HusSystemThemeHelper(QObject *parent)
+AntSystemThemeHelper::AntSystemThemeHelper(QObject *parent)
     : QObject{ parent }
-    , d_ptr(new HusSystemThemeHelperPrivate(this))
+    , d_ptr(new AntSystemThemeHelperPrivate(this))
 {
-    Q_D(HusSystemThemeHelper);
+    Q_D(AntSystemThemeHelper);
 
     d->m_themeColor = getThemeColor();
     d->m_colorScheme = getColorScheme();
@@ -103,14 +103,10 @@ HusSystemThemeHelper::HusSystemThemeHelper(QObject *parent)
 #endif
 }
 
-HusSystemThemeHelper::~HusSystemThemeHelper()
-{
+AntSystemThemeHelper::~AntSystemThemeHelper() = default;
 
-}
-
-QColor HusSystemThemeHelper::getThemeColor() const
-{
-    Q_D(const HusSystemThemeHelper);
+QColor AntSystemThemeHelper::getThemeColor() const {
+    Q_D(const AntSystemThemeHelper);
 
 #ifdef Q_OS_WIN
     return QColor::fromRgb(d->m_themeColorSettings.value("ColorizationColor").toUInt());
@@ -119,9 +115,8 @@ QColor HusSystemThemeHelper::getThemeColor() const
 #endif
 }
 
-HusSystemThemeHelper::ColorScheme HusSystemThemeHelper::getColorScheme() const
-{
-    Q_D(const HusSystemThemeHelper);
+AntSystemThemeHelper::ColorScheme AntSystemThemeHelper::getColorScheme() const {
+    Q_D(const AntSystemThemeHelper);
 #if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
     const auto scheme = QGuiApplication::styleHints()->colorScheme();
     return scheme == Qt::ColorScheme::Dark ? ColorScheme::Dark : ColorScheme::Light;
@@ -138,26 +133,23 @@ HusSystemThemeHelper::ColorScheme HusSystemThemeHelper::getColorScheme() const
 #endif // QT_VERSION
 }
 
-QColor HusSystemThemeHelper::themeColor()
-{
-    Q_D(HusSystemThemeHelper);
+QColor AntSystemThemeHelper::themeColor() {
+    Q_D(AntSystemThemeHelper);
 
     d->_updateThemeColor();
 
     return d->m_themeColor;
 }
 
-HusSystemThemeHelper::ColorScheme HusSystemThemeHelper::colorScheme()
-{
-    Q_D(HusSystemThemeHelper);
+AntSystemThemeHelper::ColorScheme AntSystemThemeHelper::colorScheme() {
+    Q_D(AntSystemThemeHelper);
 
     d->_updateColorScheme();
 
     return d->m_colorScheme;
 }
 
-bool HusSystemThemeHelper::setWindowTitleBarMode(QWindow *window, bool isDark)
-{
+bool AntSystemThemeHelper::setWindowTitleBarMode(const QWindow* window, const bool isDark) {
 #ifdef Q_OS_WIN
     return bool(pDwmSetWindowAttribute ? !pDwmSetWindowAttribute(HWND(window->winId()), 20, &isDark, sizeof(BOOL)) : false);
 #else
@@ -166,7 +158,7 @@ bool HusSystemThemeHelper::setWindowTitleBarMode(QWindow *window, bool isDark)
 }
 
 #ifdef QT_WIDGETS_LIB
-bool HusSystemThemeHelper::setWindowTitleBarMode(QWidget *window, bool isDark)
+bool AntSystemThemeHelper::setWindowTitleBarMode(QWidget *window, bool isDark)
 {
 #ifdef Q_OS_WIN
     return bool(pDwmSetWindowAttribute ? !pDwmSetWindowAttribute(HWND(window->winId()), 20, &isDark, sizeof(BOOL)) : false);
@@ -176,9 +168,8 @@ bool HusSystemThemeHelper::setWindowTitleBarMode(QWidget *window, bool isDark)
 }
 #endif //QT_WIDGETS_LIB
 
-void HusSystemThemeHelper::timerEvent(QTimerEvent *)
-{
-    Q_D(HusSystemThemeHelper);
+void AntSystemThemeHelper::timerEvent(QTimerEvent*) {
+    Q_D(AntSystemThemeHelper);
 
     d->_updateThemeColor();
 

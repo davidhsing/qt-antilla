@@ -15,8 +15,8 @@ Flickable {
 
         Description {
             desc: qsTr(`
-# AntButtonBlock 按钮块(AntIconButton变种)\n
-用于将多个按钮组织成块，类似 AntRadioBlock。\n
+# AntButtonBlock 按钮块\n
+用于将多个按钮组织成块，类似 AntRadioBlock。AntIconButton 变种。\n
 * **继承自 { Item }**\n
 \n<br/>
 \n### 支持的代理：\n

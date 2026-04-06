@@ -12,7 +12,7 @@
 */
 
 
-void HusApp::initialize(QQmlEngine* engine) {
+void AntApp::initialize(QQmlEngine* engine) {
 #ifdef BUILD_ANTILLA_ON_DESKTOP_PLATFORM
     QWK::registerTypes(engine);
 #endif
@@ -20,16 +20,16 @@ void HusApp::initialize(QQmlEngine* engine) {
     QFontDatabase::addApplicationFont(":/Antilla/resources/font/Antilla-Icons.ttf");
 }
 
-QString HusApp::libVersion() {
+QString AntApp::libVersion() {
     return ANTILLA_LIBRARY_VERSION;
 }
 
-HusApp *HusApp::instance() {
-    static auto* ins = new HusApp;
+AntApp *AntApp::instance() {
+    static auto* ins = new AntApp;
     return ins;
 }
 
-HusApp *HusApp::create(QQmlEngine*, QJSEngine*) {
+AntApp *AntApp::create(QQmlEngine*, QJSEngine*) {
     /*! 移除Qt窗口的暗黑模式, 但会造成`QGuiApplication::styleHints()->colorScheme()`失效, 暂时不使用 */
 /*
 #if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0) && defined(Q_OS_WIN)
@@ -42,5 +42,5 @@ HusApp *HusApp::create(QQmlEngine*, QJSEngine*) {
     return instance();
 }
 
-HusApp::HusApp(QObject* parent) : QObject{parent} {
+AntApp::AntApp(QObject* parent) : QObject{parent} {
 }

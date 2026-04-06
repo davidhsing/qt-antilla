@@ -10,16 +10,16 @@
 
 #include <QtQml/private/qqmlglobal_p.h>
 
-Q_LOGGING_CATEGORY(lcHusQrCode, "antilla.basic.qrcode");
+Q_LOGGING_CATEGORY(lcAntQrCode, "antilla.basic.qrcode");
 
 using namespace qrcodegen;
 
-QUrl HusIconSettings::url() const
+QUrl AntIconSettings::url() const
 {
     return m_url;
 }
 
-void HusIconSettings::setUrl(const QUrl &url)
+void AntIconSettings::setUrl(const QUrl &url)
 {
     if (m_url != url) {
         m_url = url;
@@ -27,12 +27,12 @@ void HusIconSettings::setUrl(const QUrl &url)
     }
 }
 
-qreal HusIconSettings::width() const
+qreal AntIconSettings::width() const
 {
     return m_width;
 }
 
-void HusIconSettings::setWidth(qreal width)
+void AntIconSettings::setWidth(qreal width)
 {
     if (m_width != width) {
         m_width = width;
@@ -40,12 +40,12 @@ void HusIconSettings::setWidth(qreal width)
     }
 }
 
-qreal HusIconSettings::height() const
+qreal AntIconSettings::height() const
 {
     return m_height;
 }
 
-void HusIconSettings::setHeight(qreal height)
+void AntIconSettings::setHeight(qreal height)
 {
     if (m_height != height) {
         m_height = height;
@@ -53,23 +53,23 @@ void HusIconSettings::setHeight(qreal height)
     }
 }
 
-bool HusIconSettings::isValid() const
+bool AntIconSettings::isValid() const
 {
     return m_url.isValid() && m_width > 0 && m_height > 0;
 }
 
 
-class HusQrCodePrivate
+class AntQrCodePrivate
 {
 public:
-    HusQrCodePrivate(HusQrCode *q) : q_ptr(q) { }
+    AntQrCodePrivate(AntQrCode *q) : q_ptr(q) { }
 
     void reqIcon();
     void genQrCode();
 
-    Q_DECLARE_PUBLIC(HusQrCode);
+    Q_DECLARE_PUBLIC(AntQrCode);
 
-    HusQrCode *q_ptr = nullptr;
+    AntQrCode *q_ptr = nullptr;
 
     QImage m_qrCodeImage;
     QString m_text;
@@ -78,15 +78,15 @@ public:
     QColor m_colorMargin = Qt::transparent;
     QColor m_color = Qt::black;
     QColor m_colorBg = Qt::transparent;
-    HusQrCode::ErrorLevel m_errorLevel = HusQrCode::ErrorLevel::Medium;
-    HusIconSettings *m_icon = nullptr;
+    AntQrCode::ErrorLevel m_errorLevel = AntQrCode::ErrorLevel::Medium;
+    AntIconSettings *m_icon = nullptr;
     QNetworkReply *m_iconReply = nullptr;
     QImage m_cachedIcon;
 };
 
-void HusQrCodePrivate::reqIcon()
+void AntQrCodePrivate::reqIcon()
 {
-    Q_Q(HusQrCode);
+    Q_Q(AntQrCode);
 
     if (m_icon && m_icon->isValid()) {
         const auto url = m_icon->url();
@@ -107,27 +107,27 @@ void HusQrCodePrivate::reqIcon()
                 if (manager) {
                     m_iconReply = manager->get(QNetworkRequest(url));
                     QObject::connect(m_iconReply, &QNetworkReply::finished, q, [this]{
-                        Q_Q(HusQrCode);
+                        Q_Q(AntQrCode);
                         if (m_iconReply->error() == QNetworkReply::NoError) {
                             m_cachedIcon = QImage::fromData(m_iconReply->readAll());
                             genQrCode();
                         } else {
-                            qCWarning(lcHusQrCode) << "Request icon error:" << m_iconReply->errorString();
+                            qCWarning(lcAntQrCode) << "Request icon error:" << m_iconReply->errorString();
                         }
                         m_iconReply->deleteLater();
                         m_iconReply = nullptr;
                     });
                 } else {
-                    qCWarning(lcHusQrCode) << "HusQrCode without QmlEngine, we cannot get QNetworkAccessManager!";
+                    qCWarning(lcAntQrCode) << "AntQrCode without QmlEngine, we cannot get QNetworkAccessManager!";
                 }
             }
         }
     }
 }
 
-void HusQrCodePrivate::genQrCode()
+void AntQrCodePrivate::genQrCode()
 {
-    Q_Q(HusQrCode);
+    Q_Q(AntQrCode);
 
     const auto qr = QrCode::encodeText(m_text.toStdString().c_str(), QrCode::Ecc(m_errorLevel));
 
@@ -169,33 +169,33 @@ void HusQrCodePrivate::genQrCode()
     q->update();
 }
 
-HusQrCode::HusQrCode(QQuickItem *parent) : QQuickItem(parent), d_ptr(new HusQrCodePrivate(this))
+AntQrCode::AntQrCode(QQuickItem *parent) : QQuickItem(parent), d_ptr(new AntQrCodePrivate(this))
 {
-    Q_D(HusQrCode);
+    Q_D(AntQrCode);
 
     setFlags(QQuickItem::ItemHasContents);
     setSize({ 160, 160 });
 
     /*! may move to other scenes */
     connect(this, &QQuickItem::windowChanged, this, [this]{
-        Q_D(HusQrCode);
+        Q_D(AntQrCode);
         d->m_qrCodeChange = true;
         update();
     });
 }
 
-HusQrCode::~HusQrCode() = default;
+AntQrCode::~AntQrCode() = default;
 
-QString HusQrCode::text() const
+QString AntQrCode::text() const
 {
-    Q_D(const HusQrCode);
+    Q_D(const AntQrCode);
 
     return d->m_text;
 }
 
-void HusQrCode::setText(const QString &text)
+void AntQrCode::setText(const QString &text)
 {
-    Q_D(HusQrCode);
+    Q_D(AntQrCode);
 
     if (d->m_text != text) {
         d->m_text = text;
@@ -204,16 +204,16 @@ void HusQrCode::setText(const QString &text)
     }
 }
 
-int HusQrCode::margin() const
+int AntQrCode::margin() const
 {
-    Q_D(const HusQrCode);
+    Q_D(const AntQrCode);
 
     return d->m_margin;
 }
 
-void HusQrCode::setMargin(int margin)
+void AntQrCode::setMargin(int margin)
 {
-    Q_D(HusQrCode);
+    Q_D(AntQrCode);
 
     if (d->m_margin != margin) {
         d->m_margin = margin;
@@ -222,16 +222,16 @@ void HusQrCode::setMargin(int margin)
     }
 }
 
-QColor HusQrCode::color() const
+QColor AntQrCode::color() const
 {
-    Q_D(const HusQrCode);
+    Q_D(const AntQrCode);
 
     return d->m_color;
 }
 
-void HusQrCode::setColor(const QColor &color)
+void AntQrCode::setColor(const QColor &color)
 {
-    Q_D(HusQrCode);
+    Q_D(AntQrCode);
 
     if (d->m_color != color) {
         d->m_color = color;
@@ -240,16 +240,16 @@ void HusQrCode::setColor(const QColor &color)
     }
 }
 
-QColor HusQrCode::colorMargin() const
+QColor AntQrCode::colorMargin() const
 {
-    Q_D(const HusQrCode);
+    Q_D(const AntQrCode);
 
     return d->m_colorMargin;
 }
 
-void HusQrCode::setColorMargin(const QColor &colorMargin)
+void AntQrCode::setColorMargin(const QColor &colorMargin)
 {
-    Q_D(HusQrCode);
+    Q_D(AntQrCode);
 
     if (d->m_colorMargin != colorMargin) {
         d->m_colorMargin = colorMargin;
@@ -258,16 +258,16 @@ void HusQrCode::setColorMargin(const QColor &colorMargin)
     }
 }
 
-QColor HusQrCode::colorBg() const
+QColor AntQrCode::colorBg() const
 {
-    Q_D(const HusQrCode);
+    Q_D(const AntQrCode);
 
     return d->m_colorBg;
 }
 
-void HusQrCode::setColorBg(const QColor &colorBg)
+void AntQrCode::setColorBg(const QColor &colorBg)
 {
-    Q_D(HusQrCode);
+    Q_D(AntQrCode);
 
     if (d->m_colorBg != colorBg) {
         d->m_colorBg = colorBg;
@@ -276,16 +276,16 @@ void HusQrCode::setColorBg(const QColor &colorBg)
     }
 }
 
-HusQrCode::ErrorLevel HusQrCode::errorLevel() const
+AntQrCode::ErrorLevel AntQrCode::errorLevel() const
 {
-    Q_D(const HusQrCode);
+    Q_D(const AntQrCode);
 
     return d->m_errorLevel;
 }
 
-void HusQrCode::setErrorLevel(HusQrCode::ErrorLevel level)
+void AntQrCode::setErrorLevel(AntQrCode::ErrorLevel level)
 {
-    Q_D(HusQrCode);
+    Q_D(AntQrCode);
 
     if (d->m_errorLevel != level) {
         d->m_errorLevel = level;
@@ -294,25 +294,25 @@ void HusQrCode::setErrorLevel(HusQrCode::ErrorLevel level)
     }
 }
 
-HusIconSettings *HusQrCode::icon()
+AntIconSettings *AntQrCode::icon()
 {
-    Q_D(HusQrCode);
+    Q_D(AntQrCode);
 
     if (!d->m_icon) {
-        d->m_icon = new HusIconSettings;
+        d->m_icon = new AntIconSettings;
         QQml_setParent_noEvent(d->m_icon, this);
-        connect(d->m_icon, &HusIconSettings::urlChanged, this, [d]{ d->reqIcon(); });
-        connect(d->m_icon, &HusIconSettings::widthChanged, this, [d]{ d->genQrCode(); });
-        connect(d->m_icon, &HusIconSettings::heightChanged, this, [d]{ d->genQrCode(); });
+        connect(d->m_icon, &AntIconSettings::urlChanged, this, [d]{ d->reqIcon(); });
+        connect(d->m_icon, &AntIconSettings::widthChanged, this, [d]{ d->genQrCode(); });
+        connect(d->m_icon, &AntIconSettings::heightChanged, this, [d]{ d->genQrCode(); });
         d->reqIcon();
     }
 
     return d->m_icon;
 }
 
-QSGNode *HusQrCode::updatePaintNode(QSGNode *node, UpdatePaintNodeData *)
+QSGNode *AntQrCode::updatePaintNode(QSGNode *node, UpdatePaintNodeData *)
 {
-    Q_D(HusQrCode);
+    Q_D(AntQrCode);
 
     /*QSGSimpleTextureNode *n = static_cast<QSGSimpleTextureNode *>(node);
     if (!n) {

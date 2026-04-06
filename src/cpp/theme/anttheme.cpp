@@ -7,11 +7,11 @@
 #include <QtCore/QJsonArray>
 #include <QtGui/QFont>
 
-Q_LOGGING_CATEGORY(lcHusTheme, "antilla.basic.theme");
+Q_LOGGING_CATEGORY(lcAntTheme, "antilla.basic.theme");
 
-void HusThemePrivate::parse$(QMap<QString, QVariant> &out, const QString &tokenName, const QString &expr)
+void AntThemePrivate::parse$(QMap<QString, QVariant> &out, const QString &tokenName, const QString &expr)
 {
-    Q_Q(HusTheme);
+    Q_Q(AntTheme);
 
     static QHash<QString, Function> g_funcTable {
         { "genColor",          Function::GenColor },
@@ -44,7 +44,7 @@ void HusThemePrivate::parse$(QMap<QString, QVariant> &out, const QString &tokenN
                 QColor color = colorFromIndexTable(args);
                 if (color.isValid()) {
                     auto colorBgBase = m_indexTokenTable["colorBgBase"].value<QColor>();
-                    auto colors = HusThemeFunctions::genColor(color, !q->isDark(), colorBgBase);
+                    auto colors = AntThemeFunctions::genColor(color, !q->isDark(), colorBgBase);
                     if (q->isDark()) {
                         /*! 暗黑模式需要后移并翻转色表 */
                         colors.append(colors[0]);
@@ -56,26 +56,26 @@ void HusThemePrivate::parse$(QMap<QString, QVariant> &out, const QString &tokenN
                         out[key] = genColor;
                     }
                 } else {
-                    qCDebug(lcHusTheme) << QString("func genColor() invalid color:(%1)").arg(args);
+                    qCDebug(lcAntTheme) << QString("func genColor() invalid color:(%1)").arg(args);
                 }
             } break;
             case Function::GenFontFamily:
             {
-                out["fontFamilyBase"] = HusThemeFunctions::genFontFamily(args.trimmed());
+                out["fontFamilyBase"] = AntThemeFunctions::genFontFamily(args.trimmed());
             } break;
             case Function::GenFontSize:
             {
                 bool ok = false;
                 auto base = args.toDouble(&ok);
                 if (ok) {
-                    const auto fontSizes = HusThemeFunctions::genFontSize(base);
+                    const auto fontSizes = AntThemeFunctions::genFontSize(base);
                     for (int i = 0; i < fontSizes.length(); i++) {
                         auto genFontSize = fontSizes.at(i);
                         auto key = tokenName + "-" + QString::number(i + 1);
                         out[key] = genFontSize;
                     }
                 } else {
-                    qCDebug(lcHusTheme) << QString("func genFontSize() invalid size:(%1)").arg(args);
+                    qCDebug(lcAntTheme) << QString("func genFontSize() invalid size:(%1)").arg(args);
                 }
             } break;
             case Function::GenFontLineHeight:
@@ -83,14 +83,14 @@ void HusThemePrivate::parse$(QMap<QString, QVariant> &out, const QString &tokenN
                 bool ok = false;
                 auto base = args.toDouble(&ok);
                 if (ok) {
-                    const auto fontLineHeights = HusThemeFunctions::genFontLineHeight(base);
+                    const auto fontLineHeights = AntThemeFunctions::genFontLineHeight(base);
                     for (int i = 0; i < fontLineHeights.length(); i++) {
                         auto genFontLineHeight = fontLineHeights.at(i);
                         auto key = tokenName + "-" + QString::number(i + 1);
                         out[key] = genFontLineHeight;
                     }
                 } else {
-                    qCDebug(lcHusTheme) << QString("func genFontLineHeight() invalid size:(%1)").arg(args);
+                    qCDebug(lcAntTheme) << QString("func genFontLineHeight() invalid size:(%1)").arg(args);
                 }
             } break;
             case Function::GenRadius:
@@ -98,14 +98,14 @@ void HusThemePrivate::parse$(QMap<QString, QVariant> &out, const QString &tokenN
                 bool ok = false;
                 auto base = args.toInt(&ok);
                 if (ok) {
-                    const auto radius = HusThemeFunctions::genRadius(base);
+                    const auto radius = AntThemeFunctions::genRadius(base);
                     for (int i = 0; i < radius.length(); i++) {
                         auto genRadius = radius.at(i);
                         auto key = tokenName + "-" + QString::number(i + 1);
                         out[key] = genRadius;
                     }
                 } else {
-                    qCDebug(lcHusTheme) << QString("func genRadius() invalid size:(%1)").arg(args);
+                    qCDebug(lcAntTheme) << QString("func genRadius() invalid size:(%1)").arg(args);
                 }
             } break;
             case Function::Darker:
@@ -113,13 +113,13 @@ void HusThemePrivate::parse$(QMap<QString, QVariant> &out, const QString &tokenN
                 auto argList = args.split(',');
                 if (argList.length() == 1) {
                     auto arg1 = colorFromIndexTable(argList.at(0));
-                    out[tokenName] = HusThemeFunctions::darker(arg1);
+                    out[tokenName] = AntThemeFunctions::darker(arg1);
                 } else if (argList.length() == 2) {
                     auto arg1 = colorFromIndexTable(argList.at(0));
                     auto arg2 = numberFromIndexTable(argList.at(1));
-                    out[tokenName] = HusThemeFunctions::darker(arg1, arg2);
+                    out[tokenName] = AntThemeFunctions::darker(arg1, arg2);
                 } else {
-                    qCDebug(lcHusTheme) << QString("func darker() only accepts 1/2 parameters:(%1)").arg(args);
+                    qCDebug(lcAntTheme) << QString("func darker() only accepts 1/2 parameters:(%1)").arg(args);
                 }
             } break;
             case Function::Lighter:
@@ -127,13 +127,13 @@ void HusThemePrivate::parse$(QMap<QString, QVariant> &out, const QString &tokenN
                 auto argList = args.split(',');
                 if (argList.length() == 1) {
                     auto arg1 = colorFromIndexTable(argList.at(0));
-                    out[tokenName] = HusThemeFunctions::lighter(arg1);
+                    out[tokenName] = AntThemeFunctions::lighter(arg1);
                 } else if (argList.length() == 2) {
                     auto arg1 = colorFromIndexTable(argList.at(0));
                     auto arg2 = numberFromIndexTable(argList.at(1));
-                    out[tokenName] = HusThemeFunctions::lighter(arg1, arg2);
+                    out[tokenName] = AntThemeFunctions::lighter(arg1, arg2);
                 } else {
-                    qCDebug(lcHusTheme) << QString("func lighter() only accepts 1/2 parameters:(%1)").arg(args);
+                    qCDebug(lcAntTheme) << QString("func lighter() only accepts 1/2 parameters:(%1)").arg(args);
                 }
             } break;
             case Function::Alpha:
@@ -141,13 +141,13 @@ void HusThemePrivate::parse$(QMap<QString, QVariant> &out, const QString &tokenN
                 auto argList = args.split(',');
                 if (argList.length() == 1) {
                     auto arg1 = colorFromIndexTable(argList.at(0));
-                    out[tokenName] = HusThemeFunctions::alpha(arg1);
+                    out[tokenName] = AntThemeFunctions::alpha(arg1);
                 } else if (argList.length() == 2) {
                     auto arg1 = colorFromIndexTable(argList.at(0));
                     auto arg2 = numberFromIndexTable(argList.at(1));
-                    out[tokenName] = HusThemeFunctions::alpha(arg1, arg2);
+                    out[tokenName] = AntThemeFunctions::alpha(arg1, arg2);
                 } else {
-                    qCDebug(lcHusTheme) << QString("func alpha() only accepts 1/2 parameters:(%1)").arg(args);
+                    qCDebug(lcAntTheme) << QString("func alpha() only accepts 1/2 parameters:(%1)").arg(args);
                 }
             } break;
             case Function::OnBackground:
@@ -156,9 +156,9 @@ void HusThemePrivate::parse$(QMap<QString, QVariant> &out, const QString &tokenN
                 if (argList.length() == 2) {
                     auto arg1 = colorFromIndexTable(argList.at(0).trimmed());
                     auto arg2 = colorFromIndexTable(argList.at(1).trimmed());
-                    out[tokenName] = HusThemeFunctions::onBackground(arg1, arg2);
+                    out[tokenName] = AntThemeFunctions::onBackground(arg1, arg2);
                 } else {
-                    qCDebug(lcHusTheme) << QString("func onBackground() only accepts 2 parameters:(%1)").arg(args);
+                    qCDebug(lcAntTheme) << QString("func onBackground() only accepts 2 parameters:(%1)").arg(args);
                 }
             } break;
             case Function::Add:
@@ -167,9 +167,9 @@ void HusThemePrivate::parse$(QMap<QString, QVariant> &out, const QString &tokenN
                 if (argList.length() == 2) {
                     auto arg1 = numberFromIndexTable(argList.at(0).trimmed());
                     auto arg2 = numberFromIndexTable(argList.at(1).trimmed());
-                    out[tokenName] = HusThemeFunctions::add(arg1, arg2);
+                    out[tokenName] = AntThemeFunctions::add(arg1, arg2);
                 } else {
-                    qCDebug(lcHusTheme) << QString("func add() only accepts 2 parameters:(%1)").arg(args);
+                    qCDebug(lcAntTheme) << QString("func add() only accepts 2 parameters:(%1)").arg(args);
                 }
             } break;
             case Function::Subtract:
@@ -178,9 +178,9 @@ void HusThemePrivate::parse$(QMap<QString, QVariant> &out, const QString &tokenN
                 if (argList.length() == 2) {
                     auto arg1 = numberFromIndexTable(argList.at(0).trimmed());
                     auto arg2 = numberFromIndexTable(argList.at(1).trimmed());
-                    out[tokenName] = HusThemeFunctions::subtract(arg1, arg2);
+                    out[tokenName] = AntThemeFunctions::subtract(arg1, arg2);
                 } else {
-                    qCDebug(lcHusTheme) << QString("func subtract() only accepts 2 parameters:(%1)").arg(args);
+                    qCDebug(lcAntTheme) << QString("func subtract() only accepts 2 parameters:(%1)").arg(args);
                 }
             } break;
             case Function::Multiply:
@@ -189,9 +189,9 @@ void HusThemePrivate::parse$(QMap<QString, QVariant> &out, const QString &tokenN
                 if (argList.length() == 2) {
                     auto arg1 = numberFromIndexTable(argList.at(0).trimmed());
                     auto arg2 = numberFromIndexTable(argList.at(1).trimmed());
-                    out[tokenName] = HusThemeFunctions::multiply(arg1, arg2);
+                    out[tokenName] = AntThemeFunctions::multiply(arg1, arg2);
                 } else {
-                    qCDebug(lcHusTheme) << QString("func multiply() only accepts 2 parameters:(%1)").arg(args);
+                    qCDebug(lcAntTheme) << QString("func multiply() only accepts 2 parameters:(%1)").arg(args);
                 }
             } break;
             case Function::Divide:
@@ -200,23 +200,23 @@ void HusThemePrivate::parse$(QMap<QString, QVariant> &out, const QString &tokenN
                 if (argList.length() == 2) {
                     auto arg1 = numberFromIndexTable(argList.at(0).trimmed());
                     auto arg2 = numberFromIndexTable(argList.at(1).trimmed());
-                    out[tokenName] = HusThemeFunctions::divide(arg1, arg2);
+                    out[tokenName] = AntThemeFunctions::divide(arg1, arg2);
                 } else {
-                    qCDebug(lcHusTheme) << QString("func divide() only accepts 2 parameters:(%1)").arg(args);
+                    qCDebug(lcAntTheme) << QString("func divide() only accepts 2 parameters:(%1)").arg(args);
                 }
             } break;
             default:
                 break;
             }
         } else {
-            qCDebug(lcHusTheme) << "Unknown func name:" << func;
+            qCDebug(lcAntTheme) << "Unknown func name:" << func;
         }
     } else {
-        qCDebug(lcHusTheme) << "Unknown expr:" << expr;
+        qCDebug(lcAntTheme) << "Unknown expr:" << expr;
     }
 }
 
-QColor HusThemePrivate::colorFromIndexTable(const QString &tokenName)
+QColor AntThemePrivate::colorFromIndexTable(const QString &tokenName)
 {
     QColor color;
     auto refTokenName = tokenName;
@@ -226,26 +226,26 @@ QColor HusThemePrivate::colorFromIndexTable(const QString &tokenName)
             auto v = m_indexTokenTable[refTokenName];
             color = v.value<QColor>();
             if (!color.isValid()) {
-                qCDebug(lcHusTheme) << QString("Token toColor faild:(%1)").arg(tokenName);
+                qCDebug(lcAntTheme) << QString("Token toColor faild:(%1)").arg(tokenName);
             }
         } else {
-            qCDebug(lcHusTheme) << QString("Index Token(%1) not found!").arg(refTokenName);
+            qCDebug(lcAntTheme) << QString("Index Token(%1) not found!").arg(refTokenName);
         }
     } else {
         /*! 按颜色处理 */
         color = QColor(tokenName);
         /*! 从预置颜色中获取 */
         if (tokenName.startsWith("#Preset_"))
-            color = HusColorGenerator::presetToColor(tokenName.mid(1));
+            color = AntColorGenerator::presetToColor(tokenName.mid(1));
         if (!color.isValid()) {
-            qCDebug(lcHusTheme) << QString("Token toColor faild:(%1)").arg(tokenName);
+            qCDebug(lcAntTheme) << QString("Token toColor faild:(%1)").arg(tokenName);
         }
     }
 
     return color;
 }
 
-qreal HusThemePrivate::numberFromIndexTable(const QString &tokenName)
+qreal AntThemePrivate::numberFromIndexTable(const QString &tokenName)
 {
     qreal number = 0;
     auto refTokenName = tokenName;
@@ -256,30 +256,30 @@ qreal HusThemePrivate::numberFromIndexTable(const QString &tokenName)
             auto ok = false;
             number = value.toDouble(&ok);
             if (!ok) {
-                qCDebug(lcHusTheme) << QString("Token toDouble faild:(%1)").arg(refTokenName);
+                qCDebug(lcAntTheme) << QString("Token toDouble faild:(%1)").arg(refTokenName);
             }
         } else {
-            qCDebug(lcHusTheme) << QString("Index Token(%1) not found!").arg(refTokenName);
+            qCDebug(lcAntTheme) << QString("Index Token(%1) not found!").arg(refTokenName);
         }
     } else {
         auto ok = false;
         number = tokenName.toDouble(&ok);
         if (!ok) {
-            qCDebug(lcHusTheme) << QString("Token toDouble faild:(%1)").arg(tokenName);
+            qCDebug(lcAntTheme) << QString("Token toDouble faild:(%1)").arg(tokenName);
         }
     }
 
     return number;
 }
 
-void HusThemePrivate::parseIndexExpr(const QString &tokenName, const QString &expr)
+void AntThemePrivate::parseIndexExpr(const QString &tokenName, const QString &expr)
 {
     if (expr.startsWith('@')) {
         auto refTokenName = expr.mid(1);
         if (m_indexTokenTable.contains(refTokenName))
             m_indexTokenTable[tokenName] = QVariant(m_indexTokenTable[refTokenName]);
         else {
-            qCDebug(lcHusTheme) << QString("Token(%1):Ref(%2) not found!").arg(expr, refTokenName);
+            qCDebug(lcAntTheme) << QString("Token(%1):Ref(%2) not found!").arg(expr, refTokenName);
         }
     } else if (expr.startsWith('$')) {
         parse$(m_indexTokenTable, tokenName, expr);
@@ -288,9 +288,9 @@ void HusThemePrivate::parseIndexExpr(const QString &tokenName, const QString &ex
         auto color = QColor(expr);
         /*! 从预置颜色中获取 */
         if (expr.startsWith("Preset_"))
-            color = HusColorGenerator::presetToColor(expr.mid(1));
+            color = AntColorGenerator::presetToColor(expr.mid(1));
         if (!color.isValid())
-            qCDebug(lcHusTheme) << "Unknown color:" << expr;
+            qCDebug(lcAntTheme) << "Unknown color:" << expr;
         m_indexTokenTable[tokenName] = color;
     } else {
         /*! 按字符串处理 */
@@ -298,14 +298,14 @@ void HusThemePrivate::parseIndexExpr(const QString &tokenName, const QString &ex
     }
 }
 
-void HusThemePrivate::parseComponentExpr(QVariantMap *tokenMapPtr, const QString &tokenName, const QString &expr)
+void AntThemePrivate::parseComponentExpr(QVariantMap *tokenMapPtr, const QString &tokenName, const QString &expr)
 {
     if (expr.startsWith('@')) {
         auto refTokenName = expr.mid(1);
         if (m_indexTokenTable.contains(refTokenName)) {
             tokenMapPtr->insert(tokenName, m_indexTokenTable[refTokenName]);
         } else {
-            qCDebug(lcHusTheme) << QString("Component: Token(%1):Ref(%2) not found!").arg(tokenName, refTokenName);
+            qCDebug(lcAntTheme) << QString("Component: Token(%1):Ref(%2) not found!").arg(tokenName, refTokenName);
         }
     } else if (expr.startsWith('$')) {
         parse$(*tokenMapPtr, tokenName, expr);
@@ -314,9 +314,9 @@ void HusThemePrivate::parseComponentExpr(QVariantMap *tokenMapPtr, const QString
         auto color = QColor(expr);
         /*! 从预置颜色中获取 */
         if (expr.startsWith("Preset_"))
-            color = HusColorGenerator::presetToColor(expr.mid(1));
+            color = AntColorGenerator::presetToColor(expr.mid(1));
         if (!color.isValid())
-            qCDebug(lcHusTheme) << QString("Component [%1]: Unknown color:") << expr;
+            qCDebug(lcAntTheme) << QString("Component [%1]: Unknown color:") << expr;
         tokenMapPtr->insert(tokenName, color);
     } else {
         /*! 按字符串处理 */
@@ -324,9 +324,9 @@ void HusThemePrivate::parseComponentExpr(QVariantMap *tokenMapPtr, const QString
     }
 }
 
-void HusThemePrivate::reloadIndexTheme()
+void AntThemePrivate::reloadIndexTheme()
 {
-    Q_Q(HusTheme);
+    Q_Q(AntTheme);
 
     m_indexTokenTable.clear();
     q->m_Primary.clear();
@@ -339,9 +339,9 @@ void HusThemePrivate::reloadIndexTheme()
     auto colorTextBaseList = colorTextBase.split("|");
     auto colorBgBaseList = colorBgBase.split("|");
 
-    Q_ASSERT_X(colorTextBaseList.size() == 2, "HusThemePrivate::reloadIndexTheme",
+    Q_ASSERT_X(colorTextBaseList.size() == 2, "AntThemePrivate::reloadIndexTheme",
                QString("colorTextBase(%1) Must be in light:color|dark:color format").arg(colorTextBase).toStdString().c_str());
-    Q_ASSERT_X(colorBgBaseList.size() == 2, "HusThemePrivate::reloadIndexTheme ",
+    Q_ASSERT_X(colorBgBaseList.size() == 2, "AntThemePrivate::reloadIndexTheme ",
                QString("colorBgBase(%1) Must be in light:color|dark:color format").arg(colorBgBase).toStdString().c_str());
 
     m_indexTokenTable["colorTextBase"] = q->isDark() ? colorTextBaseList.at(1) : colorTextBaseList.at(0);
@@ -370,7 +370,7 @@ void HusThemePrivate::reloadIndexTheme()
     }
 }
 
-void HusThemePrivate::reloadComponentTheme(const QMap<QObject *, ThemeData> &dataMap)
+void AntThemePrivate::reloadComponentTheme(const QMap<QObject *, ThemeData> &dataMap)
 {
     for (auto &themeData: dataMap) {
         for (auto it = themeData.componentMap.constBegin(); it != themeData.componentMap.constEnd(); it++) {
@@ -381,9 +381,9 @@ void HusThemePrivate::reloadComponentTheme(const QMap<QObject *, ThemeData> &dat
     }
 }
 
-bool HusThemePrivate::reloadComponentImport(QJsonObject &style, const QString &componentName)
+bool AntThemePrivate::reloadComponentImport(QJsonObject &style, const QString &componentName)
 {
-    Q_Q(HusTheme);
+    Q_Q(AntTheme);
 
     const auto __component__ = m_indexObject["__component__"].toObject();
     if (__component__.contains(componentName)) {
@@ -419,10 +419,10 @@ bool HusThemePrivate::reloadComponentImport(QJsonObject &style, const QString &c
                     style[it.key()] = it.value();
                 }
             } else {
-                qCDebug(lcHusTheme) << QString("Parse import component theme [%1] faild:").arg(themePath) << error.errorString();
+                qCDebug(lcAntTheme) << QString("Parse import component theme [%1] faild:").arg(themePath) << error.errorString();
             }
         } else {
-            qCDebug(lcHusTheme) << "Open import component theme faild:" << theme.errorString() << themePath;
+            qCDebug(lcAntTheme) << "Open import component theme faild:" << theme.errorString() << themePath;
         }
         return true;
     } else {
@@ -430,10 +430,10 @@ bool HusThemePrivate::reloadComponentImport(QJsonObject &style, const QString &c
     }
 }
 
-void HusThemePrivate::reloadComponentThemeFile(QObject *themeObject, const QString &componentName,
+void AntThemePrivate::reloadComponentThemeFile(QObject *themeObject, const QString &componentName,
                                                    const ThemeData::Component &componentTheme)
 {
-    Q_Q(HusTheme);
+    Q_Q(AntTheme);
     auto tokenMapPtr = componentTheme.tokenMap;
     auto installTokenMap = componentTheme.installTokenMap;
 
@@ -453,90 +453,90 @@ void HusThemePrivate::reloadComponentThemeFile(QObject *themeObject, const QStri
     }
 }
 
-void HusThemePrivate::reloadDefaultComponentTheme()
+void AntThemePrivate::reloadDefaultComponentTheme()
 {
-    Q_Q(HusTheme);
+    Q_Q(AntTheme);
     reloadComponentTheme(m_defaultTheme);
 }
 
-void HusThemePrivate::reloadCustomComponentTheme()
+void AntThemePrivate::reloadCustomComponentTheme()
 {
-    Q_Q(HusTheme);
+    Q_Q(AntTheme);
     reloadComponentTheme(m_customTheme);
 }
 
-void HusThemePrivate::registerDefaultComponentTheme(const QString &componentName, const QString &themePath)
+void AntThemePrivate::registerDefaultComponentTheme(const QString &componentName, const QString &themePath)
 {
-    Q_Q(HusTheme);
+    Q_Q(AntTheme);
 #define ADD_COMPONENT_CASE(ComponentName) \
     case Component::ComponentName: \
     registerComponentTheme(q, componentName, &q->m_##ComponentName, themePath, m_defaultTheme); break;
 
     if (g_componentTable.contains(componentName)) {
         switch (auto key = g_componentTable[componentName]; key) {
-            ADD_COMPONENT_CASE(HusButton)
-            ADD_COMPONENT_CASE(HusIconText)
-            ADD_COMPONENT_CASE(HusCopyableText)
-            ADD_COMPONENT_CASE(HusCaptionButton)
-            ADD_COMPONENT_CASE(HusTour)
-            ADD_COMPONENT_CASE(HusMenu)
-            ADD_COMPONENT_CASE(HusColorPicker)
-            ADD_COMPONENT_CASE(HusDivider)
-            ADD_COMPONENT_CASE(HusSwitch)
-            ADD_COMPONENT_CASE(HusScrollBar)
-            ADD_COMPONENT_CASE(HusSlider)
-            ADD_COMPONENT_CASE(HusTabs)
-            ADD_COMPONENT_CASE(HusToolTip)
-            ADD_COMPONENT_CASE(HusSelect)
-            ADD_COMPONENT_CASE(HusInput)
-            ADD_COMPONENT_CASE(HusInputInteger)
-            ADD_COMPONENT_CASE(HusInputNumber)
-            ADD_COMPONENT_CASE(HusRate)
-            ADD_COMPONENT_CASE(HusRadio)
-            ADD_COMPONENT_CASE(HusRadioBlock)
-            ADD_COMPONENT_CASE(HusCheckBox)
-            ADD_COMPONENT_CASE(HusDrawer)
-            ADD_COMPONENT_CASE(HusCollapse)
-            ADD_COMPONENT_CASE(HusCard)
-            ADD_COMPONENT_CASE(HusPagination)
-            ADD_COMPONENT_CASE(HusPopup)
-            ADD_COMPONENT_CASE(HusTimeline)
-            ADD_COMPONENT_CASE(HusTag)
-            ADD_COMPONENT_CASE(HusTable)
-            ADD_COMPONENT_CASE(HusMessage)
-            ADD_COMPONENT_CASE(HusAutoComplete)
-            ADD_COMPONENT_CASE(HusProgress)
-            ADD_COMPONENT_CASE(HusCarousel)
-            ADD_COMPONENT_CASE(HusBreadcrumb)
-            ADD_COMPONENT_CASE(HusImage)
-            ADD_COMPONENT_CASE(HusMultiSelect)
-            ADD_COMPONENT_CASE(HusDateTimePicker)
-            ADD_COMPONENT_CASE(HusNotification)
-            ADD_COMPONENT_CASE(HusPopconfirm)
-            ADD_COMPONENT_CASE(HusLabel)
-            ADD_COMPONENT_CASE(HusModal)
-            ADD_COMPONENT_CASE(HusText)
-            ADD_COMPONENT_CASE(HusTextArea)
-            ADD_COMPONENT_CASE(HusTransfer)
-            ADD_COMPONENT_CASE(HusTree)
-            ADD_COMPONENT_CASE(HusAudioDiagnosis)
-            ADD_COMPONENT_CASE(HusAlert)
-            ADD_COMPONENT_CASE(HusPopover)
-            ADD_COMPONENT_CASE(HusEmpty)
-            ADD_COMPONENT_CASE(HusSpin)
-            ADD_COMPONENT_CASE(HusStatusBar)
-            ADD_COMPONENT_CASE(HusFormItem)
-            ADD_COMPONENT_CASE(HusGroupBox)
-            ADD_COMPONENT_CASE(HusMaskOverlay)
-            ADD_COMPONENT_CASE(HusResult)
-            ADD_COMPONENT_CASE(HusShield)
+            ADD_COMPONENT_CASE(AntButton)
+            ADD_COMPONENT_CASE(AntIconText)
+            ADD_COMPONENT_CASE(AntCopyableText)
+            ADD_COMPONENT_CASE(AntCaptionButton)
+            ADD_COMPONENT_CASE(AntTour)
+            ADD_COMPONENT_CASE(AntMenu)
+            ADD_COMPONENT_CASE(AntColorPicker)
+            ADD_COMPONENT_CASE(AntDivider)
+            ADD_COMPONENT_CASE(AntSwitch)
+            ADD_COMPONENT_CASE(AntScrollBar)
+            ADD_COMPONENT_CASE(AntSlider)
+            ADD_COMPONENT_CASE(AntTabs)
+            ADD_COMPONENT_CASE(AntToolTip)
+            ADD_COMPONENT_CASE(AntSelect)
+            ADD_COMPONENT_CASE(AntInput)
+            ADD_COMPONENT_CASE(AntInputInteger)
+            ADD_COMPONENT_CASE(AntInputNumber)
+            ADD_COMPONENT_CASE(AntRate)
+            ADD_COMPONENT_CASE(AntRadio)
+            ADD_COMPONENT_CASE(AntRadioBlock)
+            ADD_COMPONENT_CASE(AntCheckBox)
+            ADD_COMPONENT_CASE(AntDrawer)
+            ADD_COMPONENT_CASE(AntCollapse)
+            ADD_COMPONENT_CASE(AntCard)
+            ADD_COMPONENT_CASE(AntPagination)
+            ADD_COMPONENT_CASE(AntPopup)
+            ADD_COMPONENT_CASE(AntTimeline)
+            ADD_COMPONENT_CASE(AntTag)
+            ADD_COMPONENT_CASE(AntTable)
+            ADD_COMPONENT_CASE(AntMessage)
+            ADD_COMPONENT_CASE(AntAutoComplete)
+            ADD_COMPONENT_CASE(AntProgress)
+            ADD_COMPONENT_CASE(AntCarousel)
+            ADD_COMPONENT_CASE(AntBreadcrumb)
+            ADD_COMPONENT_CASE(AntImage)
+            ADD_COMPONENT_CASE(AntMultiSelect)
+            ADD_COMPONENT_CASE(AntDateTimePicker)
+            ADD_COMPONENT_CASE(AntNotification)
+            ADD_COMPONENT_CASE(AntPopconfirm)
+            ADD_COMPONENT_CASE(AntLabel)
+            ADD_COMPONENT_CASE(AntModal)
+            ADD_COMPONENT_CASE(AntText)
+            ADD_COMPONENT_CASE(AntTextArea)
+            ADD_COMPONENT_CASE(AntTransfer)
+            ADD_COMPONENT_CASE(AntTree)
+            ADD_COMPONENT_CASE(AntAudioDiagnosis)
+            ADD_COMPONENT_CASE(AntAlert)
+            ADD_COMPONENT_CASE(AntPopover)
+            ADD_COMPONENT_CASE(AntEmpty)
+            ADD_COMPONENT_CASE(AntSpin)
+            ADD_COMPONENT_CASE(AntStatusBar)
+            ADD_COMPONENT_CASE(AntFormItem)
+            ADD_COMPONENT_CASE(AntGroupBox)
+            ADD_COMPONENT_CASE(AntMaskOverlay)
+            ADD_COMPONENT_CASE(AntResult)
+            ADD_COMPONENT_CASE(AntShield)
         default:
             break;
         }
     }
 }
 
-void HusThemePrivate::registerComponentTheme(QObject *themeObject, const QString &component, QVariantMap *themeMap,
+void AntThemePrivate::registerComponentTheme(QObject *themeObject, const QString &component, QVariantMap *themeMap,
                                              const QString &themePath, QMap<QObject *, ThemeData> &dataMap)
 {
     if (!themeObject || !themeMap) {
@@ -552,36 +552,36 @@ void HusThemePrivate::registerComponentTheme(QObject *themeObject, const QString
     }
 }
 
-HusTheme *HusTheme::instance()
+AntTheme *AntTheme::instance()
 {
-    static HusTheme *theme = new HusTheme;
+    static AntTheme *theme = new AntTheme;
     return theme;
 }
 
-HusTheme *HusTheme::create(QQmlEngine *, QJSEngine *)
+AntTheme *AntTheme::create(QQmlEngine *, QJSEngine *)
 {
     return instance();
 }
 
-bool HusTheme::isDark() const
+bool AntTheme::isDark() const
 {
-    Q_D(const HusTheme);
+    Q_D(const AntTheme);
     if (d->m_darkMode == DarkMode::System) {
-        return d->m_helper->getColorScheme() == HusSystemThemeHelper::ColorScheme::Dark;
+        return d->m_helper->getColorScheme() == AntSystemThemeHelper::ColorScheme::Dark;
     } else {
         return d->m_darkMode == DarkMode::Dark;
     }
 }
 
-HusTheme::DarkMode HusTheme::darkMode() const
+AntTheme::DarkMode AntTheme::darkMode() const
 {
-    Q_D(const HusTheme);
+    Q_D(const AntTheme);
     return d->m_darkMode;
 }
 
-void HusTheme::setDarkMode(DarkMode mode)
+void AntTheme::setDarkMode(DarkMode mode)
 {
-    Q_D(HusTheme);
+    Q_D(AntTheme);
     if (d->m_darkMode != mode) {
         auto oldIsDark = isDark();
         d->m_darkMode = mode;
@@ -595,19 +595,19 @@ void HusTheme::setDarkMode(DarkMode mode)
     }
 }
 
-HusTheme::TextRenderType HusTheme::textRenderType() const
+AntTheme::TextRenderType AntTheme::textRenderType() const
 {
-    Q_D(const HusTheme);
+    Q_D(const AntTheme);
     return d->m_textRenderType;
 }
 
-void HusTheme::setTextRenderType(TextRenderType renderType)
+void AntTheme::setTextRenderType(TextRenderType renderType)
 {
-    Q_D(HusTheme);
+    Q_D(AntTheme);
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     if (renderType == TextRenderType::CurveRendering) {
         renderType = TextRenderType::QtRendering;
-        qCWarning(lcHusTheme) << "Qt5 is not supported TextRenderType::CurveRendering!";
+        qCWarning(lcAntTheme) << "Qt5 is not supported TextRenderType::CurveRendering!";
     }
 #endif
     if (d->m_textRenderType != renderType) {
@@ -616,15 +616,15 @@ void HusTheme::setTextRenderType(TextRenderType renderType)
     }
 }
 
-void HusTheme::registerCustomComponentTheme(QObject *themeObject, const QString &component, QVariantMap *themeMap, const QString &themePath)
+void AntTheme::registerCustomComponentTheme(QObject *themeObject, const QString &component, QVariantMap *themeMap, const QString &themePath)
 {
-    Q_D(HusTheme);
+    Q_D(AntTheme);
     d->registerComponentTheme(themeObject, component, themeMap, themePath, d->m_customTheme);
 }
 
-void HusTheme::reloadTheme()
+void AntTheme::reloadTheme()
 {
-    Q_D(HusTheme);
+    Q_D(AntTheme);
     if (QFile index(d->m_themeIndexPath); index.open(QIODevice::ReadOnly)) {
         QJsonParseError error;
         QJsonDocument indexDoc = QJsonDocument::fromJson(index.readAll(), &error);
@@ -634,15 +634,15 @@ void HusTheme::reloadTheme()
             d->reloadDefaultComponentTheme();
             d->reloadCustomComponentTheme();
         } else {
-            qCDebug(lcHusTheme) << "Index.json parse error:" << error.errorString();
+            qCDebug(lcAntTheme) << "Index.json parse error:" << error.errorString();
         }
     } else {
-        qCDebug(lcHusTheme) << "Index.json open faild:" << index.errorString();
+        qCDebug(lcAntTheme) << "Index.json open faild:" << index.errorString();
     }
 }
-void HusTheme::installThemeColorTextBase(const QString &lightAndDark)
+void AntTheme::installThemeColorTextBase(const QString &lightAndDark)
 {
-    Q_D(HusTheme);
+    Q_D(AntTheme);
     auto __init__ = d->m_indexObject["__init__"].toObject();
     auto __base__ = __init__["__base__"].toObject();
     __base__["colorTextBase"] = lightAndDark.simplified();
@@ -653,9 +653,9 @@ void HusTheme::installThemeColorTextBase(const QString &lightAndDark)
     d->reloadCustomComponentTheme();
 }
 
-void HusTheme::installThemeColorBgBase(const QString &lightAndDark)
+void AntTheme::installThemeColorBgBase(const QString &lightAndDark)
 {
-    Q_D(HusTheme);
+    Q_D(AntTheme);
     auto __init__ = d->m_indexObject["__init__"].toObject();
     auto __base__ = __init__["__base__"].toObject();
     __base__["colorBgBase"] = lightAndDark.simplified();
@@ -666,39 +666,39 @@ void HusTheme::installThemeColorBgBase(const QString &lightAndDark)
     d->reloadCustomComponentTheme();
 }
 
-void HusTheme::installThemeColorBgDisabled(const QString &colorDisabled)
+void AntTheme::installThemeColorBgDisabled(const QString &colorDisabled)
 {
-    Q_D(HusTheme);
+    Q_D(AntTheme);
     installIndexToken("colorBgDisabled", colorDisabled);
 }
 
-void HusTheme::installThemePrimaryColorBase(const QColor &colorBase)
+void AntTheme::installThemePrimaryColorBase(const QColor &colorBase)
 {
-    Q_D(HusTheme);
+    Q_D(AntTheme);
     installIndexToken("colorPrimaryBase", QString("$genColor(%1)").arg(colorBase.name()));
 }
 
-void HusTheme::installThemePrimaryFontSizeBase(const int fontSizeBase)
+void AntTheme::installThemePrimaryFontSizeBase(const int fontSizeBase)
 {
-    Q_D(HusTheme);
+    Q_D(AntTheme);
     installIndexToken("fontSizeBase", QString("$genFontSize(%1)").arg(fontSizeBase));
 }
 
-void HusTheme::installThemePrimaryFontFamiliesBase(const QString &familiesBase)
+void AntTheme::installThemePrimaryFontFamiliesBase(const QString &familiesBase)
 {
-    Q_D(HusTheme);
+    Q_D(AntTheme);
     installIndexToken("fontFamilyBase", QString("$genFontFamily(%1)").arg(familiesBase));
 }
 
-void HusTheme::installThemePrimaryRadiusBase(const int radiusBase)
+void AntTheme::installThemePrimaryRadiusBase(const int radiusBase)
 {
-    Q_D(HusTheme);
+    Q_D(AntTheme);
     installIndexToken("radiusBase", QString("$genRadius(%1)").arg(radiusBase));
 }
 
-void HusTheme::installThemePrimaryAnimationBase(int durationFast, int durationMid, int durationSlow)
+void AntTheme::installThemePrimaryAnimationBase(int durationFast, int durationMid, int durationSlow)
 {
-    Q_D(HusTheme);
+    Q_D(AntTheme);
     auto __style__ = d->m_indexObject["__style__"].toObject();
     __style__["durationFast"] = QString::number(durationFast);
     __style__["durationMid"] = QString::number(durationMid);
@@ -709,9 +709,9 @@ void HusTheme::installThemePrimaryAnimationBase(int durationFast, int durationMi
     d->reloadCustomComponentTheme();
 }
 
-void HusTheme::installIndexTheme(const QString &themePath)
+void AntTheme::installIndexTheme(const QString &themePath)
 {
-    Q_D(HusTheme);
+    Q_D(AntTheme);
     if (themePath != d->m_themeIndexPath) {
         if (themePath.isEmpty()) {
             d->m_themeIndexPath = ":/Antilla/theme/Index.json";
@@ -722,9 +722,9 @@ void HusTheme::installIndexTheme(const QString &themePath)
     }
 }
 
-void HusTheme::installIndexToken(const QString &token, const QString &value)
+void AntTheme::installIndexToken(const QString &token, const QString &value)
 {
-    Q_D(HusTheme);
+    Q_D(AntTheme);
     auto __init__ = d->m_indexObject["__init__"].toObject();
     auto __vars__ = __init__["__vars__"].toObject();
     __vars__[token] = value.simplified();
@@ -735,22 +735,22 @@ void HusTheme::installIndexToken(const QString &token, const QString &value)
     d->reloadCustomComponentTheme();
 }
 
-void HusTheme::installComponentTheme(const QString &component, const QString &themePath)
+void AntTheme::installComponentTheme(const QString &component, const QString &themePath)
 {
-    Q_D(HusTheme);
+    Q_D(AntTheme);
     auto __component__ = d->m_indexObject["__component__"].toObject();
     if (__component__.contains(component)) {
         __component__[component] = themePath;
         d->m_indexObject["__component__"] = __component__;
         d->reloadDefaultComponentTheme();
     } else {
-        qCWarning(lcHusTheme) << QString("Component [%1] not found!").arg(component);
+        qCWarning(lcAntTheme) << QString("Component [%1] not found!").arg(component);
     }
 }
 
-void HusTheme::installComponentToken(const QString &component, const QString &token, const QString &value)
+void AntTheme::installComponentToken(const QString &component, const QString &token, const QString &value)
 {
-    Q_D(HusTheme);
+    Q_D(AntTheme);
     for (auto &theme: d->m_defaultTheme) {
         if (theme.componentMap.contains(component)) {
             theme.componentMap[component].installTokenMap.insert(token, value);
@@ -767,19 +767,19 @@ void HusTheme::installComponentToken(const QString &component, const QString &to
         }
     }
 
-    qCWarning(lcHusTheme) << QString("Component [%1] not found!").arg(component);
+    qCWarning(lcAntTheme) << QString("Component [%1] not found!").arg(component);
 }
 
-HusTheme::HusTheme(QObject *parent)
+AntTheme::AntTheme(QObject *parent)
     : QObject{parent}
-    , d_ptr(new HusThemePrivate(this))
+    , d_ptr(new AntThemePrivate(this))
 {
-    Q_D(HusTheme);
+    Q_D(AntTheme);
 
-    d->m_helper = new HusSystemThemeHelper(this);
+    d->m_helper = new AntSystemThemeHelper(this);
 
-    connect(d->m_helper, &HusSystemThemeHelper::colorSchemeChanged, this, [this]{
-        Q_D(HusTheme);
+    connect(d->m_helper, &AntSystemThemeHelper::colorSchemeChanged, this, [this]{
+        Q_D(AntTheme);
         if (d->m_darkMode == DarkMode::System) {
             d->reloadIndexTheme();
             d->reloadDefaultComponentTheme();
@@ -791,7 +791,7 @@ HusTheme::HusTheme(QObject *parent)
     reloadTheme();
 }
 
-HusTheme::~HusTheme()
+AntTheme::~AntTheme()
 {
 
 }

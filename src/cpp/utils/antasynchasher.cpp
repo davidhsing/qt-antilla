@@ -10,7 +10,7 @@
 #include <QtNetwork/QNetworkReply>
 #include <QtQml/QQmlEngine>
 
-Q_LOGGING_CATEGORY(lcHusAsyncHasher, "antilla.basic.asynchasher");
+Q_LOGGING_CATEGORY(lcAntAsyncHasher, "antilla.basic.asynchasher");
 
 class AsyncRunnable : public QObject, public QRunnable
 {
@@ -58,7 +58,7 @@ protected:
     QCryptographicHash::Algorithm m_algorithm;
 };
 
-class HusAsyncHasherPrivate
+class AntAsyncHasherPrivate
 {
 public:
     void cleanupRunnable()
@@ -83,30 +83,30 @@ public:
     AsyncRunnable *m_runnable = nullptr;
 };
 
-HusAsyncHasher::HusAsyncHasher(QObject *parent)
+AntAsyncHasher::AntAsyncHasher(QObject *parent)
     : QObject{parent}
-    , d_ptr(new HusAsyncHasherPrivate)
+    , d_ptr(new AntAsyncHasherPrivate)
 {
 
 }
 
-HusAsyncHasher::~HusAsyncHasher()
+AntAsyncHasher::~AntAsyncHasher()
 {
-    Q_D(HusAsyncHasher);
+    Q_D(AntAsyncHasher);
 
     d->cleanupRunnable();
 }
 
-QCryptographicHash::Algorithm HusAsyncHasher::algorithm()
+QCryptographicHash::Algorithm AntAsyncHasher::algorithm()
 {
-    Q_D(HusAsyncHasher);
+    Q_D(AntAsyncHasher);
 
     return d->m_algorithm;
 }
 
-void HusAsyncHasher::setAlgorithm(QCryptographicHash::Algorithm algorithm)
+void AntAsyncHasher::setAlgorithm(QCryptographicHash::Algorithm algorithm)
 {
-    Q_D(HusAsyncHasher);
+    Q_D(AntAsyncHasher);
 
     if (d->m_algorithm != algorithm) {
         d->m_algorithm = algorithm;
@@ -115,16 +115,16 @@ void HusAsyncHasher::setAlgorithm(QCryptographicHash::Algorithm algorithm)
     }
 }
 
-bool HusAsyncHasher::asynchronous() const
+bool AntAsyncHasher::asynchronous() const
 {
-    Q_D(const HusAsyncHasher);
+    Q_D(const AntAsyncHasher);
 
     return d->m_asynchronous;
 }
 
-void HusAsyncHasher::setAsynchronous(bool async)
+void AntAsyncHasher::setAsynchronous(bool async)
 {
-    Q_D(HusAsyncHasher);
+    Q_D(AntAsyncHasher);
 
     if (d->m_asynchronous != async) {
         d->m_asynchronous = async;
@@ -132,30 +132,30 @@ void HusAsyncHasher::setAsynchronous(bool async)
     }
 }
 
-QString HusAsyncHasher::hashValue() const
+QString AntAsyncHasher::hashValue() const
 {
-    Q_D(const HusAsyncHasher);
+    Q_D(const AntAsyncHasher);
 
     return d->m_hashValue;
 }
 
-int HusAsyncHasher::hashLength() const
+int AntAsyncHasher::hashLength() const
 {
-    Q_D(const HusAsyncHasher);
+    Q_D(const AntAsyncHasher);
 
     return QCryptographicHash::hashLength(d->m_algorithm);
 }
 
-QUrl HusAsyncHasher::source() const
+QUrl AntAsyncHasher::source() const
 {
-    Q_D(const HusAsyncHasher);
+    Q_D(const AntAsyncHasher);
 
     return d->m_source;
 }
 
-void HusAsyncHasher::setSource(const QUrl &source)
+void AntAsyncHasher::setSource(const QUrl &source)
 {
-    Q_D(HusAsyncHasher);
+    Q_D(AntAsyncHasher);
 
     if (d->m_source != source) {
         d->m_source = source;
@@ -169,8 +169,8 @@ void HusAsyncHasher::setSource(const QUrl &source)
                 emit started();
                 if (d->m_asynchronous) {
                     d->m_runnable = new AsyncRunnable(file, d->m_algorithm);
-                    connect(d->m_runnable, &AsyncRunnable::finished, this, &HusAsyncHasher::setHashValue, Qt::QueuedConnection);
-                    connect(d->m_runnable, &AsyncRunnable::progress, this, &HusAsyncHasher::hashProgress, Qt::QueuedConnection);
+                    connect(d->m_runnable, &AsyncRunnable::finished, this, &AntAsyncHasher::setHashValue, Qt::QueuedConnection);
+                    connect(d->m_runnable, &AsyncRunnable::progress, this, &AntAsyncHasher::hashProgress, Qt::QueuedConnection);
                     QThreadPool::globalInstance()->start(d->m_runnable);
                     emit started();
                 } else {
@@ -180,7 +180,7 @@ void HusAsyncHasher::setSource(const QUrl &source)
                     file->deleteLater();
                 }
             } else {
-                qCWarning(lcHusAsyncHasher) << "File Error:" << file->errorString();
+                qCWarning(lcAntAsyncHasher) << "File Error:" << file->errorString();
                 file->deleteLater();
             }
         } else {
@@ -191,7 +191,7 @@ void HusAsyncHasher::setSource(const QUrl &source)
                 if (qmlEngine(this)) {
                     d->m_manager = qmlEngine(this)->networkAccessManager();
                 } else {
-                    qCWarning(lcHusAsyncHasher) << "HusAsyncHasher without QmlEngine, we cannot get QNetworkAccessManager!";
+                    qCWarning(lcAntAsyncHasher) << "AntAsyncHasher without QmlEngine, we cannot get QNetworkAccessManager!";
                 }
             }
             if (d->m_manager) {
@@ -200,8 +200,8 @@ void HusAsyncHasher::setSource(const QUrl &source)
                     if (d->m_reply->error() == QNetworkReply::NoError) {
                         if (d->m_asynchronous) {
                             d->m_runnable = new AsyncRunnable(d->m_reply, d->m_algorithm);
-                            connect(d->m_runnable, &AsyncRunnable::finished, this, &HusAsyncHasher::setHashValue, Qt::QueuedConnection);
-                            connect(d->m_runnable, &AsyncRunnable::progress, this, &HusAsyncHasher::hashProgress, Qt::QueuedConnection);
+                            connect(d->m_runnable, &AsyncRunnable::finished, this, &AntAsyncHasher::setHashValue, Qt::QueuedConnection);
+                            connect(d->m_runnable, &AsyncRunnable::progress, this, &AntAsyncHasher::hashProgress, Qt::QueuedConnection);
                             QThreadPool::globalInstance()->start(d->m_runnable);
                         } else {
                             QCryptographicHash hash(d->m_algorithm);
@@ -210,7 +210,7 @@ void HusAsyncHasher::setSource(const QUrl &source)
                             d->m_reply->deleteLater();
                         }
                     } else {
-                        qCWarning(lcHusAsyncHasher) << "HTTP Request Error:" << d->m_reply->errorString();
+                        qCWarning(lcAntAsyncHasher) << "HTTP Request Error:" << d->m_reply->errorString();
                         d->m_reply->deleteLater();
                     }
                     d->m_reply = nullptr;
@@ -220,16 +220,16 @@ void HusAsyncHasher::setSource(const QUrl &source)
     }
 }
 
-QString HusAsyncHasher::sourceText() const
+QString AntAsyncHasher::sourceText() const
 {
-    Q_D(const HusAsyncHasher);
+    Q_D(const AntAsyncHasher);
 
     return d->m_sourceText;
 }
 
-void HusAsyncHasher::setSourceText(const QString &sourceText)
+void AntAsyncHasher::setSourceText(const QString &sourceText)
 {
-    Q_D(HusAsyncHasher);
+    Q_D(AntAsyncHasher);
 
     if (d->m_sourceText != sourceText) {
         d->m_sourceText = sourceText;
@@ -243,8 +243,8 @@ void HusAsyncHasher::setSourceText(const QString &sourceText)
             buffer->setData(sourceText.toUtf8());
             buffer->open(QIODevice::ReadOnly);
             d->m_runnable = new AsyncRunnable(buffer, d->m_algorithm);
-            connect(d->m_runnable, &AsyncRunnable::finished, this, &HusAsyncHasher::setHashValue, Qt::QueuedConnection);
-            connect(d->m_runnable, &AsyncRunnable::progress, this, &HusAsyncHasher::hashProgress, Qt::QueuedConnection);
+            connect(d->m_runnable, &AsyncRunnable::finished, this, &AntAsyncHasher::setHashValue, Qt::QueuedConnection);
+            connect(d->m_runnable, &AsyncRunnable::progress, this, &AntAsyncHasher::hashProgress, Qt::QueuedConnection);
             QThreadPool::globalInstance()->start(d->m_runnable);
         } else {
             QCryptographicHash hash(d->m_algorithm);
@@ -254,16 +254,16 @@ void HusAsyncHasher::setSourceText(const QString &sourceText)
     }
 }
 
-QByteArray HusAsyncHasher::sourceData() const
+QByteArray AntAsyncHasher::sourceData() const
 {
-    Q_D(const HusAsyncHasher);
+    Q_D(const AntAsyncHasher);
 
     return d->m_sourceData;
 }
 
-void HusAsyncHasher::setSourceData(const QByteArray &sourceData)
+void AntAsyncHasher::setSourceData(const QByteArray &sourceData)
 {
-    Q_D(HusAsyncHasher);
+    Q_D(AntAsyncHasher);
 
     if (d->m_sourceData != sourceData) {
         d->m_sourceData = sourceData;
@@ -277,8 +277,8 @@ void HusAsyncHasher::setSourceData(const QByteArray &sourceData)
             buffer->setData(sourceData);
             buffer->open(QIODevice::ReadOnly);
             d->m_runnable = new AsyncRunnable(buffer, d->m_algorithm);
-            connect(d->m_runnable, &AsyncRunnable::finished, this, &HusAsyncHasher::setHashValue, Qt::QueuedConnection);
-            connect(d->m_runnable, &AsyncRunnable::progress, this, &HusAsyncHasher::hashProgress, Qt::QueuedConnection);
+            connect(d->m_runnable, &AsyncRunnable::finished, this, &AntAsyncHasher::setHashValue, Qt::QueuedConnection);
+            connect(d->m_runnable, &AsyncRunnable::progress, this, &AntAsyncHasher::hashProgress, Qt::QueuedConnection);
             QThreadPool::globalInstance()->start(d->m_runnable);
         } else {
             QCryptographicHash hash(d->m_algorithm);
@@ -288,16 +288,16 @@ void HusAsyncHasher::setSourceData(const QByteArray &sourceData)
     }
 }
 
-QObject *HusAsyncHasher::sourceObject() const
+QObject *AntAsyncHasher::sourceObject() const
 {
-    Q_D(const HusAsyncHasher);
+    Q_D(const AntAsyncHasher);
 
     return d->m_sourceObject;
 }
 
-void HusAsyncHasher::setSourceObject(QObject *sourceObject)
+void AntAsyncHasher::setSourceObject(QObject *sourceObject)
 {
-    Q_D(HusAsyncHasher);
+    Q_D(AntAsyncHasher);
 
     if (d->m_sourceObject != sourceObject) {
         d->m_sourceObject = sourceObject;
@@ -307,23 +307,23 @@ void HusAsyncHasher::setSourceObject(QObject *sourceObject)
     }
 }
 
-void HusAsyncHasher::setHashValue(const QString &value)
+void AntAsyncHasher::setHashValue(const QString &value)
 {
-    Q_D(HusAsyncHasher);
+    Q_D(AntAsyncHasher);
 
     d->m_hashValue = value;
     emit hashValueChanged();
     emit finished();
 }
 
-bool HusAsyncHasher::operator==(const HusAsyncHasher &hasher)
+bool AntAsyncHasher::operator==(const AntAsyncHasher &hasher)
 {
-    Q_D(const HusAsyncHasher);
+    Q_D(const AntAsyncHasher);
 
     return hasher.d_func()->m_hashValue == d->m_hashValue;
 }
 
-bool HusAsyncHasher::operator!=(const HusAsyncHasher &hasher)
+bool AntAsyncHasher::operator!=(const AntAsyncHasher &hasher)
 {
     return !(*this == hasher);
 }

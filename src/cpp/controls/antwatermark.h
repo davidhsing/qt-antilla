@@ -1,13 +1,13 @@
-#ifndef HUSWATERMARK_H
-#define HUSWATERMARK_H
+#ifndef ANTWATERMARK_H
+#define ANTWATERMARK_H
 
 #include <QtQuick/QQuickPaintedItem>
 
 #include "../antglobal.h"
 
-QT_FORWARD_DECLARE_CLASS(HusWatermarkPrivate);
+QT_FORWARD_DECLARE_CLASS(AntWatermarkPrivate);
 
-class ANTILLA_EXPORT HusWatermark : public QQuickPaintedItem
+class ANTILLA_EXPORT AntWatermark : public QQuickPaintedItem
 {
     Q_OBJECT
 
@@ -20,11 +20,11 @@ class ANTILLA_EXPORT HusWatermark : public QQuickPaintedItem
     Q_PROPERTY(QFont font READ font WRITE setFont NOTIFY fontChanged FINAL)
     Q_PROPERTY(QColor colorText READ colorText WRITE setColorText NOTIFY colorTextChanged FINAL)
 
-    QML_NAMED_ELEMENT(HusWatermark)
+    QML_NAMED_ELEMENT(AntWatermark)
 
 public:
-    HusWatermark(QQuickItem *parent = nullptr);
-    ~HusWatermark();
+    AntWatermark(QQuickItem *parent = nullptr);
+    ~AntWatermark();
 
     QString text() const;
     void setText(const QString &text);
@@ -64,8 +64,8 @@ signals:
     void colorTextChanged();
 
 private:
-    Q_DECLARE_PRIVATE(HusWatermark);
-    QScopedPointer<HusWatermarkPrivate> d_ptr;
+    Q_DECLARE_PRIVATE(AntWatermark);
+    QScopedPointer<AntWatermarkPrivate> d_ptr;
 };
 
-#endif // HUSWATERMARK_H
+#endif // ANTWATERMARK_H

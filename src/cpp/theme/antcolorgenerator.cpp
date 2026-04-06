@@ -11,9 +11,9 @@ static const auto g_brightnessStep2 = 0.08; // 亮度阶梯，深色部分
 static const auto g_lightColorCount = 5; // 浅色数量，主色上
 static const auto g_darkColorCount = 4; // 深色数量，主色下
 
-[[maybe_unused]] static auto qHash(HusColorGenerator::Preset preset)
+[[maybe_unused]] static auto qHash(AntColorGenerator::Preset preset)
 {
-    return static_cast<std::underlying_type<HusColorGenerator::Preset>::type>(preset);
+    return static_cast<std::underlying_type<AntColorGenerator::Preset>::type>(preset);
 }
 
 static QColor mix(const QColor &rgb1, const QColor &rgb2, int amount)
@@ -27,7 +27,7 @@ static QColor mix(const QColor &rgb1, const QColor &rgb2, int amount)
     return rgb;
 }
 
-static qreal getHue(const QColor &hsv, int i, bool light = false)
+static qreal getHue(const QColor &hsv, const int i, const bool light = false)
 {
     qreal hue;
     // 根据色相不同，色相转向不同
@@ -92,23 +92,18 @@ static qreal getValue(const QColor &hsv, int i, bool light = false)
     return value;
 }
 
-HusColorGenerator::HusColorGenerator(QObject *parent)
+AntColorGenerator::AntColorGenerator(QObject *parent)
     : QObject{parent}
 {
 
 }
 
-HusColorGenerator::~HusColorGenerator()
-{
-
-}
-
-QColor HusColorGenerator::reverseColor(const QColor &color)
+QColor AntColorGenerator::reverseColor(const QColor &color)
 {
     return QColor(255 - color.red(), 255 - color.green(), 255 - color.blue(), color.alpha());
 }
 
-QColor HusColorGenerator::presetToColor(const QString &color)
+QColor AntColorGenerator::presetToColor(const QString &color)
 {
     using PresetTableType = QHash<QString, QColor>;
     static PresetTableType g_presetTable {
@@ -133,23 +128,23 @@ QColor HusColorGenerator::presetToColor(const QString &color)
         return QColor(QColor::Invalid);
 }
 
-QColor HusColorGenerator::presetToColor(HusColorGenerator::Preset color)
+QColor AntColorGenerator::presetToColor(AntColorGenerator::Preset color)
 {
-    using PresetTableType = QHash<HusColorGenerator::Preset, QColor>;
+    using PresetTableType = QHash<AntColorGenerator::Preset, QColor>;
     static PresetTableType g_presetTable {
-        { HusColorGenerator::Preset::Preset_Red,      QColor(0xF5222D) },
-        { HusColorGenerator::Preset::Preset_Volcano,  QColor(0xFA541C) },
-        { HusColorGenerator::Preset::Preset_Orange,   QColor(0xFA8C16) },
-        { HusColorGenerator::Preset::Preset_Gold,     QColor(0xFAAD14) },
-        { HusColorGenerator::Preset::Preset_Yellow,   QColor(0xFADB14) },
-        { HusColorGenerator::Preset::Preset_Lime,     QColor(0xA0D911) },
-        { HusColorGenerator::Preset::Preset_Green,    QColor(0x52C41A) },
-        { HusColorGenerator::Preset::Preset_Cyan,     QColor(0x13C2C2) },
-        { HusColorGenerator::Preset::Preset_Blue,     QColor(0x1677FF) },
-        { HusColorGenerator::Preset::Preset_Geekblue, QColor(0x2F54EB) },
-        { HusColorGenerator::Preset::Preset_Purple,   QColor(0x722ED1) },
-        { HusColorGenerator::Preset::Preset_Magenta,  QColor(0xEB2F96) },
-        { HusColorGenerator::Preset::Preset_Grey,     QColor(0x666666) }
+        { AntColorGenerator::Preset::Preset_Red,      QColor(0xF5222D) },
+        { AntColorGenerator::Preset::Preset_Volcano,  QColor(0xFA541C) },
+        { AntColorGenerator::Preset::Preset_Orange,   QColor(0xFA8C16) },
+        { AntColorGenerator::Preset::Preset_Gold,     QColor(0xFAAD14) },
+        { AntColorGenerator::Preset::Preset_Yellow,   QColor(0xFADB14) },
+        { AntColorGenerator::Preset::Preset_Lime,     QColor(0xA0D911) },
+        { AntColorGenerator::Preset::Preset_Green,    QColor(0x52C41A) },
+        { AntColorGenerator::Preset::Preset_Cyan,     QColor(0x13C2C2) },
+        { AntColorGenerator::Preset::Preset_Blue,     QColor(0x1677FF) },
+        { AntColorGenerator::Preset::Preset_Geekblue, QColor(0x2F54EB) },
+        { AntColorGenerator::Preset::Preset_Purple,   QColor(0x722ED1) },
+        { AntColorGenerator::Preset::Preset_Magenta,  QColor(0xEB2F96) },
+        { AntColorGenerator::Preset::Preset_Grey,     QColor(0x666666) }
     };
 
     if (g_presetTable.contains(color))
@@ -158,12 +153,12 @@ QColor HusColorGenerator::presetToColor(HusColorGenerator::Preset color)
         return QColor(QColor::Invalid);
 }
 
-QList<QColor> HusColorGenerator::generate(HusColorGenerator::Preset color, bool light, const QColor &background)
+QList<QColor> AntColorGenerator::generate(AntColorGenerator::Preset color, bool light, const QColor &background)
 {
     return generate(presetToColor(color), light, background);
 }
 
-QList<QColor> HusColorGenerator::generate(const QColor &color, bool light, const QColor &background)
+QList<QColor> AntColorGenerator::generate(const QColor &color, bool light, const QColor &background)
 {
     QList<QColor> patterns;
     const auto hsv = color.toHsv();

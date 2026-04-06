@@ -1,20 +1,20 @@
 #include "anticonfont.h"
 
-HusIcon::HusIcon(QObject* parent) : QObject{parent} {
+AntIcon::AntIcon(QObject* parent) : QObject{parent} {
 }
 
-HusIcon *HusIcon::instance() {
-    static HusIcon *ins = new HusIcon;
+AntIcon *AntIcon::instance() {
+    static AntIcon *ins = new AntIcon;
     return ins;
 }
 
-HusIcon *HusIcon::create(QQmlEngine*, QJSEngine*) {
+AntIcon *AntIcon::create(QQmlEngine*, QJSEngine*) {
     return instance();
 }
 
-QVariantMap HusIcon::allIconNames() {
+QVariantMap AntIcon::allIconNames() {
     QVariantMap iconMap;
-    QMetaEnum me = QMetaEnum::fromType<HusIcon::Type>();
+    QMetaEnum me = QMetaEnum::fromType<AntIcon::Type>();
     for (int i = 0; i < me.keyCount(); i++) {
         iconMap[QString::fromLatin1(me.key(i))] = me.value(i);
     }

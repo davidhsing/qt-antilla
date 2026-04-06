@@ -1,5 +1,5 @@
-#ifndef HUSAPI_H
-#define HUSAPI_H
+#ifndef ANTAPI_H
+#define ANTAPI_H
 
 #include <QtCore/QDate>
 #include <QtQml/qqml.h>
@@ -7,17 +7,17 @@
 
 #include "../antglobal.h"
 
-class ANTILLA_EXPORT HusApi : public QObject
+class ANTILLA_EXPORT AntApi : public QObject
 {
     Q_OBJECT
     QML_SINGLETON
-    QML_NAMED_ELEMENT(HusApi)
+    QML_NAMED_ELEMENT(AntApi)
 
 public:
-    ~HusApi();
+    ~AntApi();
 
-    static HusApi *instance();
-    static HusApi *create(QQmlEngine *, QJSEngine *);
+    static AntApi *instance();
+    static AntApi *create(QQmlEngine *, QJSEngine *);
 
     Q_INVOKABLE void setWindowStaysOnTopHint(QWindow *window, bool hint);
     Q_INVOKABLE void setWindowState(QWindow *window, int state);
@@ -35,7 +35,7 @@ public:
     Q_INVOKABLE void openLocalUrl(const QString &local);
 
 private:
-    explicit HusApi(QObject *parent = nullptr);
+    explicit AntApi(QObject *parent = nullptr);
 };
 
-#endif // HUSAPI_H
+#endif // ANTAPI_H

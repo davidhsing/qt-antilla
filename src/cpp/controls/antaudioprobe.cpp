@@ -4,19 +4,19 @@
 #include <QtMultimedia/QAudioFormat>
 #include <QtMultimedia/QAudioDevice>
 
-HusAudioProbe::HusAudioProbe(QObject* parent)
+AntAudioProbe::AntAudioProbe(QObject* parent)
     : QObject(parent), m_updateTimer(new QTimer(this)), m_mediaDevices(new QMediaDevices(this)) {
-    connect(m_updateTimer, &QTimer::timeout, this, &HusAudioProbe::handleAudioData);
+    connect(m_updateTimer, &QTimer::timeout, this, &AntAudioProbe::handleAudioData);
     m_updateTimer->setInterval(50); // 20fps update rate
     // Connect to audio inputs change signal to handle hot-plugging
-    connect(m_mediaDevices, &QMediaDevices::audioInputsChanged, this, &HusAudioProbe::handleAudioInputsChanged);
+    connect(m_mediaDevices, &QMediaDevices::audioInputsChanged, this, &AntAudioProbe::handleAudioInputsChanged);
 }
 
-HusAudioProbe::~HusAudioProbe() {
+AntAudioProbe::~AntAudioProbe() {
     cleanupAudioSource();
 }
 
-void HusAudioProbe::setDeviceId(const QString& deviceId) {
+void AntAudioProbe::setDeviceId(const QString& deviceId) {
     if (m_deviceId == deviceId) {
         return;
     }
@@ -31,7 +31,7 @@ void HusAudioProbe::setDeviceId(const QString& deviceId) {
     emit deviceValidChanged();
 }
 
-void HusAudioProbe::setActive(const bool active) {
+void AntAudioProbe::setActive(const bool active) {
     if (m_active == active) {
         return;
     }
@@ -44,7 +44,7 @@ void HusAudioProbe::setActive(const bool active) {
     emit activeChanged();
 }
 
-void HusAudioProbe::setInterval(const int interval) {
+void AntAudioProbe::setInterval(const int interval) {
     if (m_updateTimer->interval() == interval) {
         return;
     }
@@ -52,7 +52,7 @@ void HusAudioProbe::setInterval(const int interval) {
     emit intervalChanged();
 }
 
-void HusAudioProbe::setFallbackDefault(const bool fallbackDefault) {
+void AntAudioProbe::setFallbackDefault(const bool fallbackDefault) {
     if (m_fallbackDefault == fallbackDefault) {
         return;
     }
@@ -67,7 +67,7 @@ void HusAudioProbe::setFallbackDefault(const bool fallbackDefault) {
     emit deviceValidChanged();
 }
 
-void HusAudioProbe::startProbing() {
+void AntAudioProbe::startProbing() {
     if (!m_deviceValid || !m_active) {
         return;
     }
@@ -77,14 +77,14 @@ void HusAudioProbe::startProbing() {
     }
 }
 
-void HusAudioProbe::stopProbing() {
+void AntAudioProbe::stopProbing() {
     m_updateTimer->stop();
     cleanupAudioSource();
     m_level = 0.0f;
     emit levelChanged();
 }
 
-void HusAudioProbe::initializeAudioSource() {
+void AntAudioProbe::initializeAudioSource() {
     cleanupAudioSource();
     // Find the appropriate device
     QAudioDevice device;
@@ -121,7 +121,7 @@ void HusAudioProbe::initializeAudioSource() {
     }
 }
 
-void HusAudioProbe::cleanupAudioSource() {
+void AntAudioProbe::cleanupAudioSource() {
     if (m_audioDevice) {
         m_audioDevice->close();
         m_audioDevice = nullptr;
@@ -132,11 +132,11 @@ void HusAudioProbe::cleanupAudioSource() {
     }
 }
 
-void HusAudioProbe::handleAudioData() {
+void AntAudioProbe::handleAudioData() {
     calculateLevel();
 }
 
-void HusAudioProbe::calculateLevel() {
+void AntAudioProbe::calculateLevel() {
     if (!m_audioDevice) {
         return;
     }
@@ -163,7 +163,7 @@ void HusAudioProbe::calculateLevel() {
     emit levelChanged();
 }
 
-void HusAudioProbe::validateDevice() {
+void AntAudioProbe::validateDevice() {
     const bool wasValid = m_deviceValid;
     if (!m_deviceId.isEmpty()) {
         // Check if specified device exists
@@ -191,7 +191,7 @@ void HusAudioProbe::validateDevice() {
     }
 }
 
-void HusAudioProbe::handleAudioInputsChanged() {
+void AntAudioProbe::handleAudioInputsChanged() {
     // Re-validate device when audio inputs change (hot-plugging)
     validateDevice();
     // If we were probing and device became invalid, stop probing

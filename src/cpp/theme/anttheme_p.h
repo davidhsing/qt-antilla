@@ -1,5 +1,5 @@
-#ifndef HUSTHEME_P_H
-#define HUSTHEME_P_H
+#ifndef ANTTHEME_P_H
+#define ANTTHEME_P_H
 
 #include <QtCore/QHash>
 #include <QtCore/QJsonDocument>
@@ -29,124 +29,124 @@ enum class Function : uint16_t
 
 enum class Component : uint16_t
 {
-    HusButton,
-    HusIconText,
-    HusCopyableText,
-    HusCaptionButton,
-    HusTour,
-    HusMenu,
-    HusColorPicker,
-    HusDivider,
-    HusSwitch,
-    HusScrollBar,
-    HusSlider,
-    HusTabs,
-    HusToolTip,
-    HusSelect,
-    HusInput,
-    HusInputInteger,
-    HusInputNumber,
-    HusRate,
-    HusRadio,
-    HusRadioBlock,
-    HusCheckBox,
-    HusDrawer,
-    HusCollapse,
-    HusCard,
-    HusPagination,
-    HusPopup,
-    HusTimeline,
-    HusTag,
-    HusTable,
-    HusMessage,
-    HusAutoComplete,
-    HusProgress,
-    HusCarousel,
-    HusBreadcrumb,
-    HusImage,
-    HusMultiSelect,
-    HusDateTimePicker,
-    HusNotification,
-    HusPopconfirm,
-    HusLabel,
-    HusModal,
-    HusText,
-    HusTextArea,
-    HusTransfer,
-    HusTree,
-    HusAudioDiagnosis,
-    HusAlert,
-    HusPopover,
-    HusEmpty,
-    HusSpin,
-    HusStatusBar,
-    HusFormItem,
-    HusGroupBox,
-    HusMaskOverlay,
-    HusResult,
-    HusShield,
+    AntButton,
+    AntIconText,
+    AntCopyableText,
+    AntCaptionButton,
+    AntTour,
+    AntMenu,
+    AntColorPicker,
+    AntDivider,
+    AntSwitch,
+    AntScrollBar,
+    AntSlider,
+    AntTabs,
+    AntToolTip,
+    AntSelect,
+    AntInput,
+    AntInputInteger,
+    AntInputNumber,
+    AntRate,
+    AntRadio,
+    AntRadioBlock,
+    AntCheckBox,
+    AntDrawer,
+    AntCollapse,
+    AntCard,
+    AntPagination,
+    AntPopup,
+    AntTimeline,
+    AntTag,
+    AntTable,
+    AntMessage,
+    AntAutoComplete,
+    AntProgress,
+    AntCarousel,
+    AntBreadcrumb,
+    AntImage,
+    AntMultiSelect,
+    AntDateTimePicker,
+    AntNotification,
+    AntPopconfirm,
+    AntLabel,
+    AntModal,
+    AntText,
+    AntTextArea,
+    AntTransfer,
+    AntTree,
+    AntAudioDiagnosis,
+    AntAlert,
+    AntPopover,
+    AntEmpty,
+    AntSpin,
+    AntStatusBar,
+    AntFormItem,
+    AntGroupBox,
+    AntMaskOverlay,
+    AntResult,
+    AntShield,
 
     Size
 };
 
 static QHash<QString, Component> g_componentTable
 {
-    { "HusButton",          Component::HusButton           },
-    { "HusIconText",        Component::HusIconText         },
-    { "HusCopyableText",    Component::HusCopyableText     },
-    { "HusCaptionButton",   Component::HusCaptionButton    },
-    { "HusTour",            Component::HusTour             },
-    { "HusMenu",            Component::HusMenu             },
-    { "HusColorPicker",     Component::HusColorPicker      },
-    { "HusDivider",         Component::HusDivider          },
-    { "HusSwitch",          Component::HusSwitch           },
-    { "HusScrollBar",       Component::HusScrollBar        },
-    { "HusSlider",          Component::HusSlider           },
-    { "HusTabs",            Component::HusTabs             },
-    { "HusToolTip",         Component::HusToolTip          },
-    { "HusSelect",          Component::HusSelect           },
-    { "HusInput",           Component::HusInput            },
-    { "HusInputInteger",    Component::HusInputInteger     },
-    { "HusInputNumber",     Component::HusInputNumber      },
-    { "HusRate",            Component::HusRate             },
-    { "HusRadio",           Component::HusRadio            },
-    { "HusRadioBlock",      Component::HusRadioBlock       },
-    { "HusCheckBox",        Component::HusCheckBox         },
-    { "HusDrawer",          Component::HusDrawer           },
-    { "HusCollapse",        Component::HusCollapse         },
-    { "HusCard",            Component::HusCard             },
-    { "HusPagination",      Component::HusPagination       },
-    { "HusPopup",           Component::HusPopup            },
-    { "HusTimeline",        Component::HusTimeline         },
-    { "HusTable",           Component::HusTable            },
-    { "HusTag",             Component::HusTag              },
-    { "HusMessage",         Component::HusMessage          },
-    { "HusAutoComplete",    Component::HusAutoComplete     },
-    { "HusProgress",        Component::HusProgress         },
-    { "HusCarousel",        Component::HusCarousel         },
-    { "HusBreadcrumb",      Component::HusBreadcrumb       },
-    { "HusImage",           Component::HusImage            },
-    { "HusMultiSelect",     Component::HusMultiSelect      },
-    { "HusDateTimePicker",  Component::HusDateTimePicker   },
-    { "HusNotification",    Component::HusNotification     },
-    { "HusPopconfirm",      Component::HusPopconfirm       },
-    { "HusLabel",           Component::HusLabel            },
-    { "HusModal",           Component::HusModal            },
-    { "HusText",            Component::HusText             },
-    { "HusTextArea",        Component::HusTextArea         },
-    { "HusTransfer",        Component::HusTransfer         },
-    { "HusTree",            Component::HusTree             },
-    { "HusAudioDiagnosis",  Component::HusAudioDiagnosis   },
-    { "HusAlert",           Component::HusAlert            },
-    { "HusPopover",         Component::HusPopover          },
-    { "HusEmpty",           Component::HusEmpty            },
-    { "HusSpin",            Component::HusSpin             },
-    { "HusStatusBar",       Component::HusStatusBar        },
-    { "HusFormItem",        Component::HusFormItem         },
-    { "HusGroupBox",        Component::HusGroupBox         },
-    { "HusMaskOverlay",     Component::HusMaskOverlay      },
-    { "HusResult",          Component::HusResult           },
-    { "HusShield",          Component::HusShield           },
+    { "AntButton",          Component::AntButton           },
+    { "AntIconText",        Component::AntIconText         },
+    { "AntCopyableText",    Component::AntCopyableText     },
+    { "AntCaptionButton",   Component::AntCaptionButton    },
+    { "AntTour",            Component::AntTour             },
+    { "AntMenu",            Component::AntMenu             },
+    { "AntColorPicker",     Component::AntColorPicker      },
+    { "AntDivider",         Component::AntDivider          },
+    { "AntSwitch",          Component::AntSwitch           },
+    { "AntScrollBar",       Component::AntScrollBar        },
+    { "AntSlider",          Component::AntSlider           },
+    { "AntTabs",            Component::AntTabs             },
+    { "AntToolTip",         Component::AntToolTip          },
+    { "AntSelect",          Component::AntSelect           },
+    { "AntInput",           Component::AntInput            },
+    { "AntInputInteger",    Component::AntInputInteger     },
+    { "AntInputNumber",     Component::AntInputNumber      },
+    { "AntRate",            Component::AntRate             },
+    { "AntRadio",           Component::AntRadio            },
+    { "AntRadioBlock",      Component::AntRadioBlock       },
+    { "AntCheckBox",        Component::AntCheckBox         },
+    { "AntDrawer",          Component::AntDrawer           },
+    { "AntCollapse",        Component::AntCollapse         },
+    { "AntCard",            Component::AntCard             },
+    { "AntPagination",      Component::AntPagination       },
+    { "AntPopup",           Component::AntPopup            },
+    { "AntTimeline",        Component::AntTimeline         },
+    { "AntTable",           Component::AntTable            },
+    { "AntTag",             Component::AntTag              },
+    { "AntMessage",         Component::AntMessage          },
+    { "AntAutoComplete",    Component::AntAutoComplete     },
+    { "AntProgress",        Component::AntProgress         },
+    { "AntCarousel",        Component::AntCarousel         },
+    { "AntBreadcrumb",      Component::AntBreadcrumb       },
+    { "AntImage",           Component::AntImage            },
+    { "AntMultiSelect",     Component::AntMultiSelect      },
+    { "AntDateTimePicker",  Component::AntDateTimePicker   },
+    { "AntNotification",    Component::AntNotification     },
+    { "AntPopconfirm",      Component::AntPopconfirm       },
+    { "AntLabel",           Component::AntLabel            },
+    { "AntModal",           Component::AntModal            },
+    { "AntText",            Component::AntText             },
+    { "AntTextArea",        Component::AntTextArea         },
+    { "AntTransfer",        Component::AntTransfer         },
+    { "AntTree",            Component::AntTree             },
+    { "AntAudioDiagnosis",  Component::AntAudioDiagnosis   },
+    { "AntAlert",           Component::AntAlert            },
+    { "AntPopover",         Component::AntPopover          },
+    { "AntEmpty",           Component::AntEmpty            },
+    { "AntSpin",            Component::AntSpin             },
+    { "AntStatusBar",       Component::AntStatusBar        },
+    { "AntFormItem",        Component::AntFormItem         },
+    { "AntGroupBox",        Component::AntGroupBox         },
+    { "AntMaskOverlay",     Component::AntMaskOverlay      },
+    { "AntResult",          Component::AntResult           },
+    { "AntShield",          Component::AntShield           },
 };
 
 struct ThemeData
@@ -161,17 +161,17 @@ struct ThemeData
     QMap<QString, Component> componentMap;
 };
 
-class HusThemePrivate
+class AntThemePrivate
 {
 public:
-    HusThemePrivate(HusTheme *q) : q_ptr(q) { }
+    AntThemePrivate(AntTheme *q) : q_ptr(q) { }
 
-    Q_DECLARE_PUBLIC(HusTheme);
+    Q_DECLARE_PUBLIC(AntTheme);
 
-    HusTheme *q_ptr = nullptr;
-    HusTheme::DarkMode m_darkMode = HusTheme::DarkMode::Light;
-    HusTheme::TextRenderType m_textRenderType = HusTheme::TextRenderType::QtRendering;
-    HusSystemThemeHelper *m_helper { nullptr };
+    AntTheme *q_ptr = nullptr;
+    AntTheme::DarkMode m_darkMode = AntTheme::DarkMode::Light;
+    AntTheme::TextRenderType m_textRenderType = AntTheme::TextRenderType::QtRendering;
+    AntSystemThemeHelper *m_helper { nullptr };
     QString m_themeIndexPath = ":/Antilla/theme/Index.json";
     QJsonObject m_indexObject;
     QMap<QString, QVariant> m_indexTokenTable;
@@ -180,7 +180,7 @@ public:
     QMap<QObject *, ThemeData> m_defaultTheme;
     QMap<QObject *, ThemeData> m_customTheme;
 
-    static HusThemePrivate *get(HusTheme *theme) { return theme->d_func(); }
+    static AntThemePrivate *get(AntTheme *theme) { return theme->d_func(); }
 
     void parse$(QMap<QString, QVariant> &out, const QString &tokenName, const QString &expr);
 
@@ -204,4 +204,4 @@ public:
                                 QMap<QObject *, ThemeData> &dataMap);
 };
 
-#endif // HUSTHEME_P_H
+#endif // ANTTHEME_P_H

@@ -6,7 +6,7 @@
 #endif
 
 
-HusWindowAgent::HusWindowAgent(QObject* parent)
+AntWindowAgent::AntWindowAgent(QObject* parent)
 #ifdef BUILD_ANTILLA_ON_DESKTOP_PLATFORM
     : QWK::QuickWindowAgent{parent}
 #else
@@ -15,17 +15,17 @@ HusWindowAgent::HusWindowAgent(QObject* parent)
 {
 }
 
-void HusWindowAgent::classBegin() {
+void AntWindowAgent::classBegin() {
     auto p = parent();
-    Q_ASSERT_X(p, "HusWindowAgent", "parent() return nullptr!");
+    Q_ASSERT_X(p, "AntWindowAgent", "parent() return nullptr!");
     if (p) {
 #ifdef BUILD_ANTILLA_ON_DESKTOP_PLATFORM
 # if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-        if (p->objectName() == QLatin1StringView("__HusWindow__")) {
+        if (p->objectName() == QLatin1StringView("__AntWindow__")) {
             setup(qobject_cast<QQuickWindow *>(p));
         }
 # else
-        if (p->objectName() == QLatin1String("__HusWindow__")) {
+        if (p->objectName() == QLatin1String("__AntWindow__")) {
             setup(qobject_cast<QQuickWindow *>(p));
         }
 # endif
@@ -33,12 +33,12 @@ void HusWindowAgent::classBegin() {
     }
 }
 
-void HusWindowAgent::componentComplete() {
+void AntWindowAgent::componentComplete() {
 }
 
 #ifdef BUILD_ANTILLA_ON_DESKTOP_PLATFORM
 
-void HusWindowAgent::installNativeEventFilter(QObject* filter) const {
+void AntWindowAgent::installNativeEventFilter(QObject* filter) const {
     if (!filter) {
         return;
     }
@@ -49,7 +49,7 @@ void HusWindowAgent::installNativeEventFilter(QObject* filter) const {
     }
 }
 
-void HusWindowAgent::removeNativeEventFilter(QObject* filter) const {
+void AntWindowAgent::removeNativeEventFilter(QObject* filter) const {
     if (!filter) {
         return;
     }

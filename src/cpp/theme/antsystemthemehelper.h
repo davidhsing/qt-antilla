@@ -1,5 +1,5 @@
-#ifndef HUSSYSTEMTHEMEHELPER_H
-#define HUSSYSTEMTHEMEHELPER_H
+#ifndef ANTSYSTEMTHEMEHELPER_H
+#define ANTSYSTEMTHEMEHELPER_H
 
 #include <QtCore/QObject>
 #include <QtGui/QColor>
@@ -10,21 +10,21 @@
 QT_FORWARD_DECLARE_CLASS(QWindow);
 QT_FORWARD_DECLARE_CLASS(QWidget);
 
-QT_FORWARD_DECLARE_CLASS(HusSystemThemeHelperPrivate);
+QT_FORWARD_DECLARE_CLASS(AntSystemThemeHelperPrivate);
 
 #ifndef BUILD_ANTILLA_ON_DESKTOP_PLATFORM
 Q_DECLARE_OPAQUE_POINTER(QWindow*);
 Q_DECLARE_OPAQUE_POINTER(QWidget*);
 #endif
 
-class ANTILLA_EXPORT HusSystemThemeHelper : public QObject
+class ANTILLA_EXPORT AntSystemThemeHelper : public QObject
 {
     Q_OBJECT
 
     Q_PROPERTY(QColor themeColor READ themeColor NOTIFY themeColorChanged)
-    Q_PROPERTY(HusSystemThemeHelper::ColorScheme colorScheme READ colorScheme NOTIFY colorSchemeChanged)
+    Q_PROPERTY(AntSystemThemeHelper::ColorScheme colorScheme READ colorScheme NOTIFY colorSchemeChanged)
 
-    QML_NAMED_ELEMENT(HusSystemThemeHelper)
+    QML_NAMED_ELEMENT(AntSystemThemeHelper)
 
 public:
     enum class ColorScheme {
@@ -34,8 +34,8 @@ public:
     };
     Q_ENUM(ColorScheme);
 
-    HusSystemThemeHelper(QObject *parent = nullptr);
-    ~HusSystemThemeHelper();
+    explicit AntSystemThemeHelper(QObject* parent = nullptr);
+    ~AntSystemThemeHelper() override;
 
     /**
      * @brief getThemeColor 立即获取当前主题颜色{不可用于绑定}
@@ -46,9 +46,9 @@ public:
     /**
      * @brief getColorScheme 立即获取当前颜色方案{不可用于绑定}
      * @warning 此接口更快，但不会自动更新
-     * @return {@link HusSystemThemeHelper::ColorScheme}
+     * @return {@link AntSystemThemeHelper::ColorScheme}
      */
-    Q_INVOKABLE HusSystemThemeHelper::ColorScheme getColorScheme() const;
+    Q_INVOKABLE AntSystemThemeHelper::ColorScheme getColorScheme() const;
     /**
      * @brief colorScheme 获取当前主题颜色{可用于绑定}
      * @return QColor
@@ -56,11 +56,11 @@ public:
     QColor themeColor();
     /**
      * @brief colorScheme 获取当前颜色方案{可用于绑定}
-     * @return {@link HusSystemThemeHelper::ColorScheme}
+     * @return {@link AntSystemThemeHelper::ColorScheme}
      */
-    HusSystemThemeHelper::ColorScheme colorScheme();
+    AntSystemThemeHelper::ColorScheme colorScheme();
 
-    Q_INVOKABLE static bool setWindowTitleBarMode(QWindow *window, bool isDark);
+    Q_INVOKABLE static bool setWindowTitleBarMode(const QWindow *window, bool isDark);
 
 #ifdef QT_WIDGETS_LIB
     Q_INVOKABLE static bool setWindowTitleBarMode(QWidget *window, bool isDark);
@@ -68,15 +68,15 @@ public:
 
 signals:
     void themeColorChanged(const QColor &color);
-    void colorSchemeChanged(HusSystemThemeHelper::ColorScheme scheme);
+    void colorSchemeChanged(AntSystemThemeHelper::ColorScheme scheme);
 
 protected:
     virtual void timerEvent(QTimerEvent *);
 
 private:
-    Q_DECLARE_PRIVATE(HusSystemThemeHelper);
-    QScopedPointer<HusSystemThemeHelperPrivate> d_ptr;
+    Q_DECLARE_PRIVATE(AntSystemThemeHelper);
+    QScopedPointer<AntSystemThemeHelperPrivate> d_ptr;
 };
 
 
-#endif // HUSSYSTEMTHEMEHELPER_H
+#endif // ANTSYSTEMTHEMEHELPER_H

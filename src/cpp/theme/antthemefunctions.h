@@ -1,5 +1,5 @@
-#ifndef HUSTHEMEFUNCTIONS_H
-#define HUSTHEMEFUNCTIONS_H
+#ifndef ANTTHEMEFUNCTIONS_H
+#define ANTTHEMEFUNCTIONS_H
 
 #include <QtCore/QObject>
 #include <QtGui/QColor>
@@ -7,17 +7,17 @@
 
 #include "../antglobal.h"
 
-class ANTILLA_EXPORT HusThemeFunctions : public QObject
+class ANTILLA_EXPORT AntThemeFunctions : public QObject
 {
     Q_OBJECT
     QML_SINGLETON
-    QML_NAMED_ELEMENT(HusThemeFunctions)
+    QML_NAMED_ELEMENT(AntThemeFunctions)
 
 public:
-    HusThemeFunctions(QObject *parent = nullptr);
+    explicit AntThemeFunctions(QObject* parent = nullptr);
 
-    static HusThemeFunctions *instance();
-    static HusThemeFunctions *create(QQmlEngine *, QJSEngine *);
+    static AntThemeFunctions* instance();
+    static AntThemeFunctions* create(QQmlEngine*, QJSEngine*);
 
     Q_INVOKABLE static QList<QColor> genColor(int preset, bool light = true, const QColor &background = QColor(QColor::Invalid));
     Q_INVOKABLE static QList<QColor> genColor(const QColor &color, bool light = true, const QColor &background = QColor(QColor::Invalid));
@@ -36,4 +36,4 @@ public:
     Q_INVOKABLE static qreal divide(qreal num1, qreal num2);
 };
 
-#endif // HUSTHEMEFUNCTIONS_H
+#endif // ANTTHEMEFUNCTIONS_H

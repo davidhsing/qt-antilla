@@ -9,11 +9,11 @@
 #include <private/qqmlglobal_p.h>
 #include <private/qquickrectangle_p.h>
 
-qreal HusRadius::all() const {
+qreal AntRadius::all() const {
     return m_all;
 }
 
-void HusRadius::setAll(const qreal all) {
+void AntRadius::setAll(const qreal all) {
     if (m_all == all) {
         return;
     }
@@ -34,14 +34,14 @@ void HusRadius::setAll(const qreal all) {
     }
 }
 
-qreal HusRadius::topLeft() const {
+qreal AntRadius::topLeft() const {
     if (m_topLeft >= 0.) {
         return m_topLeft;
     }
     return m_all;
 }
 
-void HusRadius::setTopLeft(const qreal topLeft) {
+void AntRadius::setTopLeft(const qreal topLeft) {
     if (m_topLeft == topLeft) {
         return;
     }
@@ -53,14 +53,14 @@ void HusRadius::setTopLeft(const qreal topLeft) {
     emit topLeftChanged();
 }
 
-qreal HusRadius::topRight() const {
+qreal AntRadius::topRight() const {
     if (m_topRight >= 0.) {
         return m_topRight;
     }
     return m_all;
 }
 
-void HusRadius::setTopRight(const qreal topRight) {
+void AntRadius::setTopRight(const qreal topRight) {
     if (m_topRight == topRight) {
         return;
     }
@@ -72,14 +72,14 @@ void HusRadius::setTopRight(const qreal topRight) {
     emit topRightChanged();
 }
 
-qreal HusRadius::bottomLeft() const {
+qreal AntRadius::bottomLeft() const {
     if (m_bottomLeft >= 0.) {
         return m_bottomLeft;
     }
     return m_all;
 }
 
-void HusRadius::setBottomLeft(const qreal bottomLeft) {
+void AntRadius::setBottomLeft(const qreal bottomLeft) {
     if (m_bottomLeft == bottomLeft) {
         return;
     }
@@ -91,14 +91,14 @@ void HusRadius::setBottomLeft(const qreal bottomLeft) {
     emit bottomLeftChanged();
 }
 
-qreal HusRadius::bottomRight() const {
+qreal AntRadius::bottomRight() const {
     if (m_bottomRight >= 0.) {
         return m_bottomRight;
     }
     return m_all;
 }
 
-void HusRadius::setBottomRight(const qreal bottomRight) {
+void AntRadius::setBottomRight(const qreal bottomRight) {
     if (m_bottomRight == bottomRight) {
         return;
     }
@@ -110,30 +110,39 @@ void HusRadius::setBottomRight(const qreal bottomRight) {
     emit bottomRightChanged();
 }
 
-qreal HusMargin::all() const {
+qreal AntMargin::all() const {
     return m_all;
 }
 
-void HusMargin::setAll(const qreal all) {
+void AntMargin::setAll(const qreal all) {
     if (m_all == all) {
         return;
     }
     m_all = all;
     emit allChanged();
-    setLeft(all);
-    setTop(all);
-    setRight(all);
-    setBottom(all);
+    // Set all if it is negative
+    if (m_top < 0.) {
+        emit topChanged();
+    }
+    if (m_bottom < 0.) {
+        emit bottomChanged();
+    }
+    if (m_left < 0.) {
+        emit leftChanged();
+    }
+    if (m_right < 0.) {
+        emit rightChanged();
+    }
 }
 
-qreal HusMargin::left() const {
+qreal AntMargin::left() const {
     if (m_left >= 0.) {
         return m_left;
     }
     return m_all;
 }
 
-void HusMargin::setLeft(const qreal left) {
+void AntMargin::setLeft(const qreal left) {
     if (m_left == left) {
         return;
     }
@@ -145,14 +154,14 @@ void HusMargin::setLeft(const qreal left) {
     emit leftChanged();
 }
 
-qreal HusMargin::top() const {
+qreal AntMargin::top() const {
     if (m_top >= 0.) {
         return m_top;
     }
     return m_all;
 }
 
-void HusMargin::setTop(const qreal top) {
+void AntMargin::setTop(const qreal top) {
     if (m_top == top) {
         return;
     }
@@ -164,14 +173,14 @@ void HusMargin::setTop(const qreal top) {
     emit topChanged();
 }
 
-qreal HusMargin::right() const {
+qreal AntMargin::right() const {
     if (m_right >= 0.) {
         return m_right;
     }
     return m_all;
 }
 
-void HusMargin::setRight(const qreal right) {
+void AntMargin::setRight(const qreal right) {
     if (m_right == right) {
         return;
     }
@@ -183,14 +192,14 @@ void HusMargin::setRight(const qreal right) {
     emit rightChanged();
 }
 
-qreal HusMargin::bottom() const {
+qreal AntMargin::bottom() const {
     if (m_bottom >= 0.) {
         return m_bottom;
     }
     return m_all;
 }
 
-void HusMargin::setBottom(const qreal bottom) {
+void AntMargin::setBottom(const qreal bottom) {
     if (m_bottom == bottom) {
         return;
     }
@@ -202,10 +211,10 @@ void HusMargin::setBottom(const qreal bottom) {
     emit bottomChanged();
 }
 
-class HusRectanglePrivate {
+class AntRectanglePrivate {
 public:
     QColor m_color = { 0xffffff };
-    HusPen *m_pen = nullptr;
+    AntPen *m_pen = nullptr;
     QJSValue m_gradient;
     qreal m_radius = 0;
     qreal m_topLeftRadius = 0;
@@ -216,18 +225,18 @@ public:
     static int doUpdateSlotIdx;
 };
 
-int HusRectanglePrivate::doUpdateSlotIdx = -1;
+int AntRectanglePrivate::doUpdateSlotIdx = -1;
 
-HusRectangle::HusRectangle(QQuickItem* parent) : QQuickPaintedItem{parent}, d_ptr(new HusRectanglePrivate) {
+AntRectangle::AntRectangle(QQuickItem* parent) : QQuickPaintedItem{parent}, d_ptr(new AntRectanglePrivate) {
 }
 
-QColor HusRectangle::color() const {
-    Q_D(const HusRectangle);
+QColor AntRectangle::color() const {
+    Q_D(const AntRectangle);
     return d->m_color;
 }
 
-void HusRectangle::setColor(const QColor color) {
-    Q_D(HusRectangle);
+void AntRectangle::setColor(const QColor color) {
+    Q_D(AntRectangle);
     if (d->m_color != color) {
         d->m_color = color;
         emit colorChanged();
@@ -235,32 +244,32 @@ void HusRectangle::setColor(const QColor color) {
     }
 }
 
-HusPen *HusRectangle::border() {
-    Q_D(HusRectangle);
+AntPen *AntRectangle::border() {
+    Q_D(AntRectangle);
     if (!d->m_pen) {
-        d->m_pen = new HusPen;
+        d->m_pen = new AntPen;
         QQml_setParent_noEvent(d->m_pen, this);
-        connect(d->m_pen, &HusPen::colorChanged, this, [this]{ update(); });
-        connect(d->m_pen, &HusPen::widthChanged, this, [this]{ update(); });
-        connect(d->m_pen, &HusPen::styleChanged, this, [this]{ update(); });
+        connect(d->m_pen, &AntPen::colorChanged, this, [this]{ update(); });
+        connect(d->m_pen, &AntPen::widthChanged, this, [this]{ update(); });
+        connect(d->m_pen, &AntPen::styleChanged, this, [this]{ update(); });
         update();
     }
     return d->m_pen;
 }
 
-QJSValue HusRectangle::gradient() const {
-    Q_D(const HusRectangle);
+QJSValue AntRectangle::gradient() const {
+    Q_D(const AntRectangle);
     return d->m_gradient;
 }
 
-void HusRectangle::setGradient(const QJSValue &gradient) {
-    Q_D(HusRectangle);
+void AntRectangle::setGradient(const QJSValue &gradient) {
+    Q_D(AntRectangle);
     if (d->m_gradient.equals(gradient)) {
         return;
     }
     static int updatedSignalIdx = QMetaMethod::fromSignal(&QQuickGradient::updated).methodIndex();
-    if (HusRectanglePrivate::doUpdateSlotIdx < 0) {
-        HusRectanglePrivate::doUpdateSlotIdx = QQuickRectangle::staticMetaObject.indexOfSlot("doUpdate()");
+    if (AntRectanglePrivate::doUpdateSlotIdx < 0) {
+        AntRectanglePrivate::doUpdateSlotIdx = QQuickRectangle::staticMetaObject.indexOfSlot("doUpdate()");
     }
     if (const auto oldGradient = qobject_cast<QQuickGradient*>(d->m_gradient.toQObject())) {
         QMetaObject::disconnect(oldGradient, updatedSignalIdx, this, d->doUpdateSlotIdx);
@@ -308,17 +317,17 @@ void HusRectangle::setGradient(const QJSValue &gradient) {
     update();
 }
 
-void HusRectangle::resetGradient() {
+void AntRectangle::resetGradient() {
     setGradient(QJSValue());
 }
 
-qreal HusRectangle::radius() const {
-    Q_D(const HusRectangle);
+qreal AntRectangle::radius() const {
+    Q_D(const AntRectangle);
     return d->m_radius;
 }
 
-void HusRectangle::setRadius(const qreal radius) {
-    Q_D(HusRectangle);
+void AntRectangle::setRadius(const qreal radius) {
+    Q_D(AntRectangle);
     if (d->m_radius == radius) {
         return;
     }
@@ -331,16 +340,16 @@ void HusRectangle::setRadius(const qreal radius) {
     update();
 }
 
-qreal HusRectangle::topLeftRadius() const {
-    Q_D(const HusRectangle);
+qreal AntRectangle::topLeftRadius() const {
+    Q_D(const AntRectangle);
     if (d->m_topLeftRadius >= 0.) {
         return d->m_topLeftRadius;
     }
     return d->m_radius;
 }
 
-void HusRectangle::setTopLeftRadius(const qreal radius) {
-    Q_D(HusRectangle);
+void AntRectangle::setTopLeftRadius(const qreal radius) {
+    Q_D(AntRectangle);
     if (d->m_topLeftRadius == radius) {
         return;
     }
@@ -353,16 +362,16 @@ void HusRectangle::setTopLeftRadius(const qreal radius) {
     update();
 }
 
-qreal HusRectangle::topRightRadius() const {
-    Q_D(const HusRectangle);
+qreal AntRectangle::topRightRadius() const {
+    Q_D(const AntRectangle);
     if (d->m_topRightRadius >= 0.) {
         return d->m_topRightRadius;
     }
     return d->m_radius;
 }
 
-void HusRectangle::setTopRightRadius(const qreal radius) {
-    Q_D(HusRectangle);
+void AntRectangle::setTopRightRadius(const qreal radius) {
+    Q_D(AntRectangle);
     if (d->m_topRightRadius == radius) {
         return;
     }
@@ -375,16 +384,16 @@ void HusRectangle::setTopRightRadius(const qreal radius) {
     update();
 }
 
-qreal HusRectangle::bottomLeftRadius() const {
-    Q_D(const HusRectangle);
+qreal AntRectangle::bottomLeftRadius() const {
+    Q_D(const AntRectangle);
     if (d->m_bottomLeftRadius >= 0.) {
         return d->m_bottomLeftRadius;
     }
     return d->m_radius;
 }
 
-void HusRectangle::setBottomLeftRadius(const qreal radius) {
-    Q_D(HusRectangle);
+void AntRectangle::setBottomLeftRadius(const qreal radius) {
+    Q_D(AntRectangle);
     if (d->m_bottomLeftRadius == radius) {
         return;
     }
@@ -397,16 +406,16 @@ void HusRectangle::setBottomLeftRadius(const qreal radius) {
     update();
 }
 
-qreal HusRectangle::bottomRightRadius() const {
-    Q_D(const HusRectangle);
+qreal AntRectangle::bottomRightRadius() const {
+    Q_D(const AntRectangle);
     if (d->m_bottomRightRadius >= 0.) {
         return d->m_bottomRightRadius;
     }
     return d->m_radius;
 }
 
-void HusRectangle::setBottomRightRadius(const qreal radius) {
-    Q_D(HusRectangle);
+void AntRectangle::setBottomRightRadius(const qreal radius) {
+    Q_D(AntRectangle);
     if (d->m_bottomRightRadius == radius) {
         return;
     }
@@ -419,8 +428,8 @@ void HusRectangle::setBottomRightRadius(const qreal radius) {
     update();
 }
 
-void HusRectangle::paint(QPainter* painter) {
-    Q_D(HusRectangle);
+void AntRectangle::paint(QPainter* painter) {
+    Q_D(AntRectangle);
     painter->save();
     painter->setRenderHint(QPainter::Antialiasing);
     auto rect = boundingRect();
@@ -498,6 +507,6 @@ void HusRectangle::paint(QPainter* painter) {
     painter->restore();
 }
 
-void HusRectangle::doUpdate() {
+void AntRectangle::doUpdate() {
     update();
 }

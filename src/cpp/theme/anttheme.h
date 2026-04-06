@@ -1,83 +1,83 @@
-#ifndef HUSTHEME_H
-#define HUSTHEME_H
+#ifndef ANTTHEME_H
+#define ANTTHEME_H
 
 #include <QtQml/qqml.h>
 
 #include "../antglobal.h"
 #include "../antdefinitions.h"
 
-QT_FORWARD_DECLARE_CLASS(HusThemePrivate)
+QT_FORWARD_DECLARE_CLASS(AntThemePrivate)
 
-class ANTILLA_EXPORT HusTheme : public QObject
+class ANTILLA_EXPORT AntTheme : public QObject
 {
     Q_OBJECT
     QML_SINGLETON
-    QML_NAMED_ELEMENT(HusTheme)
+    QML_NAMED_ELEMENT(AntTheme)
 
     Q_PROPERTY(bool isDark READ isDark NOTIFY isDarkChanged)
     Q_PROPERTY(DarkMode darkMode READ darkMode WRITE setDarkMode NOTIFY darkModeChanged FINAL)
     Q_PROPERTY(TextRenderType textRenderType READ textRenderType WRITE setTextRenderType NOTIFY textRenderTypeChanged FINAL)
 
-    HUS_PROPERTY_INIT(bool, animationEnabled, setAnimationEnabled, true);
+    ANT_PROPERTY_INIT(bool, animationEnabled, setAnimationEnabled, true);
 
-    HUS_PROPERTY_READONLY(QVariantMap, Primary); /*! 所有 {Index.json} 中的变量 */
+    ANT_PROPERTY_READONLY(QVariantMap, Primary); /*! 所有 {Index.json} 中的变量 */
 
-    HUS_PROPERTY_READONLY(QVariantMap, HusButton);
-    HUS_PROPERTY_READONLY(QVariantMap, HusIconText);
-    HUS_PROPERTY_READONLY(QVariantMap, HusCopyableText);
-    HUS_PROPERTY_READONLY(QVariantMap, HusCaptionButton);
-    HUS_PROPERTY_READONLY(QVariantMap, HusTour);
-    HUS_PROPERTY_READONLY(QVariantMap, HusMenu);
-    HUS_PROPERTY_READONLY(QVariantMap, HusColorPicker);
-    HUS_PROPERTY_READONLY(QVariantMap, HusDivider);
-    HUS_PROPERTY_READONLY(QVariantMap, HusSwitch);
-    HUS_PROPERTY_READONLY(QVariantMap, HusScrollBar);
-    HUS_PROPERTY_READONLY(QVariantMap, HusSlider);
-    HUS_PROPERTY_READONLY(QVariantMap, HusTabs);
-    HUS_PROPERTY_READONLY(QVariantMap, HusToolTip);
-    HUS_PROPERTY_READONLY(QVariantMap, HusSelect);
-    HUS_PROPERTY_READONLY(QVariantMap, HusInput);
-    HUS_PROPERTY_READONLY(QVariantMap, HusInputInteger);
-    HUS_PROPERTY_READONLY(QVariantMap, HusInputNumber);
-    HUS_PROPERTY_READONLY(QVariantMap, HusRate);
-    HUS_PROPERTY_READONLY(QVariantMap, HusRadio);
-    HUS_PROPERTY_READONLY(QVariantMap, HusRadioBlock);
-    HUS_PROPERTY_READONLY(QVariantMap, HusCheckBox);
-    HUS_PROPERTY_READONLY(QVariantMap, HusDrawer);
-    HUS_PROPERTY_READONLY(QVariantMap, HusCollapse);
-    HUS_PROPERTY_READONLY(QVariantMap, HusCard);
-    HUS_PROPERTY_READONLY(QVariantMap, HusPagination);
-    HUS_PROPERTY_READONLY(QVariantMap, HusPopup);
-    HUS_PROPERTY_READONLY(QVariantMap, HusTimeline);
-    HUS_PROPERTY_READONLY(QVariantMap, HusTag);
-    HUS_PROPERTY_READONLY(QVariantMap, HusTable);
-    HUS_PROPERTY_READONLY(QVariantMap, HusMessage);
-    HUS_PROPERTY_READONLY(QVariantMap, HusAutoComplete);
-    HUS_PROPERTY_READONLY(QVariantMap, HusProgress);
-    HUS_PROPERTY_READONLY(QVariantMap, HusCarousel);
-    HUS_PROPERTY_READONLY(QVariantMap, HusBreadcrumb);
-    HUS_PROPERTY_READONLY(QVariantMap, HusImage);
-    HUS_PROPERTY_READONLY(QVariantMap, HusMultiSelect);
-    HUS_PROPERTY_READONLY(QVariantMap, HusDateTimePicker);
-    HUS_PROPERTY_READONLY(QVariantMap, HusNotification);
-    HUS_PROPERTY_READONLY(QVariantMap, HusPopconfirm);
-    HUS_PROPERTY_READONLY(QVariantMap, HusLabel);
-    HUS_PROPERTY_READONLY(QVariantMap, HusModal);
-    HUS_PROPERTY_READONLY(QVariantMap, HusText);
-    HUS_PROPERTY_READONLY(QVariantMap, HusTextArea);
-    HUS_PROPERTY_READONLY(QVariantMap, HusTransfer);
-    HUS_PROPERTY_READONLY(QVariantMap, HusTree);
-    HUS_PROPERTY_READONLY(QVariantMap, HusAudioDiagnosis);
-    HUS_PROPERTY_READONLY(QVariantMap, HusAlert);
-    HUS_PROPERTY_READONLY(QVariantMap, HusPopover);
-    HUS_PROPERTY_READONLY(QVariantMap, HusEmpty);
-    HUS_PROPERTY_READONLY(QVariantMap, HusSpin);
-    HUS_PROPERTY_READONLY(QVariantMap, HusStatusBar);
-    HUS_PROPERTY_READONLY(QVariantMap, HusFormItem);
-    HUS_PROPERTY_READONLY(QVariantMap, HusGroupBox);
-    HUS_PROPERTY_READONLY(QVariantMap, HusMaskOverlay);
-    HUS_PROPERTY_READONLY(QVariantMap, HusResult);
-    HUS_PROPERTY_READONLY(QVariantMap, HusShield);
+    ANT_PROPERTY_READONLY(QVariantMap, AntButton);
+    ANT_PROPERTY_READONLY(QVariantMap, AntIconText);
+    ANT_PROPERTY_READONLY(QVariantMap, AntCopyableText);
+    ANT_PROPERTY_READONLY(QVariantMap, AntCaptionButton);
+    ANT_PROPERTY_READONLY(QVariantMap, AntTour);
+    ANT_PROPERTY_READONLY(QVariantMap, AntMenu);
+    ANT_PROPERTY_READONLY(QVariantMap, AntColorPicker);
+    ANT_PROPERTY_READONLY(QVariantMap, AntDivider);
+    ANT_PROPERTY_READONLY(QVariantMap, AntSwitch);
+    ANT_PROPERTY_READONLY(QVariantMap, AntScrollBar);
+    ANT_PROPERTY_READONLY(QVariantMap, AntSlider);
+    ANT_PROPERTY_READONLY(QVariantMap, AntTabs);
+    ANT_PROPERTY_READONLY(QVariantMap, AntToolTip);
+    ANT_PROPERTY_READONLY(QVariantMap, AntSelect);
+    ANT_PROPERTY_READONLY(QVariantMap, AntInput);
+    ANT_PROPERTY_READONLY(QVariantMap, AntInputInteger);
+    ANT_PROPERTY_READONLY(QVariantMap, AntInputNumber);
+    ANT_PROPERTY_READONLY(QVariantMap, AntRate);
+    ANT_PROPERTY_READONLY(QVariantMap, AntRadio);
+    ANT_PROPERTY_READONLY(QVariantMap, AntRadioBlock);
+    ANT_PROPERTY_READONLY(QVariantMap, AntCheckBox);
+    ANT_PROPERTY_READONLY(QVariantMap, AntDrawer);
+    ANT_PROPERTY_READONLY(QVariantMap, AntCollapse);
+    ANT_PROPERTY_READONLY(QVariantMap, AntCard);
+    ANT_PROPERTY_READONLY(QVariantMap, AntPagination);
+    ANT_PROPERTY_READONLY(QVariantMap, AntPopup);
+    ANT_PROPERTY_READONLY(QVariantMap, AntTimeline);
+    ANT_PROPERTY_READONLY(QVariantMap, AntTag);
+    ANT_PROPERTY_READONLY(QVariantMap, AntTable);
+    ANT_PROPERTY_READONLY(QVariantMap, AntMessage);
+    ANT_PROPERTY_READONLY(QVariantMap, AntAutoComplete);
+    ANT_PROPERTY_READONLY(QVariantMap, AntProgress);
+    ANT_PROPERTY_READONLY(QVariantMap, AntCarousel);
+    ANT_PROPERTY_READONLY(QVariantMap, AntBreadcrumb);
+    ANT_PROPERTY_READONLY(QVariantMap, AntImage);
+    ANT_PROPERTY_READONLY(QVariantMap, AntMultiSelect);
+    ANT_PROPERTY_READONLY(QVariantMap, AntDateTimePicker);
+    ANT_PROPERTY_READONLY(QVariantMap, AntNotification);
+    ANT_PROPERTY_READONLY(QVariantMap, AntPopconfirm);
+    ANT_PROPERTY_READONLY(QVariantMap, AntLabel);
+    ANT_PROPERTY_READONLY(QVariantMap, AntModal);
+    ANT_PROPERTY_READONLY(QVariantMap, AntText);
+    ANT_PROPERTY_READONLY(QVariantMap, AntTextArea);
+    ANT_PROPERTY_READONLY(QVariantMap, AntTransfer);
+    ANT_PROPERTY_READONLY(QVariantMap, AntTree);
+    ANT_PROPERTY_READONLY(QVariantMap, AntAudioDiagnosis);
+    ANT_PROPERTY_READONLY(QVariantMap, AntAlert);
+    ANT_PROPERTY_READONLY(QVariantMap, AntPopover);
+    ANT_PROPERTY_READONLY(QVariantMap, AntEmpty);
+    ANT_PROPERTY_READONLY(QVariantMap, AntSpin);
+    ANT_PROPERTY_READONLY(QVariantMap, AntStatusBar);
+    ANT_PROPERTY_READONLY(QVariantMap, AntFormItem);
+    ANT_PROPERTY_READONLY(QVariantMap, AntGroupBox);
+    ANT_PROPERTY_READONLY(QVariantMap, AntMaskOverlay);
+    ANT_PROPERTY_READONLY(QVariantMap, AntResult);
+    ANT_PROPERTY_READONLY(QVariantMap, AntShield);
 
 public:
     enum class DarkMode {
@@ -94,10 +94,10 @@ public:
     };
     Q_ENUM(TextRenderType);
 
-    ~HusTheme();
+    ~AntTheme();
 
-    static HusTheme *instance();
-    static HusTheme *create(QQmlEngine *, QJSEngine *);
+    static AntTheme *instance();
+    static AntTheme *create(QQmlEngine *, QJSEngine *);
 
     bool isDark() const;
 
@@ -122,37 +122,37 @@ public:
     Q_INVOKABLE void reloadTheme();
 
     /**
-     * @brief 设置文本基础色{HusTheme.Primary.colorTextBase}
+     * @brief 设置文本基础色{AntTheme.Primary.colorTextBase}
      * @param lightAndDark 明亮和暗黑模式颜色字符串,类似于{#000|#fff}
      */
     Q_INVOKABLE void installThemeColorTextBase(const QString &lightAndDark);
     /**
-     * @brief 设置背景基础色{HusTheme.Primary.colorBgBase}
+     * @brief 设置背景基础色{AntTheme.Primary.colorBgBase}
      * @param lightAndDark 明亮和暗黑模式颜色字符串,类似于{#fff|#000}
      */
     Q_INVOKABLE void installThemeColorBgBase(const QString &lightAndDark);
     /**
-     * @brief 设置背景禁用色{HusTheme.Primary.colorBgDisabled}
+     * @brief 设置背景禁用色{AntTheme.Primary.colorBgDisabled}
      * @param colorDisabled 禁用颜色
      */
     Q_INVOKABLE void installThemeColorBgDisabled(const QString &colorDisabled);
     /**
-     * @brief 设置主基础色{HusTheme.Primary.colorPrimaryBase}
+     * @brief 设置主基础色{AntTheme.Primary.colorPrimaryBase}
      * @param colorBase 主基础颜色
      */
     Q_INVOKABLE void installThemePrimaryColorBase(const QColor &colorBase);
     /**
-     * @brief 设置字体基础大小{HusTheme.Primary.fontSizeBase}
+     * @brief 设置字体基础大小{AntTheme.Primary.fontSizeBase}
      * @param fontSizeBase 基础字体像素大小
      */
     Q_INVOKABLE void installThemePrimaryFontSizeBase(int fontSizeBase);
     /**
-     * @brief 设置基础字体族{HusTheme.Primary.fontFamilyBase}
+     * @brief 设置基础字体族{AntTheme.Primary.fontFamilyBase}
      * @param familiesBase 基础字体族
      */
     Q_INVOKABLE void installThemePrimaryFontFamiliesBase(const QString &familiesBase);
     /**
-     * @brief 设置圆角半径基础大小{HusTheme.Primary.radiusBase}
+     * @brief 设置圆角半径基础大小{AntTheme.Primary.radiusBase}
      * @param radiusBase 基础圆角半径大小
      */
     Q_INVOKABLE void installThemePrimaryRadiusBase(int radiusBase);
@@ -198,10 +198,10 @@ signals:
     void textRenderTypeChanged();
 
 private:
-    explicit HusTheme(QObject *parent = nullptr);
+    explicit AntTheme(QObject *parent = nullptr);
 
-    Q_DECLARE_PRIVATE(HusTheme);
-    QScopedPointer<HusThemePrivate> d_ptr;
+    Q_DECLARE_PRIVATE(AntTheme);
+    QScopedPointer<AntThemePrivate> d_ptr;
 };
 
-#endif // HUSTHEME_H
+#endif // ANTTHEME_H

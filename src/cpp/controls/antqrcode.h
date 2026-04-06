@@ -3,20 +3,20 @@
 #include "../antglobal.h"
 
 
-QT_FORWARD_DECLARE_CLASS(HusQrCodePrivate);
+QT_FORWARD_DECLARE_CLASS(AntQrCodePrivate);
 
 
-class ANTILLA_EXPORT HusIconSettings : public QObject {
+class ANTILLA_EXPORT AntIconSettings : public QObject {
     Q_OBJECT
 
     Q_PROPERTY(QUrl url READ url WRITE setUrl NOTIFY urlChanged FINAL)
     Q_PROPERTY(qreal width READ width WRITE setWidth NOTIFY widthChanged FINAL)
     Q_PROPERTY(qreal height READ height WRITE setHeight NOTIFY heightChanged FINAL)
 
-    QML_NAMED_ELEMENT(HusIconSettings)
+    QML_NAMED_ELEMENT(AntIconSettings)
 
 public:
-    explicit HusIconSettings(QObject *parent = nullptr) : QObject{parent} { }
+    explicit AntIconSettings(QObject *parent = nullptr) : QObject{parent} { }
 
     [[nodiscard]] QUrl url() const;
     void setUrl(const QUrl &url);
@@ -40,7 +40,7 @@ private:
     qreal m_height = 40;
 };
 
-class ANTILLA_EXPORT HusQrCode : public QQuickItem {
+class ANTILLA_EXPORT AntQrCode : public QQuickItem {
     Q_OBJECT
 
     Q_PROPERTY(QString text READ text WRITE setText NOTIFY textChanged FINAL)
@@ -48,10 +48,10 @@ class ANTILLA_EXPORT HusQrCode : public QQuickItem {
     Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged FINAL)
     Q_PROPERTY(QColor colorMargin READ colorMargin WRITE setColorMargin NOTIFY colorMarginChanged FINAL)
     Q_PROPERTY(QColor colorBg READ colorBg WRITE setColorBg NOTIFY colorBgChanged FINAL)
-    Q_PROPERTY(HusQrCode::ErrorLevel errorLevel READ errorLevel WRITE setErrorLevel NOTIFY errorLevelChanged FINAL)
-    Q_PROPERTY(HusIconSettings* icon READ icon CONSTANT)
+    Q_PROPERTY(AntQrCode::ErrorLevel errorLevel READ errorLevel WRITE setErrorLevel NOTIFY errorLevelChanged FINAL)
+    Q_PROPERTY(AntIconSettings* icon READ icon CONSTANT)
 
-    QML_NAMED_ELEMENT(HusQrCode)
+    QML_NAMED_ELEMENT(AntQrCode)
 
 public:
     enum class ErrorLevel : uint8_t {
@@ -62,8 +62,8 @@ public:
     };
     Q_ENUM(ErrorLevel);
 
-    HusQrCode(QQuickItem *parent = nullptr);
-    ~HusQrCode() override;
+    AntQrCode(QQuickItem *parent = nullptr);
+    ~AntQrCode() override;
 
     [[nodiscard]] QString text() const;
     void setText(const QString &text);
@@ -80,10 +80,10 @@ public:
     [[nodiscard]] QColor colorBg() const;
     void setColorBg(const QColor &colorBg);
 
-    [[nodiscard]] HusQrCode::ErrorLevel errorLevel() const;
-    void setErrorLevel(HusQrCode::ErrorLevel level);
+    [[nodiscard]] AntQrCode::ErrorLevel errorLevel() const;
+    void setErrorLevel(AntQrCode::ErrorLevel level);
 
-    HusIconSettings *icon();
+    AntIconSettings *icon();
 
 protected:
     QSGNode *updatePaintNode(QSGNode *node, UpdatePaintNodeData *) override;
@@ -97,6 +97,6 @@ signals:
     void errorLevelChanged();
 
 private:
-    Q_DECLARE_PRIVATE(HusQrCode);
-    QScopedPointer<HusQrCodePrivate> d_ptr;
+    Q_DECLARE_PRIVATE(AntQrCode);
+    QScopedPointer<AntQrCodePrivate> d_ptr;
 };

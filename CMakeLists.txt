@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(Antilla_Solution)
+project(Qt-Antilla)
 
 option(BUILD_ANTILLA_GALLERY "Build Antilla Gallery." ON)
 option(BUILD_ANTILLA_STATIC_LIBRARY "Build Antilla as a static library." OFF)

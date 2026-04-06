@@ -1,22 +1,21 @@
-#ifndef HUSSIZEGENERATOR_H
-#define HUSSIZEGENERATOR_H
+#ifndef ANTSIZEGENERATOR_H
+#define ANTSIZEGENERATOR_H
 
 #include <QtCore/QObject>
 #include <QtQml/qqml.h>
 
 #include "../antglobal.h"
 
-class ANTILLA_EXPORT HusSizeGenerator : public QObject
+class ANTILLA_EXPORT AntSizeGenerator : public QObject
 {
     Q_OBJECT
-    QML_NAMED_ELEMENT(HusSizeGenerator)
+    QML_NAMED_ELEMENT(AntSizeGenerator)
 
 public:
-    HusSizeGenerator(QObject *parent = nullptr);
-    ~HusSizeGenerator();
+    explicit AntSizeGenerator(QObject *parent = nullptr);
 
     Q_INVOKABLE static QList<qreal> generateFontSize(qreal fontSizeBase);
     Q_INVOKABLE static QList<qreal> generateFontLineHeight(qreal fontSizeBase);
 };
 
-#endif // HUSSIZEGENERATOR_H
+#endif // ANTSIZEGENERATOR_H

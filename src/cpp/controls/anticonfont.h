@@ -4,10 +4,10 @@
 #include "../antglobal.h"
 
 
-class ANTILLA_EXPORT HusIcon : public QObject {
+class ANTILLA_EXPORT AntIcon : public QObject {
     Q_OBJECT
     QML_SINGLETON
-    QML_NAMED_ELEMENT(HusIcon)
+    QML_NAMED_ELEMENT(AntIcon)
 
 public:
     enum class Type : uint16_t {
@@ -1638,11 +1638,11 @@ public:
     };
     Q_ENUM(Type);
 
-    static HusIcon* instance();
-    static HusIcon* create(QQmlEngine*, QJSEngine*);
+    static AntIcon* instance();
+    static AntIcon* create(QQmlEngine*, QJSEngine*);
 
     static Q_INVOKABLE QVariantMap allIconNames();
 
 private:
-    HusIcon(QObject* parent = nullptr);
+    AntIcon(QObject* parent = nullptr);
 };

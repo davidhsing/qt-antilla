@@ -4,12 +4,12 @@
 #include "../antdefinitions.h"
 
 
-QT_FORWARD_DECLARE_CLASS(HusRectanglePrivate)
+QT_FORWARD_DECLARE_CLASS(AntRectanglePrivate)
 
 
-class ANTILLA_EXPORT HusRadius: public QObject {
+class ANTILLA_EXPORT AntRadius: public QObject {
     Q_OBJECT
-    QML_NAMED_ELEMENT(HusRadius)
+    QML_NAMED_ELEMENT(AntRadius)
 
     Q_PROPERTY(qreal all READ all WRITE setAll NOTIFY allChanged FINAL)
     Q_PROPERTY(qreal topLeft READ topLeft WRITE setTopLeft NOTIFY topLeftChanged FINAL)
@@ -18,7 +18,7 @@ class ANTILLA_EXPORT HusRadius: public QObject {
     Q_PROPERTY(qreal bottomRight READ bottomRight WRITE setBottomRight NOTIFY bottomRightChanged FINAL)
 
 public:
-    explicit HusRadius(QObject* parent = nullptr) : QObject{parent} { }
+    explicit AntRadius(QObject* parent = nullptr) : QObject{parent} { }
 
     [[nodiscard]] qreal all() const;
     void setAll(qreal all);
@@ -50,9 +50,9 @@ private:
     qreal m_bottomRight = -1.;
 };
 
-class ANTILLA_EXPORT HusMargin: public QObject {
+class ANTILLA_EXPORT AntMargin: public QObject {
     Q_OBJECT
-    QML_NAMED_ELEMENT(HusMargin)
+    QML_NAMED_ELEMENT(AntMargin)
 
     Q_PROPERTY(qreal all READ all WRITE setAll NOTIFY allChanged FINAL)
     Q_PROPERTY(qreal left READ left WRITE setLeft NOTIFY leftChanged FINAL)
@@ -61,7 +61,7 @@ class ANTILLA_EXPORT HusMargin: public QObject {
     Q_PROPERTY(qreal bottom READ bottom WRITE setBottom NOTIFY bottomChanged FINAL)
 
 public:
-    explicit HusMargin(QObject *parent = nullptr) : QObject{parent} { }
+    explicit AntMargin(QObject *parent = nullptr) : QObject{parent} { }
 
     [[nodiscard]] qreal all() const;
     void setAll(qreal all);
@@ -93,29 +93,29 @@ private:
     qreal m_bottom = 0.;
 };
 
-class ANTILLA_EXPORT HusPen: public QObject {
+class ANTILLA_EXPORT AntPen: public QObject {
     Q_OBJECT
-    QML_NAMED_ELEMENT(HusPen)
+    QML_NAMED_ELEMENT(AntPen)
 
-    HUS_PROPERTY_INIT(qreal, width, setWidth, 1)
-    HUS_PROPERTY_INIT(QColor, color, setColor, Qt::transparent)
-    HUS_PROPERTY_INIT(int, style, setStyle, Qt::SolidLine)
+    ANT_PROPERTY_INIT(qreal, width, setWidth, 1)
+    ANT_PROPERTY_INIT(QColor, color, setColor, Qt::transparent)
+    ANT_PROPERTY_INIT(int, style, setStyle, Qt::SolidLine)
 
 public:
-    explicit HusPen(QObject *parent = nullptr) : QObject{parent} { }
+    explicit AntPen(QObject *parent = nullptr) : QObject{parent} { }
 
     [[nodiscard]] bool isValid() const {
         return m_width > 0 && m_color.isValid() && m_color.alpha() > 0;
     }
 };
 
-class ANTILLA_EXPORT HusRectangle: public QQuickPaintedItem {
+class ANTILLA_EXPORT AntRectangle: public QQuickPaintedItem {
     Q_OBJECT
-    QML_NAMED_ELEMENT(HusRectangle)
+    QML_NAMED_ELEMENT(AntRectangle)
 
     Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged FINAL)
     Q_PROPERTY(QJSValue gradient READ gradient WRITE setGradient RESET resetGradient)
-    Q_PROPERTY(HusPen* border READ border CONSTANT)
+    Q_PROPERTY(AntPen* border READ border CONSTANT)
 
     Q_PROPERTY(qreal radius READ radius WRITE setRadius NOTIFY radiusChanged FINAL)
     Q_PROPERTY(qreal topLeftRadius READ topLeftRadius WRITE setTopLeftRadius NOTIFY topLeftRadiusChanged FINAL)
@@ -124,12 +124,12 @@ class ANTILLA_EXPORT HusRectangle: public QQuickPaintedItem {
     Q_PROPERTY(qreal bottomRightRadius READ bottomRightRadius WRITE setBottomRightRadius NOTIFY bottomRightRadiusChanged FINAL)
 
 public:
-    explicit HusRectangle(QQuickItem *parent = nullptr);
+    explicit AntRectangle(QQuickItem *parent = nullptr);
 
     [[nodiscard]] QColor color() const;
     void setColor(QColor color);
 
-    HusPen *border();
+    AntPen *border();
 
     [[nodiscard]] QJSValue gradient() const;
     void setGradient(const QJSValue &gradient);
@@ -165,31 +165,31 @@ private Q_SLOTS:
     void doUpdate();
 
 private:
-    Q_DECLARE_PRIVATE(HusRectangle);
-    QSharedPointer<HusRectanglePrivate> d_ptr;
+    Q_DECLARE_PRIVATE(AntRectangle);
+    QSharedPointer<AntRectanglePrivate> d_ptr;
 };
 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
 # include <private/qquickrectangle_p.h>
 
 /*! 内部矩形, 作为高版本基础控件时在内部使用, 但无法使用 border.style */
-class HusRectangleInternal: public QQuickRectangle {
+class AntRectangleInternal: public QQuickRectangle {
     Q_OBJECT
-    QML_NAMED_ELEMENT(HusRectangleInternal)
+    QML_NAMED_ELEMENT(AntRectangleInternal)
 
 public:
-    explicit HusRectangleInternal(QQuickItem *parent = nullptr) : QQuickRectangle{parent} { }
+    explicit AntRectangleInternal(QQuickItem *parent = nullptr) : QQuickRectangle{parent} { }
 };
 
 #else
 
-class HusRectangleInternal: public HusRectangle {
+class AntRectangleInternal: public AntRectangle {
     Q_OBJECT
-    QML_NAMED_ELEMENT(HusRectangleInternal)
+    QML_NAMED_ELEMENT(AntRectangleInternal)
 
 public:
-    explicit HusRectangleInternal(QQuickItem *parent = nullptr) : HusRectangle{parent} { }
-    ~HusRectangleInternal() { };
+    explicit AntRectangleInternal(QQuickItem *parent = nullptr) : AntRectangle{parent} { }
+    ~AntRectangleInternal() { };
 };
 
 #endif

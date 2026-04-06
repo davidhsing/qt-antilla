@@ -5,57 +5,57 @@
 
 #include <QtGui/QFontDatabase>
 
-HusThemeFunctions::HusThemeFunctions(QObject *parent) : QObject{parent}
+AntThemeFunctions::AntThemeFunctions(QObject *parent) : QObject{parent}
 {
 }
 
-HusThemeFunctions *HusThemeFunctions::instance()
+AntThemeFunctions *AntThemeFunctions::instance()
 {
-    static HusThemeFunctions *ins = new HusThemeFunctions;
+    static AntThemeFunctions *ins = new AntThemeFunctions;
     return ins;
 }
 
-HusThemeFunctions *HusThemeFunctions::create(QQmlEngine *, QJSEngine *)
+AntThemeFunctions *AntThemeFunctions::create(QQmlEngine *, QJSEngine *)
 {
     return instance();
 }
 
-QList<QColor> HusThemeFunctions::genColor(int preset, bool light, const QColor &background)
+QList<QColor> AntThemeFunctions::genColor(int preset, bool light, const QColor &background)
 {
-    return HusColorGenerator::generate(HusColorGenerator::Preset(preset), light, background);
+    return AntColorGenerator::generate(AntColorGenerator::Preset(preset), light, background);
 }
 
-QList<QColor> HusThemeFunctions::genColor(const QColor &color, bool light, const QColor &background)
+QList<QColor> AntThemeFunctions::genColor(const QColor &color, bool light, const QColor &background)
 {
-    return HusColorGenerator::generate(color, light, background);
+    return AntColorGenerator::generate(color, light, background);
 }
 
-QList<QString> HusThemeFunctions::genColorString(const QColor &color, bool light, const QColor &background)
+QList<QString> AntThemeFunctions::genColorString(const QColor &color, bool light, const QColor &background)
 {
     QList<QString> result;
-    const auto listColor = HusColorGenerator::generate(color, light, background);
+    const auto listColor = AntColorGenerator::generate(color, light, background);
     for (const auto &color: listColor)
         result.append(color.name());
 
     return result;
 }
 
-QList<qreal> HusThemeFunctions::genFontSize(qreal fontSizeBase)
+QList<qreal> AntThemeFunctions::genFontSize(qreal fontSizeBase)
 {
-    return HusSizeGenerator::generateFontSize(fontSizeBase);
+    return AntSizeGenerator::generateFontSize(fontSizeBase);
 }
 
-QList<qreal> HusThemeFunctions::genFontLineHeight(qreal fontSizeBase)
+QList<qreal> AntThemeFunctions::genFontLineHeight(qreal fontSizeBase)
 {
-    return HusSizeGenerator::generateFontLineHeight(fontSizeBase);
+    return AntSizeGenerator::generateFontLineHeight(fontSizeBase);
 }
 
-QList<int> HusThemeFunctions::genRadius(int radiusBase)
+QList<int> AntThemeFunctions::genRadius(int radiusBase)
 {
-    return HusRadiusGenerator::generateRadius(radiusBase);
+    return AntRadiusGenerator::generateRadius(radiusBase);
 }
 
-QString HusThemeFunctions::genFontFamily(const QString &familyBase)
+QString AntThemeFunctions::genFontFamily(const QString &familyBase)
 {
     const auto families = familyBase.split(',');
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
@@ -72,22 +72,22 @@ QString HusThemeFunctions::genFontFamily(const QString &familyBase)
     return database.first();
 }
 
-QColor HusThemeFunctions::darker(const QColor &color, int factor)
+QColor AntThemeFunctions::darker(const QColor &color, int factor)
 {
     return color.darker(factor);
 }
 
-QColor HusThemeFunctions::lighter(const QColor &color, int factor)
+QColor AntThemeFunctions::lighter(const QColor &color, int factor)
 {
     return color.lighter(factor);
 }
 
-QColor HusThemeFunctions::alpha(const QColor &color, qreal alpha)
+QColor AntThemeFunctions::alpha(const QColor &color, qreal alpha)
 {
     return QColor(color.red(), color.green(), color.blue(), alpha * 255);
 }
 
-QColor HusThemeFunctions::onBackground(const QColor &color, const QColor &background)
+QColor AntThemeFunctions::onBackground(const QColor &color, const QColor &background)
 {
     const auto fg = color.toRgb();
     const auto bg = background.toRgb();
@@ -101,22 +101,22 @@ QColor HusThemeFunctions::onBackground(const QColor &color, const QColor &backgr
         );
 }
 
-qreal HusThemeFunctions::add(qreal num1, qreal num2)
+qreal AntThemeFunctions::add(qreal num1, qreal num2)
 {
     return num1 + num2;
 }
 
-qreal HusThemeFunctions::subtract(qreal num1, qreal num2)
+qreal AntThemeFunctions::subtract(qreal num1, qreal num2)
 {
     return num1 - num2;
 }
 
-qreal HusThemeFunctions::multiply(qreal num1, qreal num2)
+qreal AntThemeFunctions::multiply(qreal num1, qreal num2)
 {
     return num1 * num2;
 }
 
-qreal HusThemeFunctions::divide(qreal num1, qreal num2)
+qreal AntThemeFunctions::divide(qreal num1, qreal num2)
 {
     return (num2 == 0) ? 0 : (num1 / num2);
 }

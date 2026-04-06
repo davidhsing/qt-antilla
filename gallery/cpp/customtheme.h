@@ -11,7 +11,7 @@ class CustomTheme : public QObject
     QML_SINGLETON
     QML_NAMED_ELEMENT(CustomTheme)
 
-    HUS_PROPERTY_READONLY(QVariantMap, MyControl);
+    ANT_PROPERTY_READONLY(QVariantMap, MyControl);
 
 public:
     static CustomTheme *instance();

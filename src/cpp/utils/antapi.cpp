@@ -16,25 +16,25 @@
 # include <Windows.h>
 #endif
 
-Q_LOGGING_CATEGORY(lcHusApi, "antilla.basic.api");
+Q_LOGGING_CATEGORY(lcAntApi, "antilla.basic.api");
 
-HusApi::~HusApi()
+AntApi::~AntApi()
 {
 
 }
 
-HusApi *HusApi::instance()
+AntApi *AntApi::instance()
 {
-    static HusApi *ins = new HusApi;
+    static AntApi *ins = new AntApi;
     return ins;
 }
 
-HusApi *HusApi::create(QQmlEngine *, QJSEngine *)
+AntApi *AntApi::create(QQmlEngine *, QJSEngine *)
 {
     return instance();
 }
 
-void HusApi::setWindowStaysOnTopHint(QWindow *window, bool hint)
+void AntApi::setWindowStaysOnTopHint(QWindow *window, bool hint)
 {
     if (window) {
 #ifdef Q_OS_WIN
@@ -50,7 +50,7 @@ void HusApi::setWindowStaysOnTopHint(QWindow *window, bool hint)
     }
 }
 
-void HusApi::setWindowState(QWindow *window, int state)
+void AntApi::setWindowState(QWindow *window, int state)
 {
     if (window) {
 #ifdef Q_OS_WIN
@@ -72,7 +72,7 @@ void HusApi::setWindowState(QWindow *window, int state)
     }
 }
 
-void HusApi::setPopupAllowAutoFlip(QObject *popup, bool allowVerticalFlip, bool allowHorizontalFlip)
+void AntApi::setPopupAllowAutoFlip(QObject *popup, bool allowVerticalFlip, bool allowHorizontalFlip)
 {
     if (auto p = qobject_cast<QQuickPopup*>(popup)) {
         QQuickPopupPrivate::get(p)->allowVerticalFlip = allowVerticalFlip;
@@ -82,7 +82,7 @@ void HusApi::setPopupAllowAutoFlip(QObject *popup, bool allowVerticalFlip, bool 
     }
 }
 
-QString HusApi::getClipbordText() const
+QString AntApi::getClipbordText() const
 {
     if (auto clipboard = QGuiApplication::clipboard()) {
         return clipboard->text();
@@ -91,7 +91,7 @@ QString HusApi::getClipbordText() const
     return QString();
 }
 
-bool HusApi::setClipbordText(const QString &text)
+bool AntApi::setClipbordText(const QString &text)
 {
     if (auto clipboard = QGuiApplication::clipboard()) {
         clipboard->setText(text);
@@ -101,35 +101,35 @@ bool HusApi::setClipbordText(const QString &text)
     return false;
 }
 
-QString HusApi::readFileToString(const QString &fileName)
+QString AntApi::readFileToString(const QString &fileName)
 {
     QString result;
     QFile file(fileName);
     if (file.open(QIODevice::ReadOnly)) {
         result = file.readAll();
     } else {
-        qCDebug(lcHusApi) << "Open file error:" << file.errorString();
+        qCDebug(lcAntApi) << "Open file error:" << file.errorString();
     }
 
     return result;
 }
 
-int HusApi::getWeekNumber(const QDateTime &dateTime) const
+int AntApi::getWeekNumber(const QDateTime &dateTime) const
 {
     return dateTime.date().weekNumber();
 }
 
-QDateTime HusApi::dateFromString(const QString &dateTime, const QString &format) const
+QDateTime AntApi::dateFromString(const QString &dateTime, const QString &format) const
 {
     return QDateTime::fromString(dateTime, format);
 }
 
-void HusApi::openLocalUrl(const QString &local)
+void AntApi::openLocalUrl(const QString &local)
 {
     QDesktopServices::openUrl(QUrl::fromLocalFile(local));
 }
 
-HusApi::HusApi(QObject *parent)
+AntApi::AntApi(QObject *parent)
     : QObject{parent}
 {
 

@@ -93,7 +93,7 @@ Column {
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
                 onClicked: {
-                    Qt.openUrlExternally('https://github.com/davidhsing/antilla');
+                    Qt.openUrlExternally('https://github.com/davidhsing/qt-antilla');
                 }
             }
         }
@@ -128,7 +128,7 @@ Column {
                             hoverEnabled: true
                             cursorShape: Qt.PointingHandCursor
                             onClicked: {
-                                Qt.openUrlExternally('https://github.com/davidhsing/antilla');
+                                Qt.openUrlExternally('https://github.com/davidhsing/qt-antilla');
                             }
                         }
                     }

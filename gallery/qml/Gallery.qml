@@ -198,7 +198,7 @@ AntWindow {
 
             TapHandler {
                 onTapped: {
-                    Qt.openUrlExternally('https://github.com/davidhsing/antilla');
+                    Qt.openUrlExternally('https://github.com/davidhsing/qt-antilla');
                 }
             }
         }

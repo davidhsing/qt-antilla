@@ -1,21 +1,21 @@
-#ifndef HUSRADIUSGENERATOR_H
-#define HUSRADIUSGENERATOR_H
+#ifndef ANTRADIUSGENERATOR_H
+#define ANTRADIUSGENERATOR_H
 
 #include <QtCore/QObject>
 #include <QtQml/qqml.h>
 
 #include "../antglobal.h"
 
-class ANTILLA_EXPORT HusRadiusGenerator : public QObject
+class ANTILLA_EXPORT AntRadiusGenerator : public QObject
 {
     Q_OBJECT
-    QML_NAMED_ELEMENT(HusRadiusGenerator)
+    QML_NAMED_ELEMENT(AntRadiusGenerator)
 
 public:
-    HusRadiusGenerator(QObject *parent = nullptr);
-    ~HusRadiusGenerator();
+    AntRadiusGenerator(QObject *parent = nullptr);
+    ~AntRadiusGenerator();
 
     Q_INVOKABLE static QList<int> generateRadius(int radiusBase);
 };
 
-#endif // HUSRADIUSGENERATOR_H
+#endif // ANTRADIUSGENERATOR_H

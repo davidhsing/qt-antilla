@@ -8,9 +8,9 @@
 #include "../antglobal.h"
 
 
-class ANTILLA_EXPORT HusAudioProbe : public QObject {
+class ANTILLA_EXPORT AntAudioProbe : public QObject {
     Q_OBJECT
-    QML_NAMED_ELEMENT(HusAudioProbe)
+    QML_NAMED_ELEMENT(AntAudioProbe)
 
     Q_PROPERTY(QString deviceId READ deviceId WRITE setDeviceId NOTIFY deviceIdChanged)
     Q_PROPERTY(bool deviceValid READ deviceValid NOTIFY deviceValidChanged)
@@ -20,8 +20,8 @@ class ANTILLA_EXPORT HusAudioProbe : public QObject {
     Q_PROPERTY(bool fallbackDefault READ fallbackDefault WRITE setFallbackDefault NOTIFY fallbackDefaultChanged)
 
 public:
-    explicit HusAudioProbe(QObject* parent = nullptr);
-    ~HusAudioProbe() override;
+    explicit AntAudioProbe(QObject* parent = nullptr);
+    ~AntAudioProbe() override;
 
     [[nodiscard]] QString deviceId() const { return m_deviceId; }
     void setDeviceId(const QString& deviceId);

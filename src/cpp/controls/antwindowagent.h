@@ -10,17 +10,17 @@
 
 
 #ifdef BUILD_ANTILLA_ON_DESKTOP_PLATFORM
-class ANTILLA_EXPORT HusWindowAgent : public QWK::QuickWindowAgent, public QQmlParserStatus
+class ANTILLA_EXPORT AntWindowAgent : public QWK::QuickWindowAgent, public QQmlParserStatus
 #else
-class ANTILLA_EXPORT HusWindowAgent : public QObject, public QQmlParserStatus
+class ANTILLA_EXPORT AntWindowAgent : public QObject, public QQmlParserStatus
 #endif
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
-    QML_NAMED_ELEMENT(HusWindowAgent)
+    QML_NAMED_ELEMENT(AntWindowAgent)
 
 public:
-    explicit HusWindowAgent(QObject *parent = nullptr);
+    explicit AntWindowAgent(QObject *parent = nullptr);
 
     void classBegin() override;
     void componentComplete() override;

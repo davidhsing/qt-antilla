@@ -2,18 +2,13 @@
 
 #include <QtCore/qmath.h>
 
-HusSizeGenerator::HusSizeGenerator(QObject *parent)
+AntSizeGenerator::AntSizeGenerator(QObject *parent)
     : QObject{parent}
 {
 
 }
 
-HusSizeGenerator::~HusSizeGenerator()
-{
-
-}
-
-QList<qreal> HusSizeGenerator::generateFontSize(qreal fontSizeBase)
+QList<qreal> AntSizeGenerator::generateFontSize(qreal fontSizeBase)
 {
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     QList<qreal> fontSizes(10);
@@ -43,7 +38,7 @@ QList<qreal> HusSizeGenerator::generateFontSize(qreal fontSizeBase)
 #endif
 }
 
-QList<qreal> HusSizeGenerator::generateFontLineHeight(qreal fontSizeBase)
+QList<qreal> AntSizeGenerator::generateFontLineHeight(qreal fontSizeBase)
 {
     QList<qreal> fontLineHeights = generateFontSize(fontSizeBase);
     for (int index = 0; index < 10; index++) {

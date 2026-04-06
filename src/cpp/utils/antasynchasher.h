@@ -1,5 +1,5 @@
-#ifndef HUSASYNCHASHER_H
-#define HUSASYNCHASHER_H
+#ifndef ANTASYNCHASHER_H
+#define ANTASYNCHASHER_H
 
 #include <QtCore/QCryptographicHash>
 #include <QtCore/QFuture>
@@ -9,9 +9,9 @@
 
 QT_FORWARD_DECLARE_CLASS(QNetworkAccessManager);
 
-QT_FORWARD_DECLARE_CLASS(HusAsyncHasherPrivate);
+QT_FORWARD_DECLARE_CLASS(AntAsyncHasherPrivate);
 
-class ANTILLA_EXPORT HusAsyncHasher : public QObject
+class ANTILLA_EXPORT AntAsyncHasher : public QObject
 {
     Q_OBJECT
 
@@ -24,13 +24,13 @@ class ANTILLA_EXPORT HusAsyncHasher : public QObject
     Q_PROPERTY(QByteArray sourceData READ sourceData WRITE setSourceData NOTIFY sourceDataChanged)
     Q_PROPERTY(QObject* sourceObject READ sourceObject WRITE setSourceObject NOTIFY sourceObjectChanged)
 
-    QML_NAMED_ELEMENT(HusAsyncHasher)
+    QML_NAMED_ELEMENT(AntAsyncHasher)
 
 public:
     Q_ENUMS(QCryptographicHash::Algorithm);
 
-    explicit HusAsyncHasher(QObject *parent = nullptr);
-    ~HusAsyncHasher();
+    explicit AntAsyncHasher(QObject *parent = nullptr);
+    ~AntAsyncHasher();
 
     QCryptographicHash::Algorithm algorithm();
     void setAlgorithm(QCryptographicHash::Algorithm algorithm);
@@ -54,8 +54,8 @@ public:
     QObject *sourceObject() const;
     void setSourceObject(QObject *sourceObject);
 
-    bool operator==(const HusAsyncHasher &hasher);
-    bool operator!=(const HusAsyncHasher &hasher);
+    bool operator==(const AntAsyncHasher &hasher);
+    bool operator!=(const AntAsyncHasher &hasher);
 
     QFuture<QByteArray> static hash(const QByteArray &data, QCryptographicHash::Algorithm algorithm);
 
@@ -76,8 +76,8 @@ private slots:
     void setHashValue(const QString &value);
 
 private:
-    Q_DECLARE_PRIVATE(HusAsyncHasher);
-    QScopedPointer<HusAsyncHasherPrivate> d_ptr;
+    Q_DECLARE_PRIVATE(AntAsyncHasher);
+    QScopedPointer<AntAsyncHasherPrivate> d_ptr;
 };
 
-#endif // HUSASYNCHASHER_H
+#endif // ANTASYNCHASHER_H

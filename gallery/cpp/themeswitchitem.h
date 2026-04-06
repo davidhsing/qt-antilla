@@ -13,11 +13,11 @@ class ThemeSwitchItem : public QQuickPaintedItem
     Q_OBJECT
     QML_NAMED_ELEMENT(ThemeSwitchItem)
 
-    HUS_PROPERTY(int, radius, setRadius)
-    HUS_PROPERTY(int, duration, setDuration)
-    HUS_PROPERTY(QColor, colorBg, setColorBg)
-    HUS_PROPERTY(bool, isDark, setIsDark)
-    HUS_PROPERTY_P(QQuickItem*, target, setTarget)
+    ANT_PROPERTY(int, radius, setRadius)
+    ANT_PROPERTY(int, duration, setDuration)
+    ANT_PROPERTY(QColor, colorBg, setColorBg)
+    ANT_PROPERTY(bool, isDark, setIsDark)
+    ANT_PROPERTY_P(QQuickItem*, target, setTarget)
 
 public:
     explicit ThemeSwitchItem(QQuickItem *parent = nullptr);

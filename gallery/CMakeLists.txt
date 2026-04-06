@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-set(ANTILLA_VERSION 0.6.0.0)
+set(ANTILLA_VERSION 1.0.0.0)
 
 project(Gallery VERSION ${ANTILLA_VERSION} LANGUAGES CXX)
 
@@ -24,7 +24,7 @@ if(WIN32)
         COMPANY "Antilla"
         DESCRIPTION ""
         VERSION "${PROJECT_VERSION}"
-        COPYRIGHT "Copyright (C) 2025 davidhsing. All rights reserved."
+        COPYRIGHT "Copyright (C) 2026 davidhsing. All rights reserved."
         ICONS ../resources/antilla_icon.ico
         OUTPUT_FILE "${GALLERY_RC_FILE}"
     )

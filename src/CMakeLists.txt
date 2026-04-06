@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
-set(ANTILLA_VERSION_MAJOR 0)
-set(ANTILLA_VERSION_MINOR 6)
+set(ANTILLA_VERSION_MAJOR 1)
+set(ANTILLA_VERSION_MINOR 0)
 set(ANTILLA_VERSION_PATCH 0)
 set(ANTILLA_VERSION_TWEAK 0)
 set(ANTILLA_VERSION ${ANTILLA_VERSION_MAJOR}.${ANTILLA_VERSION_MINOR}.${ANTILLA_VERSION_PATCH}.${ANTILLA_VERSION_TWEAK})
@@ -106,9 +106,9 @@ if(WIN32)
         COMMENTS "Modern UI-Kit for Qml { Design reference Ant-d }"
         NAME ${RC_NAME}
         COMPANY "Antilla"
-        DESCRIPTION "https://github.com/davidhsing/antilla"
+        DESCRIPTION "https://github.com/davidhsing/qt-antilla"
         VERSION "${PROJECT_VERSION}"
-        COPYRIGHT "Copyright (C) 2025 davidhsing. All rights reserved."
+        COPYRIGHT "Copyright (C) 2026 davidhsing. All rights reserved."
         OUTPUT_FILE "${ANTILLA_RC_FILE}"
     )
 endif()

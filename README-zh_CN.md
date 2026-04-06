@@ -5,7 +5,7 @@
 
 Qt Qml 的 Ant 设计组件库
 
-如果你需要 Qt5 实现 [Antilla for Qt5](https://github.com/davidhsing/antilla_Qt5)
+如果你需要 Qt5 实现 [Antilla for Qt5](https://github.com/davidhsing/qt-antilla_Qt5)
 
 </div>
 
@@ -26,13 +26,13 @@ Qt Qml 的 Ant 设计组件库
 [macos-badge]: https://img.shields.io/badge/MacOS-passing-brightgreen?style=flat-square
 [android-badge]: https://img.shields.io/badge/Android-passing-brightgreen?style=flat-square
 
-[issues-open-image]: https://img.shields.io/github/issues/davidhsing/antilla?label=Issue&style=flat-square
-[issues-open-url]: https://github.com/davidhsing/antilla/issues
-[issues-close-image]: https://img.shields.io/github/issues-closed/davidhsing/antilla?color=brightgreen&label=Issue&style=flat-square
-[issues-close-url]: https://github.com/davidhsing/antilla/issues?q=is%3Aissue%20state%3Aclosed
+[issues-open-image]: https://img.shields.io/github/issues/davidhsing/qt-antilla?label=Issue&style=flat-square
+[issues-open-url]: https://github.com/davidhsing/qt-antilla/issues
+[issues-close-image]: https://img.shields.io/github/issues-closed/davidhsing/qt-antilla?color=brightgreen&label=Issue&style=flat-square
+[issues-close-url]: https://github.com/davidhsing/qt-antilla/issues?q=is%3Aissue%20state%3Aclosed
 
-[release-image]: https://img.shields.io/github/v/release/davidhsing/antilla?label=Release&style=flat-square
-[release-url]: https://github.com/davidhsing/antilla/releases
+[release-image]: https://img.shields.io/github/v/release/davidhsing/qt-antilla?label=Release&style=flat-square
+[release-url]: https://github.com/davidhsing/qt-antilla/releases
 
 [qqgroup-image]: https://img.shields.io/badge/QQGroup-490328047-f74658?style=flat-square
 [qqgroup-url]: https://qm.qq.com/q/cMNHn2tWeY
@@ -56,12 +56,12 @@ Qt Qml 的 Ant 设计组件库
 
 ## 🗺️ 路线图
 
-开发计划可以在这里看到: [组件路线图](https://github.com/davidhsing/antilla/discussions/5).
+开发计划可以在这里看到: [组件路线图](https://github.com/davidhsing/qt-antilla/discussions/5).
 
 任何人都可以通过 issue/qq群/wx群 进行讨论, 最终有意义的组件/功能将添加到开发计划.
 
 ## 🌐 在线 wiki
-- [Antilla 在线 wiki (AI)](https://deepwiki.com/davidhsing/antilla)
+- [Antilla 在线 wiki (AI)](https://deepwiki.com/davidhsing/qt-antilla)
 
 ## 📺 在线演示
 
@@ -71,13 +71,13 @@ Qt Qml 的 Ant 设计组件库
 
 预编译了两个平台的 `Windows / Linux` 程序包和二进制库包.
 
-前往 [Release](https://github.com/davidhsing/antilla/releases) 中下载.
+前往 [Release](https://github.com/davidhsing/qt-antilla/releases) 中下载.
 
 ## 🔨 如何构建
 
 - 克隆
 ```shell
-git clone --recursive https://github.com/davidhsing/antilla.git
+git clone --recursive https://github.com/davidhsing/qt-antilla.git
 ```
 - 构建
 ```shell

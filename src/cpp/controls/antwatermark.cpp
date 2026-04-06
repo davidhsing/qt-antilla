@@ -7,19 +7,19 @@
 #include <QtGui/QPainter>
 #include <QtQml/QQmlEngine>
 
-Q_LOGGING_CATEGORY(lcHusWatermark, "antilla.basic.watermark");
+Q_LOGGING_CATEGORY(lcAntWatermark, "antilla.basic.watermark");
 
-class HusWatermarkPrivate
+class AntWatermarkPrivate
 {
 public:
-    HusWatermarkPrivate(HusWatermark *q) : q_ptr(q) { }
+    AntWatermarkPrivate(AntWatermark *q) : q_ptr(q) { }
 
     void updateImage();
     void updateMarkSize();
 
-    Q_DECLARE_PUBLIC(HusWatermark);
+    Q_DECLARE_PUBLIC(AntWatermark);
 
-    HusWatermark *q_ptr = nullptr;
+    AntWatermark *q_ptr = nullptr;
     QString m_text;
     QUrl m_image;
     QNetworkReply *m_imageReply = nullptr;
@@ -33,9 +33,9 @@ public:
     QColor m_colorText { 0, 0, 0, 15 };
 };
 
-void HusWatermarkPrivate::updateImage()
+void AntWatermarkPrivate::updateImage()
 {
-    Q_Q(HusWatermark);
+    Q_Q(AntWatermark);
 
     if (m_image.isLocalFile()) {
         m_cachedImage = QImage(m_image.toLocalFile());
@@ -56,25 +56,25 @@ void HusWatermarkPrivate::updateImage()
             if (manager) {
                 m_imageReply = manager->get(QNetworkRequest(m_image));
                 QObject::connect(m_imageReply, &QNetworkReply::finished, q, [this]{
-                    Q_Q(HusWatermark);
+                    Q_Q(AntWatermark);
                     if (m_imageReply->error() == QNetworkReply::NoError) {
                         m_cachedImage = QImage::fromData(m_imageReply->readAll());
                         updateMarkSize();
                         q->update();
                     } else {
-                        qCWarning(lcHusWatermark) << "Request image error:" << m_imageReply->errorString();
+                        qCWarning(lcAntWatermark) << "Request image error:" << m_imageReply->errorString();
                     }
                     m_imageReply->deleteLater();
                     m_imageReply = nullptr;
                 });
             } else {
-                qCWarning(lcHusWatermark) << "HusWatermark without QmlEngine, we cannot get QNetworkAccessManager!";
+                qCWarning(lcAntWatermark) << "AntWatermark without QmlEngine, we cannot get QNetworkAccessManager!";
             }
         }
     }
 }
 
-void HusWatermarkPrivate::updateMarkSize()
+void AntWatermarkPrivate::updateMarkSize()
 {
     if (!m_isSetMarkSize) {
         QFontMetricsF fontMetrics(m_font);
@@ -85,33 +85,33 @@ void HusWatermarkPrivate::updateMarkSize()
     }
 }
 
-HusWatermark::HusWatermark(QQuickItem *parent)
+AntWatermark::AntWatermark(QQuickItem *parent)
     : QQuickPaintedItem(parent)
-    , d_ptr(new HusWatermarkPrivate(this))
+    , d_ptr(new AntWatermarkPrivate(this))
 {
-    Q_D(HusWatermark);
+    Q_D(AntWatermark);
 
-    d->m_font.setFamily(HusTheme::instance()->Primary()["fontPrimaryFamily"].toString());
-    d->m_font.setPixelSize(HusTheme::instance()->Primary()["fontPrimarySize"].toInt());
+    d->m_font.setFamily(AntTheme::instance()->Primary()["fontPrimaryFamily"].toString());
+    d->m_font.setPixelSize(AntTheme::instance()->Primary()["fontPrimarySize"].toInt());
 
     setAntialiasing(true);
 }
 
-HusWatermark::~HusWatermark()
+AntWatermark::~AntWatermark()
 {
 
 }
 
-QString HusWatermark::text() const
+QString AntWatermark::text() const
 {
-    Q_D(const HusWatermark);
+    Q_D(const AntWatermark);
 
     return d->m_text;
 }
 
-void HusWatermark::setText(const QString &text)
+void AntWatermark::setText(const QString &text)
 {
-    Q_D(HusWatermark);
+    Q_D(AntWatermark);
 
     if (d->m_text != text) {
         d->m_text = text;
@@ -122,16 +122,16 @@ void HusWatermark::setText(const QString &text)
     }
 }
 
-QUrl HusWatermark::image() const
+QUrl AntWatermark::image() const
 {
-    Q_D(const HusWatermark);
+    Q_D(const AntWatermark);
 
     return d->m_image;
 }
 
-void HusWatermark::setImage(const QUrl &image)
+void AntWatermark::setImage(const QUrl &image)
 {
-    Q_D(HusWatermark);
+    Q_D(AntWatermark);
 
     if (d->m_image != image) {
         d->m_image = image;
@@ -142,16 +142,16 @@ void HusWatermark::setImage(const QUrl &image)
     }
 }
 
-QSize HusWatermark::markSize() const
+QSize AntWatermark::markSize() const
 {
-    Q_D(const HusWatermark);
+    Q_D(const AntWatermark);
 
     return d->m_markSize;
 }
 
-void HusWatermark::setMarkSize(const QSize &markSize)
+void AntWatermark::setMarkSize(const QSize &markSize)
 {
-    Q_D(HusWatermark);
+    Q_D(AntWatermark);
 
     d->m_isSetMarkSize = true;
 
@@ -163,16 +163,16 @@ void HusWatermark::setMarkSize(const QSize &markSize)
     }
 }
 
-QPointF HusWatermark::gap() const
+QPointF AntWatermark::gap() const
 {
-    Q_D(const HusWatermark);
+    Q_D(const AntWatermark);
 
     return d->m_gap;
 }
 
-void HusWatermark::setGap(const QPointF &gap)
+void AntWatermark::setGap(const QPointF &gap)
 {
-    Q_D(HusWatermark);
+    Q_D(AntWatermark);
 
     if (d->m_gap != gap) {
         d->m_gap = gap;
@@ -182,16 +182,16 @@ void HusWatermark::setGap(const QPointF &gap)
     }
 }
 
-QPointF HusWatermark::offset() const
+QPointF AntWatermark::offset() const
 {
-    Q_D(const HusWatermark);
+    Q_D(const AntWatermark);
 
     return d->m_offset;
 }
 
-void HusWatermark::setOffset(const QPointF &offset)
+void AntWatermark::setOffset(const QPointF &offset)
 {
-    Q_D(HusWatermark);
+    Q_D(AntWatermark);
 
     if (d->m_offset != offset) {
         d->m_offset = offset;
@@ -201,16 +201,16 @@ void HusWatermark::setOffset(const QPointF &offset)
     }
 }
 
-qreal HusWatermark::rotate() const
+qreal AntWatermark::rotate() const
 {
-    Q_D(const HusWatermark);
+    Q_D(const AntWatermark);
 
     return d->m_rotate;
 }
 
-void HusWatermark::setRotate(qreal rotate)
+void AntWatermark::setRotate(qreal rotate)
 {
-    Q_D(HusWatermark);
+    Q_D(AntWatermark);
 
     if (d->m_rotate != rotate) {
         d->m_rotate = rotate;
@@ -220,16 +220,16 @@ void HusWatermark::setRotate(qreal rotate)
     }
 }
 
-QFont HusWatermark::font() const
+QFont AntWatermark::font() const
 {
-    Q_D(const HusWatermark);
+    Q_D(const AntWatermark);
 
     return d->m_font;
 }
 
-void HusWatermark::setFont(const QFont &font)
+void AntWatermark::setFont(const QFont &font)
 {
-    Q_D(HusWatermark);
+    Q_D(AntWatermark);
 
     if (d->m_font != font) {
         d->m_font = font;
@@ -240,16 +240,16 @@ void HusWatermark::setFont(const QFont &font)
     }
 }
 
-QColor HusWatermark::colorText() const
+QColor AntWatermark::colorText() const
 {
-    Q_D(const HusWatermark);
+    Q_D(const AntWatermark);
 
     return d->m_colorText;
 }
 
-void HusWatermark::setColorText(const QColor &colorText)
+void AntWatermark::setColorText(const QColor &colorText)
 {
-    Q_D(HusWatermark);
+    Q_D(AntWatermark);
 
     if (d->m_colorText != colorText) {
         d->m_colorText = colorText;
@@ -258,9 +258,9 @@ void HusWatermark::setColorText(const QColor &colorText)
     }
 }
 
-void HusWatermark::paint(QPainter *painter)
+void AntWatermark::paint(QPainter *painter)
 {
-    Q_D(HusWatermark);
+    Q_D(AntWatermark);
 
     painter->save();
 

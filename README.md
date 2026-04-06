@@ -24,13 +24,13 @@ English | [中文](./README-zh_CN.md)
 [macos-badge]: https://img.shields.io/badge/MacOS-passing-brightgreen?style=flat-square
 [android-badge]: https://img.shields.io/badge/Android-passing-brightgreen?style=flat-square
 
-[issues-open-image]: https://img.shields.io/github/issues/davidhsing/antilla?label=Issue&style=flat-square
-[issues-open-url]: https://github.com/davidhsing/antilla/issues
-[issues-close-image]: https://img.shields.io/github/issues-closed/davidhsing/antilla?color=brightgreen&label=Issue&style=flat-square
-[issues-close-url]: https://github.com/davidhsing/antilla/issues?q=is%3Aissue%20state%3Aclosed
+[issues-open-image]: https://img.shields.io/github/issues/davidhsing/qt-antilla?label=Issue&style=flat-square
+[issues-open-url]: https://github.com/davidhsing/qt-antilla/issues
+[issues-close-image]: https://img.shields.io/github/issues-closed/davidhsing/qt-antilla?color=brightgreen&label=Issue&style=flat-square
+[issues-close-url]: https://github.com/davidhsing/qt-antilla/issues?q=is%3Aissue%20state%3Aclosed
 
-[release-image]: https://img.shields.io/github/v/release/davidhsing/antilla?label=Release&style=flat-square
-[release-url]: https://github.com/davidhsing/antilla/releases
+[release-image]: https://img.shields.io/github/v/release/davidhsing/qt-antilla?label=Release&style=flat-square
+[release-url]: https://github.com/davidhsing/qt-antilla/releases
 
 [qqgroup-image]: https://img.shields.io/badge/QQGroup-490328047-f74658?style=flat-square
 [qqgroup-url]: https://qm.qq.com/q/cMNHn2tWeY
@@ -54,12 +54,12 @@ English | [中文](./README-zh_CN.md)
 
 ## 🗺️ Roadmap
 
-The development plan can be found here: [Component Roadmap](https://github.com/davidhsing/antilla/discussions/5).
+The development plan can be found here: [Component Roadmap](https://github.com/davidhsing/qt-antilla/discussions/5).
 
 Anyone can discuss through issues, QQ groups, or WeChat groups, and ultimately meaningful components/functions will be added to the development plan.
 
 ## 🌐 Online wiki
-- [Antilla Online wiki (AI)](https://deepwiki.com/davidhsing/antilla)
+- [Antilla Online wiki (AI)](https://deepwiki.com/davidhsing/qt-antilla)
 
 ## 📺 Online Demo
 
@@ -69,13 +69,13 @@ Anyone can discuss through issues, QQ groups, or WeChat groups, and ultimately m
 
 Precompiled packages and binary libraries for two platforms, `Windows / Linux`, have been created.
 
-Please visit [Release](https://github.com/davidhsing/antilla/releases) to download.
+Please visit [Release](https://github.com/davidhsing/qt-antilla/releases) to download.
 
 ## 🔨 How to Build
 
 - Clone
 ```shell
-git clone --recursive https://github.com/davidhsing/antilla.git
+git clone --recursive https://github.com/davidhsing/qt-antilla.git
 ```
 - Update
 ```shell

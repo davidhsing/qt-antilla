@@ -73,7 +73,7 @@ colorBg | color | 'transparent' | 背景颜色
                         id: input
                         width: 280
                         maximumLength: 60
-                        text: 'https://github.com/davidhsing/antilla'
+                        text: 'https://github.com/davidhsing/qt-antilla'
                     }
                 }
             `
@@ -96,7 +96,7 @@ colorBg | color | 'transparent' | 背景颜色
                     id: input
                     width: 280
                     maximumLength: 60
-                    text: 'https://github.com/davidhsing/antilla'
+                    text: 'https://github.com/davidhsing/qt-antilla'
                 }
             }
         }
@@ -124,7 +124,7 @@ colorBg | color | 'transparent' | 背景颜色
                     spacing: 10
 
                     AntQrCode {
-                        text: 'https://github.com/davidhsing/antilla'
+                        text: 'https://github.com/davidhsing/qt-antilla'
                         errorLevel: AntQrCode.High
                         color: AntTheme.Primary.colorTextBase
                         icon.url: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg'
@@ -142,7 +142,7 @@ colorBg | color | 'transparent' | 背景颜色
                 spacing: 10
 
                 AntQrCode {
-                    text: 'https://github.com/davidhsing/antilla'
+                    text: 'https://github.com/davidhsing/qt-antilla'
                     errorLevel: AntQrCode.High
                     color: AntTheme.Primary.colorTextBase
                     icon.url: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg'
@@ -185,7 +185,7 @@ colorBg | color | 'transparent' | 背景颜色
                     }
 
                     AntQrCode {
-                        text: 'https://github.com/davidhsing/antilla'
+                        text: 'https://github.com/davidhsing/qt-antilla'
                         width: sizeBlock.size
                         height: sizeBlock.size
                         errorLevel: AntQrCode.High
@@ -219,7 +219,7 @@ colorBg | color | 'transparent' | 背景颜色
                 }
 
                 AntQrCode {
-                    text: 'https://github.com/davidhsing/antilla'
+                    text: 'https://github.com/davidhsing/qt-antilla'
                     width: sizeBlock.size
                     height: sizeBlock.size
                     errorLevel: AntQrCode.High
@@ -252,12 +252,12 @@ colorBg | color | 'transparent' | 背景颜色
                     spacing: 10
 
                     AntQrCode {
-                        text: 'https://github.com/davidhsing/antilla'
+                        text: 'https://github.com/davidhsing/qt-antilla'
                         color: AntTheme.Primary.colorSuccess
                     }
 
                     AntQrCode {
-                        text: 'https://github.com/davidhsing/antilla'
+                        text: 'https://github.com/davidhsing/qt-antilla'
                         color: AntTheme.Primary.colorInfo
                         colorBg: AntTheme.Primary.colorWarning
                         colorMargin: "#80ff0000"
@@ -268,12 +268,12 @@ colorBg | color | 'transparent' | 背景颜色
                 spacing: 10
 
                 AntQrCode {
-                    text: 'https://github.com/davidhsing/antilla'
+                    text: 'https://github.com/davidhsing/qt-antilla'
                     color: AntTheme.Primary.colorSuccess
                 }
 
                 AntQrCode {
-                    text: 'https://github.com/davidhsing/antilla'
+                    text: 'https://github.com/davidhsing/qt-antilla'
                     color: AntTheme.Primary.colorInfo
                     colorBg: AntTheme.Primary.colorWarning
                     colorMargin: "#80ff0000"
@@ -305,7 +305,7 @@ colorBg | color | 'transparent' | 背景颜色
                             visible: parent.hovered || parent.down
                             closePolicy: AntPopover.NoAutoClose
                             contentDelegate: AntQrCode {
-                                text: 'https://github.com/davidhsing/antilla'
+                                text: 'https://github.com/davidhsing/qt-antilla'
                                 color: AntTheme.Primary.colorTextBase
                             }
                         }
@@ -326,7 +326,7 @@ colorBg | color | 'transparent' | 背景颜色
                         visible: parent.hovered || parent.down
                         closePolicy: AntPopover.NoAutoClose
                         contentDelegate: AntQrCode {
-                            text: 'https://github.com/davidhsing/antilla'
+                            text: 'https://github.com/davidhsing/qt-antilla'
                             color: AntTheme.Primary.colorTextBase
                         }
                     }

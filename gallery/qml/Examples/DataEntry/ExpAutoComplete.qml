@@ -221,7 +221,7 @@ Row {
     AntAutoComplete {
         width: 280
         tooltipVisible: true
-        placeholderText: 'input here'
+        placeholderText: 'Input here'
         options: [
             { label: 'Antilla', option: 'Libraries' },
             { label: 'Antilla for Qml' },
@@ -277,7 +277,7 @@ Row {
                 AntAutoComplete {
                     width: 280
                     tooltipVisible: true
-                    placeholderText: 'input here'
+                    placeholderText: 'Input here'
                     options: [
                         { label: 'Antilla', option: 'Libraries' },
                         { label: 'Antilla for Qml' },
@@ -339,14 +339,12 @@ import QtQuick
 import Antilla.Basic
 
 Row {
-    spacing: -8
-
     AntAutoComplete {
         width: 280
         height: 40
         rightPadding: 30
         tooltipVisible: true
-        placeholderText: 'input here'
+        placeholderText: 'Input here'
         onSearched: function(input) {
             if (!input) {
                 options = [];
@@ -373,33 +371,15 @@ Row {
             textFormat: Text.RichText
         }
     }
-
-    AntIconButton {
-        id: searchButton
-        height: 40
-        type: AntButton.TypePrimary
-        iconSource: AntIcon.SearchOutlined
-        background: AntRectangle {
-            topLeftRadius: 0
-            bottomLeftRadius: 0
-            topRightRadius: searchButton.radiusBg
-            bottomRightRadius: searchButton.radiusBg
-            color: searchButton.colorBg
-            border.color: searchButton.colorBorder
-            border.width: 1
-        }
-    }
 }
             `
             exampleDelegate: Row {
-                spacing: -8
-
                 AntAutoComplete {
                     width: 280
                     height: 40
                     rightPadding: 30
                     tooltipVisible: true
-                    placeholderText: 'input here'
+                    placeholderText: 'Input here'
                     onSearched: function(input) {
                         if (!input) {
                             options = [];
@@ -424,22 +404,6 @@ Row {
                         elide: Text.ElideRight
                         verticalAlignment: Text.AlignVCenter
                         textFormat: Text.RichText
-                    }
-                }
-
-                AntIconButton {
-                    id: searchButton
-                    height: 40
-                    type: AntButton.TypePrimary
-                    iconSource: AntIcon.SearchOutlined
-                    background: AntRectangle {
-                        topLeftRadius: 0
-                        bottomLeftRadius: 0
-                        topRightRadius: searchButton.radiusBg
-                        bottomRightRadius: searchButton.radiusBg
-                        color: searchButton.colorBg
-                        border.color: searchButton.colorBorder
-                        border.width: 1
                     }
                 }
             }

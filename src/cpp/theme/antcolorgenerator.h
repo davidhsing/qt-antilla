@@ -1,5 +1,5 @@
-#ifndef HUSCOLORGENERATOR_H
-#define HUSCOLORGENERATOR_H
+#ifndef ANTCOLORGENERATOR_H
+#define ANTCOLORGENERATOR_H
 
 #include <QtCore/QObject>
 #include <QtGui/QColor>
@@ -7,10 +7,10 @@
 
 #include "../antglobal.h"
 
-class ANTILLA_EXPORT HusColorGenerator : public QObject
+class ANTILLA_EXPORT AntColorGenerator : public QObject
 {
     Q_OBJECT
-    QML_NAMED_ELEMENT(HusColorGenerator)
+    QML_NAMED_ELEMENT(AntColorGenerator)
 
 public:
     enum class Preset
@@ -31,15 +31,14 @@ public:
     };
     Q_ENUM(Preset);
 
-    HusColorGenerator(QObject *parent = nullptr);
-    ~HusColorGenerator();
+    explicit AntColorGenerator(QObject* parent = nullptr);
 
     Q_INVOKABLE static QColor reverseColor(const QColor &color);
     Q_INVOKABLE static QColor presetToColor(const QString& color);
-    Q_INVOKABLE static QColor presetToColor(HusColorGenerator::Preset color);
-    Q_INVOKABLE static QList<QColor> generate(HusColorGenerator::Preset color, bool light = true, const QColor &background = QColor(QColor::Invalid));
+    Q_INVOKABLE static QColor presetToColor(AntColorGenerator::Preset color);
+    Q_INVOKABLE static QList<QColor> generate(AntColorGenerator::Preset color, bool light = true, const QColor &background = QColor(QColor::Invalid));
     Q_INVOKABLE static QList<QColor> generate(const QColor &color, bool light = true, const QColor &background = QColor(QColor::Invalid));
 };
 
 
-#endif // HUSCOLORGENERATOR_H
+#endif // ANTCOLORGENERATOR_H

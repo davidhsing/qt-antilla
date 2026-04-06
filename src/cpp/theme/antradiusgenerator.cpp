@@ -1,17 +1,17 @@
 #include "antradiusgenerator.h"
 
-HusRadiusGenerator::HusRadiusGenerator(QObject *parent)
+AntRadiusGenerator::AntRadiusGenerator(QObject *parent)
     : QObject{parent}
 {
 
 }
 
-HusRadiusGenerator::~HusRadiusGenerator()
+AntRadiusGenerator::~AntRadiusGenerator()
 {
 
 }
 
-QList<int> HusRadiusGenerator::generateRadius(int radiusBase)
+QList<int> AntRadiusGenerator::generateRadius(int radiusBase)
 {
     auto radiusLG = radiusBase;
     auto radiusSM = radiusBase;

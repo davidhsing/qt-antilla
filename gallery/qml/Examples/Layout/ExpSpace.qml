@@ -574,14 +574,14 @@ layout === 'Grid/GridLayout' 用法，等同于使用原生 \`Grid/GridLayout\`�
                     AntSpace {
                         layout: AntSpace.TypeRow
 
-                        AntInput { text: 'https://github.com/davidhsing/antilla' }
+                        AntInput { text: 'https://github.com/davidhsing/qt-antilla' }
                         AntButton { type: AntButton.TypePrimary; text: 'Submit' }
                     }
 
                     AntSpace {
                         layout: AntSpace.TypeRow
 
-                        AntInput { text: 'https://github.com/davidhsing/antilla' }
+                        AntInput { text: 'https://github.com/davidhsing/qt-antilla' }
                         AntIconButton { iconSource: AntIcon.CopyOutlined }
                     }
 
@@ -638,14 +638,14 @@ layout === 'Grid/GridLayout' 用法，等同于使用原生 \`Grid/GridLayout\`�
                 AntSpace {
                     layout: AntSpace.TypeRow
 
-                    AntInput { text: 'https://github.com/davidhsing/antilla' }
+                    AntInput { text: 'https://github.com/davidhsing/qt-antilla' }
                     AntButton { type: AntButton.TypePrimary; text: 'Submit' }
                 }
 
                 AntSpace {
                     layout: AntSpace.TypeRow
 
-                    AntInput { text: 'https://github.com/davidhsing/antilla' }
+                    AntInput { text: 'https://github.com/davidhsing/qt-antilla' }
                     AntIconButton { iconSource: AntIcon.CopyOutlined }
                 }
 
