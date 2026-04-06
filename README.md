@@ -39,10 +39,6 @@ Anyone can discuss through issues, QQ groups, or WeChat groups, and ultimately m
 ## 🌐 Online wiki
 - [Antilla Online wiki (AI)](https://deepwiki.com/davidhsing/qt-antilla)
 
-## 📺 Online Demo
-
-  - [BiliBili](https://www.bilibili.com/video/BV1jodhYhE8a/?spm_id_from=333.1387.homepage.video_card.click)
-
 ## 🗂️ Precompiled package
 
 Precompiled packages and binary libraries for two platforms, `Windows / Linux`, have been created.

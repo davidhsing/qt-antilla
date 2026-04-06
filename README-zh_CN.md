@@ -57,10 +57,6 @@ Qt Qml 的 Ant 设计组件库
 ## 🌐 在线 wiki
 - [Antilla 在线 wiki (AI)](https://deepwiki.com/davidhsing/qt-antilla)
 
-## 📺 在线演示
-
-  - [哔哩哔哩](https://www.bilibili.com/video/BV1jodhYhE8a/?spm_id_from=333.1387.homepage.video_card.click)
-
 ## 🗂️ 预编译包
 
 预编译了两个平台的 `Windows / Linux` 程序包和二进制库包.
