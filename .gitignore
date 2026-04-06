@@ -32,8 +32,8 @@ qrc_*.cpp
 Thumbs.db
 *.res
 *.rc
-/.qmake.cache
-/.qmake.stash
+.qmake.cache
+.qmake.stash
 
 # qtcreator generated files
 *.pro.user*
@@ -73,11 +73,10 @@ CMakeLists.txt.user*
 *.exe
 
 # CMake generated files
-/bin/
-/build/
-/install/
-/gallery/bin/
-/package/
+build
+install
+gallery/bin
+package
 CMakeCache.txt
 CMakeFiles
 cmake_install.cmake
@@ -85,11 +84,11 @@ install_manifest.txt
 Makefile
 
 # VS Code
-/.vscode/
+.vscode
 .qmlls.ini
 
 # clang
-/.cache/
+.cache
 
 # clion
 **/.idea
