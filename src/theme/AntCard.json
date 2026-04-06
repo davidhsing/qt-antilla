@@ -1,0 +1,16 @@
+{
+    "__style__": {
+        "fontFamily": "@fontPrimaryFamily",
+        "fontSizeTitle": "@fontPrimarySize",
+        "fontSizeBodyTitle": "@fontPrimarySize",
+        "fontSizeBodyDescription": "@fontPrimarySize",
+        "colorBg": "@colorBgContainer",
+        "colorBorder": "@colorBorderSecondary",
+        "colorShadow": "@colorTextBase",
+        "colorTitle": "@colorTextPrimary",
+        "colorBodyAvatar": "@colorTextPrimary",
+        "colorBodyTitle": "@colorTextPrimary",
+        "colorBodyDescription": "@colorTextTertiary",
+        "radiusBg": "@radiusPrimary"
+    }
+}

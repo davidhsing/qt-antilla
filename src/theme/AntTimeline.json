@@ -1,0 +1,13 @@
+{
+    "__style__": {
+        "fontFamily": "@fontPrimaryFamily",
+        "fontSize": "@fontPrimarySize",
+        "colorNode": "@colorPrimary",
+        "colorNodeBg": "@colorBgBase",
+        "colorLine": "@colorSplit",
+        "colorTimeText": "@colorTextPrimary",
+        "colorContentText": "@colorTextPrimary",
+        "colorContentBg": "transparent",
+        "colorContentBordor": "transparent"
+    }
+}

@@ -1,0 +1,490 @@
+import QtQuick
+import QtQuick.Controls.Basic
+import Antilla.Basic
+import '../../Controls'
+
+Flickable {
+    contentHeight: column.height
+    ScrollBar.vertical: AntScrollBar { }
+
+    Column {
+        id: column
+        width: parent.width - 15
+        spacing: 30
+
+        Description {
+            desc: qsTr(`
+# AntAutoComplete 自动完成\n
+输入框自动完成功能。\n
+* **继承自 { [AntInput](internal://AntInput) }**\n
+\n<br/>
+\n### 支持的代理：\n
+- **labelDelegate: Component** 弹出框标签项代理，代理可访问属性：\n
+  - \`parent.textData: var\` {textRole}对应的文本数据\n
+  - \`parent.valueData: var\` {valueRole}对应的值数据\n
+  - \`parent.modelData: var\` 选项模型数据\n
+  - \`parent.hovered: bool\` 是否悬浮\n
+  - \`parent.highlighted: bool\` 是否高亮\n
+- **labelBgDelegate: Component** 弹出框标签项背景代理，代理可访问属性：\n
+  - \`parent.textData: var\` {textRole}对应的文本数据\n
+  - \`parent.valueData: var\` {valueRole}对应的值数据\n
+  - \`parent.modelData: var\` 选项模型数据\n
+  - \`parent.hovered: bool\` 是否悬浮\n
+  - \`parent.selected: bool\` 是否选择\n
+  - \`parent.highlighted: bool\` 是否高亮\n
+\n<br/>
+\n### 支持的属性：\n
+属性名 | 类型 | 默认值 | 描述
+------ | --- | :---: | ---
+options | list | [] | 选项模型列表
+filterOption | function | - | 输入项将使用该函数进行筛选
+textRole | string | 'label' | 弹出框文本的模型角色。
+valueRole | string | 'value' | 弹出框值的模型角色。
+tooltipVisible | bool | false | 是否显示文字提示
+defaultPopupMaxHeight | int | 240 | 默认弹出框最大高度
+defaultOptionSpacing | int | 0 | 默认选项间隔
+\n<br/>
+\n### 支持的函数：\n
+- \`clearInput()\` 清空输入\n
+- \`openPopup()\` 打开弹出框\n
+- \`closePopup()\` 关闭弹出框\n
+- \`filter()\` 使用 \`filterOption\` 过滤选项列表
+\n<br/>
+\n### 支持的信号：\n
+- \`searched(input: string)\` 搜索补全项的时发出\n
+  - \`input\` 输入文本\n
+- \`selected(option: var)\` 选择补全项时发出\n
+  - \`option\` 选择的选项\n
+                       `)
+        }
+
+        Description {
+            title: qsTr('何时使用')
+            desc: qsTr(`
+- 需要一个输入框而不是选择器。\n
+- 需要输入建议/辅助提示。\n
+和 [AntSelect](internal://AntSelect) 的区别是：\n
+- [AntAutoComplete](internal://AntAutoComplete) 是一个带提示的文本输入框，用户可以自由输入，关键词是**辅助输入**。\n
+- [AntSelect](internal://AntSelect) 是在限定的可选项中进行选择，关键词是**选择**。\n
+                       `)
+        }
+
+        ThemeToken {
+            source: 'AntAutoComplete'
+        }
+
+        Description {
+            title: qsTr('代码演示')
+        }
+
+        CodeBox {
+            width: parent.width
+            descTitle: qsTr('基本使用')
+            desc: qsTr(`
+基本使用，通过 \`options\` 设置自动完成的数据源。\n
+                       `)
+            code: `
+import QtQuick
+import Antilla.Basic
+
+Row {
+    spacing: 10
+
+    AntAutoComplete {
+        width: 180
+        placeholderText: 'Basic Usage'
+        onSearched: function(input) {
+            options = input ? [{ label: input.repeat(1) }, { label: input.repeat(2) }, { label: input.repeat(3) }] : [];
+        }
+    }
+}
+            `
+            exampleDelegate: Row {
+                spacing: 10
+
+                AntAutoComplete {
+                    width: 180
+                    placeholderText: 'Basic Usage'
+                    onSearched: function(input) {
+                        options = input ? [{ label: input.repeat(1) }, { label: input.repeat(2) }, { label: input.repeat(3) }] : [];
+                    }
+                }
+            }
+        }
+
+        CodeBox {
+            width: parent.width
+            descTitle: qsTr('自定义选项')
+            desc: qsTr(`
+可以返回自定义的 \`options\` 的 label。\n
+                       `)
+            code: `
+import QtQuick
+import Antilla.Basic
+
+Row {
+    spacing: 10
+
+    AntAutoComplete {
+        width: 180
+        placeholderText: 'Custom Options'
+        onSearched: function(input) {
+            if (!input || input.includes('@')) {
+                options = [];
+            } else {
+                options = ['gmail.com', '163.com', 'qq.com'].map(
+                            (domain) => ({
+                                             label: \`\${input}@\${domain}\`,
+                                             value: \`\${input}@\${domain}\`,
+                                         }));
+            }
+        }
+    }
+}
+            `
+            exampleDelegate: Row {
+                spacing: 10
+
+                AntAutoComplete {
+                    width: 180
+                    placeholderText: 'Custom Options'
+                    onSearched: function(input) {
+                        if (!input || input.includes('@')) {
+                            options = [];
+                        } else {
+                            options = ['gmail.com', '163.com', 'qq.com'].map(
+                                        (domain) => ({
+                                                         label: `${input}@${domain}`,
+                                                         value: `${input}@${domain}`,
+                                                     }));
+                        }
+                    }
+                }
+            }
+        }
+
+        CodeBox {
+            width: parent.width
+            descTitle: qsTr('不区分大小写')
+            desc: qsTr(`
+不区分大小写的 AntAutoComplete。\n
+通过 \`filterOption\` 设置过滤选项，它是形如：\`function(input: string, option: var): bool { }\` 的函数。\n
+                       `)
+            code: `
+import QtQuick
+import Antilla.Basic
+
+Row {
+    spacing: 10
+
+    AntAutoComplete {
+        width: 180
+        placeholderText: 'try to type \`b\`'
+        options: [
+            { label: 'Burns Bay Road' },
+            { label: 'Downing Street' },
+            { label: 'Wall Street' },
+        ]
+        filterOption: (input, option) => option.label.toUpperCase().indexOf(input.toUpperCase()) !== -1
+    }
+}
+            `
+            exampleDelegate: Row {
+                spacing: 10
+
+                AntAutoComplete {
+                    width: 180
+                    placeholderText: 'try to type `b`'
+                    options: [
+                        { label: 'Burns Bay Road' },
+                        { label: 'Downing Street' },
+                        { label: 'Wall Street' },
+                    ]
+                    filterOption: (input, option) => option.label.toUpperCase().indexOf(input.toUpperCase()) !== -1
+                }
+            }
+        }
+
+        CodeBox {
+            width: parent.width
+            descTitle: qsTr('查询模式 - 确定类目')
+            desc: qsTr(`
+查询模式: 确定类目 示例。\n
+                       `)
+            code: `
+import QtQuick
+import Antilla.Basic
+
+Row {
+    spacing: 10
+
+    AntAutoComplete {
+        width: 280
+        tooltipVisible: true
+        placeholderText: 'input here'
+        options: [
+            { label: 'Antilla', option: 'Libraries' },
+            { label: 'Antilla for Qml' },
+            { label: 'Antilla FAQ', option: 'Solutions' },
+            { label: 'Antilla for Qml FAQ' },
+            { label: 'Antilla', option: 'Copyright' },
+            { label: 'Copyright (C) 2025 davidhsing. All rights reserved.' },
+        ]
+        labelDelegate: Column {
+            id: delegateColumn
+
+            property string option: modelData.option ?? ''
+
+            Loader {
+                active: delegateColumn.option !== ''
+                sourceComponent: AntDivider {
+                    width: delegateColumn.width
+                    height: 30
+                    titleAlign: AntDivider.AlignCenter
+                    titleText: delegateColumn.option
+                    colorText: 'red'
+                }
+            }
+
+            AntText {
+                id: label
+                text: textData
+                color: AntTheme.AntAutoComplete.colorItemText
+                elide: Text.ElideRight
+                verticalAlignment: Text.AlignVCenter
+            }
+        }
+        labelBgDelegate: Item {
+            property string option: modelData.option ?? ''
+
+            Rectangle {
+                width: parent.width
+                height: option == '' ? parent.height : parent.height - 30
+                anchors.bottom: parent.bottom
+                clip: true
+                radius: 2
+                color: highlighted ? AntTheme.AntAutoComplete.colorItemBgActive :
+                                     hovered ? AntTheme.AntAutoComplete.colorItemBgHover :
+                                               AntTheme.AntAutoComplete.colorItemBg;
+            }
+        }
+    }
+}
+            `
+            exampleDelegate: Row {
+                spacing: 10
+
+                AntAutoComplete {
+                    width: 280
+                    tooltipVisible: true
+                    placeholderText: 'input here'
+                    options: [
+                        { label: 'Antilla', option: 'Libraries' },
+                        { label: 'Antilla for Qml' },
+                        { label: 'Antilla FAQ', option: 'Solutions' },
+                        { label: 'Antilla for Qml FAQ' },
+                        { label: 'Antilla', option: 'Copyright' },
+                        { label: 'Copyright (C) 2025 davidhsing. All rights reserved.' },
+                    ]
+                    labelDelegate: Column {
+                        id: delegateColumn
+
+                        property string option: modelData.option ?? ''
+
+                        Loader {
+                            active: delegateColumn.option !== ''
+                            sourceComponent: AntDivider {
+                                width: delegateColumn.width
+                                height: 30
+                                titleAlign: AntDivider.AlignCenter
+                                titleText: delegateColumn.option
+                                colorText: 'red'
+                            }
+                        }
+
+                        AntText {
+                            id: label
+                            text: textData
+                            color: AntTheme.AntAutoComplete.colorItemText
+                            elide: Text.ElideRight
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                    }
+                    labelBgDelegate: Item {
+                        property string option: modelData.option ?? ''
+
+                        Rectangle {
+                            width: parent.width
+                            height: option === '' ? parent.height : parent.height - 30
+                            anchors.bottom: parent.bottom
+                            clip: true
+                            radius: 2
+                            color: highlighted ? AntTheme.AntAutoComplete.colorItemBgActive :
+                                                 hovered ? AntTheme.AntAutoComplete.colorItemBgHover :
+                                                           AntTheme.AntAutoComplete.colorItemBg;
+                        }
+                    }
+                }
+            }
+        }
+
+        CodeBox {
+            width: parent.width
+            descTitle: qsTr('查询模式 - 不确定类目')
+            desc: qsTr(`
+查询模式: 不确定类目 示例。\n
+                       `)
+            code: `
+import QtQuick
+import Antilla.Basic
+
+Row {
+    spacing: -8
+
+    AntAutoComplete {
+        width: 280
+        height: 40
+        rightPadding: 30
+        tooltipVisible: true
+        placeholderText: 'input here'
+        onSearched: function(input) {
+            if (!input) {
+                options = [];
+            } else {
+                const getRandomInt = (max, min = 0) => Math.floor(Math.random() * (max - min + 1)) + min;
+                options =
+                        Array.from({ length: getRandomInt(5) })
+                            .join('.')
+                            .split('.')
+                            .map((_, idx) => {
+                                     const category = \`\${input}\${idx}\`;
+                                     return {
+                                         value: category,
+                                         label: \`Found \${input} on <span style='color:#1677FF'>\${category}</span> \${getRandomInt(200, 100)} results\`
+                                     }
+                                 });
+            }
+        }
+        labelDelegate: AntText {
+            text: textData
+            color: AntTheme.AntAutoComplete.colorItemText
+            elide: Text.ElideRight
+            verticalAlignment: Text.AlignVCenter
+            textFormat: Text.RichText
+        }
+    }
+
+    AntIconButton {
+        id: searchButton
+        height: 40
+        type: AntButton.TypePrimary
+        iconSource: AntIcon.SearchOutlined
+        background: AntRectangle {
+            topLeftRadius: 0
+            bottomLeftRadius: 0
+            topRightRadius: searchButton.radiusBg
+            bottomRightRadius: searchButton.radiusBg
+            color: searchButton.colorBg
+            border.color: searchButton.colorBorder
+            border.width: 1
+        }
+    }
+}
+            `
+            exampleDelegate: Row {
+                spacing: -8
+
+                AntAutoComplete {
+                    width: 280
+                    height: 40
+                    rightPadding: 30
+                    tooltipVisible: true
+                    placeholderText: 'input here'
+                    onSearched: function(input) {
+                        if (!input) {
+                            options = [];
+                        } else {
+                            const getRandomInt = (max, min = 0) => Math.floor(Math.random() * (max - min + 1)) + min;
+                            options =
+                                    Array.from({ length: getRandomInt(5) })
+                                        .join('.')
+                                        .split('.')
+                                        .map((_, idx) => {
+                                                 const category = `${input}${idx}`;
+                                                 return {
+                                                     value: category,
+                                                     label: `Found ${input} on <span style='color:#1677FF'>${category}</span> ${getRandomInt(200, 100)} results`
+                                                 }
+                                             });
+                        }
+                    }
+                    labelDelegate: AntText {
+                        text: textData
+                        color: AntTheme.AntAutoComplete.colorItemText
+                        elide: Text.ElideRight
+                        verticalAlignment: Text.AlignVCenter
+                        textFormat: Text.RichText
+                    }
+                }
+
+                AntIconButton {
+                    id: searchButton
+                    height: 40
+                    type: AntButton.TypePrimary
+                    iconSource: AntIcon.SearchOutlined
+                    background: AntRectangle {
+                        topLeftRadius: 0
+                        bottomLeftRadius: 0
+                        topRightRadius: searchButton.radiusBg
+                        bottomRightRadius: searchButton.radiusBg
+                        color: searchButton.colorBg
+                        border.color: searchButton.colorBorder
+                        border.width: 1
+                    }
+                }
+            }
+        }
+
+        CodeBox {
+            width: parent.width
+            descTitle: qsTr('自定义清除按钮')
+            desc: qsTr(`
+通过 \`clearable\` 设置是否启用清除按钮。\n
+通过 \`clearIconSource\` 设置清除图标，为 0 则不显示。\n
+通过 \`clearIconSize\` 设置清除图标大小。\n
+通过 \`clearIconPosition\` 设置清除图标的位置，支持的位置：\n
+- 清除图标在输入框左边(默认){ AntAutoComplete.PositionLeft }\n
+- 清除图标在输入框右边{ AntAutoComplete.PositionRight }\n
+                       `)
+            code: `
+import QtQuick
+import Antilla.Basic
+
+Row {
+    spacing: 10
+
+    AntAutoComplete {
+        width: 240
+        clearIconSource: AntIcon.CloseSquareFilled
+        placeholderText: 'Customized clear icon'
+        onSearched: function(input) {
+            options = input ? [{ label: input.repeat(1) }, { label: input.repeat(2) }, { label: input.repeat(3) }] : [];
+        }
+    }
+}
+            `
+            exampleDelegate: Row {
+                spacing: 10
+
+                AntAutoComplete {
+                    width: 240
+                    clearIconSource: AntIcon.CloseSquareFilled
+                    placeholderText: 'Customized clear icon'
+                    onSearched: function(input) {
+                        options = input ? [{ label: input.repeat(1) }, { label: input.repeat(2) }, { label: input.repeat(3) }] : [];
+                    }
+                }
+            }
+        }
+    }
+}

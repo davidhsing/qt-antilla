@@ -1,0 +1,9 @@
+{
+    "__style__": {
+        "fontFamily": "@fontPrimaryFamily",
+        "fontSize": "@fontPrimarySize",
+        "colorText": "@colorTextPrimary",
+        "colorTextSelected": "@colorTextPrimary",
+        "colorSelection": "$alpha(@colorPrimary, 0.6)"
+    }
+}

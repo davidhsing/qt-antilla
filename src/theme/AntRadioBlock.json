@@ -1,0 +1,21 @@
+{
+    "__init__": {
+        "__import__": ["AntRadio"]
+    },
+    "__style__": {
+        "colorBlockText": "@colorTextPrimary",
+        "colorBlockTextFilledChecked": "#fff",
+        "colorBlockTextChecked": "@colorPrimary",
+        "colorBlockTextDisabled": "@colorPrimaryTextDisabled",
+        "colorBlockBg": "@colorBgBase",
+        "colorBlockBgChecked": "@colorPrimary",
+        "colorBlockBgHover": "@colorPrimaryContainerBgHover",
+        "colorBlockBgActive": "@colorPrimaryContainerBgActive",
+        "colorBlockBgCheckedDisabled": "$alpha(@colorTextBase, 0.2)",
+        "colorBlockBgDisabled": "$alpha(@colorTextBase, 0.05)",
+        "colorBlockBorder": "@colorTextQuaternary",
+        "colorBlockBorderChecked": "@colorPrimaryBorderActive",
+        "colorBlockEffectBg": "@colorPrimaryBorderHover",
+        "radiusBlockBg": "@radiusPrimary"
+    }
+}

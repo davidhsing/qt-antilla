@@ -1,0 +1,14 @@
+{
+    "__style__": {
+        "fontFamily": "@fontPrimaryFamily",
+        "fontSize": "$add(@fontPrimarySize, 2)",
+        "colorText": "#fff",
+        "colorIndicatorText": "#ccc",
+        "colorButtonTextDisabled": "#bbb",
+        "colorButtonText": "#ccc",
+        "colorButtonTextHover": "#fff",
+        "colorButtonBg": "@colorFillPrimary",
+        "colorButtonBgHover": "@colorTextQuaternary",
+        "colorOperationBg": "@colorFillPrimary"
+    }
+}

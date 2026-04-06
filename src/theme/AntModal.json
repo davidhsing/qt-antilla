@@ -1,0 +1,15 @@
+{
+    "__init__": {
+        "__import__": ["AntPopup"]
+    },
+    "__style__": {
+        "fontTitleSize": "@fontPrimarySize",
+        "fontDescriptionLineHeight": "@fontPrimaryLineHeightHeading1",
+        "fontDescriptionSize": "@fontPrimarySize",
+        "colorOverlay": "@colorBgMask",
+        "colorIcon": "@colorInfo",
+        "colorTitle": "@colorTextPrimary",
+        "colorDescription": "@colorTextPrimary",
+        "radiusCloseBg": "@radiusPrimarySM"
+    }
+}

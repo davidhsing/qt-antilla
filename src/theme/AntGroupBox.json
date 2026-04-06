@@ -1,0 +1,11 @@
+{
+    "__style__": {
+        "fontFamily": "@fontPrimaryFamily",
+        "fontSize": "$subtract(@fontPrimarySize, 1)",
+        "colorTitle": "@colorTextSecondary",
+        "colorTitleBg": "@colorBgContainer",
+        "colorBorder": "@colorBorder",
+        "colorBg": "transparent",
+        "radiusBg": "@radiusPrimary"
+    }
+}

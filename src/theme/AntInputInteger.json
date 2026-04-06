@@ -1,0 +1,13 @@
+{
+    "__init__": {
+        "__import__": ["AntInput"]
+    },
+    "__style__": {
+        "colorLabelBg": "$onBackground(@colorFillQuaternary, @colorBgBase)",
+        "colorLabelBgDisabled": "@colorBgDisabled",
+        "colorPrefix": "@colorTextSecondary",
+        "colorSuffix": "@colorTextSecondary",
+        "colorBeforeLabel": "@colorTextSecondary",
+        "colorAfterLabel": "@colorTextSecondary"
+    }
+}

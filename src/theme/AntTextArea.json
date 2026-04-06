@@ -1,0 +1,20 @@
+{
+    "__style__": {
+        "fontFamily": "@fontPrimaryFamily",
+        "fontSize": "@fontPrimarySize",
+        "colorText": "@colorTextPrimary",
+        "colorTextDisabled": "@colorPrimaryTextDisabled",
+        "colorPlaceholderText": "@colorTextQuaternary",
+        "colorPlaceholderTextDisabled": "@colorPrimaryTextDisabled",
+        "colorTextSelected": "@colorTextPrimary",
+        "colorSelection": "$alpha(@colorPrimary, 0.6)",
+        "colorBorder": "$onBackground(@colorTextQuaternary, @colorBgBase)",
+        "colorBorderHover": "@colorPrimary",
+        "colorBorderDisabled": "$onBackground(@colorFill, @colorBgBase)",
+        "colorBg": "@colorBgBase",
+        "colorBgDisabled": "@colorBgDisabled",
+        "colorErrorBorder": "@colorError",
+        "colorErrorBorderHover": "@colorErrorActive",
+        "radiusBg": "@radiusPrimary"
+    }
+}

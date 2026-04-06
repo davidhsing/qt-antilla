@@ -1,0 +1,28 @@
+{
+    "__style__": {
+        "fontFamily": "@fontPrimaryFamily",
+        "fontSize": "@fontPrimarySize",
+        "fontIconSize": "@fontPrimarySizeHeading5",
+        "fontClearIconSize": "@fontPrimarySize",
+        "colorIcon": "@colorTextPrimary",
+        "colorIconDisabled": "$onBackground(@colorTextQuaternary, @colorBgBase)",
+        "colorClearIcon": "$onBackground(@colorTextQuaternary, @colorBgBase)",
+        "colorClearIconHover": "$onBackground(@colorTextTertiary, @colorBgBase)",
+        "colorClearIconActive": "$onBackground(@colorTextPrimary, @colorBgBase)",
+        "colorClearIconDisabled": "$onBackground(@colorTextQuaternary, @colorBgBase)",
+        "colorText": "@colorTextPrimary",
+        "colorTextDisabled": "@colorPrimaryTextDisabled",
+        "colorPlaceholderText": "@colorTextQuaternary",
+        "colorPlaceholderTextDisabled": "@colorPrimaryTextDisabled",
+        "colorTextSelected": "@colorTextPrimary",
+        "colorSelection": "$alpha(@colorPrimary, 0.6)",
+        "colorBorder": "$onBackground(@colorTextQuaternary, @colorBgBase)",
+        "colorBorderHover": "@colorPrimary",
+        "colorBorderDisabled": "$onBackground(@colorFill, @colorBgBase)",
+        "colorBg": "@colorBgBase",
+        "colorBgDisabled": "@colorBgDisabled",
+        "colorErrorBorder": "@colorError",
+        "colorErrorBorderHover": "@colorErrorActive",
+        "radiusBg": "@radiusPrimary"
+    }
+}

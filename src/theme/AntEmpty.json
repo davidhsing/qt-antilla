@@ -1,0 +1,7 @@
+{
+    "__style__": {
+        "fontFamily": "@fontPrimaryFamily",
+        "fontSize": "$subtract(@fontPrimarySize, 1)",
+        "colorDescription": "@colorTextSecondary"
+    }
+}

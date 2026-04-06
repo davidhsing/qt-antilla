@@ -1,0 +1,13 @@
+{
+    "__init__": {
+        "__import__": ["AntSelect"]
+    },
+    "__style__": {
+        "colorIconSelect": "@colorPrimary",
+        "colorTagText": "@colorTextPrimary",
+        "colorTagBg": "@colorFillPrimary",
+        "colorTagCloseHover": "@colorTextPrimary",
+        "colorTagClose": "@colorTextTertiary",
+        "radiusTagBg": "@radiusPrimarySM"
+    }
+}

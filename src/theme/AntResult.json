@@ -1,0 +1,13 @@
+{
+    "__style__": {
+        "fontTitleFamily": "@fontPrimaryFamily",
+        "fontTitleSize": "$add(@fontPrimarySize, 2)",
+        "fontDescriptionFamily": "@fontPrimaryFamily",
+        "fontDescriptionSize": "@fontPrimarySize",
+        "colorBg": "@colorBgContainer",
+        "colorBorder": "@colorBorderSecondary",
+        "colorTitle": "@colorTextPrimary",
+        "colorDescription": "@colorTextSecondary",
+        "radiusBg": "@radiusPrimary"
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "__style__": {
+        "leftFontFamily": "@fontPrimaryFamily",
+        "leftFontSize": "$subtract(@fontPrimarySize, 2)",
+        "rightFontFamily": "@fontPrimaryFamily",
+        "rightFontSize": "$subtract(@fontPrimarySize, 2)",
+        "colorLeftBg": "@colorTextSecondary",
+        "colorLeftText": "white",
+        "colorRightBg": "@colorSuccess",
+        "colorRightText": "white",
+        "radiusBg": "@radiusPrimary"
+    }
+}

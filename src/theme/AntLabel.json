@@ -1,0 +1,16 @@
+{
+    "__style__": {
+        "fontFamily": "@fontPrimaryFamily",
+        "fontSize": "@fontPrimarySize",
+        "colorText": "@colorTextPrimary",
+        "colorTextDisabled": "@colorPrimaryTextDisabled",
+        "colorTextHover": "@colorTextPrimary",
+        "colorLinkText": "@colorPrimaryText",
+        "colorBg": "@colorBgBase",
+        "colorBgDisabled": "@colorBgDisabled",
+        "colorBgHover": "@colorBgBase",
+        "colorBorder": "@colorBorder",
+        "colorBorderDisabled": "@colorBorder",
+        "colorBorderHover": "@colorBorder"
+    }
+}

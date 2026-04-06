@@ -1,0 +1,18 @@
+{
+    "__style__": {
+        "fontLabelFamily": "@fontPrimaryFamily",
+        "fontLabelSize": "@fontPrimarySize",
+        "fontTooltipIconSize": "$add(@fontPrimarySize, 2)",
+        "fontTooltipTextSize": "@fontPrimarySize",
+        "fontFeedbackFamily": "@fontPrimaryFamily",
+        "fontFeedbackSize": "$subtract(@fontPrimarySize, 1)",
+        "colorLabelText": "@colorTextPrimary",
+        "colorLabelRequired": "@colorError",
+        "colorTooltipIcon": "@colorTextTertiary",
+        "colorTooltipIconHover": "@colorTextSecondary",
+        "colorTooltipText": "@colorTextPrimary",
+        "colorFeedbackNormal": "@colorTextPrimary",
+        "colorFeedbackSuccess": "@colorSuccess",
+        "colorFeedbackError": "@colorError"
+    }
+}

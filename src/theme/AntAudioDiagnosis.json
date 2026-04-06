@@ -1,0 +1,9 @@
+{
+    "__style__": {
+        "colorBar": "@colorSuccess",
+        "colorTrack": "@colorFillPrimary",
+        "colorIconRecording": "@colorSuccessText",
+        "colorIconStopped": "@colorTextQuinary",
+        "colorIconMuted": "@colorError"
+    }
+}

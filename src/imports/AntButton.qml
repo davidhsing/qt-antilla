@@ -1,0 +1,262 @@
+import QtQuick
+import QtQuick.Templates as T
+import Antilla.Basic
+
+T.Button {
+    id: control
+
+    enum ButtonType {
+        TypeDefault = 0,
+        TypeOutlined = 1,
+        TypeDashed = 2,
+        TypePrimary = 3,
+        TypeFilled = 4,
+        TypeText = 5,
+        TypeLink = 6
+    }
+
+    enum ButtonShape {
+        ShapeDefault = 0,
+        ShapeCircle = 1
+    }
+
+    property bool animationEnabled: AntTheme.animationEnabled
+    property bool active: down || checked
+    property bool danger: false
+    property bool effectEnabled: true
+    property bool forceState: false
+    property int hoverCursorShape: Qt.PointingHandCursor
+    property int type: AntButton.TypeDefault
+    property int shape: AntButton.ShapeDefault
+    property AntRadius radiusBg: AntRadius { all: AntTheme.AntButton.radiusBg }
+    property color colorText: {
+        if (enabled || control.forceState) {
+            if (control.danger) {
+                switch (control.type) {
+                    case AntButton.TypePrimary: return 'white';
+                    case AntButton.TypeFilled:
+                    case AntButton.TypeDefault:
+                    case AntButton.TypeOutlined:
+                    case AntButton.TypeDashed:
+                    case AntButton.TypeText:
+                    case AntButton.TypeLink:
+                        return control.active ? AntTheme.AntButton.colorErrorTextActive : (control.hovered ? AntTheme.AntButton.colorErrorTextHover :  AntTheme.AntButton.colorError);
+                }
+            }
+            switch (control.type) {
+                case AntButton.TypeDefault:
+                    return control.active ? AntTheme.AntButton.colorTextActive : (control.hovered ? AntTheme.AntButton.colorTextHover : AntTheme.AntButton.colorTextDefault);
+                case AntButton.TypeOutlined:
+                case AntButton.TypeDashed:
+                    return control.active ? AntTheme.AntButton.colorTextActive : (control.hovered ? AntTheme.AntButton.colorTextHover : AntTheme.AntButton.colorText);
+                case AntButton.TypePrimary:
+                    return 'white';
+                case AntButton.TypeFilled:
+                case AntButton.TypeText:
+                case AntButton.TypeLink:
+                    return control.active ? AntTheme.AntButton.colorTextActive : (control.hovered ? AntTheme.AntButton.colorTextHover : AntTheme.AntButton.colorText);
+                default:
+                    return AntTheme.AntButton.colorText;
+            }
+        }
+        return AntTheme.AntButton.colorTextDisabled;
+    }
+    property color colorBg: {
+        if (control.type === AntButton.TypeLink) {
+            return 'transparent';
+        }
+        if (enabled || control.forceState) {
+            if (control.danger) {
+                switch (control.type) {
+                    case AntButton.TypePrimary:
+                        return control.active ? AntTheme.AntButton.colorErrorBgActive: (control.hovered ? AntTheme.AntButton.colorErrorBgHover : AntTheme.AntButton.colorErrorBg);
+                    case AntButton.TypeFilled:
+                        return control.active ? AntTheme.AntButton.colorErrorFillBgActive: (control.hovered ? AntTheme.AntButton.colorErrorFillBgHover : AntTheme.AntButton.colorErrorFillBg);
+                    case AntButton.TypeText:
+                        return control.active ? AntTheme.AntButton.colorErrorFillBgActive: (control.hovered ? AntTheme.AntButton.colorErrorFillBg : 'transparent');
+                    case AntButton.TypeDefault:
+                    case AntButton.TypeOutlined:
+                    case AntButton.TypeDashed:
+                        return control.active ? AntTheme.AntButton.colorBgActive: (control.hovered ? AntTheme.AntButton.colorBgHover : AntTheme.AntButton.colorBg);
+                    default: return AntTheme.AntButton.colorBg;
+                }
+            }
+            switch (control.type) {
+                case AntButton.TypeDefault:
+                case AntButton.TypeOutlined:
+                case AntButton.TypeDashed:
+                    return control.active ? AntTheme.AntButton.colorBgActive : (control.hovered ? AntTheme.AntButton.colorBgHover : AntTheme.AntButton.colorBg);
+                case AntButton.TypePrimary:
+                    return control.active ? AntTheme.AntButton.colorPrimaryBgActive : (control.hovered ? AntTheme.AntButton.colorPrimaryBgHover : AntTheme.AntButton.colorPrimaryBg);
+                case AntButton.TypeFilled:
+                    if (AntTheme.isDark) {
+                        return control.active ? AntTheme.AntButton.colorFillBgDarkActive : (control.hovered ? AntTheme.AntButton.colorFillBgDarkHover : AntTheme.AntButton.colorFillBgDark);
+                    } else {
+                        return control.active ? AntTheme.AntButton.colorFillBgActive : (control.hovered ? AntTheme.AntButton.colorFillBgHover : AntTheme.AntButton.colorFillBg);
+                    }
+                case AntButton.TypeText:
+                    if (AntTheme.isDark) {
+                        return control.active ? AntTheme.AntButton.colorFillBgDarkActive : (control.hovered ? AntTheme.AntButton.colorFillBgDarkHover : AntTheme.AntButton.colorTextBg);
+                    } else {
+                        return control.active ? AntTheme.AntButton.colorTextBgActive : (control.hovered ? AntTheme.AntButton.colorTextBgHover : AntTheme.AntButton.colorTextBg);
+                    }
+                default:
+                    return AntTheme.AntButton.colorBg;
+            }
+        }
+        return AntTheme.AntButton.colorBgDisabled;
+    }
+    property color colorBorder: {
+        if (type === AntButton.TypeLink) {
+            return 'transparent';
+        }
+        if (enabled || control.forceState) {
+            if (control.danger) {
+                switch (control.type) {
+                    case AntButton.TypeDefault:
+                        return (control.active || control.visualFocus) ? AntTheme.AntButton.colorBorderActive : (control.hovered ? AntTheme.AntButton.colorErrorBorderHover : AntTheme.AntButton.colorDefaultBorder);
+                    default:
+                        return (control.active || control.visualFocus) ? AntTheme.AntButton.colorErrorBorderActive: (control.hovered ? AntTheme.AntButton.colorErrorBorderHover : AntTheme.AntButton.colorErrorBorder);
+                }
+            }
+            switch (control.type) {
+                case AntButton.TypeDefault:
+                    return (control.active || control.visualFocus) ? AntTheme.AntButton.colorBorderActive : (control.hovered ? AntTheme.AntButton.colorBorderHover : AntTheme.AntButton.colorDefaultBorder);
+                default:
+                    return (control.active || control.visualFocus) ? AntTheme.AntButton.colorBorderActive : (control.hovered ? AntTheme.AntButton.colorBorderHover : AntTheme.AntButton.colorBorder);
+            }
+        }
+        return AntTheme.AntButton.colorBorderDisabled;
+    }
+    property string ariaConstrual: text
+
+    objectName: '__AntButton__'
+    implicitWidth: implicitContentWidth + leftPadding + rightPadding
+    implicitHeight: implicitContentHeight + topPadding + bottomPadding
+    padding: 15
+    topPadding: 6
+    bottomPadding: 6
+    font {
+        family: AntTheme.AntButton.fontFamily
+        pixelSize: AntTheme.AntButton.fontSize
+    }
+    contentItem: Text {
+        text: control.text
+        font: control.font
+        lineHeight: AntTheme.AntButton.fontLineHeight
+        color: control.colorText
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        elide: Text.ElideRight
+
+        Behavior on color { enabled: control.animationEnabled; ColorAnimation { duration: AntTheme.Primary.durationFast } }
+    }
+    background: Item {
+        AntRectangleInternal {
+            id: __effect
+            width: __bg.width
+            height: __bg.height
+            radius: __bg.r
+            topLeftRadius: __bg.tl
+            topRightRadius: __bg.tr
+            bottomLeftRadius: __bg.bl
+            bottomRightRadius: __bg.br
+            anchors.centerIn: parent
+            visible: control.effectEnabled && control.type !== AntButton.TypeLink
+            color: 'transparent'
+            border.width: 0
+            border.color: (control.enabled || control.forceState) ? AntTheme.AntButton.colorBorderHover : 'transparent'
+            opacity: 0.2
+
+            ParallelAnimation {
+                id: __animation
+                onFinished: __effect.border.width = 0;
+                NumberAnimation {
+                    target: __effect; property: 'width'; from: __bg.width + 3; to: __bg.width + 8;
+                    duration: AntTheme.Primary.durationFast
+                    easing.type: Easing.OutQuart
+                }
+                NumberAnimation {
+                    target: __effect; property: 'height'; from: __bg.height + 3; to: __bg.height + 8;
+                    duration: AntTheme.Primary.durationFast
+                    easing.type: Easing.OutQuart
+                }
+                NumberAnimation {
+                    target: __effect; property: 'opacity'; from: 0.2; to: 0;
+                    duration: AntTheme.Primary.durationSlow
+                }
+            }
+
+            Connections {
+                target: control
+                function onReleased() {
+                    if (control.animationEnabled && control.effectEnabled) {
+                        __effect.border.width = 8;
+                        __animation.restart();
+                    }
+                }
+            }
+        }
+
+        Loader {
+            id: __bg
+            width: realWidth
+            height: realHeight
+            anchors.centerIn: parent
+            sourceComponent: control.type === AntButton.TypeDashed ? __dashedBgComponent : __bgComponent
+            property real r: control.radiusBg?.all ?? 0
+            property real tl: control.shape === AntButton.ShapeDefault ? control.radiusBg?.topLeft ?? 0 : height / 2
+            property real tr: control.shape === AntButton.ShapeDefault ? control.radiusBg?.topRight ?? 0 : height / 2
+            property real bl: control.shape === AntButton.ShapeDefault ? control.radiusBg?.bottomLeft ?? 0 : height / 2
+            property real br: control.shape === AntButton.ShapeDefault ? control.radiusBg?.bottomRight ?? 0 : height / 2
+            property real realWidth: control.shape === AntButton.ShapeDefault ? parent.width : parent.height
+            property real realHeight: control.shape === AntButton.ShapeDefault ? parent.height : parent.height
+        }
+
+        Component {
+            id: __bgComponent
+
+            AntRectangleInternal {
+                color: control.colorBg
+                border.width: (control.type === AntButton.TypeFilled || control.type === AntButton.TypeText) ? 0 : 1
+                border.color: (control.enabled || control.forceState) ? control.colorBorder : 'transparent'
+                radius: r
+                topLeftRadius: tl
+                topRightRadius: tr
+                bottomLeftRadius: bl
+                bottomRightRadius: br
+
+                Behavior on color { enabled: control.animationEnabled; ColorAnimation { duration: AntTheme.Primary.durationMid } }
+                Behavior on border.color { enabled: control.animationEnabled; ColorAnimation { duration: AntTheme.Primary.durationMid } }
+            }
+        }
+
+        Component {
+            id: __dashedBgComponent
+
+            AntRectangle {
+                color: control.colorBg
+                border.width: (control.type === AntButton.TypeFilled || control.type === AntButton.TypeText) ? 0 : 1
+                border.color: (control.enabled || control.forceState) ? control.colorBorder : 'transparent'
+                border.style: Qt.DashLine
+                radius: r
+                topLeftRadius: tl
+                topRightRadius: tr
+                bottomLeftRadius: bl
+                bottomRightRadius: br
+
+                Behavior on color { enabled: control.animationEnabled; ColorAnimation { duration: AntTheme.Primary.durationMid } }
+                Behavior on border.color { enabled: control.animationEnabled; ColorAnimation { duration: AntTheme.Primary.durationMid } }
+            }
+        }
+    }
+
+    HoverHandler {
+        cursorShape: control.hoverCursorShape
+    }
+
+    Accessible.role: Accessible.Button
+    Accessible.name: control.text
+    Accessible.description: control.ariaConstrual
+    Accessible.onPressAction: control.clicked();
+}

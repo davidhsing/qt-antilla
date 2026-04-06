@@ -1,0 +1,36 @@
+{
+    "__init__": {
+        "__import__": ["AntInput"]
+    },
+    "__style__": {
+        "fontFamily": "@fontPrimaryFamily",
+        "fontSize": "@fontPrimarySize",
+        "colorWeekText": "@colorTextPrimary",
+        "colorIcon": "@colorTextTertiary",
+        "colorIconHover": "@colorTextSecondary",
+        "colorIconDisabled": "@colorTextQuaternary",
+        "colorDayText": "@colorTextPrimary",
+        "colorDayTextNone": "@colorTextQuaternary",
+        "colorDayItemBgCurrent": "@colorPrimary",
+        "colorDayItemBgHover": "$alpha(@colorPrimary, 0.6)",
+        "colorDayItemBg": "transparent",
+        "colorDayBgCurrent": "@colorPrimary",
+        "colorDayBgHover": "$onBackground(@colorFill, @colorBgBase)",
+        "colorDayBg": "$alpha(@colorBgBase, 0)",
+        "colorDayBorderToday": "@colorPrimaryBorderActive",
+        "colorPageIconHover": "@colorTextPrimary",
+        "colorPageIcon": "@colorTextTertiary",
+        "colorPageTextHover": "@colorPrimary",
+        "colorPageText": "@colorTextPrimary",
+        "colorSplitLine": "$alpha(@colorTextBase, 0.1)",
+        "colorTimeText": "@colorTextPrimary",
+        "colorTimeHeaderText": "@colorTextPrimary",
+        "colorPopupBg": "@colorBgBase",
+        "colorPopupBgDark": "@colorMain-11",
+        "colorButtonBgHover": "$alpha(@colorTextBase, 0.05)",
+        "colorButtonBgActive": "@colorPrimaryBase-1",
+        "radiusBg": "@radiusPrimary",
+        "radiusItemBg": "@radiusPrimarySM",
+        "radiusPopupBg": "@radiusPrimary"
+    }
+}

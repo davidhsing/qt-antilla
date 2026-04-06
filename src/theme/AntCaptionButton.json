@@ -1,0 +1,18 @@
+{
+    "__style__": {
+        "fontSize": "14",
+        "colorIconDisabled": "@colorPrimaryTextDisabled",
+        "colorIcon": "@colorTextPrimary",
+        "colorIconHover": "@colorTextPrimary",
+        "colorIconActive": "@colorTextPrimary",
+        "colorIconChecked": "@colorPrimaryTextHover",
+        "colorBgDisabled": "@colorBgDisabled",
+        "colorBg": "$alpha(@colorTextBase, 0)",
+        "colorBgHover": "@colorFillSecondary",
+        "colorBgActive": "@colorFill",
+        "colorErrorBg": "$alpha(@colorError, 0)",
+        "colorErrorBgHover": "@colorErrorHover",
+        "colorErrorBgActive": "@colorErrorActive",
+        "radiusBg": "@radiusPrimary"
+    }
+}

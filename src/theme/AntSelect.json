@@ -1,0 +1,31 @@
+{
+    "__style__": {
+        "fontFamily": "@fontPrimaryFamily",
+        "fontSize": "@fontPrimarySize",
+        "colorText": "@colorTextPrimary",
+        "colorTextActive": "$onBackground(@colorTextTertiary, @colorBgBase)",
+        "colorTextDisabled": "$onBackground(@colorPrimaryTextDisabled, @colorBgBase)",
+        "colorIndicator": "$onBackground(@colorTextQuaternary, @colorBgBase)",
+        "colorIndicatorHover": "$onBackground(@colorTextTertiary, @colorBgBase)",
+        "colorIndicatorActive": "$onBackground(@colorTextPrimary, @colorBgBase)",
+        "colorIndicatorDisabled": "$onBackground(@colorTextQuaternary, @colorBgBase)",
+        "colorBorder": "$onBackground(@colorTextQuaternary, @colorBgBase)",
+        "colorBorderHover": "@colorPrimary",
+        "colorBorderDisabled": "$onBackground(@colorFill, @colorBgBase)",
+        "colorBg": "@colorBgBase",
+        "colorBgDisabled": "@colorBgDisabled",
+        "colorErrorBorder": "@colorError",
+        "colorErrorBorderHover": "@colorErrorActive",
+        "colorPopupBg": "@colorBgBase",
+        "colorPopupBgDark": "@colorMain-11",
+        "colorItemText": "@colorTextPrimary",
+        "colorItemTextDisabled": "@colorPrimaryTextDisabled",
+        "colorItemBg": "@colorBgBase",
+        "colorItemBgHover": "$onBackground(@colorFillTertiary, @colorBgBase)",
+        "colorItemBgActive": "@colorPrimaryBase-1",
+        "colorItemBgDisabled": "@colorBgBase",
+        "radiusBg": "@radiusPrimary",
+        "radiusItemBg": "@radiusPrimarySM",
+        "radiusPopupBg": "@radiusPrimary"
+    }
+}

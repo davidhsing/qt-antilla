@@ -1,0 +1,17 @@
+{
+    "__style__": {
+        "titleFontFamily": "@fontPrimaryFamily",
+        "titleFontSize": "@fontPrimarySize",
+        "descriptionFontFamily": "@fontPrimaryFamily",
+        "descriptionFontSize": "$subtract(@fontPrimarySize, 1)",
+        "marqueeFontFamily": "@fontPrimaryFamily",
+        "marqueeFontSize": "$subtract(@fontPrimarySize, 1)",
+        "colorBorder": "@colorBorderSecondary",
+        "colorClose": "@colorTextSecondary",
+        "colorIcon": "@colorTextPrimary",
+        "colorTitle": "@colorTextPrimary",
+        "colorDescription": "@colorTextPrimary",
+        "colorMarquee": "@colorTextPrimary",
+        "radiusBg": "@radiusPrimary"
+    }
+}

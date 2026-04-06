@@ -1,0 +1,12 @@
+{
+    "__init__": {
+        "__import__": ["AntPopup"]
+    },
+    "__style__": {
+        "fontTitleSize": "@fontPrimarySize",
+        "fontDescriptionSize": "@fontPrimarySize",
+        "colorIcon": "@colorWarning",
+        "colorTitle": "@colorTextPrimary",
+        "colorDescription": "@colorTextPrimary"
+    }
+}

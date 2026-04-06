@@ -1,0 +1,17 @@
+{
+    "__style__": {
+        "fontFamily": "@fontPrimaryFamily",
+        "fontSize": "@fontPrimarySizeHeading5",
+        "colorTextDisabled": "@colorPrimaryTextDisabled",
+        "colorText": "@colorTextPrimary",
+        "colorTextActive": "@colorPrimaryTextHover",
+        "colorBgDisabled": "transparent",
+        "colorBg": "$alpha(@colorPrimaryBgActive, 0)",
+        "colorBgHover": "$alpha(@colorPrimaryBgActive, 0.15)",
+        "colorBgActive": "$alpha(@colorPrimaryBgActive, 0.25)",
+        "colorBorder": "@colorBorderSecondary",
+        "colorChildBg": "@colorFillQuaternary",
+        "radiusMenuBg": "@radiusPrimary",
+        "radiusPopupBg": "@radiusPrimary"
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "__style__": {
+        "fontFamily": "@fontPrimaryFamily",
+        "fontSize": "@fontPrimarySize",
+        "colorBg": "transparent",
+        "colorGridLine": "@colorBorderSecondary",
+        "colorColumnHeaderTitle": "@colorTextPrimary",
+        "colorColumnHeaderBg": "@colorFillQuaternary",
+        "colorIcon": "@colorTextTertiary",
+        "colorIconHover": "@colorPrimary",
+        "colorRowHeaderTitle": "@colorTextSecondary",
+        "colorRowHeaderBg": "transparent",
+        "colorResizeBlockBg": "@colorFillQuaternary",
+        "colorCellBg": "transparent",
+        "colorCellBgHover": "@colorFillQuaternary",
+        "colorCellBgHoverChecked": "@colorPrimaryBgHover",
+        "colorCellBgChecked": "@colorPrimaryBg",
+        "colorCellBgDarkHoverChecked": "@colorPrimaryBase-9",
+        "colorCellBgDarkChecked": "@colorPrimaryBase-10",
+        "radiusBg": "@radiusPrimary"
+    }
+}
