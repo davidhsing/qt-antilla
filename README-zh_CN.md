@@ -11,12 +11,6 @@ Qt Qml 的 Ant 设计组件库
 
 <div align=center>
 
-![win-badge] ![linux-badge] ![macos-badge] ![android-badge]
-
-[![Issues][issues-open-image]][issues-open-url] [![Issues][issues-close-image]][issues-close-url] [![Release][release-image]][release-url]
-
-[![QQGroup][qqgroup-image]][qqgroup-url]
-
 [English](./README.md) | 中文
 
 </div>
@@ -177,4 +171,4 @@ Windows 11 / Ubuntu 24.04.2, Qt Version >= 6.7
 
 ## 🎉 Star 历史
 
-[![Star History Chart](https://api.star-history.com/svg?repos=davidhsing/Antilla&type=Date)](https://star-history.com/#davidhsing/Antilla&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=davidhsing/qt-antilla&type=Date)](https://star-history.com/#davidhsing/qt-antilla&Date)

@@ -9,31 +9,9 @@ Ant Design component library for Qt Qml
 
 <div align=center>
 
-![win-badge] ![linux-badge] ![macos-badge] ![android-badge]
-
-[![Issues][issues-open-image]][issues-open-url] [![Issues][issues-close-image]][issues-close-url] [![Release][release-image]][release-url]
-
-[![QQGroup][qqgroup-image]][qqgroup-url]
-
 English | [中文](./README-zh_CN.md)
 
 </div>
-
-[win-badge]: https://img.shields.io/badge/Windows-passing-brightgreen?style=flat-square
-[linux-badge]: https://img.shields.io/badge/Linux-passing-brightgreen?style=flat-square
-[macos-badge]: https://img.shields.io/badge/MacOS-passing-brightgreen?style=flat-square
-[android-badge]: https://img.shields.io/badge/Android-passing-brightgreen?style=flat-square
-
-[issues-open-image]: https://img.shields.io/github/issues/davidhsing/qt-antilla?label=Issue&style=flat-square
-[issues-open-url]: https://github.com/davidhsing/qt-antilla/issues
-[issues-close-image]: https://img.shields.io/github/issues-closed/davidhsing/qt-antilla?color=brightgreen&label=Issue&style=flat-square
-[issues-close-url]: https://github.com/davidhsing/qt-antilla/issues?q=is%3Aissue%20state%3Aclosed
-
-[release-image]: https://img.shields.io/github/v/release/davidhsing/qt-antilla?label=Release&style=flat-square
-[release-url]: https://github.com/davidhsing/qt-antilla/releases
-
-[qqgroup-image]: https://img.shields.io/badge/QQGroup-490328047-f74658?style=flat-square
-[qqgroup-url]: https://qm.qq.com/q/cMNHn2tWeY
 
 <div align=center>
 
@@ -181,4 +159,4 @@ Windows 11 / Ubuntu 24.04.2, Qt Version >= 6.7
 
 ## 🎉 Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=davidhsing/Antilla&type=Date)](https://star-history.com/#davidhsing/Antilla&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=davidhsing/qt-antilla&type=Date)](https://star-history.com/#davidhsing/qt-antilla&Date)
