@@ -30,26 +30,30 @@ T.ToolTip {
             ctx.fillStyle = colorBg;
             ctx.beginPath();
             switch (position) {
-            case AntToolTip.PositionTop: {
-                ctx.moveTo(0, 0);
-                ctx.lineTo(width, 0);
-                ctx.lineTo(width / 2, height);
-            } break;
-            case AntToolTip.PositionBottom: {
-                ctx.moveTo(0, height);
-                ctx.lineTo(width, height);
-                ctx.lineTo(width / 2, 0);
-            } break;
-            case AntToolTip.PositionLeft: {
-                ctx.moveTo(0, 0);
-                ctx.lineTo(0, height);
-                ctx.lineTo(width, height / 2);
-            } break;
-            case AntToolTip.PositionRight: {
-                ctx.moveTo(width, 0);
-                ctx.lineTo(width, height);
-                ctx.lineTo(0, height / 2);
-            } break;
+                case AntToolTip.PositionTop: {
+                    ctx.moveTo(0, 0);
+                    ctx.lineTo(width, 0);
+                    ctx.lineTo(width / 2, height);
+                }
+                break;
+                case AntToolTip.PositionBottom: {
+                    ctx.moveTo(0, height);
+                    ctx.lineTo(width, height);
+                    ctx.lineTo(width / 2, 0);
+                }
+                break;
+                case AntToolTip.PositionLeft: {
+                    ctx.moveTo(0, 0);
+                    ctx.lineTo(0, height);
+                    ctx.lineTo(width, height / 2);
+                }
+                break;
+                case AntToolTip.PositionRight: {
+                    ctx.moveTo(width, 0);
+                    ctx.lineTo(width, height);
+                    ctx.lineTo(0, height / 2);
+                }
+                break;
             }
             ctx.closePath();
             ctx.fill();
@@ -59,24 +63,24 @@ T.ToolTip {
 
     x: {
         switch (position) {
-        case AntToolTip.PositionTop:
-        case AntToolTip.PositionBottom:
-            return (__private.controlParentWidth - implicitWidth) / 2;
-        case AntToolTip.PositionLeft:
-            return -implicitWidth - control.arrowOffset;
-        case AntToolTip.PositionRight:
-            return __private.controlParentWidth + control.arrowOffset;
+            case AntToolTip.PositionTop:
+            case AntToolTip.PositionBottom:
+                return (__private.controlParentWidth - implicitWidth) / 2;
+            case AntToolTip.PositionLeft:
+                return -implicitWidth - control.arrowOffset;
+            case AntToolTip.PositionRight:
+                return __private.controlParentWidth + control.arrowOffset;
         }
     }
     y: {
         switch (position) {
-        case AntToolTip.PositionTop:
-            return -implicitHeight - control.arrowOffset;
-        case AntToolTip.PositionBottom:
-            return __private.controlParentHeight + control.arrowOffset;
-        case AntToolTip.PositionLeft:
-        case AntToolTip.PositionRight:
-            return (__private.controlParentHeight - implicitHeight) / 2;
+            case AntToolTip.PositionTop:
+                return -implicitHeight - control.arrowOffset;
+            case AntToolTip.PositionBottom:
+                return __private.controlParentHeight + control.arrowOffset;
+            case AntToolTip.PositionLeft:
+            case AntToolTip.PositionRight:
+                return (__private.controlParentHeight - implicitHeight) / 2;
         }
     }
 
