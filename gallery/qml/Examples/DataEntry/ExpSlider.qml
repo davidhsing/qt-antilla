@@ -45,7 +45,7 @@ editable | bool | false | 是否启用滑块编辑模式
 minHandle | int | -1 | 最小滑块数量限制（-1 表示不限制）
 maxHandle | int | -1 | 最大滑块数量限制（-1 表示不限制）
 hovered | (readonly)bool | - | 是否悬浮在滑动条上
-snapMode | enum | AntSlider.SnapNone | 滑块对齐模式(来自 AntSlider)
+snapMode | enum | AntSlider.SnapOnRelease | 滑块对齐模式(来自 AntSlider)
 orientation | enum | Qt.Horizontal | 滑动条方向(Qt.Horizontal 或 Qt.Vertical)
 colorHandle | color | - | 滑块颜色
 colorTrack | color | - | 滑块轨道颜色

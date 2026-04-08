@@ -41,7 +41,7 @@ Item {
     property int minHandle: -1
     property int maxHandle: -1
     readonly property bool hovered: __sliderLoader.item ? __sliderLoader.item.hovered : (__multiHandleArea ? __multiHandleArea.containsMouse : false)
-    property int snapMode: AntSlider.SnapNone
+    property int snapMode: AntSlider.SnapOnRelease
     property int orientation: Qt.Horizontal
     property color colorBg: (enabled && hovered) ? AntTheme.AntSlider.colorBgHover : AntTheme.AntSlider.colorBg
     property color colorHandle: AntTheme.AntSlider.colorHandle
@@ -62,7 +62,7 @@ Item {
     property Component handleToolTipDelegate: AntToolTip {
         arrowVisible: true
         delay: 100
-        text: handleValue
+        text: handleValue.toFixed(0)
         position: control.handleToolTipPosition
         visible: control.handleToolTipAlwaysVisible || handlePressed || handleHovered
     }
