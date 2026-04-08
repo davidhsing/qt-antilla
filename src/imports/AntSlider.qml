@@ -20,7 +20,7 @@ Item {
     property int hoverCursorShape: Qt.PointingHandCursor
     property real min: 0
     property real max: 100
-    property real stepSize: 0.0
+    property real stepSize: 1.0
     property var initialValue: 0
     property int handleCount: 0
     readonly property var value: {
@@ -46,17 +46,26 @@ Item {
     property color colorBg: (enabled && hovered) ? AntTheme.AntSlider.colorBgHover : AntTheme.AntSlider.colorBg
     property color colorHandle: AntTheme.AntSlider.colorHandle
     property color colorTrack: {
-        if (!enabled) {
+        if (!control.enabled) {
             return AntTheme.AntSlider.colorTrackDisabled;
         }
         if (AntTheme.isDark) {
-            return hovered ? AntTheme.AntSlider.colorTrackHoverDark : AntTheme.AntSlider.colorTrackDark;
+            return control.hovered ? AntTheme.AntSlider.colorTrackHoverDark : AntTheme.AntSlider.colorTrackDark;
         } else {
-            return hovered ? AntTheme.AntSlider.colorTrackHover : AntTheme.AntSlider.colorTrack;
+            return control.hovered ? AntTheme.AntSlider.colorTrackHover : AntTheme.AntSlider.colorTrack;
         }
     }
     property AntRadius radiusBg: AntRadius { all: AntTheme.AntSlider.radiusBg }
-    property Component handleToolTipDelegate: Item { }
+    property bool handleToolTipEnabled: false
+    property bool handleToolTipAlwaysVisible: false
+    property int handleToolTipPosition: (control.orientation === Qt.Horizontal) ? AntToolTip.PositionTop : AntToolTip.PositionRight
+    property Component handleToolTipDelegate: AntToolTip {
+        arrowVisible: true
+        delay: 100
+        text: handleValue
+        position: control.handleToolTipPosition
+        visible: control.handleToolTipAlwaysVisible || handlePressed || handleHovered
+    }
     property Component handleDelegate: Rectangle {
         id: __handleItem
         x: __handleX
@@ -81,7 +90,12 @@ Item {
         property bool down: pressed
         property bool active: __hoverHandler.hovered || down
         property bool __selected: false
+        property int handleIndex: 0
+        // __handleValue is set by the parent Loader in single/range slider modes
+        // In multi-handle mode, it's bound directly in the Repeater item
         property real __handleValue: 0
+        // visualPosition is passed directly from Loader in single/range slider modes
+        // In multi-handle mode, calculate from __handleValue
         // visualPosition is passed directly from Loader in single/range slider modes
         // In multi-handle mode, calculate from __handleValue
         property real __visualPosition: visualPosition !== undefined ? visualPosition : ((__handleValue - control.min) / (control.max - control.min))
@@ -150,10 +164,15 @@ Item {
         }
 
         Loader {
+            id: __toolTipLoader
             sourceComponent: handleToolTipDelegate
+            active: control.handleToolTipEnabled
+            visible: active
             onLoaded: item.parent = __handleItem;
-            property alias handleHovered: __hoverHandler.hovered
+            property bool handleHovered: __private.initialHandleCount > 2 ? __hoverHandler.hovered : __hoverArea.containsMouse
             property alias handlePressed: __handleItem.down
+            property alias handleValue: __handleItem.__handleValue
+            property int handleIndex: __handleItem.handleIndex
         }
     }
     property Component bgDelegate: Item {
@@ -220,7 +239,6 @@ Item {
     onInitialValueChanged: __private.fromValueUpdate();
     // Force init when component is completed to ensure proper initialization
     Component.onCompleted: {
-        console.log("control Component.onCompleted, initialHandleCount:", __private.initialHandleCount, "initialValue:", JSON.stringify(initialValue));
         if (__private.initialHandleCount > 2 && __private.handlesValues.length === 0) {
             __private.initHandles();
         }
@@ -377,9 +395,13 @@ Item {
 
                 Loader {
                     sourceComponent: handleToolTipDelegate
+                    active: control.handleToolTipEnabled
+                    visible: active
                     onLoaded: item.parent = __handleItemMulti;
                     property alias handleHovered: __hoverHandler.hovered
                     property alias handlePressed: __handleItemMulti.down
+                    property alias handleValue: __handleItemMulti.__handleValue
+                    property int handleIndex: __handleItemMulti.handleIndex
                 }
             }
         }
@@ -409,6 +431,7 @@ Item {
                 property alias visualPosition: __control.visualPosition
                 property alias pressed: __control.pressed
                 property int handleIndex: 0
+                onLoaded: item.__handleValue = Qt.binding(function() { return __control.value; })
             }
             background: Loader {
                 sourceComponent: bgDelegate
@@ -447,6 +470,7 @@ Item {
                 property alias visualPosition: __control.first.visualPosition
                 property alias pressed: __control.first.pressed
                 property int handleIndex: 0
+                onLoaded: item.__handleValue = Qt.binding(function() { return __control.first.value; })
             }
             first.onMoved: control.handleMoved(0, first.value);
             first.onPressedChanged: {
@@ -460,6 +484,7 @@ Item {
                 property alias visualPosition: __control.second.visualPosition
                 property alias pressed: __control.second.pressed
                 property int handleIndex: 1
+                onLoaded: item.__handleValue = Qt.binding(function() { return __control.second.value; })
             }
             second.onMoved: control.handleMoved(1, second.value);
             second.onPressedChanged: {
@@ -544,7 +569,6 @@ Item {
         property int initialHandleCount: Array.isArray(control.initialValue) ? control.initialValue.length : 1
 
         function initHandles() {
-            console.log("initHandles called, initialValue:", JSON.stringify(control.initialValue));
             if (Array.isArray(control.initialValue)) {
                 // Create a new array from initialValue
                 var newValues = [];
@@ -557,7 +581,6 @@ Item {
                 handlesValues = [control.initialValue];
             }
             control.handleCount = handlesValues.length;
-            console.log("initHandles set handlesValues to:", JSON.stringify(handlesValues), "length:", handlesValues.length, "handleCount:", control.handleCount);
             updateMinMaxIndices();
         }
 
@@ -675,7 +698,6 @@ Item {
         }
 
         Component.onCompleted: {
-            console.log("__private Component.onCompleted, initialHandleCount:", initialHandleCount, "initialValue:", JSON.stringify(control.initialValue));
             if (initialHandleCount > 2 && handlesValues.length === 0) {
                 initHandles();
             }

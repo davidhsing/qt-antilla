@@ -15,7 +15,7 @@ Flickable {
         Description {
             desc: qsTr(`
 # AntSlider 滑动输入条\n
-滑动型输入器，展示当前值和可选范围。。\n
+滑动型输入器，展示当前值和可选范围。\n
 * **继承自 { Item }**\n
 \n<br/>
 \n### 支持的代理：\n
@@ -51,6 +51,9 @@ colorHandle | color | - | 滑块颜色
 colorTrack | color | - | 滑块轨道颜色
 colorBg | color | - | 背景颜色
 radiusBg | [AntRadius](internal://AntRadius) | - | 背景圆角半径
+handleToolTipEnabled | bool | false | 是否启用滑块提示
+handleToolTipAlwaysVisible | bool | false | 提示是否始终可见
+handleToolTipPosition | enum | AntToolTip.PositionTop/Right | 提示位置（水平时为顶部，垂直时为右侧）
 ariaConstrual | string | '' | 内容描述(提高可用性)
 \n<br/>
 \n### 支持的函数：\n
@@ -90,6 +93,7 @@ ariaConstrual | string | '' | 内容描述(提高可用性)
 - 长度大于2的数组：多滑块模式\n\n
 当 \`enabled\` 为 \`false\` 时，滑块处于不可用状态。\n
 通过 \`value\` 获取当前值，始终返回数组形式。
+通过 \`handleToolTipEnabled\` 设置启用滑块提示。
                        `)
             code: `
 import QtQuick
@@ -100,6 +104,7 @@ Column {
         width: 300
         height: 30
         initialValue: 50
+        handleToolTipEnabled: true
 
         AntCopyableText {
             anchors.verticalCenter: parent.verticalCenter
@@ -138,6 +143,7 @@ Column {
                     width: 300
                     height: 30
                     initialValue: 50
+                    handleToolTipEnabled: true
 
                     AntCopyableText {
                         anchors.verticalCenter: parent.verticalCenter
@@ -151,6 +157,7 @@ Column {
                     width: 300
                     height: 30
                     initialValue: [20, 50]
+                    handleToolTipEnabled: true
 
                     AntCopyableText {
                         anchors.verticalCenter: parent.verticalCenter
@@ -396,6 +403,7 @@ Column {
         height: 30
         initialValue: [20, 50, 80]
         editable: true
+        handleToolTipEnabled: true
 
         AntCopyableText {
             anchors.verticalCenter: parent.verticalCenter
@@ -423,6 +431,7 @@ Column {
                     height: 30
                     initialValue: [20, 50, 80]
                     editable: true
+                    handleToolTipEnabled: true
 
                     AntCopyableText {
                         anchors.verticalCenter: parent.verticalCenter

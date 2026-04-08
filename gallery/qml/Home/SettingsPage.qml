@@ -189,18 +189,18 @@ AntWindow {
                             slider.min: 20
                             slider.max: 200
                             slider.stepSize: 1
-                            slider.onFirstReleased: {
-                                const base = slider.currentValue;
+                            slider.onHandleReleased: (index, value) => {
+                                const base = value;
                                 AntTheme.installThemePrimaryAnimationBase(base, base * 2, base * 3);
                             }
                             slider.handleToolTipDelegate: AntToolTip {
                                 arrowVisible: true
                                 delay: 100
-                                text: themeSpeed.slider.currentValue
+                                text: themeSpeed.slider.value[0]
                                 visible: handlePressed || handleHovered
                             }
                             Component.onCompleted: {
-                                slider.value = AntTheme.Primary.durationFast;
+                                slider.initialValue = AntTheme.Primary.durationFast;
                             }
                         }
 
@@ -210,14 +210,14 @@ AntWindow {
                             slider.min: 0
                             slider.max: 2000
                             slider.stepSize: 1
-                            slider.value: gallerySwitchEffect.duration
-                            slider.onFirstReleased: {
-                                gallerySwitchEffect.duration = slider.currentValue;
+                            slider.initialValue: gallerySwitchEffect.duration
+                            slider.onHandleReleased: (index, value) => {
+                                gallerySwitchEffect.duration = value;
                             }
                             slider.handleToolTipDelegate: AntToolTip {
                                 arrowVisible: true
                                 delay: 100
-                                text: effectSpeed.slider.currentValue
+                                text: effectSpeed.slider.value[0]
                                 visible: handlePressed || handleHovered
                             }
                         }
@@ -225,15 +225,15 @@ AntWindow {
                         MySlider {
                             id: bgOpacitySlider
                             label.text: qsTr('背景透明度')
-                            slider.value: galleryBackground.opacity
+                            slider.initialValue: galleryBackground.opacity
                             slider.snapMode: AntSlider.SnapOnRelease
-                            slider.onFirstMoved: {
-                                galleryBackground.opacity = slider.currentValue;
+                            slider.onHandleMoved: (index, value) => {
+                                galleryBackground.opacity = value;
                             }
                             slider.handleToolTipDelegate: AntToolTip {
                                 arrowVisible: true
                                 delay: 100
-                                text: bgOpacitySlider.slider.currentValue.toFixed(1)
+                                text: bgOpacitySlider.slider.value[0].toFixed(1)
                                 visible: handlePressed || handleHovered
                             }
                         }
@@ -243,10 +243,10 @@ AntWindow {
                             slider.min: 12
                             slider.max: 24
                             slider.stepSize: 4
-                            slider.value: AntTheme.Primary.fontPrimarySizeHeading5
+                            slider.initialValue: AntTheme.Primary.fontPrimarySizeHeading5
                             slider.snapMode: AntSlider.SnapAlways
-                            slider.onFirstReleased: {
-                                AntTheme.installThemePrimaryFontSizeBase(slider.currentValue);
+                            slider.onHandleReleased: (index, value) => {
+                                AntTheme.installThemePrimaryFontSizeBase(value);
                             }
                             scaleVisible: true
                         }
@@ -256,10 +256,10 @@ AntWindow {
                             slider.min: 0
                             slider.max: 24
                             slider.stepSize: 2
-                            slider.value: AntTheme.Primary.radiusPrimary
+                            slider.initialValue: AntTheme.Primary.radiusPrimary
                             slider.snapMode: AntSlider.SnapAlways
-                            slider.onFirstReleased: {
-                                AntTheme.installThemePrimaryRadiusBase(slider.currentValue);
+                            slider.onHandleReleased: (index, value) => {
+                                AntTheme.installThemePrimaryRadiusBase(value);
                             }
                             scaleVisible: true
                         }
