@@ -236,7 +236,9 @@ Item {
     property string ariaConstrual: ''
 
     objectName: '__AntSlider__'
-    onInitialValueChanged: __private.fromValueUpdate();
+    implicitWidth: (control.orientation === Qt.Horizontal) ? 400 : 24
+    implicitHeight: (control.orientation === Qt.Horizontal) ? 24 : 400
+
     // Force init when component is completed to ensure proper initialization
     Component.onCompleted: {
         if (__private.initialHandleCount > 2 && __private.handlesValues.length === 0) {
@@ -355,16 +357,19 @@ Item {
                     anchors.fill: parent
                     cursorShape: control.hoverCursorShape
                     property real pressValue: 0
-                    onPressed: {
+                    onPressed: (mouse) => {
+                        mouse.accepted = true;
                         __private.selectHandle(handleIndex);
                         __handleItemMulti.forceActiveFocus();
                         // Record the value at press time
                         pressValue = __private.handlesValues[handleIndex];
                     }
-                    onReleased: {
+                    onReleased: (mouse) => {
+                        mouse.accepted = true;
                         control.handleReleased(handleIndex, __private.handlesValues[handleIndex]);
                     }
-                    onPositionChanged: {
+                    onPositionChanged: (mouse) => {
+                        mouse.accepted = true;
                         // Use mouse position relative to the slider root (not the handle)
                         // Map global mouse pos to slider coordinate
                         let globalMouse = mapToGlobal(mouseX, mouseY);
@@ -374,8 +379,7 @@ Item {
                         let available = control.orientation === Qt.Horizontal ? __sliderRoot.availableWidth : __sliderRoot.availableHeight;
                         let padding = control.orientation === Qt.Horizontal ? __sliderRoot.leftPadding : __sliderRoot.topPadding;
                         // Map position so handle can reach full range (0 to 1)
-                        // mousePos ranges from padding to padding + available
-                        // handle center should be able to reach min and max
+                        // Mouse pos ranges from padding to padding + available, handle center should be able to reach min and max
                         let pos = (mousePos - padding - handleSize / 2) / (available - handleSize);
                         pos = Math.max(0, Math.min(1, pos));
                         let newValue = control.min + pos * (control.max - control.min);
@@ -510,8 +514,10 @@ Item {
     Accessible.role: Accessible.Slider
     Accessible.name: control.ariaConstrual
     Accessible.description: control.ariaConstrual
-    Accessible.onIncreaseAction: increase();
-    Accessible.onDecreaseAction: decrease();
+    Accessible.onIncreaseAction: control.increase();
+    Accessible.onDecreaseAction: control.decrease();
+
+    onInitialValueChanged: __private.fromValueUpdate();
 
     function decrease(index = 0) {
         if (__private.initialHandleCount > 2) {
