@@ -838,16 +838,29 @@ Item {
         property real handleSize: tempHandle.item ? tempHandle.item.implicitWidth : 14
 
         function initHandles() {
-            if (Array.isArray(control.initialValue)) {
-                // Create a new array from initialValue
-                var newValues = [];
-                for (var i = 0; i < control.initialValue.length; i++) {
-                    newValues.push(control.initialValue[i]);
+            if (Array.isArray(control.initialValue) && control.initialValue.length > 0) {
+                // Create a new array from initialValue, filtering out invalid values
+                let newValues = [];
+                for (let i = 0; i < control.initialValue.length; i++) {
+                    let val = control.initialValue[i];
+                    // Only add valid numbers
+                    if (val !== undefined && val !== null && !isNaN(Number(val))) {
+                        newValues.push(Number(val));
+                    }
+                }
+                // If no valid values, use default
+                if (newValues.length === 0) {
+                    newValues = [control.min];
                 }
                 newValues.sort(function(a, b) { return a - b; });
-                handlesValues = newValues;
+                __private.handlesValues = newValues;
             } else {
-                handlesValues = [control.initialValue];
+                // Handle non-array or empty array case
+                let val = Array.isArray(control.initialValue) ? control.initialValue[0] : control.initialValue;
+                if (val === undefined || val === null || isNaN(Number(val))) {
+                    val = control.min;
+                }
+                __private.handlesValues = [Number(val)];
             }
             control.handleCount = handlesValues.length;
             updateMinMaxIndices();
@@ -860,10 +873,27 @@ Item {
                 if (__sliderLoader.item) {
                     if (initialHandleCount === 2) {
                         if (Array.isArray(control.initialValue) && control.initialValue.length >= 2) {
-                            __sliderLoader.item.setValues(control.initialValue[0], control.initialValue[1]);
+                            let val1 = control.initialValue[0];
+                            let val2 = control.initialValue[1];
+                            // Validate values
+                            if (val1 === undefined || val1 === null || isNaN(Number(val1))) {
+                                val1 = control.min;
+                            }
+                            if (val2 === undefined || val2 === null || isNaN(Number(val2))) {
+                                val2 = control.min;
+                            }
+                            __sliderLoader.item.setValues(Number(val1), Number(val2));
                         }
                     } else {
-                        __sliderLoader.item.value = Array.isArray(control.initialValue) ? control.initialValue[0] : control.initialValue;
+                        // Single handle mode
+                        let val = Array.isArray(control.initialValue) && control.initialValue.length > 0 
+                            ? control.initialValue[0] 
+                            : control.initialValue;
+                        // Validate value
+                        if (val === undefined || val === null || isNaN(Number(val))) {
+                            val = control.min;
+                        }
+                        __sliderLoader.item.value = Number(val);
                     }
                 }
             }
