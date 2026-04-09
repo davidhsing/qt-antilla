@@ -156,8 +156,8 @@ Item {
             hoverEnabled: true
             acceptedButtons: Qt.NoButton
             cursorShape: control.hoverCursorShape
-            visible: !(__private.initialHandleCount > 2)
-            enabled: !(__private.initialHandleCount > 2)
+            enabled: __private.initialHandleCount <= 2
+            visible: enabled
         }
 
         Keys.onPressed: (event) => {
@@ -826,7 +826,6 @@ Item {
         property real singleHandleVisualPosition: 0
         // 0: single handle, 2: double handle (RangeSlider), >2: multi-handle
         property int initialHandleCount: Array.isArray(control.initialValue) ? control.initialValue.length : 1
-        
         // Create a temporary handle to get its size for mark calculations
         property Item tempHandle: Loader {
             sourceComponent: control.handleDelegate
@@ -859,16 +858,16 @@ Item {
                 }
                 __private.handlesValues = [Number(val)];
             }
-            control.handleCount = handlesValues.length;
+            control.handleCount = __private.handlesValues.length;
             updateMinMaxIndices();
         }
 
         function fromValueUpdate() {
-            if (initialHandleCount > 2) {
+            if (__private.initialHandleCount > 2) {
                 initHandles();
             } else {
                 if (__sliderLoader.item) {
-                    if (initialHandleCount === 2) {
+                    if (__private.initialHandleCount === 2) {
                         if (Array.isArray(control.initialValue) && control.initialValue.length >= 2) {
                             let val1 = control.initialValue[0];
                             let val2 = control.initialValue[1];
@@ -883,9 +882,7 @@ Item {
                         }
                     } else {
                         // Single handle mode
-                        let val = Array.isArray(control.initialValue) && control.initialValue.length > 0 
-                            ? control.initialValue[0] 
-                            : control.initialValue;
+                        let val = Array.isArray(control.initialValue) && control.initialValue.length > 0  ? control.initialValue[0] : control.initialValue;
                         // Validate value
                         if (val === undefined || val === null || isNaN(Number(val))) {
                             val = control.min;
@@ -897,46 +894,95 @@ Item {
         }
 
         function addHandle(value) {
-            if (control.maxHandle > 0 && handlesValues.length >= control.maxHandle) {
+            if (control.maxHandle > 0 && __private.handlesValues.length >= control.maxHandle) {
                 return;
             }
             value = Math.max(control.min, Math.min(control.max, value));
-            // Find insertion position to keep sorted
-            let insertIndex = handlesValues.findIndex(v => v > value);
-            if (insertIndex === -1) {
-                insertIndex = handlesValues.length;
+            // Apply snap if snapMode is not SnapNone
+            if (control.snapMode !== AntSlider.SnapNone && control.stepSize > 0) {
+                let steps = Math.round((value - control.min) / control.stepSize);
+                let snappedValue = control.min + steps * control.stepSize;
+                // Check if there's an existing handle at the snapped position
+                let existingIndex = __private.handlesValues.findIndex(v => Math.abs(v - snappedValue) < 0.0001);
+                if (existingIndex !== -1) {
+                    // There's already a handle at this position
+                    // Try to snap to the next available position
+                    if (steps > 0) {
+                        // Try to snap to previous step
+                        let prevValue = snappedValue - control.stepSize;
+                        if (prevValue >= control.min && prevValue < value) {
+                            snappedValue = prevValue;
+                        } else {
+                            // Try to snap to next step
+                            let nextValue = snappedValue + control.stepSize;
+                            if (nextValue <= control.max && nextValue > value) {
+                                snappedValue = nextValue;
+                            }
+                        }
+                    } else {
+                        // At the minimum, try to go to next step
+                        let nextValue = snappedValue + control.stepSize;
+                        if (nextValue <= control.max) {
+                            snappedValue = nextValue;
+                        }
+                    }
+                    // Re-check if the new snapped position is still occupied
+                    existingIndex = __private.handlesValues.findIndex(v => Math.abs(v - snappedValue) < 0.0001);
+                    if (existingIndex !== -1) {
+                        // Still occupied, don't add
+                        return;
+                    }
+                }
+                value = snappedValue;
             }
-            let newArr = handlesValues.slice();
+            // Find insertion position to keep sorted
+            let insertIndex = __private.handlesValues.findIndex(v => v > value);
+            if (insertIndex === -1) {
+                insertIndex = __private.handlesValues.length;
+            }
+            // Check minimum gap constraint (1% of range)
+            let minGap = (control.max - control.min) * 0.01;
+            if (insertIndex > 0 && value < __private.handlesValues[insertIndex - 1] + minGap) {
+                value = __private.handlesValues[insertIndex - 1] + minGap;
+            }
+            if (insertIndex < __private.handlesValues.length && value > __private.handlesValues[insertIndex] - minGap) {
+                value = __private.handlesValues[insertIndex] - minGap;
+            }
+            // Check if still valid after gap adjustment
+            if (value < control.min || value > control.max) {
+                return;
+            }
+            let newArr = __private.handlesValues.slice();
             newArr.splice(insertIndex, 0, value);
-            handlesValues = newArr;
-            control.handleCount = handlesValues.length;
+            __private.handlesValues = newArr;
+            control.handleCount = __private.handlesValues.length;
             updateMinMaxIndices();
             control.handleAdded(insertIndex);
             selectHandle(insertIndex);
         }
 
         function deleteHandle(index) {
-            if (index < 0 || index >= handlesValues.length) {
+            if (index < 0 || index >= __private.handlesValues.length) {
                 return;
             }
-            if (control.minHandle > 0 && handlesValues.length <= control.minHandle) {
+            if (control.minHandle > 0 && __private.handlesValues.length <= control.minHandle) {
                 return;
             }
-            let newArr = handlesValues.slice();
+            let newArr = __private.handlesValues.slice();
             newArr.splice(index, 1);
-            handlesValues = newArr;
-            control.handleCount = handlesValues.length;
-            if (selectedIndex === index) {
-                selectedIndex = -1;
-            } else if (selectedIndex > index) {
-                selectedIndex--;
+            __private.handlesValues = newArr;
+            control.handleCount = __private.handlesValues.length;
+            if (__private.selectedIndex === index) {
+                __private.selectedIndex = -1;
+            } else if (__private.selectedIndex > index) {
+                __private.selectedIndex--;
             }
             updateMinMaxIndices();
             control.handleDeleted(index);
         }
 
         function updateHandleValue(index, newValue) {
-            if (index < 0 || index >= handlesValues.length) {
+            if (index < 0 || index >= __private.handlesValues.length) {
                 return;
             }
             newValue = Math.max(control.min, Math.min(control.max, newValue));
@@ -951,50 +997,50 @@ Item {
             let minGap = (control.max - control.min) * 0.01;
             if (index > 0) {
                 // Cannot go below the left (previous) handle + min gap
-                newValue = Math.max(newValue, handlesValues[index - 1] + minGap);
+                newValue = Math.max(newValue, __private.handlesValues[index - 1] + minGap);
             }
-            if (index < handlesValues.length - 1) {
+            if (index < __private.handlesValues.length - 1) {
                 // Cannot go above the right (next) handle - min gap
-                newValue = Math.min(newValue, handlesValues[index + 1] - minGap);
+                newValue = Math.min(newValue, __private.handlesValues[index + 1] - minGap);
             }
-            let newArr = handlesValues.slice();
+            let newArr = __private.handlesValues.slice();
             newArr[index] = newValue;
-            handlesValues = newArr;
+            __private.handlesValues = newArr;
             updateMinMaxIndices();
             control.handleMoved(index, newValue);
         }
 
         function selectHandle(index) {
-            if (index >= 0 && index < handlesValues.length) {
-                selectedIndex = index;
+            if (index >= 0 && index < __private.handlesValues.length) {
+                __private.selectedIndex = index;
             }
         }
 
         function updateMinMaxIndices() {
             if (handlesValues.length === 0) {
-                minHandleIndex = -1;
-                maxHandleIndex = -1;
-                singleHandleVisualPosition = 0;
+                __private.minHandleIndex = -1;
+                __private.maxHandleIndex = -1;
+                __private.singleHandleVisualPosition = 0;
             } else if (handlesValues.length === 1) {
-                minHandleIndex = 0;
-                maxHandleIndex = 0;
-                singleHandleVisualPosition = getHandleVisualPosition(0);
+                __private.minHandleIndex = 0;
+                __private.maxHandleIndex = 0;
+                __private.singleHandleVisualPosition = getHandleVisualPosition(0);
             } else {
-                minHandleIndex = 0;
-                maxHandleIndex = handlesValues.length - 1;
-                singleHandleVisualPosition = getHandleVisualPosition(0);
+                __private.minHandleIndex = 0;
+                __private.maxHandleIndex = __private.handlesValues.length - 1;
+                __private.singleHandleVisualPosition = getHandleVisualPosition(0);
             }
         }
 
         function getHandleVisualPosition(index) {
-            if (index < 0 || index >= handlesValues.length) {
+            if (index < 0 || index >= __private.handlesValues.length) {
                 return 0;
             }
             return (handlesValues[index] - control.min) / (control.max - control.min);
         }
 
         Component.onCompleted: {
-            if (initialHandleCount > 2 && handlesValues.length === 0) {
+            if (__private.initialHandleCount > 2 && __private.handlesValues.length === 0) {
                 initHandles();
             }
         }
