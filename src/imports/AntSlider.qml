@@ -758,8 +758,8 @@ Item {
     Loader {
         id: __sliderLoader
         anchors.fill: parent
-        visible: !(__private.initialHandleCount > 2)
-        sourceComponent: __private.initialHandleCount === 2 ? __rangeSliderComponent : __sliderComponent
+        visible: __private.initialHandleCount <= 2 && !control.editable
+        sourceComponent: (__private.initialHandleCount === 2) ? __rangeSliderComponent : __sliderComponent
         onLoaded: __private.fromValueUpdate();
     }
 
