@@ -254,7 +254,7 @@ Item {
     Item {
         id: __multiHandleContainer
         anchors.fill: parent
-        visible: __private.initialHandleCount > 2
+        visible: control.editable || __private.initialHandleCount > 2
 
         Item {
             id: __sliderRoot
@@ -265,8 +265,6 @@ Item {
             property real bottomPadding: 0
             property real availableWidth: Math.max(0, width - leftPadding - rightPadding)
             property real availableHeight: Math.max(0, height - topPadding - bottomPadding)
-
-
         }
 
         // Background track
@@ -380,7 +378,7 @@ Item {
 
         // Handles repeater
         Repeater {
-            model: __private.initialHandleCount > 2 ? __private.handlesValues.length : 0
+            model: (control.editable || __private.initialHandleCount > 2) ? __private.handlesValues.length : 0
 
             Rectangle {
                 id: __handleItemMulti
@@ -459,14 +457,12 @@ Item {
                     onPositionChanged: (mouse) => {
                         mouse.accepted = true;
                         // Use mouse position relative to the slider root (not the handle)
-                        // Map global mouse pos to slider coordinate
                         let globalMouse = mapToGlobal(mouseX, mouseY);
                         let sliderLocal = __sliderRoot.mapFromGlobal(globalMouse.x, globalMouse.y);
                         let mousePos = control.orientation === Qt.Horizontal ? sliderLocal.x : sliderLocal.y;
                         let handleSize = control.orientation === Qt.Horizontal ? __handleItemMulti.width : __handleItemMulti.height;
                         let available = control.orientation === Qt.Horizontal ? __sliderRoot.availableWidth : __sliderRoot.availableHeight;
                         let padding = control.orientation === Qt.Horizontal ? __sliderRoot.leftPadding : __sliderRoot.topPadding;
-                        // Map position so handle can reach full range (0 to 1)
                         // Mouse pos ranges from padding to padding + available, handle center should be able to reach min and max
                         let pos = (mousePos - padding - handleSize / 2) / (available - handleSize);
                         pos = Math.max(0, Math.min(1, pos));
