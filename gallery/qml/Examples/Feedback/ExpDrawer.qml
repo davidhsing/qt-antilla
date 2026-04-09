@@ -27,7 +27,7 @@ Flickable {
 属性名 | 类型 | 默认值 | 描述
 ------ | --- | :---: | ---
 animationEnabled | bool | AntTheme.animationEnabled | 是否开启动画
-maskClosable | bool | true | 点击蒙层是否允许关闭
+maskClosable | bool | true | 是否允许点击蒙层来关闭
 closePosition | enum | AntDrawer.PositionLeft | 关闭按钮的位置(来自 AntDrawer)
 drawerSize | int | 378 | 抽屉宽度
 edge | enum | Qt.RightEdge | 抽屉打开的位置(来自 Qt.*Edge)

@@ -36,7 +36,7 @@ animationEnabled | bool | AntTheme.animationEnabled | 是否开启动画
 position | enum | AntModal.PositionCenter | 弹框出现的位置(来自 AntModal)
 positionMargin | int | 120 | 弹框出现位置距离窗口边缘的距离
 closable | bool | true | 是否显示右上角的关闭按钮
-maskClosable | bool | true | 点击蒙层是否允许关闭
+maskClosable | bool | true | 是否允许点击蒙层来关闭
 iconSource | int丨string | 0丨'' | 图标源(来自 AntIcon)或图标链接
 iconSize | int | 24 | 图标大小
 titleText | string | '' | 标题文本

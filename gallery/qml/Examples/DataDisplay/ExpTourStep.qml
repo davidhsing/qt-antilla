@@ -30,7 +30,7 @@ Flickable {
 animationEnabled | bool | AntTheme.animationEnabled | 是否开启动画
 penetrationEvent | bool | false | 是否可穿透事件
 closable | bool | true | 是否显示右上角的关闭按钮
-maskClosable | bool | false | 点击蒙层是否允许关闭
+maskClosable | bool | false | 是否允许点击蒙层来关闭
 stepModel | list | [] | 步骤模型
 currentTarget | Item | null | 当前步骤目标
 currentStep | int | 0 | 当前步数

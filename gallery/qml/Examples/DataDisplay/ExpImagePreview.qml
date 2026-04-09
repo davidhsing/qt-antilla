@@ -42,7 +42,7 @@ currentScale | real(readonly) | - | 当前缩放值
 currentRotation | real(readonly) | - | 当前旋转(角度)值
 currentIndex | int | - | 当前图片索引
 count | int(readonly) | - | 当前图片数量
-maskClosable | bool | true | 点击蒙层是否允许关闭
+maskClosable | bool | true | 是否允许点击蒙层来关闭
 extraVisible | bool | true | 额外操作是否可见
 closeVisible | bool | true | 关闭按钮是否可见
 prevVisible | bool | true | 前一幅按钮是否可见
