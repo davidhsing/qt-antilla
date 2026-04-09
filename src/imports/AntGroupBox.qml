@@ -80,8 +80,7 @@ Item {
     objectName: '__AntGroupBox__'
     implicitWidth: Math.max(1, __contentItem.implicitWidth + control.contentLeftMargin + control.contentRightMargin)
     implicitHeight: {
-        const contentHeight = Math.max(__contentItem.height, __contentItem.implicitHeight);
-        let height = contentHeight + control.contentTopMargin + control.contentBottomMargin;
+        let height = __contentItem.implicitHeight + control.contentTopMargin + control.contentBottomMargin;
         if (!!control.titleText && __titleLoader.item) {
             height += __titleLoader.item.implicitHeight / 2;
         }
