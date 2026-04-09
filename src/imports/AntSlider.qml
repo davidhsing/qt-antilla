@@ -43,6 +43,7 @@ Item {
     readonly property bool hovered: __sliderLoader.item ? __sliderLoader.item.hovered : (__multiHandleArea ? __multiHandleArea.containsMouse : false)
     property int snapMode: AntSlider.SnapOnRelease
     property int orientation: Qt.Horizontal
+    property int fontMarkSize: AntTheme.AntSlider.fontMarkSize
     property color colorBg: (enabled && hovered) ? AntTheme.AntSlider.colorBgHover : AntTheme.AntSlider.colorBg
     property color colorHandle: AntTheme.AntSlider.colorHandle
     property color colorTrack: {
@@ -59,6 +60,9 @@ Item {
     property bool handleToolTipEnabled: false
     property bool handleToolTipAlwaysVisible: false
     property int handleToolTipPosition: (control.orientation === Qt.Horizontal) ? AntToolTip.PositionTop : AntToolTip.PositionRight
+    property bool markVisible: false
+    property color colorMarkLine: AntTheme.AntSlider.colorMarkLine
+    property color colorMarkText: AntTheme.AntSlider.colorMarkText
     property Component handleToolTipDelegate: AntToolTip {
         arrowVisible: true
         delay: 100
@@ -236,8 +240,8 @@ Item {
     property string ariaConstrual: ''
 
     objectName: '__AntSlider__'
-    implicitWidth: (control.orientation === Qt.Horizontal) ? 400 : 24
-    implicitHeight: (control.orientation === Qt.Horizontal) ? 24 : 400
+    implicitWidth: (control.orientation === Qt.Horizontal) ? 400 : (control.markVisible ? 32 : 24)
+    implicitHeight: (control.orientation === Qt.Horizontal) ? (control.markVisible ? 32 : 24) : 400
 
     // Force init when component is completed to ensure proper initialization
     Component.onCompleted: {
@@ -270,6 +274,90 @@ Item {
             sourceComponent: bgDelegate
             anchors.fill: parent
             property alias slider: __sliderRoot
+        }
+
+        // Marks display
+        Item {
+            anchors.fill: parent
+            visible: control.markVisible
+
+            Row {
+                id: __marksHorizontal
+                visible: control.orientation === Qt.Horizontal
+                anchors.top: parent.top
+                anchors.topMargin: 6
+                anchors.left: parent.left
+                anchors.leftMargin: __private.handleSize / 2 - 2
+                anchors.right: parent.right
+                anchors.rightMargin: __private.handleSize / 2 - 2
+                height: 30
+                spacing: (parent.width - __private.handleSize - ((__marksRepeater.count - 1) * 4)) / Math.max(1, __marksRepeater.count - 1)
+
+                Repeater {
+                    id: __marksRepeater
+                    model: Math.round((control.max - control.min) / control.stepSize) + 1
+                    delegate: Item {
+                        width: 4
+                        height: 6
+
+                        Rectangle {
+                            width: 4
+                            height: 6
+                            radius: 2
+                            color: control.colorMarkLine
+                            anchors.horizontalCenter: parent.horizontalCenter
+                        }
+
+                        AntText {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.top: parent.bottom
+                            anchors.topMargin: 10
+                            text: control.stepSize * index + control.min
+                            color: control.colorMarkText
+                            font.pixelSize: control.fontMarkSize
+                        }
+                    }
+                }
+            }
+
+            Column {
+                id: __marksVertical
+                visible: control.orientation === Qt.Vertical
+                anchors.left: parent.left
+                anchors.leftMargin: 6
+                anchors.top: parent.top
+                anchors.topMargin: __private.handleSize / 2 - 2
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: __private.handleSize / 2 - 2
+                width: 30
+                spacing: (parent.height - __private.handleSize - ((__marksRepeaterVertical.count - 1) * 4)) / Math.max(1, __marksRepeaterVertical.count - 1)
+
+                Repeater {
+                    id: __marksRepeaterVertical
+                    model: Math.round((control.max - control.min) / control.stepSize) + 1
+                    delegate: Item {
+                        width: 6
+                        height: 4
+
+                        Rectangle {
+                            width: 6
+                            height: 4
+                            radius: 2
+                            color: control.colorMarkLine
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+
+                        AntText {
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.left: parent.right
+                            anchors.leftMargin: 10
+                            text: control.max - (control.stepSize * index)
+                            color: control.colorMarkText
+                            font.pixelSize: control.fontMarkSize
+                        }
+                    }
+                }
+            }
         }
 
         // Click area to add new handle
@@ -442,6 +530,90 @@ Item {
                 property alias slider: __control
                 property alias visualPosition: __control.visualPosition
             }
+
+            // Marks display for single handle mode
+            Item {
+                anchors.fill: parent
+                visible: control.markVisible
+
+                Row {
+                    id: __marksSliderHorizontal
+                    visible: control.orientation === Qt.Horizontal
+                    anchors.top: parent.top
+                    anchors.topMargin: 6
+                    anchors.left: parent.left
+                    anchors.leftMargin: __private.handleSize / 2 - 2
+                    anchors.right: parent.right
+                    anchors.rightMargin: __private.handleSize / 2 - 2
+                    height: 30
+                    spacing: (parent.width - __private.handleSize - ((__marksSliderRepeater.count - 1) * 4)) / Math.max(1, __marksSliderRepeater.count - 1)
+
+                    Repeater {
+                        id: __marksSliderRepeater
+                        model: Math.round((control.max - control.min) / control.stepSize) + 1
+                        delegate: Item {
+                            width: 4
+                            height: 6
+
+                            Rectangle {
+                                width: 4
+                                height: 6
+                                radius: 2
+                                color: control.colorMarkLine
+                                anchors.horizontalCenter: parent.horizontalCenter
+                            }
+
+                            AntText {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                anchors.top: parent.bottom
+                                anchors.topMargin: 10
+                                text: control.stepSize * index + control.min
+                                color: control.colorMarkText
+                                font.pixelSize: control.fontMarkSize
+                            }
+                        }
+                    }
+                }
+
+                Column {
+                    id: __marksSliderVertical
+                    visible: control.orientation === Qt.Vertical
+                    anchors.left: parent.left
+                    anchors.leftMargin: 6
+                    anchors.top: parent.top
+                    anchors.topMargin: __private.handleSize / 2 - 2
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: __private.handleSize / 2 - 2
+                    width: 30
+                    spacing: (parent.height - __private.handleSize - ((__marksSliderRepeaterVertical.count - 1) * 4)) / Math.max(1, __marksSliderRepeaterVertical.count - 1)
+
+                    Repeater {
+                        id: __marksSliderRepeaterVertical
+                        model: Math.round((control.max - control.min) / control.stepSize) + 1
+                        delegate: Item {
+                            width: 6
+                            height: 4
+
+                            Rectangle {
+                                width: 6
+                                height: 4
+                                radius: 2
+                                color: control.colorMarkLine
+                                anchors.verticalCenter: parent.verticalCenter
+                            }
+
+                            AntText {
+                                anchors.verticalCenter: parent.verticalCenter
+                                anchors.left: parent.right
+                                anchors.leftMargin: 10
+                                text: control.max - (control.stepSize * index)
+                                color: control.colorMarkText
+                                font.pixelSize: control.fontMarkSize
+                            }
+                        }
+                    }
+                }
+            }
             onMoved: control.handleMoved(0, value);
             onPressedChanged: {
                 if (!pressed) {
@@ -499,6 +671,90 @@ Item {
             background: Loader {
                 sourceComponent: bgDelegate
                 property alias slider: __control
+            }
+
+            // Marks display for double handle mode
+            Item {
+                anchors.fill: parent
+                visible: control.markVisible
+
+                Row {
+                    id: __marksRangeHorizontal
+                    visible: control.orientation === Qt.Horizontal
+                    anchors.top: parent.top
+                    anchors.topMargin: 6
+                    anchors.left: parent.left
+                    anchors.leftMargin: __private.handleSize / 2 - 2
+                    anchors.right: parent.right
+                    anchors.rightMargin: __private.handleSize / 2 - 2
+                    height: 30
+                    spacing: (parent.width - __private.handleSize - ((__marksRangeRepeater.count - 1) * 4)) / Math.max(1, __marksRangeRepeater.count - 1)
+
+                    Repeater {
+                        id: __marksRangeRepeater
+                        model: Math.round((control.max - control.min) / control.stepSize) + 1
+                        delegate: Item {
+                            width: 4
+                            height: 6
+
+                            Rectangle {
+                                width: 4
+                                height: 6
+                                radius: 2
+                                color: control.colorMarkLine
+                                anchors.horizontalCenter: parent.horizontalCenter
+                            }
+
+                            AntText {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                anchors.top: parent.bottom
+                                anchors.topMargin: 10
+                                text: control.stepSize * index + control.min
+                                color: control.colorMarkText
+                                font.pixelSize: control.fontMarkSize
+                            }
+                        }
+                    }
+                }
+
+                Column {
+                    id: __marksRangeVertical
+                    visible: control.orientation === Qt.Vertical
+                    anchors.left: parent.left
+                    anchors.leftMargin: 6
+                    anchors.top: parent.top
+                    anchors.topMargin: __private.handleSize / 2 - 2
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: __private.handleSize / 2 - 2
+                    width: 30
+                    spacing: (parent.height - __private.handleSize - ((__marksRangeRepeaterVertical.count - 1) * 4)) / Math.max(1, __marksRangeRepeaterVertical.count - 1)
+
+                    Repeater {
+                        id: __marksRangeRepeaterVertical
+                        model: Math.round((control.max - control.min) / control.stepSize) + 1
+                        delegate: Item {
+                            width: 6
+                            height: 4
+
+                            Rectangle {
+                                width: 6
+                                height: 4
+                                radius: 2
+                                color: control.colorMarkLine
+                                anchors.verticalCenter: parent.verticalCenter
+                            }
+
+                            AntText {
+                                anchors.verticalCenter: parent.verticalCenter
+                                anchors.left: parent.right
+                                anchors.leftMargin: 10
+                                text: control.max - (control.stepSize * index)
+                                color: control.colorMarkText
+                                font.pixelSize: control.fontMarkSize
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -573,6 +829,13 @@ Item {
         property real singleHandleVisualPosition: 0
         // 0: single handle, 2: double handle (RangeSlider), >2: multi-handle
         property int initialHandleCount: Array.isArray(control.initialValue) ? control.initialValue.length : 1
+        
+        // Create a temporary handle to get its size for mark calculations
+        property Item tempHandle: Loader {
+            sourceComponent: control.handleDelegate
+            active: false
+        }
+        property real handleSize: tempHandle.item ? tempHandle.item.implicitWidth : 14
 
         function initHandles() {
             if (Array.isArray(control.initialValue)) {

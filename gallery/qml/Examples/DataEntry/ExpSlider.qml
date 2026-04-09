@@ -49,13 +49,17 @@ maxHandle | int | -1 | 最大滑块数量限制（-1 表示不限制）
 hovered | (readonly)bool | - | 是否悬浮在滑动条上
 snapMode | enum | AntSlider.SnapOnRelease | 滑块对齐模式(来自 AntSlider)
 orientation | enum | Qt.Horizontal | 滑动条方向(Qt.Horizontal 或 Qt.Vertical)
+markVisible | bool | false | 是否显示刻度标记
+colorMarkLine | color | - | 刻度线颜色
+colorMarkText | color | - | 刻度值颜色
+fontMarkSize | real | - | 刻度值字体大小
+handleToolTipEnabled | bool | false | 是否启用滑块提示
+handleToolTipAlwaysVisible | bool | false | 提示是否始终可见
+handleToolTipPosition | enum | AntToolTip.PositionTop/Right | 提示位置（水平时为顶部，垂直时为右侧）
 colorHandle | color | - | 滑块颜色
 colorTrack | color | - | 滑块轨道颜色
 colorBg | color | - | 背景颜色
 radiusBg | [AntRadius](internal://AntRadius) | - | 背景圆角半径
-handleToolTipEnabled | bool | false | 是否启用滑块提示
-handleToolTipAlwaysVisible | bool | false | 提示是否始终可见
-handleToolTipPosition | enum | AntToolTip.PositionTop/Right | 提示位置（水平时为顶部，垂直时为右侧）
 ariaConstrual | string | '' | 内容描述(提高可用性)
 \n<br/>
 \n### 支持的函数：\n
@@ -200,7 +204,10 @@ Row {
     AntSlider {
         width: 30
         height: 300
-        initialValue: 50
+        min: 0
+        max: 10
+        initialValue: 5
+        markVisible: true
         orientation: Qt.Vertical
 
         AntCopyableText {
@@ -236,7 +243,10 @@ Row {
                 AntSlider {
                     width: 30
                     height: 300
-                    initialValue: 50
+                    min: 0
+                    max: 10
+                    initialValue: 5
+                    markVisible: true
                     orientation: Qt.Vertical
 
                     AntCopyableText {
@@ -401,11 +411,14 @@ Column {
 
     AntSlider {
         id: slider
-        width: 400
+        width: 500
         height: 30
-        initialValue: [20, 50, 80]
+        min: 0
+        max: 20
+        initialValue: [2, 5, 8]
         editable: true
         handleToolTipEnabled: true
+        markVisible: true
 
         AntCopyableText {
             anchors.verticalCenter: parent.verticalCenter
@@ -429,11 +442,14 @@ Column {
 
                 AntSlider {
                     id: slider
-                    width: 400
+                    width: 500
                     height: 30
-                    initialValue: [20, 50, 80]
+                    min: 0
+                    max: 20
+                    initialValue: [2, 5, 8]
                     editable: true
                     handleToolTipEnabled: true
+                    markVisible: true
 
                     AntCopyableText {
                         anchors.verticalCenter: parent.verticalCenter

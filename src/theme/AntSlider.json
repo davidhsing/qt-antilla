@@ -1,5 +1,6 @@
 {
     "__style__": {
+        "fontMarkSize": "$subtract(@fontPrimarySize, 4)",
         "colorHandle": "@colorBgBase",
         "colorHandleBorder": "@colorPrimaryBgActive",
         "colorHandleBorderDisabled": "@colorTextQuaternary",
@@ -7,12 +8,14 @@
         "colorHandleBorderDark": "@colorPrimaryBase-7",
         "colorHandleBorderHoverDark": "@colorPrimaryBorderActive",
         "colorTrackDisabled": "$alpha(@colorPrimaryBgActive, 0)",
-        "colorBg": "$alpha(@colorTextBase, 0.15)",
-        "colorBgHover": "$alpha(@colorTextBase, 0.25)",
+        "colorBg": "@colorTextQuinary",
+        "colorBgHover": "@colorTextQuaternary",
         "colorTrack": "@colorPrimaryBgActive",
         "colorTrackHover": "@colorPrimaryBorderHover",
         "colorTrackDark": "@colorPrimaryBase-7",
         "colorTrackHoverDark": "@colorPrimaryBase-6",
+        "colorMarkLine": "@colorTextQuinary",
+        "colorMarkText": "@colorTextTertiary",
         "radiusBg": "@radiusPrimary"
     }
 }
