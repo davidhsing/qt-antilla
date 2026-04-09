@@ -37,6 +37,7 @@ AntButton {
                 color: control.colorIcon
                 iconSize: control.iconSize
                 iconSource: control.loading ? AntIcon.LoadingOutlined : control.iconSource
+                cursorShape: control.hoverCursorShape
                 verticalAlignment: Text.AlignVCenter
                 visible: control.loading || (control.iconSource !== 0 && control.iconSource !== '')
 
