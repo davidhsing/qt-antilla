@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 3.16)
 
 project(%1_Solution)
 
-set(BUILD_ANTILLA_STATIC_LIBRARY %2)
+set(BUILD_ANTILLA_STATIC_LIBS %2)
 set(BUILD_ANTILLA_ON_DESKTOP_PLATFORM ON)
 set(BUILD_ANTILLA_IN_DEFAULT_LOCATION ON)
 
@@ -31,7 +31,7 @@ cmake_minimum_required(VERSION 3.16)
 
 project(%1_Solution)
 
-option(BUILD_ANTILLA_STATIC_LIBRARY "Antilla is static library." %2)
+option(BUILD_ANTILLA_STATIC_LIBS "Antilla is static library." %2)
 
 #Your project
 add_subdirectory(src)
@@ -60,7 +60,7 @@ qt_add_qml_module(${PROJECT_NAME}
 )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE
-    $<$<BOOL:${BUILD_ANTILLA_STATIC_LIBRARY}>:BUILD_ANTILLA_STATIC_LIBRARY>
+    $<$<BOOL:${BUILD_ANTILLA_STATIC_LIBS}>:BUILD_ANTILLA_STATIC_LIBS>
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
@@ -88,7 +88,7 @@ static auto g_cmake_only_link_antilla = R"(
 target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt6::Quick
     AntillaBasic
-    $<$<BOOL:${BUILD_ANTILLA_STATIC_LIBRARY}>:AntillaBasicPlugin>
+    $<$<BOOL:${BUILD_ANTILLA_STATIC_LIBS}>:AntillaBasicPlugin>
 )
 )";
 
@@ -98,7 +98,7 @@ target_link_directories(${PROJECT_NAME} PRIVATE %2)
 target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt6::Quick
     AntillaBasic
-    $<$<BOOL:${BUILD_ANTILLA_STATIC_LIBRARY}>:AntillaBasicPlugin>
+    $<$<BOOL:${BUILD_ANTILLA_STATIC_LIBS}>:AntillaBasicPlugin>
 )
 )";
 
@@ -221,7 +221,7 @@ static auto g_main_cpp_file = R"(
 #include <QQmlApplicationEngine>
 #include <QQuickWindow>
 
-#ifdef BUILD_ANTILLA_STATIC_LIBRARY
+#ifdef BUILD_ANTILLA_STATIC_LIBS
 #include <QtQml/qqmlextensionplugin.h>
 Q_IMPORT_QML_PLUGIN(Antilla_BasicPlugin)
 #endif
@@ -253,7 +253,7 @@ static auto g_main_add_import_cpp_file = R"(
 #include <QQmlApplicationEngine>
 #include <QQuickWindow>
 
-#ifdef BUILD_ANTILLA_STATIC_LIBRARY
+#ifdef BUILD_ANTILLA_STATIC_LIBS
 #include <QtQml/qqmlextensionplugin.h>
 Q_IMPORT_QML_PLUGIN(Antilla_BasicPlugin)
 #endif

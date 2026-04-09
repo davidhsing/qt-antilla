@@ -2,7 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQuickWindow>
 
-#ifdef BUILD_ANTILLA_STATIC_LIBRARY
+#ifdef BUILD_ANTILLA_STATIC_LIBS
 #include <QtQml/qqmlextensionplugin.h>
 Q_IMPORT_QML_PLUGIN(Antilla_BasicPlugin)
 #endif

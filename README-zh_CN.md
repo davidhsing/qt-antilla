@@ -61,7 +61,7 @@ git submodule update --remote --recursive
 
 ```shell
 cd Antilla
-cmake -S . -B build -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DBUILD_ANTILLA_STATIC_LIBRARY=OFF    # -DCMAKE_BUILD_TYPE=Debug
+cmake -S . -B build -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DBUILD_ANTILLA_STATIC_LIBS=OFF    # -DCMAKE_BUILD_TYPE=Debug
 cmake --build build --target all --parallel --config Release    # --config Debug
 # cmake --install build --prefix install
 ```

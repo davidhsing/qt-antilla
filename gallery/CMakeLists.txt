@@ -193,11 +193,11 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt6::Quick
     Qt6::Multimedia
     AntillaBasic
-    $<$<BOOL:${BUILD_ANTILLA_STATIC_LIBRARY}>:AntillaBasicPlugin>
+    $<$<BOOL:${BUILD_ANTILLA_STATIC_LIBS}>:AntillaBasicPlugin>
 )
 
-if(BUILD_ANTILLA_STATIC_LIBRARY)
-    target_compile_definitions(${PROJECT_NAME} PRIVATE BUILD_ANTILLA_STATIC_LIBRARY)
+if(BUILD_ANTILLA_STATIC_LIBS)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE BUILD_ANTILLA_STATIC_LIBS)
 endif()
 
 # Deploy Script

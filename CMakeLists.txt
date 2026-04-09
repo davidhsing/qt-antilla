@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.16)
 project(Qt-Antilla)
 
 option(BUILD_ANTILLA_GALLERY "Build Antilla Gallery." ON)
-option(BUILD_ANTILLA_STATIC_LIBRARY "Build Antilla as a static library." OFF)
+option(BUILD_ANTILLA_STATIC_LIBS "Build Antilla as a static library." OFF)
 option(BUILD_ANTILLA_ON_DESKTOP_PLATFORM "Build Antilla on desktop platform (mobile platform set OFF)." ON)
 option(BUILD_ANTILLA_IN_DEFAULT_LOCATION "Build Antilla in default location[QtSDK Dir]." ON)
 
