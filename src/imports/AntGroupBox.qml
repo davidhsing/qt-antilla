@@ -35,7 +35,6 @@ Item {
     property int contentLeftMargin: contentMargins
     property int contentRightMargin: contentMargins
     property color colorTitle: AntTheme.AntGroupBox.colorTitle
-    property color colorTitleBg: AntTheme.AntGroupBox.colorTitleBg
     property color colorBorder: AntTheme.AntGroupBox.colorBorder
     property color colorBg: AntTheme.AntGroupBox.colorBg
     property AntRadius radiusBg: AntRadius { all: AntTheme.AntGroupBox.radiusBg }
@@ -50,6 +49,10 @@ Item {
     }
 
     property Component borderDelegate: Item {
+        id: borderItem
+        property real titleX: 0
+        property real titleWidth: 0
+
         // 完整的带圆角边框
         AntRectangle {
             anchors.fill: parent
@@ -62,6 +65,11 @@ Item {
             border.width: control.borderWidth
             border.color: control.colorBorder
             border.style: Qt.SolidLine
+            // 根据标题位置设置边框留白
+            topPreserve.from: control.titlePosition === AntGroupBox.PositionTop ? borderItem.titleX : 0
+            topPreserve.to: control.titlePosition === AntGroupBox.PositionTop ? borderItem.titleX + borderItem.titleWidth : 0
+            bottomPreserve.from: control.titlePosition === AntGroupBox.PositionBottom ? borderItem.titleX : 0
+            bottomPreserve.to: control.titlePosition === AntGroupBox.PositionBottom ? borderItem.titleX + borderItem.titleWidth : 0
         }
     }
 
@@ -109,9 +117,23 @@ Item {
                 id: __borderLoader
                 anchors.fill: parent
                 sourceComponent: borderDelegate
+
+                onLoaded: {
+                    // 对于上边框，preserve.from 和 preserve.to 是从右边开始计算的
+                    item.titleX = Qt.binding(function() {
+                        if (control.titlePosition === AntGroupBox.PositionTop) {
+                            // 上边框：转换为从右边开始计算
+                            const titleEnd = __titleContainer.x + __titleContainer.width
+                            return __borderLoader.width - titleEnd
+                        } else {
+                            return __titleContainer.x
+                        }
+                    });
+                    item.titleWidth = Qt.binding(function() { return __titleContainer.width })
+                }
             }
 
-            // 标题容器（包含标题和遮罩）
+            // 标题容器
             Item {
                 id: __titleContainer
                 z: 1
@@ -134,24 +156,9 @@ Item {
                 width: __titleLoader.item ? __titleLoader.item.implicitWidth : 0
                 height: __titleLoader.item ? __titleLoader.item.implicitHeight : 0
 
-                // 标题位置的遮罩（在边框上遮住标题下方的线条）
-                Rectangle {
-                    id: __titleMask
-                    anchors.fill: parent
-                    anchors.leftMargin: -4
-                    anchors.rightMargin: -4
-                    x: 4
-                    y: (control.titlePosition === AntGroupBox.PositionTop) ? parent.height / 2 - 1 : -1
-                    width: parent.width + 8
-                    height: control.borderWidth + 1
-                    color: control.colorTitleBg
-                    visible: !!control.titleText && __titleLoader.active
-                }
-
                 // 标题
                 Loader {
                     id: __titleLoader
-                    z: 1
                     anchors.centerIn: parent
                     sourceComponent: control.titleDelegate
                     active: control.titleVisible
