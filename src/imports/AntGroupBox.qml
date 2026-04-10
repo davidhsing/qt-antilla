@@ -76,8 +76,8 @@ Item {
     default property alias content: __contentItem.data
 
     objectName: '__AntGroupBox__'
-    implicitWidth: __mainLoader.implicitWidth
-    implicitHeight: __mainLoader.implicitHeight
+    implicitWidth: parent.width
+    implicitHeight: __mainLoader.height || 100
 
     Behavior on colorTitle { enabled: control.animationEnabled; ColorAnimation { duration: AntTheme.Primary.durationFast } }
     Behavior on colorBorder { enabled: control.animationEnabled; ColorAnimation { duration: AntTheme.Primary.durationFast } }
