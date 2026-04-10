@@ -109,6 +109,31 @@ public:
     }
 };
 
+class ANTILLA_EXPORT AntPreserve: public QObject {
+    Q_OBJECT
+    QML_NAMED_ELEMENT(AntPreserve)
+
+    Q_PROPERTY(qreal from READ from WRITE setFrom NOTIFY fromChanged FINAL)
+    Q_PROPERTY(qreal to READ to WRITE setTo NOTIFY toChanged FINAL)
+
+public:
+    explicit AntPreserve(QObject *parent = nullptr) : QObject{parent} { }
+
+    [[nodiscard]] qreal from() const { return m_from; }
+    void setFrom(qreal from);
+
+    [[nodiscard]] qreal to() const { return m_to; }
+    void setTo(qreal to);
+
+signals:
+    void fromChanged();
+    void toChanged();
+
+private:
+    qreal m_from = 0.;
+    qreal m_to = 0.;
+};
+
 class ANTILLA_EXPORT AntRectangle: public QQuickPaintedItem {
     Q_OBJECT
     QML_NAMED_ELEMENT(AntRectangle)
@@ -122,6 +147,11 @@ class ANTILLA_EXPORT AntRectangle: public QQuickPaintedItem {
     Q_PROPERTY(qreal topRightRadius READ topRightRadius WRITE setTopRightRadius NOTIFY topRightRadiusChanged FINAL)
     Q_PROPERTY(qreal bottomLeftRadius READ bottomLeftRadius WRITE setBottomLeftRadius NOTIFY bottomLeftRadiusChanged FINAL)
     Q_PROPERTY(qreal bottomRightRadius READ bottomRightRadius WRITE setBottomRightRadius NOTIFY bottomRightRadiusChanged FINAL)
+
+    Q_PROPERTY(AntPreserve* topPreserve READ topPreserve CONSTANT)
+    Q_PROPERTY(AntPreserve* bottomPreserve READ bottomPreserve CONSTANT)
+    Q_PROPERTY(AntPreserve* leftPreserve READ leftPreserve CONSTANT)
+    Q_PROPERTY(AntPreserve* rightPreserve READ rightPreserve CONSTANT)
 
 public:
     explicit AntRectangle(QQuickItem *parent = nullptr);
@@ -150,6 +180,11 @@ public:
     [[nodiscard]] qreal bottomRightRadius() const;
     void setBottomRightRadius(qreal radius);
 
+    [[nodiscard]] AntPreserve* topPreserve();
+    [[nodiscard]] AntPreserve* bottomPreserve();
+    [[nodiscard]] AntPreserve* leftPreserve();
+    [[nodiscard]] AntPreserve* rightPreserve();
+
 signals:
     void colorChanged();
     void radiusChanged();
@@ -158,7 +193,7 @@ signals:
     void bottomLeftRadiusChanged();
     void bottomRightRadiusChanged();
 
-protected:
+public:
     void paint(QPainter *painter) override;
 
 private Q_SLOTS:
