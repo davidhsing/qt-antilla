@@ -63,73 +63,121 @@ Item {
             border.color: control.colorBorder
             border.style: Qt.SolidLine
         }
-
-        // 标题位置的遮罩
-        Rectangle {
-            x: __titleLoader.x - 4
-            y: (control.titlePosition === AntGroupBox.PositionTop) ? -1 : control.height - 1
-            width: __titleLoader.implicitWidth + 8
-            height: control.borderWidth + 1
-            color: control.colorTitleBg
-            visible: !!control.titleText
-        }
     }
 
     default property alias content: __contentItem.data
 
     objectName: '__AntGroupBox__'
-    implicitWidth: Math.max(1, __contentItem.implicitWidth + control.contentLeftMargin + control.contentRightMargin)
-    implicitHeight: {
-        let height = __contentItem.implicitHeight + control.contentTopMargin + control.contentBottomMargin;
-        if (!!control.titleText && __titleLoader.item) {
-            height += __titleLoader.item.implicitHeight / 2;
-        }
-        return Math.max(1, height);
-    }
+    implicitWidth: __mainLoader.implicitWidth
+    implicitHeight: __mainLoader.implicitHeight
 
     Behavior on colorTitle { enabled: control.animationEnabled; ColorAnimation { duration: AntTheme.Primary.durationFast } }
     Behavior on colorBorder { enabled: control.animationEnabled; ColorAnimation { duration: AntTheme.Primary.durationFast } }
     Behavior on colorBg { enabled: control.animationEnabled; ColorAnimation { duration: AntTheme.Primary.durationFast } }
 
-    Loader {
-        id: __borderLoader
-        anchors.fill: parent
-        sourceComponent: borderDelegate
-    }
-
-    Loader {
-        id: __titleLoader
-        z: 1
-        x: {
-            if (control.titleAlign === AntGroupBox.AlignLeft) {
-                return control.titlePadding;
-            } else if (control.titleAlign === AntGroupBox.AlignRight) {
-                return control.width - (__titleLoader.item ? __titleLoader.item.implicitWidth : 0) - control.titlePadding;
-            }
-            return (control.width - (__titleLoader.item ? __titleLoader.item.implicitWidth : 0)) / 2;
-        }
-        y: {
-            if (control.titlePosition === AntGroupBox.PositionTop) {
-                return -(__titleLoader.item ? __titleLoader.item.implicitHeight : 0) / 2;
-            } else if (control.titlePosition === AntGroupBox.PositionBottom) {
-                return control.height - (__titleLoader.item ? __titleLoader.item.implicitHeight : 0) / 2;
-            }
-            return 0;
-        }
-        sourceComponent: control.titleDelegate
-        active: control.titleVisible
-        visible: active
-    }
-
+    // 临时内容容器（用于接收子组件）
     Item {
         id: __contentItem
+        width: parent.width
+        visible: false
+    }
+
+    Loader {
+        id: __mainLoader
         anchors.fill: parent
-        anchors.topMargin: control.contentTopMargin
-        anchors.bottomMargin: control.contentBottomMargin
-        anchors.leftMargin: control.contentLeftMargin
-        anchors.rightMargin: control.contentRightMargin
-        implicitWidth: childrenRect.width
-        implicitHeight: childrenRect.height
+        sourceComponent: __mainComponent
+    }
+
+    Component {
+        id: __mainComponent
+        Item {
+            anchors.fill: parent
+            implicitWidth: {
+                let width = __realContentItem.implicitWidth + control.contentLeftMargin + control.contentRightMargin;
+                return Math.max(1, width);
+            }
+            implicitHeight: {
+                let height = __realContentItem.implicitHeight + control.contentTopMargin + control.contentBottomMargin;
+                if (!!control.titleText && __titleLoader.item) {
+                    height += __titleLoader.item.implicitHeight / 2;
+                }
+                return Math.max(1, height);
+            }
+
+            // 边框
+            Loader {
+                id: __borderLoader
+                anchors.fill: parent
+                sourceComponent: borderDelegate
+            }
+
+            // 标题容器（包含标题和遮罩）
+            Item {
+                id: __titleContainer
+                z: 1
+                x: {
+                    if (control.titleAlign === AntGroupBox.AlignLeft) {
+                        return control.titlePadding;
+                    } else if (control.titleAlign === AntGroupBox.AlignRight) {
+                        return control.width - (__titleLoader.item ? __titleLoader.item.implicitWidth : 0) - control.titlePadding;
+                    }
+                    return (control.width - (__titleLoader.item ? __titleLoader.item.implicitWidth : 0)) / 2;
+                }
+                y: {
+                    if (control.titlePosition === AntGroupBox.PositionTop) {
+                        return -(__titleLoader.item ? __titleLoader.item.implicitHeight : 0) / 2;
+                    } else if (control.titlePosition === AntGroupBox.PositionBottom) {
+                        return control.height - (__titleLoader.item ? __titleLoader.item.implicitHeight : 0) / 2;
+                    }
+                    return 0;
+                }
+                width: __titleLoader.item ? __titleLoader.item.implicitWidth : 0
+                height: __titleLoader.item ? __titleLoader.item.implicitHeight : 0
+
+                // 标题位置的遮罩（在边框上遮住标题下方的线条）
+                Rectangle {
+                    id: __titleMask
+                    anchors.fill: parent
+                    anchors.leftMargin: -4
+                    anchors.rightMargin: -4
+                    x: 4
+                    y: (control.titlePosition === AntGroupBox.PositionTop) ? parent.height / 2 - 1 : -1
+                    width: parent.width + 8
+                    height: control.borderWidth + 1
+                    color: control.colorTitleBg
+                    visible: !!control.titleText && __titleLoader.active
+                }
+
+                // 标题
+                Loader {
+                    id: __titleLoader
+                    z: 1
+                    anchors.centerIn: parent
+                    sourceComponent: control.titleDelegate
+                    active: control.titleVisible
+                    visible: active
+                }
+            }
+
+            // 真正的内容区域（显示子组件）
+            Item {
+                id: __realContentItem
+                anchors.fill: parent
+                anchors.topMargin: control.contentTopMargin
+                anchors.bottomMargin: control.contentBottomMargin
+                anchors.leftMargin: control.contentLeftMargin
+                anchors.rightMargin: control.contentRightMargin
+                implicitWidth: childrenRect.width
+                implicitHeight: childrenRect.height
+
+                // 将临时容器中的子组件移到这里
+                Component.onCompleted: {
+                    for (let i = 0; i < __contentItem.data.length; i++) {
+                        __contentItem.data[i].parent = __realContentItem;
+                    }
+                }
+            }
+        }
     }
 
     Accessible.role: Accessible.Grouping

@@ -82,6 +82,7 @@ AntGroupBox {
 }`
             exampleDelegate: AntGroupBox {
                 titleText: qsTr('用户信息')
+                colorTitleBg: AntTheme.isDark ? '#181818' : '#eaeeed'
 
                 Column {
                     width: parent.width
@@ -136,6 +137,7 @@ Row {
                     height: 150
                     titleText: qsTr('顶部标题')
                     titlePosition: AntGroupBox.PositionTop
+                    colorTitleBg: AntTheme.isDark ? '#181818' : '#eaeeed'
 
                     AntText {
                         anchors.centerIn: parent
@@ -148,6 +150,7 @@ Row {
                     height: 150
                     titleText: qsTr('底部标题')
                     titlePosition: AntGroupBox.PositionBottom
+                    colorTitleBg: AntTheme.isDark ? '#181818' : '#eaeeed'
 
                     AntText {
                         anchors.centerIn: parent
@@ -211,6 +214,7 @@ Column {
                     height: 100
                     titleText: qsTr('左对齐')
                     titleAlign: AntGroupBox.AlignLeft
+                    colorTitleBg: AntTheme.isDark ? '#181818' : '#eaeeed'
 
                     AntText {
                         anchors.centerIn: parent
@@ -223,6 +227,7 @@ Column {
                     height: 100
                     titleText: qsTr('居中对齐')
                     titleAlign: AntGroupBox.AlignCenter
+                    colorTitleBg: AntTheme.isDark ? '#181818' : '#eaeeed'
 
                     AntText {
                         anchors.centerIn: parent
@@ -235,6 +240,7 @@ Column {
                     height: 100
                     titleText: qsTr('右对齐')
                     titleAlign: AntGroupBox.AlignRight
+                    colorTitleBg: AntTheme.isDark ? '#181818' : '#eaeeed'
 
                     AntText {
                         anchors.centerIn: parent
