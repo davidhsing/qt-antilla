@@ -73,7 +73,7 @@ Column {
 
     AntShield {
         leftText: 'Antilla'
-        rightText: 'v0.5.0'
+        rightText: '1.0.0'
     }
 
     AntShield {
@@ -88,7 +88,7 @@ Column {
 
                 AntShield {
                     leftText: 'Antilla'
-                    rightText: 'v0.5.0'
+                    rightText: '1.0.0'
                 }
 
                 AntShield {

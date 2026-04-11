@@ -61,13 +61,13 @@ Column {
         min: 0
         max: 360
         stepSize: 1
-        value: 0
+        initialValue: 0
 
         AntCopyableText {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.right
             anchors.leftMargin: 10
-            text: qsTr('旋转角度: ') + parent.currentValue.toFixed(0)
+            text: qsTr('旋转角度: ') + parent.value[0].toFixed(0)
         }
     }
 
@@ -83,7 +83,7 @@ Column {
             offset.x: -50
             offset.y: -50
             text: qsTr('Antilla')
-            rotate: slider1.currentValue
+            rotate: slider1.value[0]
             font.family: AntTheme.Primary.fontPrimaryFamily
             colorText: '#80ff0000'
         }
@@ -107,13 +107,13 @@ Column {
                     min: 0
                     max: 360
                     stepSize: 1
-                    value: 0
+                    initialValue: 0
 
                     AntCopyableText {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: parent.right
                         anchors.leftMargin: 10
-                        text: qsTr('旋转角度: ') + parent.currentValue.toFixed(0)
+                        text: qsTr('旋转角度: ') + parent.value[0].toFixed(0)
                     }
                 }
 
@@ -129,7 +129,7 @@ Column {
                         offset.x: -50
                         offset.y: -50
                         text: qsTr('Antilla')
-                        rotate: slider1.currentValue
+                        rotate: slider1.value[0]
                         font.family: AntTheme.Primary.fontPrimaryFamily
                         colorText: '#80ff0000'
                     }
@@ -163,13 +163,13 @@ Column {
         min: 0
         max: 360
         stepSize: 1
-        value: 0
+        initialValue: 0
 
         AntCopyableText {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.right
             anchors.leftMargin: 10
-            text: qsTr('旋转角度: ') + parent.currentValue.toFixed(0)
+            text: qsTr('旋转角度: ') + parent.value[0].toFixed(0)
         }
     }
 
@@ -187,7 +187,7 @@ Column {
             image: 'https://avatars.githubusercontent.com/u/9333918?v=4'
             markSize.width: 100
             markSize.height: 100
-            rotate: slider2.currentValue
+            rotate: slider2.value[0]
             colorText: '#80ff0000'
             font.family: AntTheme.Primary.fontPrimaryFamily
         }
@@ -211,13 +211,13 @@ Column {
                     min: 0
                     max: 360
                     stepSize: 1
-                    value: 0
+                    initialValue: 0
 
                     AntCopyableText {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: parent.right
                         anchors.leftMargin: 10
-                        text: qsTr('旋转角度: ') + parent.currentValue.toFixed(0)
+                        text: qsTr('旋转角度: ') + parent.value[0].toFixed(0)
                     }
                 }
 
@@ -235,7 +235,7 @@ Column {
                         image: 'https://avatars.githubusercontent.com/u/9333918?v=4'
                         markSize.width: 100
                         markSize.height: 100
-                        rotate: slider2.currentValue
+                        rotate: slider2.value[0]
                         colorText: '#80ff0000'
                         font.family: AntTheme.Primary.fontPrimaryFamily
                     }

@@ -275,8 +275,8 @@ Column {
         AntTourStep {
             id: tourStep2
             penetrationEvent: true
-            focusMargin: marginSlider.currentValue
-            focusRadius: radiusSlider.currentValue
+            focusMargin: marginSlider.value[0]
+            focusRadius: radiusSlider.value[0]
             stepModel: [{ target: tourStepGrid }]
             stepCardDelegate: Rectangle {
                 id: __stepCardDelegate
@@ -345,10 +345,10 @@ Column {
             height: 30
             min: 0
             max: 30
-            value: 5
+            initialValue: 5
             handleToolTipDelegate: AntToolTip {
                 visible: handleHovered || handlePressed
-                text: marginSlider.currentValue.toFixed(0)
+                text: marginSlider.value[0].toFixed(0)
             }
         }
 
@@ -364,7 +364,7 @@ Column {
             max: 30
             handleToolTipDelegate: AntToolTip {
                 visible: handleHovered || handlePressed
-                text: radiusSlider.currentValue.toFixed(0)
+                text: radiusSlider.value[0].toFixed(0)
             }
         }
     }
@@ -383,8 +383,8 @@ Column {
                     AntTourStep {
                         id: tourStep2
                         penetrationEvent: true
-                        focusMargin: marginSlider.currentValue
-                        focusRadius: radiusSlider.currentValue
+                        focusMargin: marginSlider.value[0]
+                        focusRadius: radiusSlider.value[0]
                         stepModel: [{ target: tourStepGrid }]
                         stepCardDelegate: Rectangle {
                             id: __stepCardDelegate
@@ -453,10 +453,10 @@ Column {
                         height: 30
                         min: 0
                         max: 30
-                        value: 5
+                        initialValue: 5
                         handleToolTipDelegate: AntToolTip {
                             visible: handleHovered || handlePressed
-                            text: marginSlider.currentValue.toFixed(0)
+                            text: marginSlider.value[0].toFixed(0)
                         }
                     }
 
@@ -472,7 +472,7 @@ Column {
                         max: 30
                         handleToolTipDelegate: AntToolTip {
                             visible: handleHovered || handlePressed
-                            text: radiusSlider.currentValue.toFixed(0)
+                            text: radiusSlider.value[0].toFixed(0)
                         }
                     }
                 }

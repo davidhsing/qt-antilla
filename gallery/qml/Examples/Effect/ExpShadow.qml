@@ -52,7 +52,7 @@ Column {
         id: shadowOpacitySlider
         width: 150
         height: 30
-        value: 1.0
+        initialValue: 1.0
         min: 0.0
         max: 1.0
         stepSize: 0.1
@@ -61,7 +61,7 @@ Column {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.right
             anchors.leftMargin: 10
-            text: qsTr('阴影透明度: ') + parent.currentValue.toFixed(1);
+            text: qsTr('阴影透明度: ') + parent.value[0].toFixed(1);
         }
     }
 
@@ -69,7 +69,7 @@ Column {
         id: shadowScaleSlider
         width: 150
         height: 30
-        value: 1.0
+        initialValue: 1.0
         min: 1.0
         max: 1.5
         stepSize: 0.01
@@ -78,7 +78,7 @@ Column {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.right
             anchors.leftMargin: 10
-            text: qsTr('阴影缩放: ') + parent.currentValue.toFixed(1);
+            text: qsTr('阴影缩放: ') + parent.value[0].toFixed(1);
         }
     }
 
@@ -86,7 +86,7 @@ Column {
         id: shadowVerticalOffsetSlider
         width: 150
         height: 30
-        value: 0
+        initialValue: 0
         min: -100
         max: 100
         stepSize: 1
@@ -95,7 +95,7 @@ Column {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.right
             anchors.leftMargin: 10
-            text: qsTr('阴影垂直偏移: ') + parent.currentValue.toFixed(1);
+            text: qsTr('阴影垂直偏移: ') + parent.value[0].toFixed(1);
         }
     }
 
@@ -103,7 +103,7 @@ Column {
         id: shadowHorizontalOffsetSlider
         width: 150
         height: 30
-        value: 0
+        initialValue: 0
         min: -100
         max: 100
         stepSize: 1
@@ -112,7 +112,7 @@ Column {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.right
             anchors.leftMargin: 10
-            text: qsTr('阴影水平偏移: ') + parent.currentValue.toFixed(1);
+            text: qsTr('阴影水平偏移: ') + parent.value[0].toFixed(1);
         }
     }
 
@@ -128,7 +128,7 @@ Column {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.right
             anchors.leftMargin: 10
-            text: qsTr('左上圆角: ') + parent.currentValue.toFixed(0);
+            text: qsTr('左上圆角: ') + parent.value[0].toFixed(0);
         }
     }
 
@@ -144,7 +144,7 @@ Column {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.right
             anchors.leftMargin: 10
-            text: qsTr('右上圆角: ') + parent.currentValue.toFixed(0);
+            text: qsTr('右上圆角: ') + parent.value[0].toFixed(0);
         }
     }
 
@@ -160,7 +160,7 @@ Column {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.right
             anchors.leftMargin: 10
-            text: qsTr('左下圆角: ') + parent.currentValue.toFixed(0);
+            text: qsTr('左下圆角: ') + parent.value[0].toFixed(0);
         }
     }
 
@@ -176,7 +176,7 @@ Column {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.right
             anchors.leftMargin: 10
-            text: qsTr('右下圆角: ') + parent.currentValue.toFixed(0);
+            text: qsTr('右下圆角: ') + parent.value[0].toFixed(0);
         }
     }
 
@@ -187,10 +187,10 @@ Column {
         AntShadow {
             anchors.fill: back
             source: back
-            shadowOpacity: shadowOpacitySlider.currentValue
-            shadowScale: shadowScaleSlider.currentValue
-            shadowVerticalOffset: shadowVerticalOffsetSlider.currentValue
-            shadowHorizontalOffset: shadowHorizontalOffsetSlider.currentValue
+            shadowOpacity: shadowOpacitySlider.value[0]
+            shadowScale: shadowScaleSlider.value[0]
+            shadowVerticalOffset: shadowVerticalOffsetSlider.value[0]
+            shadowHorizontalOffset: shadowHorizontalOffsetSlider.value[0]
             paddingRect: Qt.rect(width * shadowScale, height * shadowScale, width * shadowScale, height * shadowScale)
         }
 
@@ -200,10 +200,10 @@ Column {
             height: 200
             anchors.centerIn: parent
             color: '#EF8A8A'
-            topLeftRadius: topLeftSlider.currentValue
-            topRightRadius: topRightSlider.currentValue
-            bottomLeftRadius: bottomLeftSlider.currentValue
-            bottomRightRadius: bottomRightSlider.currentValue
+            topLeftRadius: topLeftSlider.value[0]
+            topRightRadius: topRightSlider.value[0]
+            bottomLeftRadius: bottomLeftSlider.value[0]
+            bottomRightRadius: bottomRightSlider.value[0]
             visible: false
         }
     }
@@ -216,7 +216,7 @@ Column {
                     id: shadowOpacitySlider
                     width: 150
                     height: 30
-                    value: 0.5
+                    initialValue: 0.5
                     min: 0.0
                     max: 1.0
                     stepSize: 0.1
@@ -225,7 +225,7 @@ Column {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: parent.right
                         anchors.leftMargin: 10
-                        text: qsTr('阴影透明度: ') + parent.currentValue.toFixed(1);
+                        text: qsTr('阴影透明度: ') + parent.value[0].toFixed(1);
                     }
                 }
 
@@ -233,7 +233,7 @@ Column {
                     id: shadowScaleSlider
                     width: 150
                     height: 30
-                    value: 1.0
+                    initialValue: 1.0
                     min: 1.0
                     max: 1.5
                     stepSize: 0.01
@@ -242,7 +242,7 @@ Column {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: parent.right
                         anchors.leftMargin: 10
-                        text: qsTr('阴影缩放: ') + parent.currentValue.toFixed(1);
+                        text: qsTr('阴影缩放: ') + parent.value[0].toFixed(1);
                     }
                 }
 
@@ -250,7 +250,7 @@ Column {
                     id: shadowVerticalOffsetSlider
                     width: 150
                     height: 30
-                    value: 0
+                    initialValue: 0
                     min: -100
                     max: 100
                     stepSize: 1
@@ -259,7 +259,7 @@ Column {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: parent.right
                         anchors.leftMargin: 10
-                        text: qsTr('阴影垂直偏移: ') + parent.currentValue.toFixed(1);
+                        text: qsTr('阴影垂直偏移: ') + parent.value[0].toFixed(1);
                     }
                 }
 
@@ -267,7 +267,7 @@ Column {
                     id: shadowHorizontalOffsetSlider
                     width: 150
                     height: 30
-                    value: 0
+                    initialValue: 0
                     min: -100
                     max: 100
                     stepSize: 1
@@ -276,7 +276,7 @@ Column {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: parent.right
                         anchors.leftMargin: 10
-                        text: qsTr('阴影水平偏移: ') + parent.currentValue.toFixed(1);
+                        text: qsTr('阴影水平偏移: ') + parent.value[0].toFixed(1);
                     }
                 }
 
@@ -292,7 +292,7 @@ Column {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: parent.right
                         anchors.leftMargin: 10
-                        text: qsTr('左上圆角: ') + parent.currentValue.toFixed(0);
+                        text: qsTr('左上圆角: ') + parent.value[0].toFixed(0);
                     }
                 }
 
@@ -308,7 +308,7 @@ Column {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: parent.right
                         anchors.leftMargin: 10
-                        text: qsTr('右上圆角: ') + parent.currentValue.toFixed(0);
+                        text: qsTr('右上圆角: ') + parent.value[0].toFixed(0);
                     }
                 }
 
@@ -324,7 +324,7 @@ Column {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: parent.right
                         anchors.leftMargin: 10
-                        text: qsTr('左下圆角: ') + parent.currentValue.toFixed(0);
+                        text: qsTr('左下圆角: ') + parent.value[0].toFixed(0);
                     }
                 }
 
@@ -340,7 +340,7 @@ Column {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: parent.right
                         anchors.leftMargin: 10
-                        text: qsTr('右下圆角: ') + parent.currentValue.toFixed(0);
+                        text: qsTr('右下圆角: ') + parent.value[0].toFixed(0);
                     }
                 }
 
@@ -351,10 +351,10 @@ Column {
                     AntShadow {
                         anchors.fill: back
                         source: back
-                        shadowOpacity: shadowOpacitySlider.currentValue
-                        shadowScale: shadowScaleSlider.currentValue
-                        shadowVerticalOffset: shadowVerticalOffsetSlider.currentValue
-                        shadowHorizontalOffset: shadowHorizontalOffsetSlider.currentValue
+                        shadowOpacity: shadowOpacitySlider.value[0]
+                        shadowScale: shadowScaleSlider.value[0]
+                        shadowVerticalOffset: shadowVerticalOffsetSlider.value[0]
+                        shadowHorizontalOffset: shadowHorizontalOffsetSlider.value[0]
                         paddingRect: Qt.rect(width * shadowScale, height * shadowScale, width * shadowScale, height * shadowScale)
                     }
 
@@ -364,10 +364,10 @@ Column {
                         height: 200
                         anchors.centerIn: parent
                         color: '#EF8A8A'
-                        topLeftRadius: topLeftSlider.currentValue
-                        topRightRadius: topRightSlider.currentValue
-                        bottomLeftRadius: bottomLeftSlider.currentValue
-                        bottomRightRadius: bottomRightSlider.currentValue
+                        topLeftRadius: topLeftSlider.value[0]
+                        topRightRadius: topRightSlider.value[0]
+                        bottomLeftRadius: bottomLeftSlider.value[0]
+                        bottomRightRadius: bottomRightSlider.value[0]
                         visible: false
                     }
                 }

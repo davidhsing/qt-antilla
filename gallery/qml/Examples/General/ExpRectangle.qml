@@ -78,13 +78,13 @@ Column {
         min: 0
         max: 20
         stepSize: 1
-        value: 1
+        initialValue: 1
 
         AntCopyableText {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.right
             anchors.leftMargin: 10
-            text: qsTr('边框线宽: ') + parent.currentValue.toFixed(0);
+            text: qsTr('边框线宽: ') + parent.value[0].toFixed(0);
         }
     }
 
@@ -100,7 +100,7 @@ Column {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.right
             anchors.leftMargin: 10
-            text: qsTr('左上圆角: ') + parent.currentValue.toFixed(0);
+            text: qsTr('左上圆角: ') + parent.value[0].toFixed(0);
         }
     }
 
@@ -116,7 +116,7 @@ Column {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.right
             anchors.leftMargin: 10
-            text: qsTr('右上圆角: ') + parent.currentValue.toFixed(0);
+            text: qsTr('右上圆角: ') + parent.value[0].toFixed(0);
         }
     }
 
@@ -132,7 +132,7 @@ Column {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.right
             anchors.leftMargin: 10
-            text: qsTr('左下圆角: ') + parent.currentValue.toFixed(0);
+            text: qsTr('左下圆角: ') + parent.value[0].toFixed(0);
         }
     }
 
@@ -148,20 +148,20 @@ Column {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.right
             anchors.leftMargin: 10
-            text: qsTr('右下圆角: ') + parent.currentValue.toFixed(0);
+            text: qsTr('右下圆角: ') + parent.value[0].toFixed(0);
         }
     }
 
     AntRectangle {
         width: 200
         height: 200
-        border.width: bordrWidthSlider.currentValue
+        border.width: bordrWidthSlider.value[0]
         border.color: AntTheme.Primary.colorTextBase
         border.style: styleRadio.currentCheckedValue
-        topLeftRadius: topLeftSlider.currentValue
-        topRightRadius: topRightSlider.currentValue
-        bottomLeftRadius: bottomLeftSlider.currentValue
-        bottomRightRadius: bottomRightSlider.currentValue
+        topLeftRadius: topLeftSlider.value[0]
+        topRightRadius: topRightSlider.value[0]
+        bottomLeftRadius: bottomLeftSlider.value[0]
+        bottomRightRadius: bottomRightSlider.value[0]
         gradient: Gradient {
             GradientStop { position: 0.0; color: 'red' }
             GradientStop { position: 0.33; color: 'yellow' }
@@ -191,13 +191,13 @@ Column {
                     min: 0
                     max: 20
                     stepSize: 1
-                    value: 1
+                    initialValue: 1
 
                     AntCopyableText {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: parent.right
                         anchors.leftMargin: 10
-                        text: qsTr('边框线宽: ') + parent.currentValue.toFixed(0);
+                        text: qsTr('边框线宽: ') + parent.value[0].toFixed(0);
                     }
                 }
 
@@ -213,7 +213,7 @@ Column {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: parent.right
                         anchors.leftMargin: 10
-                        text: qsTr('左上圆角: ') + parent.currentValue.toFixed(0);
+                        text: qsTr('左上圆角: ') + parent.value[0].toFixed(0);
                     }
                 }
 
@@ -229,7 +229,7 @@ Column {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: parent.right
                         anchors.leftMargin: 10
-                        text: qsTr('右上圆角: ') + parent.currentValue.toFixed(0);
+                        text: qsTr('右上圆角: ') + parent.value[0].toFixed(0);
                     }
                 }
 
@@ -245,7 +245,7 @@ Column {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: parent.right
                         anchors.leftMargin: 10
-                        text: qsTr('左下圆角: ') + parent.currentValue.toFixed(0);
+                        text: qsTr('左下圆角: ') + parent.value[0].toFixed(0);
                     }
                 }
 
@@ -261,20 +261,20 @@ Column {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: parent.right
                         anchors.leftMargin: 10
-                        text: qsTr('右下圆角: ') + parent.currentValue.toFixed(0);
+                        text: qsTr('右下圆角: ') + parent.value[0].toFixed(0);
                     }
                 }
 
                 AntRectangle {
                     width: 200
                     height: 200
-                    border.width: bordrWidthSlider.currentValue
+                    border.width: bordrWidthSlider.value[0]
                     border.color: AntTheme.Primary.colorTextBase
                     border.style: styleRadio.currentCheckedValue
-                    topLeftRadius: topLeftSlider.currentValue
-                    topRightRadius: topRightSlider.currentValue
-                    bottomLeftRadius: bottomLeftSlider.currentValue
-                    bottomRightRadius: bottomRightSlider.currentValue
+                    topLeftRadius: topLeftSlider.value[0]
+                    topRightRadius: topRightSlider.value[0]
+                    bottomLeftRadius: bottomLeftSlider.value[0]
+                    bottomRightRadius: bottomRightSlider.value[0]
                     gradient: Gradient {
                         GradientStop { position: 0.0; color: 'red' }
                         GradientStop { position: 0.33; color: 'yellow' }

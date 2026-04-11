@@ -104,13 +104,13 @@ radiusBg | [AntRadius](internal://AntRadius) | - | 背景圆角
                             height: 30
                             min: -1
                             max: 100
-                            value: -1
+                            initialValue: -1
                         }
                     }
 
                     AntSpace {
                         layout: AntSpace.TypeRow
-                        spacing: spaceSlider.currentValue
+                        spacing: spaceSlider.value[0]
                         layoutDirection: layoutDirectionRadio.currentCheckedValue
 
                         AntIconButton {
@@ -172,7 +172,7 @@ radiusBg | [AntRadius](internal://AntRadius) | - | 背景圆角
 
                     AntSpace {
                         layout: AntSpace.TypeRow
-                        spacing: spaceSlider.currentValue
+                        spacing: spaceSlider.value[0]
                         layoutDirection: layoutDirectionRadio.currentCheckedValue
 
                         AntButton { type: buttonTypeRadio.currentCheckedValue; text: 'Button1' }
@@ -245,13 +245,13 @@ radiusBg | [AntRadius](internal://AntRadius) | - | 背景圆角
                         height: 30
                         min: -1
                         max: 100
-                        value: -1
+                        initialValue: -1
                     }
                 }
 
                 AntSpace {
                     layout: AntSpace.TypeRow
-                    spacing: spaceSlider.currentValue
+                    spacing: spaceSlider.value[0]
                     layoutDirection: layoutDirectionRadio.currentCheckedValue
 
                     AntIconButton {
@@ -313,7 +313,7 @@ radiusBg | [AntRadius](internal://AntRadius) | - | 背景圆角
 
                 AntSpace {
                     layout: AntSpace.TypeRow
-                    spacing: spaceSlider.currentValue
+                    spacing: spaceSlider.value[0]
                     layoutDirection: layoutDirectionRadio.currentCheckedValue
 
                     AntButton { type: buttonTypeRadio.currentCheckedValue; text: 'Button1' }

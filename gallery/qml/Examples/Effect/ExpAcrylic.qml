@@ -64,13 +64,13 @@ Column {
         min: 0.0
         max: 1.0
         stepSize: 0.01
-        value: 0.65
+        initialValue: 0.65
 
         AntCopyableText {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.right
             anchors.leftMargin: 10
-            text: qsTr('色调透明度: ') + parent.currentValue.toFixed(2);
+            text: qsTr('色调透明度: ') + parent.value[0].toFixed(2);
         }
     }
 
@@ -81,13 +81,13 @@ Column {
         min: 0.0
         max: 1.0
         stepSize: 0.01
-        value: 0.01
+        initialValue: 0.01
 
         AntCopyableText {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.right
             anchors.leftMargin: 10
-            text: qsTr('亮度: ') + parent.currentValue.toFixed(2);
+            text: qsTr('亮度: ') + parent.value[0].toFixed(2);
         }
     }
 
@@ -98,13 +98,13 @@ Column {
         min: 0
         max: 128
         stepSize: 1
-        value: 32
+        initialValue: 32
 
         AntCopyableText {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.right
             anchors.leftMargin: 10
-            text: qsTr('模糊半径: ') + parent.currentValue.toFixed(0);
+            text: qsTr('模糊半径: ') + parent.value[0].toFixed(0);
         }
     }
 
@@ -128,9 +128,9 @@ Column {
             width: 200
             height: width
             sourceItem: source
-            opacityTint: opacityTintSlider.currentValue
-            luminosity: luminositySlider.currentValue
-            radiusBlur: radiusBlurSlider.currentValue
+            opacityTint: opacityTintSlider.value[0]
+            luminosity: luminositySlider.value[0]
+            radiusBlur: radiusBlurSlider.value[0]
 
             DragHandler {
                 target: parent
@@ -152,13 +152,13 @@ Column {
                     min: 0.0
                     max: 1.0
                     stepSize: 0.01
-                    value: 0.65
+                    initialValue: 0.65
 
                     AntCopyableText {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: parent.right
                         anchors.leftMargin: 10
-                        text: qsTr('色调透明度: ') + parent.currentValue.toFixed(2);
+                        text: qsTr('色调透明度: ') + parent.value[0].toFixed(2);
                     }
                 }
 
@@ -169,13 +169,13 @@ Column {
                     min: 0.0
                     max: 1.0
                     stepSize: 0.01
-                    value: 0.01
+                    initialValue: 0.01
 
                     AntCopyableText {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: parent.right
                         anchors.leftMargin: 10
-                        text: qsTr('亮度: ') + parent.currentValue.toFixed(2);
+                        text: qsTr('亮度: ') + parent.value[0].toFixed(2);
                     }
                 }
 
@@ -186,13 +186,13 @@ Column {
                     min: 0
                     max: 128
                     stepSize: 1
-                    value: 32
+                    initialValue: 32
 
                     AntCopyableText {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: parent.right
                         anchors.leftMargin: 10
-                        text: qsTr('模糊半径: ') + parent.currentValue.toFixed(0);
+                        text: qsTr('模糊半径: ') + parent.value[0].toFixed(0);
                     }
                 }
 
@@ -216,9 +216,9 @@ Column {
                         width: 200
                         height: width
                         sourceItem: source
-                        opacityTint: opacityTintSlider.currentValue
-                        luminosity: luminositySlider.currentValue
-                        radiusBlur: radiusBlurSlider.currentValue
+                        opacityTint: opacityTintSlider.value[0]
+                        luminosity: luminositySlider.value[0]
+                        radiusBlur: radiusBlurSlider.value[0]
 
                         DragHandler {
                             target: parent

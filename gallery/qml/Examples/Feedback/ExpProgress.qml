@@ -574,7 +574,7 @@ Column {
 
     Column {
         AntCopyableText {
-            text: \`Custom step count: \${stepCoutSlider.currentValue}\`
+            text: \`Custom step count: \${stepCoutSlider.value[0]}\`
         }
 
         AntSlider {
@@ -583,12 +583,12 @@ Column {
             height: 30
             min: 1
             max: 100
-            value: 8
+            initialValue: 8
             stepSize: 1
         }
 
         AntCopyableText {
-            text: \`Custom gap: \${gapCountSlider.currentValue}\`
+            text: \`Custom gap: \${gapCountSlider.value[0]}\`
         }
 
         AntSlider {
@@ -597,13 +597,13 @@ Column {
             height: 30
             min: 0
             max: 40
-            value: 4
+            initialValue: 4
             stepSize: 4
             snapMode: AntSlider.SnapAlways
         }
 
         AntCopyableText {
-            text: \`Custom bar thickness: \${barThicknessSlider.currentValue}\`
+            text: \`Custom bar thickness: \${barThicknessSlider.value[0]}\`
         }
 
         AntSlider {
@@ -612,7 +612,7 @@ Column {
             height: 30
             min: 4
             max: 40
-            value: 8
+            initialValue: 8
             stepSize: 1
         }
     }
@@ -623,10 +623,10 @@ Column {
         AntProgress {
             width: 600
             height: Math.min(40, Math.max(barThickness, 16))
-            barThickness: barThicknessSlider.currentValue
+            barThickness: barThicknessSlider.value[0]
             percent: 75
-            gap: gapCountSlider.currentValue
-            steps: Math.round(stepCoutSlider.currentValue)
+            gap: gapCountSlider.value[0]
+            steps: Math.round(stepCoutSlider.value[0])
             currentStep: Math.floor(percent / 100 * steps)
         }
 
@@ -634,10 +634,10 @@ Column {
             width: 600
             height: Math.min(40, Math.max(barThickness, 16))
             status: AntProgress.StatusException
-            barThickness: barThicknessSlider.currentValue
+            barThickness: barThicknessSlider.value[0]
             percent: 75
-            gap: gapCountSlider.currentValue
-            steps: Math.round(stepCoutSlider.currentValue)
+            gap: gapCountSlider.value[0]
+            steps: Math.round(stepCoutSlider.value[0])
             currentStep: Math.floor(percent / 100 * steps)
         }
     }
@@ -649,7 +649,7 @@ Column {
             width: 200
             height: width
             type: AntProgress.TypeCircle
-            barThickness: barThicknessSlider.currentValue
+            barThickness: barThicknessSlider.value[0]
             percent: 75
             gap: gapCountSlider.currentValue
             steps: Math.round(stepCoutSlider.currentValue)
@@ -711,7 +711,7 @@ Column {
                         height: 30
                         min: 1
                         max: 100
-                        value: 8
+                        initialValue: 8
                         stepSize: 1
                     }
 
@@ -725,7 +725,7 @@ Column {
                         height: 30
                         min: 0
                         max: 40
-                        value: 4
+                        initialValue: 4
                         stepSize: 4
                         snapMode: AntSlider.SnapAlways
                     }
@@ -740,7 +740,7 @@ Column {
                         height: 30
                         min: 4
                         max: 40
-                        value: 8
+                        initialValue: 8
                         stepSize: 1
                     }
                 }

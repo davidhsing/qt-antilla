@@ -76,7 +76,7 @@ cursorShape | enumeration | Qt.ArrowCursor | 鼠标光标形状
                             height: 30
                             min: 0
                             max: 30
-                            value: 4
+                            initialValue: 4
                         }
                     }
 
@@ -92,7 +92,7 @@ cursorShape | enumeration | Qt.ArrowCursor | 鼠标光标形状
                         text: qsTr('AntLabel 文本')
                         enabled: enabledSwitch.checked
                         colorTextHover: 'red'
-                        radiusBg.all: radiusSlider.currentValue
+                        radiusBg.all: radiusSlider.value[0]
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                         width: 250
@@ -114,7 +114,7 @@ cursorShape | enumeration | Qt.ArrowCursor | 鼠标光标形状
                         height: 30
                         min: 0
                         max: 30
-                        value: 4
+                        initialValue: 4
                     }
                 }
 
@@ -130,7 +130,7 @@ cursorShape | enumeration | Qt.ArrowCursor | 鼠标光标形状
                     text: qsTr('AntLabel 文本')
                     enabled: enabledSwitch.checked
                     colorTextHover: 'red'
-                    radiusBg.all: radiusSlider.currentValue
+                    radiusBg.all: radiusSlider.value[0]
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     width: 250

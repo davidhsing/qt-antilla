@@ -111,11 +111,11 @@ Column {
             height: parent.height
             min: 0
             max: 3000
-            value: 1500
+            initialValue: 1500
         }
 
         AntText {
-            text: durationSlider.currentValue.toFixed(0)
+            text: durationSlider.value[0].toFixed(0)
             anchors.verticalCenter: parent.verticalCenter
         }
     }
@@ -183,7 +183,7 @@ Column {
         AntSwitchEffect {
             id: switchEffect
             anchors.fill: parent
-            duration: durationSlider.currentValue
+            duration: durationSlider.value[0]
             maskScale: animationTime * 3
             maskRotation: (1.0 - animationTime) * 360
             onFinished: {
@@ -229,11 +229,11 @@ Column {
                         height: parent.height
                         min: 0
                         max: 3000
-                        value: 1500
+                        initialValue: 1500
                     }
 
                     AntText {
-                        text: durationSlider.currentValue.toFixed(0)
+                        text: durationSlider.value[0].toFixed(0)
                         anchors.verticalCenter: parent.verticalCenter
                     }
                 }
@@ -302,9 +302,9 @@ Column {
                     AntSwitchEffect {
                         id: switchEffect
                         anchors.fill: parent
-                        duration: durationSlider.currentValue
+                        duration: durationSlider.value[0]
                         maskScale: animationTime * 3
-                        maskRotation: type == AntSwitchEffect.TypeBlinds ? 45 : (1.0 - animationTime) * 360
+                        maskRotation: type === AntSwitchEffect.TypeBlinds ? 45 : (1.0 - animationTime) * 360
                         onFinished: {
                             item1.visible = !startButton.direction;
                             item2.visible = startButton.direction;
