@@ -18,8 +18,8 @@ Rectangle {
     property int tagState: AntTag.StateDefault
     property string text: ''
     property font font: Qt.font({
-        family: AntTheme.AntTag.fontFamily,
-        pixelSize: AntTheme.AntTag.fontSize - 2
+        family: control.themeSource.fontFamily,
+        pixelSize: control.themeSource.fontSize
     })
     property int adjustWidth: 16
     property int adjustHeight: 8
@@ -30,17 +30,18 @@ Rectangle {
     property int closeIconSize: AntTheme.AntButton.fontSize
     property alias spacing: __row.spacing
     property string presetColor: ''
-    property color colorText: presetColor == '' ? AntTheme.AntTag.colorDefaultText : __private.isCustom ? '#fff' : __private.colorArray[5]
-    property color colorBg: presetColor == '' ? AntTheme.AntTag.colorDefaultBg : __private.isCustom ? presetColor : __private.colorArray[0]
-    property color colorBorder: presetColor == '' ? AntTheme.AntTag.colorDefaultBorder : __private.isCustom ? 'transparent' : __private.colorArray[2]
+    property color colorText: presetColor == '' ? control.themeSource.colorDefaultText : __private.isCustom ? '#fff' : __private.colorArray[5]
+    property color colorBg: presetColor == '' ? control.themeSource.colorDefaultBg : __private.isCustom ? presetColor : __private.colorArray[0]
+    property color colorBorder: presetColor == '' ? control.themeSource.colorDefaultBorder : __private.isCustom ? 'transparent' : __private.colorArray[2]
     property color colorIcon: colorText
+    property var themeSource: AntTheme.AntTag
 
     objectName: '__AntTag__'
     implicitWidth: __row.implicitWidth + control.adjustWidth
     implicitHeight: Math.max(__icon.implicitHeight, __text.implicitHeight, __closeIcon.implicitHeight) + control.adjustHeight
     color: colorBg
     border.color: colorBorder
-    radius: AntTheme.AntTag.radiusBg
+    radius: control.themeSource.radiusBg
     onTagStateChanged: {
         switch (tagState) {
         case AntTag.StateSuccess: presetColor = '#52c41a'; break;
@@ -122,7 +123,7 @@ Rectangle {
         AntIconText {
             id: __closeIcon
             anchors.verticalCenter: parent.verticalCenter
-            color: hovered ? AntTheme.AntTag.colorCloseIconHover : AntTheme.AntTag.colorCloseIcon
+            color: hovered ? control.themeSource.colorCloseIconHover : control.themeSource.colorCloseIcon
             iconSize: control.closeIconSize
             iconSource: control.closeIconSource
             verticalAlignment: Text.AlignVCenter

@@ -28,7 +28,7 @@ T.SpinBox {
     property var downIcon: AntIcon.DownOutlined || ''
     property font labelFont: Qt.font({
         family: 'Antilla-Icons',
-        pixelSize: parseInt(themeSource.fontSize)
+        pixelSize: parseInt(control.themeSource.fontSize)
     })
     property var beforeLabel: '' || []
     property var afterLabel: '' || []
@@ -40,11 +40,11 @@ T.SpinBox {
     property var parser: (text, locale) => Number(text) || 0    // Number.fromLocaleString(locale, text)
     property int defaultHandlerWidth: 24
     property alias colorText: __input.colorText
-    property color colorPrefix: themeSource.colorPrefix
-    property color colorSuffix: themeSource.colorSuffix
-    property color colorBeforeLabel: themeSource.colorBeforeLabel
-    property color colorAfterLabel: themeSource.colorAfterLabel
-    property AntRadius radiusBg: AntRadius { all: themeSource.radiusBg }
+    property color colorPrefix: control.themeSource.colorPrefix
+    property color colorSuffix: control.themeSource.colorSuffix
+    property color colorBeforeLabel: control.themeSource.colorBeforeLabel
+    property color colorAfterLabel: control.themeSource.colorAfterLabel
+    property AntRadius radiusBg: AntRadius { all: control.themeSource.radiusBg }
     property var themeSource: AntTheme.AntInputInteger
     property alias input: __input
     property Component beforeDelegate: AntRectangleInternal {
@@ -177,8 +177,8 @@ T.SpinBox {
         top: Math.max(control.from, control.to)
     }
     font {
-        family: themeSource.fontFamily
-        pixelSize: parseInt(themeSource.fontSize)
+        family: control.themeSource.fontFamily
+        pixelSize: parseInt(control.themeSource.fontSize)
     }
     // valueFromText: parser
     // textFromValue: formatter

@@ -7,7 +7,7 @@ AntPopup {
     signal menuClicked(deep: int, key: string, keyPath: var, data: var)
 
     property bool animationEnabled: AntTheme.animationEnabled
-    property int defaultMenuIconSize: AntTheme.AntMenu.fontSize
+    property int defaultMenuIconSize: control.themeSource.fontSize
     property int defaultMenuIconSpacing: 8
     property int defaultMenuWidth: 140
     property int defaultMenuHeight: 30
@@ -17,6 +17,7 @@ AntPopup {
     property bool keepIconPlace: true
     property bool tooltipVisible: false
     property AntRadius radiusMenuBg: AntRadius { all: AntTheme.Primary.radiusPrimary }
+    property var themeSource: AntTheme.AntMenu
 
     objectName: '__AntContextMenu__'
     implicitWidth: defaultMenuWidth
@@ -74,7 +75,7 @@ AntPopup {
         menuIconDelegate: AntIconText {
             iconSize: menuButton.iconSize
             iconSource: menuButton.iconSource
-            colorIcon: !menuButton.isGroup && menuButton.enabled ? AntTheme.AntMenu.colorText : AntTheme.AntMenu.colorTextDisabled
+            colorIcon: !menuButton.isGroup && menuButton.enabled ? control.themeSource.colorText : control.themeSource.colorTextDisabled
             verticalAlignment: Text.AlignVCenter
 
             Behavior on x {
@@ -86,7 +87,7 @@ AntPopup {
         menuLabelDelegate: AntText {
             text: menuButton.text
             font: menuButton.font
-            color: !menuButton.isGroup && menuButton.enabled ? AntTheme.AntMenu.colorText : AntTheme.AntMenu.colorTextDisabled
+            color: !menuButton.isGroup && menuButton.enabled ? control.themeSource.colorText : control.themeSource.colorTextDisabled
             elide: Text.ElideRight
 
             Behavior on color { enabled: control.animationEnabled; ColorAnimation { duration: AntTheme.Primary.durationFast } }
@@ -128,7 +129,7 @@ AntPopup {
                 anchors.verticalCenter: parent.verticalCenter
                 visible: menuButton.expandedVisible
                 iconSource: AntIcon.RightOutlined
-                colorIcon: !isGroup && menuButton.enabled ? AntTheme.AntMenu.colorText : AntTheme.AntMenu.colorTextDisabled
+                colorIcon: !isGroup && menuButton.enabled ? control.themeSource.colorText : control.themeSource.colorTextDisabled
 
                 Behavior on color { enabled: control.animationEnabled; ColorAnimation { duration: AntTheme.Primary.durationFast } }
             }
@@ -141,12 +142,12 @@ AntPopup {
             bottomRightRadius: control.radiusMenuBg.bottomRight
             color: {
                 if (enabled) {
-                    if (menuButton.isGroup) return AntTheme.AntMenu.colorBgDisabled;
-                    else if (menuButton.pressed) return AntTheme.AntMenu.colorBgActive;
-                    else if (menuButton.hovered) return AntTheme.AntMenu.colorBgHover;
-                    else return AntTheme.AntMenu.colorBg;
+                    if (menuButton.isGroup) return control.themeSource.colorBgDisabled;
+                    else if (menuButton.pressed) return control.themeSource.colorBgActive;
+                    else if (menuButton.hovered) return control.themeSource.colorBgHover;
+                    else return control.themeSource.colorBg;
                 } else {
-                    return AntTheme.AntMenu.colorBgDisabled;
+                    return control.themeSource.colorBgDisabled;
                 }
             }
             border.color: menuButton.colorBorder

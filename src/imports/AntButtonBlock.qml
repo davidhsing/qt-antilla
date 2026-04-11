@@ -27,10 +27,10 @@ Item {
     property int buttonTopPadding: 8
     property int buttonBottomPadding: 8
     property font font: Qt.font({
-        family: AntTheme.AntButton.fontFamily,
-        pixelSize: AntTheme.AntButton.fontSize
+        family: control.themeSource.fontFamily,
+        pixelSize: control.themeSource.fontSize
     })
-    property AntRadius radiusBg: AntRadius { all: AntTheme.AntButton.radiusBg }
+    property AntRadius radiusBg: AntRadius { all: control.themeSource.radiusBg }
     property Component buttonDelegate: AntIconButton {
         id: __rootItem
 
@@ -67,7 +67,7 @@ Item {
                 visible: __rootItem.effectEnabled
                 color: 'transparent'
                 border.width: 0
-                border.color: __rootItem.enabled ? AntTheme.AntButton.colorBorderHover : 'transparent'
+                border.color: __rootItem.enabled ? control.themeSource.colorBorderHover : 'transparent'
                 opacity: 0.2
 
                 ParallelAnimation {
@@ -119,6 +119,7 @@ Item {
         }
     }
     property string ariaConstrual: ''
+    property var themeSource: AntTheme.AntButton
 
     objectName: '__AntButtonBlock__'
     implicitWidth: __loader.width

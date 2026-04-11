@@ -18,21 +18,21 @@ Item {
     property var defaultActiveKey: []
     property var expandIcon: AntIcon.RightOutlined || ''
     property font titleFont: Qt.font({
-        family: AntTheme.AntCollapse.fontFamily,
-        pixelSize: AntTheme.AntCollapse.fontSizeTitle
+        family: control.themeSource.fontFamily,
+        pixelSize: control.themeSource.fontSizeTitle
     })
-    property color colorBg: AntTheme.AntCollapse.colorBg
-    property color colorIcon: AntTheme.AntCollapse.colorIcon
-    property color colorTitle: AntTheme.AntCollapse.colorTitle
-    property color colorTitleBg: AntTheme.AntCollapse.colorTitleBg
+    property color colorBg: control.themeSource.colorBg
+    property color colorIcon: control.themeSource.colorIcon
+    property color colorTitle: control.themeSource.colorTitle
+    property color colorTitleBg: control.themeSource.colorTitleBg
     property font contentFont: Qt.font({
-        family: AntTheme.AntCollapse.fontFamily,
-        pixelSize: AntTheme.AntCollapse.fontSizeContent
+        family: control.themeSource.fontFamily,
+        pixelSize: control.themeSource.fontSizeContent
     })
-    property color colorContent: AntTheme.AntCollapse.colorContent
-    property color colorContentBg: AntTheme.AntCollapse.colorContentBg
-    property color colorBorder: AntTheme.isDark ? AntTheme.AntCollapse.colorBorderDark : AntTheme.AntCollapse.colorBorder
-    property AntRadius radiusBg: AntRadius { all: AntTheme.AntCollapse.radiusBg }
+    property color colorContent: control.themeSource.colorContent
+    property color colorContentBg: control.themeSource.colorContentBg
+    property color colorBorder: AntTheme.isDark ? control.themeSource.colorBorderDark : control.themeSource.colorBorder
+    property AntRadius radiusBg: AntRadius { all: control.themeSource.radiusBg }
 
     property Component titleDelegate: Row {
         leftPadding: 16
@@ -72,6 +72,7 @@ Item {
         wrapMode: Text.WordWrap
         color: control.colorContent
     }
+    property var themeSource: AntTheme.AntCollapse
 
     objectName: '__AntCollapse__'
     height: __listView.contentHeight

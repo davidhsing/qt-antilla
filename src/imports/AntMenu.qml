@@ -16,7 +16,7 @@ Item {
     property int popupWidth: 200
     property int popupOffset: 4
     property int popupMaxHeight: control.height
-    property int defaultMenuIconSize: AntTheme.AntMenu.fontSize
+    property int defaultMenuIconSize: control.themeSource.fontSize
     property int defaultMenuIconSpacing: 8
     property int defaultMenuWidth: 300
     property int defaultMenuHeight: 40
@@ -26,9 +26,9 @@ Item {
     property bool keepIconPlace: true
     property bool tooltipVisible: false
     property alias scrollBar: __menuScrollBar
-    property color colorBorder: AntTheme.AntMenu.colorBorder
-    property AntRadius radiusMenuBg: AntRadius { all: AntTheme.AntMenu.radiusMenuBg }
-    property AntRadius radiusPopupBg: AntRadius { all: AntTheme.AntMenu.radiusPopupBg }
+    property color colorBorder: control.themeSource.colorBorder
+    property AntRadius radiusMenuBg: AntRadius { all: control.themeSource.radiusMenuBg }
+    property AntRadius radiusPopupBg: AntRadius { all: control.themeSource.radiusPopupBg }
 
     property Component menuIconDelegate: AntIconText {
         color: menuButton.colorText
@@ -112,6 +112,7 @@ Item {
             Behavior on color { enabled: control.animationEnabled; ColorAnimation { duration: AntTheme.Primary.durationFast } }
         }
     }
+    property var themeSource: AntTheme.AntMenu
 
     objectName: '__AntMenu__'
     implicitWidth: compactMode ? compactWidth : defaultMenuWidth
@@ -129,7 +130,7 @@ Item {
         id: __menuButtonImpl
 
         property var iconSource: 0 ?? ''
-        property int iconSize: AntTheme.AntMenu.fontSize
+        property int iconSize: control.themeSource.fontSize
         property int iconSpacing: 5
         property int iconStart: 0
         property bool expanded: false
@@ -153,27 +154,27 @@ Item {
         colorText: {
             if (enabled) {
                 if (isGroup) {
-                    return (isCurrent && control.compactMode) ? AntTheme.AntMenu.colorTextActive : AntTheme.AntMenu.colorTextDisabled;
+                    return (isCurrent && control.compactMode) ? control.themeSource.colorTextActive : control.themeSource.colorTextDisabled;
                 } else {
-                    return isCurrent ? AntTheme.AntMenu.colorTextActive : AntTheme.AntMenu.colorText;
+                    return isCurrent ? control.themeSource.colorTextActive : control.themeSource.colorText;
                 }
             } else {
-                return AntTheme.AntMenu.colorTextDisabled;
+                return control.themeSource.colorTextDisabled;
             }
         }
         colorBg: {
             if (enabled) {
                 if (isGroup)
-                    return (isCurrent && control.compactMode) ? AntTheme.AntMenu.colorBgActive : AntTheme.AntMenu.colorBgDisabled;
+                    return (isCurrent && control.compactMode) ? control.themeSource.colorBgActive : control.themeSource.colorBgDisabled;
                 else if (isCurrent)
-                    return AntTheme.AntMenu.colorBgActive;
+                    return control.themeSource.colorBgActive;
                 else if (hovered) {
-                    return AntTheme.AntMenu.colorBgHover;
+                    return control.themeSource.colorBgHover;
                 } else {
-                    return AntTheme.AntMenu.colorBg;
+                    return control.themeSource.colorBg;
                 }
             } else {
-                return AntTheme.AntMenu.colorBgDisabled;
+                return control.themeSource.colorBgDisabled;
             }
         }
         contentItem: Loader {
@@ -367,7 +368,7 @@ Item {
                 width: parent.width
                 height: __menuButton.height + ((control.compactMode || control.popupMode) ? 0 : __childrenListView.height)
                 anchors.top: parent.top
-                color: (view.menuDeep === 0 || control.compactMode || control.popupMode) ? 'transparent' : AntTheme.AntMenu.colorChildBg
+                color: (view.menuDeep === 0 || control.compactMode || control.popupMode) ? 'transparent' : control.themeSource.colorChildBg
                 visible: menuType == 'item' || menuType == 'group'
 
                 MenuButton {

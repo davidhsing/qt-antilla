@@ -33,9 +33,9 @@ T.Control {
     property string selectedKey: ''
     property var initModel: []
     property alias titleFont: control.font
-    property color colorLine: themeSource.colorLine
-    property AntRadius radiusSwitcherBg: AntRadius { all: themeSource.radiusSwitcherBg }
-    property AntRadius radiusTitleBg: AntRadius { all: themeSource.radiusTitleBg }
+    property color colorLine: control.themeSource.colorLine
+    property AntRadius radiusSwitcherBg: AntRadius { all: control.themeSource.radiusSwitcherBg }
+    property AntRadius radiusTitleBg: AntRadius { all: control.themeSource.radiusTitleBg }
     property string contentDescription: ''
     property AntMargin marginIcon: AntMargin { left: 2 }
     property AntMargin marginText: AntMargin { left: 3 }

@@ -36,9 +36,9 @@ Item {
     property bool tabCentered: false
     property bool tabCardMovable: false
     property int defaultTabWidth: 80
-    property int defaultTabHeight: AntTheme.AntTabs.fontSize + 16
+    property int defaultTabHeight: control.themeSource.fontSize + 16
     property int defaultTabSpacing: 2
-    property int defaultTabBgRadius: AntTheme.AntTabs.radiusTabBg
+    property int defaultTabBgRadius: control.themeSource.radiusTabBg
     property int defaultHighlightWidth: __private.isHorizontal ? 40 : 20
     property var tabAddCallback: () => {
         append({ title: `New Tab ${__tabView.count + 1}` });
@@ -50,11 +50,11 @@ Item {
     property Component addButtonDelegate: AntCaptionButton {
         id: __addButton
         animationEnabled: control.animationEnabled
-        iconSize: AntTheme.AntTabs.fontSize
+        iconSize: control.themeSource.fontSize
         iconSource: AntIcon.PlusOutlined
-        colorIcon: AntTheme.AntTabs.colorTabCloseHover
+        colorIcon: control.themeSource.colorTabCloseHover
         hoverCursorShape: Qt.PointingHandCursor
-        radiusBg.all: AntTheme.AntTabs.radiusButtonBg
+        radiusBg.all: control.themeSource.radiusButtonBg
         onClicked: tabAddCallback();
     }
     property Component tabDelegate: tabType === AntTabs.TypeDefault ? __defaultTabDelegate : __cardTabDelegate
@@ -121,10 +121,11 @@ Item {
             ]
             active: control.tabType === AntTabs.TypeDefault
             sourceComponent: Rectangle {
-                color: AntTheme.isDark ? AntTheme.AntTabs.colorHighlightDark : AntTheme.AntTabs.colorHighlight
+                color: AntTheme.isDark ? control.themeSource.colorHighlightDark : control.themeSource.colorHighlight
             }
         }
     }
+    property var themeSource: AntTheme.AntTabs
 
     objectName: '__AntTabs__'
     onInitModelChanged: {
@@ -209,14 +210,14 @@ Item {
             colorBorder: 'transparent'
             colorText: {
                 if (isCurrent) {
-                    return AntTheme.isDark ? AntTheme.AntTabs.colorHighlightDark : AntTheme.AntTabs.colorHighlight;
+                    return AntTheme.isDark ? control.themeSource.colorHighlightDark : control.themeSource.colorHighlight;
                 } else {
-                    return down ? AntTheme.AntTabs.colorTabActive : (hovered ? AntTheme.AntTabs.colorTabHover : AntTheme.AntTabs.colorTab);
+                    return down ? control.themeSource.colorTabActive : (hovered ? control.themeSource.colorTabHover : control.themeSource.colorTab);
                 }
             }
             font {
-                family: AntTheme.AntTabs.fontFamily
-                pixelSize: AntTheme.AntTabs.fontSize
+                family: control.themeSource.fontFamily
+                pixelSize: control.themeSource.fontSize
             }
             contentItem: Item {
                 implicitWidth: control.tabSize === AntTabs.SizeAuto ? (__text.width + calcIconWidth) : __tabItem.tabFixedWidth
@@ -267,7 +268,7 @@ Item {
             property bool isCurrent: __tabView.currentIndex === index
             property string tabKey: modelData.key || ''
             property var tabIcon: modelData.iconSource || 0
-            property int tabIconSize: modelData.iconSize || AntTheme.AntTabs.fontSize
+            property int tabIconSize: modelData.iconSize || control.themeSource.fontSize
             property int tabIconSpacing: modelData.iconSpacing || 5
             property string tabTitle: modelData.title || ''
             property int tabFixedWidth: modelData.tabWidth || defaultTabWidth
@@ -292,7 +293,7 @@ Item {
             property bool isCurrent: __tabView.currentIndex === index
             property string tabKey: modelData.key || ''
             property var tabIcon: modelData.iconSource || 0
-            property int tabIconSize: modelData.iconSize || AntTheme.AntTabs.fontSize
+            property int tabIconSize: modelData.iconSize || control.themeSource.fontSize
             property int tabIconSpacing: modelData.iconSpacing || 5
             property string tabTitle: modelData.title || ''
             property int tabFixedWidth: modelData.tabWidth || defaultTabWidth
@@ -316,12 +317,12 @@ Item {
                 z: __dragHandler.drag.active ? 1 : 0
                 color: {
                     if (AntTheme.isDark) {
-                        return isCurrent ? AntTheme.AntTabs.colorTabCardBgCheckedDark : AntTheme.AntTabs.colorTabCardBgDark;
+                        return isCurrent ? control.themeSource.colorTabCardBgCheckedDark : control.themeSource.colorTabCardBgDark;
                     } else {
-                        return isCurrent ? AntTheme.AntTabs.colorTabCardBgChecked : AntTheme.AntTabs.colorTabCardBg;
+                        return isCurrent ? control.themeSource.colorTabCardBgChecked : control.themeSource.colorTabCardBg;
                     }
                 }
-                border.color: AntTheme.AntTabs.colorTabCardBorder
+                border.color: control.themeSource.colorTabCardBorder
                 topLeftRadius: control.tabPosition === AntTabs.PositionTop || control.tabPosition === AntTabs.PositionLeft ? defaultTabBgRadius : 0
                 topRightRadius: control.tabPosition === AntTabs.PositionTop || control.tabPosition === AntTabs.PositionRight ? defaultTabBgRadius : 0
                 bottomLeftRadius: control.tabPosition === AntTabs.PositionBottom || control.tabPosition === AntTabs.PositionLeft ? defaultTabBgRadius : 0
@@ -336,9 +337,9 @@ Item {
                 property real calcHeight: Math.max(__icon.implicitHeight, __text.implicitHeight, __close.height)
                 property color colorText: {
                     if (isCurrent) {
-                        return AntTheme.isDark ? AntTheme.AntTabs.colorHighlightDark : AntTheme.AntTabs.colorHighlight;
+                        return AntTheme.isDark ? control.themeSource.colorHighlightDark : control.themeSource.colorHighlight;
                     } else {
-                        return down ? AntTheme.AntTabs.colorTabActive : (hovered ? AntTheme.AntTabs.colorTabHover : AntTheme.AntTabs.colorTab);
+                        return down ? control.themeSource.colorTabActive : (hovered ? control.themeSource.colorTabHover : control.themeSource.colorTab);
                     }
                 }
 
@@ -417,8 +418,8 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     text: tabTitle
                     font {
-                        family: AntTheme.AntTabs.fontFamily
-                        pixelSize: AntTheme.AntTabs.fontSize
+                        family: control.themeSource.fontFamily
+                        pixelSize: control.themeSource.fontSize
                     }
                     color: __tabItem.colorText
                     elide: Text.ElideRight
@@ -442,7 +443,7 @@ Item {
                     hoverCursorShape: Qt.PointingHandCursor
                     iconSize: tabIconSize
                     iconSource: AntIcon.CloseOutlined
-                    colorIcon: hovered ? AntTheme.AntTabs.colorTabCloseHover : AntTheme.AntTabs.colorTabClose
+                    colorIcon: hovered ? control.themeSource.colorTabCloseHover : control.themeSource.colorTabClose
                     onClicked: {
                         control.tabCloseCallback(__tabContainer.index, __tabContainer.model);
                     }

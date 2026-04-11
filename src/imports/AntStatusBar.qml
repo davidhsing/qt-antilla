@@ -13,13 +13,13 @@ Item {
 
     property bool animationEnabled: AntTheme.animationEnabled
     property var model: []
-    property int defaultFontSize: AntTheme.AntStatusBar.fontSize - 2
+    property int defaultFontSize: control.themeSource.fontSize
     property int defaultLeftMargin: 10
     property int defaultRightMargin: 10
     property int defaultElide: Text.ElideRight
-    property color colorBg: AntTheme.AntStatusBar.colorBg
-    property color colorDivider: AntTheme.AntStatusBar.colorDivider
-    property color defaultColorText: AntTheme.AntStatusBar.colorText
+    property color colorBg: control.themeSource.colorBg
+    property color colorDivider: control.themeSource.colorDivider
+    property color defaultColorText: control.themeSource.colorText
     property AntRadius radiusBg: AntRadius { all: 0 }
     property string textRole: 'text'
     property string widthRole: 'width'
@@ -29,6 +29,7 @@ Item {
     property string leftMarginRole: 'leftMargin'
     property string rightMarginRole: 'rightMargin'
     property string elideRole: 'elide'
+    property var themeSource: AntTheme.AntStatusBar
 
     objectName: '__AntStatusBar__'
     implicitWidth: parent.width

@@ -31,15 +31,15 @@ T.Control {
     property var pagination: false ?? {}
     property bool unidirection: false
     property font titleFont: Qt.font({
-        family: themeSource.fontFamilyTitle,
-        pixelSize: parseInt(themeSource.fontSizeTitle)
+        family: control.themeSource.fontFamilyTitle,
+        pixelSize: parseInt(control.themeSource.fontSizeTitle)
     })
 
-    property color colorTitle: themeSource.colorColumnHeaderTitle
-    property color colorText: themeSource.colorText
-    property color colorBg: themeSource.colorBg
-    property color colorBorder: themeSource.colorBorder
-    property AntRadius radiusBg: AntRadius { all: themeSource.radiusBg }
+    property color colorTitle: control.themeSource.colorColumnHeaderTitle
+    property color colorText: control.themeSource.colorText
+    property color colorBg: control.themeSource.colorBg
+    property color colorBorder: control.themeSource.colorBorder
+    property AntRadius radiusBg: AntRadius { all: control.themeSource.radiusBg }
     property var themeSource: AntTheme.AntTransfer
 
     property alias sourceTableView: __sourceList.view
@@ -110,8 +110,8 @@ T.Control {
                              implicitContentHeight + topPadding + bottomPadding)
     spacing: 4
     font {
-        family: themeSource.fontFamily
-        pixelSize: parseInt(themeSource.fontSize)
+        family: control.themeSource.fontFamily
+        pixelSize: parseInt(control.themeSource.fontSize)
     }
     contentItem: RowLayout {
         spacing: control.spacing

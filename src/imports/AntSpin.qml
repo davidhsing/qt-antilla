@@ -10,10 +10,11 @@ Item {
     property bool spinning: true
     property string tip: ''
     property real tipSpacing: 8
-    property color colorIcon: AntTheme.AntSpin.colorIcon
-    property color colorTip: AntTheme.AntSpin.colorTip
+    property color colorIcon: control.themeSource.colorIcon
+    property color colorTip: control.themeSource.colorTip
     property int delay: 0    // 毫秒
     default property alias contentDelegate: __contentItem.data
+    property var themeSource: AntTheme.AntSpin
 
     signal closed()
 

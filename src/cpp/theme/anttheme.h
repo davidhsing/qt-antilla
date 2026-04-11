@@ -60,7 +60,6 @@ class ANTILLA_EXPORT AntTheme : public QObject
     ANT_PROPERTY_READONLY(QVariantMap, AntMultiSelect);
     ANT_PROPERTY_READONLY(QVariantMap, AntDateTimePicker);
     ANT_PROPERTY_READONLY(QVariantMap, AntNotification);
-    ANT_PROPERTY_READONLY(QVariantMap, AntPopconfirm);
     ANT_PROPERTY_READONLY(QVariantMap, AntLabel);
     ANT_PROPERTY_READONLY(QVariantMap, AntModal);
     ANT_PROPERTY_READONLY(QVariantMap, AntText);

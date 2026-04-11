@@ -9,15 +9,15 @@ T.CheckBox {
     property bool effectEnabled: true
     property int hoverCursorShape: Qt.PointingHandCursor
     property int indicatorSize: 18
-    property AntRadius radiusIndicator: AntRadius { all: themeSource.radiusIndicator }
-    property color colorText: enabled ? themeSource.colorText : themeSource.colorTextDisabled
+    property AntRadius radiusIndicator: AntRadius { all: control.themeSource.radiusIndicator }
+    property color colorText: enabled ? control.themeSource.colorText : control.themeSource.colorTextDisabled
     property color colorIndicator: {
         if (enabled) {
-            return (checkState !== Qt.Unchecked) ? (hovered ? themeSource.colorIndicatorCheckedHover : themeSource.colorIndicatorChecked) : themeSource.colorIndicator
+            return (checkState !== Qt.Unchecked) ? (hovered ? control.themeSource.colorIndicatorCheckedHover : control.themeSource.colorIndicatorChecked) : control.themeSource.colorIndicator
         }
-        return themeSource.colorIndicatorDisabled;
+        return control.themeSource.colorIndicatorDisabled;
     }
-    property color colorIndicatorBorder: enabled ? ((hovered || checked) ? themeSource.colorIndicatorBorderChecked : themeSource.colorIndicatorBorder) : themeSource.colorIndicatorDisabled
+    property color colorIndicatorBorder: enabled ? ((hovered || checked) ? control.themeSource.colorIndicatorBorderChecked : control.themeSource.colorIndicatorBorder) : control.themeSource.colorIndicatorDisabled
     property string ariaConstrual: ''
     property var themeSource: AntTheme.AntCheckBox
 
@@ -28,8 +28,8 @@ T.CheckBox {
     objectName: '__AntCheckBox__'
     implicitWidth: implicitContentWidth + leftPadding + rightPadding
     implicitHeight: Math.max(implicitContentHeight, implicitIndicatorHeight) + topPadding + bottomPadding
-    font.family: themeSource.fontFamily
-    font.pixelSize: themeSource.fontSize
+    font.family: control.themeSource.fontFamily
+    font.pixelSize: control.themeSource.fontSize
     spacing: 6
     indicator: Item {
         x: control.leftPadding

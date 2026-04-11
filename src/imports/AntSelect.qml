@@ -20,12 +20,12 @@ T.ComboBox {
     property bool readOnly: false
     property bool tooltipVisible: false
     property alias placeholderText: __contentItem.placeholderText
-    property color colorText: enabled ? ((popup.visible && !editable) ? themeSource.colorTextActive : themeSource.colorText) : themeSource.colorTextDisabled
-    property color colorBorder: danger ? (active ? themeSource.colorErrorBorderHover : themeSource.colorErrorBorder) : (enabled ? (active ? themeSource.colorBorderHover : themeSource.colorBorder) : themeSource.colorBorderDisabled)
-    property color colorBg: enabled ? themeSource.colorBg : themeSource.colorBgDisabled
-    property AntRadius radiusBg: AntRadius { all: themeSource.radiusBg }
-    property AntRadius radiusItemBg: AntRadius { all: themeSource.radiusItemBg }
-    property AntRadius radiusPopupBg: AntRadius { all: themeSource.radiusPopupBg }
+    property color colorText: enabled ? ((popup.visible && !editable) ? control.themeSource.colorTextActive : control.themeSource.colorText) : control.themeSource.colorTextDisabled
+    property color colorBorder: danger ? (active ? control.themeSource.colorErrorBorderHover : control.themeSource.colorErrorBorder) : (enabled ? (active ? control.themeSource.colorBorderHover : control.themeSource.colorBorder) : control.themeSource.colorBorderDisabled)
+    property color colorBg: enabled ? control.themeSource.colorBg : control.themeSource.colorBgDisabled
+    property AntRadius radiusBg: AntRadius { all: control.themeSource.radiusBg }
+    property AntRadius radiusItemBg: AntRadius { all: control.themeSource.radiusItemBg }
+    property AntRadius radiusPopupBg: AntRadius { all: control.themeSource.radiusPopupBg }
     property string ariaConstrual: ''
     property var themeSource: AntTheme.AntSelect
 

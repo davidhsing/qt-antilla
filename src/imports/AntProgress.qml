@@ -46,29 +46,30 @@ Item {
     }
     property color colorBar: {
         switch (control.status) {
-            case AntProgress.StatusSuccess: return AntTheme.AntProgress.colorBarSuccess;
-            case AntProgress.StatusException: return AntTheme.AntProgress.colorBarException;
-            case AntProgress.StatusNormal: return AntTheme.AntProgress.colorBarNormal;
-            case AntProgress.StatusActive : return AntTheme.AntProgress.colorBarNormal;
-            default: return AntTheme.AntProgress.colorBarNormal;
+            case AntProgress.StatusSuccess: return control.themeSource.colorBarSuccess;
+            case AntProgress.StatusException: return control.themeSource.colorBarException;
+            case AntProgress.StatusNormal: return control.themeSource.colorBarNormal;
+            case AntProgress.StatusActive : return control.themeSource.colorBarNormal;
+            default: return control.themeSource.colorBarNormal;
         }
     }
-    property color colorTrack: AntTheme.AntProgress.colorTrack
+    property color colorTrack: control.themeSource.colorTrack
     property color colorInfo: {
         switch (control.status) {
-            case AntProgress.StatusSuccess: return AntTheme.AntProgress.colorInfoSuccess;
-            case AntProgress.StatusException: return AntTheme.AntProgress.colorInfoException;
-            default: return AntTheme.AntProgress.colorInfoNormal;
+            case AntProgress.StatusSuccess: return control.themeSource.colorInfoSuccess;
+            case AntProgress.StatusException: return control.themeSource.colorInfoException;
+            default: return control.themeSource.colorInfoNormal;
         }
     }
     property Component infoDelegate: AntIconText {
         color: control.colorInfo
-        font.family: isIcon ? 'Antilla-Icons' : AntTheme.AntProgress.fontFamily
-        font.pixelSize: type === AntProgress.TypeLine ? AntTheme.AntProgress.fontSize + (!isIcon ? 0 : 2) : AntTheme.AntProgress.fontSize + (!isIcon ? 8 : 16)
+        font.family: isIcon ? 'Antilla-Icons' : control.themeSource.fontFamily
+        font.pixelSize: type === AntProgress.TypeLine ? control.themeSource.fontSize + (!isIcon ? 0 : 2) : control.themeSource.fontSize + (!isIcon ? 8 : 16)
         text: isIcon ? String.fromCharCode(formatText) : formatText
         property var formatText: control.formatter()
         property bool isIcon: typeof formatText == 'number'
     }
+    property var themeSource: AntTheme.AntProgress
 
     objectName: '__AntProgress__'
     height: 16

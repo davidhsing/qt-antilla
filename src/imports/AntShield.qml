@@ -11,22 +11,21 @@ Item {
     property string leftText: ''
     property string rightText: ''
     property font leftFont: Qt.font({
-        family: AntTheme.AntShield.leftFontFamily,
-        pixelSize: AntTheme.AntShield.leftFontSize
+        family: control.themeSource.leftFontFamily,
+        pixelSize: control.themeSource.leftFontSize
     })
     property font rightFont: Qt.font({
-        family: AntTheme.AntShield.rightFontFamily,
-        pixelSize: AntTheme.AntShield.rightFontSize
+        family: control.themeSource.rightFontFamily,
+        pixelSize: control.themeSource.rightFontSize
     })
-    property color colorLeftBg: AntTheme.AntShield.colorLeftBg
-    property color colorLeftText: AntTheme.AntShield.colorLeftText
-    property color colorRightBg: AntTheme.AntShield.colorRightBg
-    property color colorRightText: AntTheme.AntShield.colorRightText
-    property AntRadius radiusBg: AntRadius { all: AntTheme.AntShield.radiusBg }
-
-    // Delegate 属性
+    property color colorLeftBg: control.themeSource.colorLeftBg
+    property color colorLeftText: control.themeSource.colorLeftText
+    property color colorRightBg: control.themeSource.colorRightBg
+    property color colorRightText: control.themeSource.colorRightText
+    property AntRadius radiusBg: AntRadius { all: control.themeSource.radiusBg }
     property Component leftDelegate: __defaultLeftDelegate
     property Component rightDelegate: __defaultRightDelegate
+    property var themeSource: AntTheme.AntShield
 
     objectName: '__AntShield__'
     implicitWidth: __row.width

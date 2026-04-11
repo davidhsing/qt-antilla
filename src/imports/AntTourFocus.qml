@@ -9,24 +9,17 @@ T.Popup {
     property bool penetrationEvent: false
     property bool maskClosable: true
     property Item target: null
-    property color colorOverlay: AntTheme.AntTour.colorOverlay
+    property color colorOverlay: control.themeSource.colorOverlay
     property int focusMargin: 5
     property int focusRadius: 2
+    property var themeSource: AntTheme.AntTour
 
-    function close() {
-        if (!visible || __private.isClosing) return;
-        if (animationEnabled) {
-            __private.startClosing();
-        } else {
-            visible = false;
-        }
-    }
-
+    objectName: '__AntTourFocus__'
     focus: true
     modal: !penetrationEvent
     dim: true
-    objectName: '__AntTourFocus__'
     closePolicy: maskClosable ? T.Popup.CloseOnEscape | T.Popup.CloseOnPressOutside : T.Popup.NoAutoClose
+
     onFocusMarginChanged: {
         __private.recalcPosition();
     }
@@ -53,6 +46,7 @@ T.Popup {
     exit: null
     parent: T.Overlay.overlay
     background: Item { }
+
     T.Overlay.modal: Item {
         id: __overlayItem
         onWidthChanged: __private.recalcPosition();
@@ -130,6 +124,15 @@ T.Popup {
         onFinished: {
             __private.isClosing = false;
             control.visible = false;
+        }
+    }
+
+    function close() {
+        if (!visible || __private.isClosing) return;
+        if (animationEnabled) {
+            __private.startClosing();
+        } else {
+            visible = false;
         }
     }
 

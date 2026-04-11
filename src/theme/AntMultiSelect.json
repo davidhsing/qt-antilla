@@ -3,6 +3,9 @@
         "__import__": ["AntSelect"]
     },
     "__style__": {
+        "fontCloseSize": "$subtract(@fontPrimarySize, 2)",
+        "colorPrefixText": "@colorTextSecondary",
+        "colorSuffixText": "@colorTextSecondary",
         "colorIconSelect": "@colorPrimary",
         "colorTagText": "@colorTextPrimary",
         "colorTagBg": "@colorFillPrimary",

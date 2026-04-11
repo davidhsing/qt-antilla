@@ -16,9 +16,9 @@ T.Popup {
     property real maximumWidth: Number.NaN
     property real minimumHeight: 0
     property real maximumHeight: Number.NaN
-    property color colorShadow: themeSource.colorShadow
-    property color colorBg: AntTheme.isDark ? themeSource.colorBgDark : themeSource.colorBg
-    property AntRadius radiusBg: AntRadius { all: themeSource.radiusBg }
+    property color colorShadow: control.themeSource.colorShadow
+    property color colorBg: AntTheme.isDark ? control.themeSource.colorBgDark : control.themeSource.colorBg
+    property AntRadius radiusBg: AntRadius { all: control.themeSource.radiusBg }
     property var themeSource: AntTheme.AntPopup
 
     objectName: '__AntPopup__'

@@ -29,13 +29,13 @@ T.Control {
         family: control.themeSource.fontFamilyInput,
         pixelSize: parseInt(control.themeSource.fontSizeInput) - 2
     })
-    property color colorBg: themeSource.colorBg
-    property color colorBorder: enabled ? (active ? themeSource.colorBorderHover : themeSource.colorBorder) : themeSource.colorBorderDisabled
-    property color colorTitle: themeSource.colorTitle
-    property color colorInput: themeSource.colorInput
-    property color colorPresetIcon: themeSource.colorPresetIcon
-    property color colorPresetText: themeSource.colorPresetText
-    property AntRadius radiusBg: AntRadius { all: themeSource.radiusBg }
+    property color colorBg: control.themeSource.colorBg
+    property color colorBorder: enabled ? (active ? control.themeSource.colorBorderHover : control.themeSource.colorBorder) : control.themeSource.colorBorderDisabled
+    property color colorTitle: control.themeSource.colorTitle
+    property color colorInput: control.themeSource.colorInput
+    property color colorPresetIcon: control.themeSource.colorPresetIcon
+    property color colorPresetText: control.themeSource.colorPresetText
+    property AntRadius radiusBg: AntRadius { all: control.themeSource.radiusBg }
     property var themeSource: AntTheme.AntColorPicker
 
     property Component titleDelegate: AntText {

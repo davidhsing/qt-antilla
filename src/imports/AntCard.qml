@@ -15,8 +15,8 @@ T.Control {
     property bool titleVisible: true
     property string titleText: ''
     property font titleFont: Qt.font({
-        family: AntTheme.AntCard.fontFamily,
-        pixelSize: AntTheme.AntCard.fontSizeTitle,
+        family: control.themeSource.fontFamily,
+        pixelSize: control.themeSource.fontSizeTitle,
         weight: Font.DemiBold,
     })
     property bool titleDividerVisible: true
@@ -32,25 +32,25 @@ T.Control {
     property string bodyAvatarText: ''
     property string bodyTitleText: ''
     property font bodyTitleFont: Qt.font({
-        family: AntTheme.AntCard.fontFamily,
-        pixelSize: AntTheme.AntCard.fontSizeBodyTitle,
+        family: control.themeSource.fontFamily,
+        pixelSize: control.themeSource.fontSizeBodyTitle,
         weight: Font.DemiBold,
     })
     property string bodyDescriptionText: ''
     property font bodyDescriptionFont: Qt.font({
-        family: AntTheme.AntCard.fontFamily,
-        pixelSize: AntTheme.AntCard.fontSizeBodyDescription,
+        family: control.themeSource.fontFamily,
+        pixelSize: control.themeSource.fontSizeBodyDescription,
     })
     property int bodyHeight: 100
-    property color colorBg: AntTheme.AntCard.colorBg
-    property color colorBorder: AntTheme.AntCard.colorBorder
-    property color colorTitle: AntTheme.AntCard.colorTitle
-    property color colorShadow: AntTheme.AntCard.colorShadow
-    property color colorBodyAvatar: AntTheme.AntCard.colorBodyAvatar
+    property color colorBg: control.themeSource.colorBg
+    property color colorBorder: control.themeSource.colorBorder
+    property color colorTitle: control.themeSource.colorTitle
+    property color colorShadow: control.themeSource.colorShadow
+    property color colorBodyAvatar: control.themeSource.colorBodyAvatar
     property color colorBodyAvatarBg: 'transparent'
-    property color colorBodyTitle: AntTheme.AntCard.colorBodyTitle
-    property color colorBodyDescription: AntTheme.AntCard.colorBodyDescription
-    property AntRadius radiusBg: AntRadius { all: AntTheme.AntCard.radiusBg }
+    property color colorBodyTitle: control.themeSource.colorBodyTitle
+    property color colorBodyDescription: control.themeSource.colorBodyDescription
+    property AntRadius radiusBg: AntRadius { all: control.themeSource.radiusBg }
 
     property Component titleDelegate: Item {
         height: control.titleHeight
@@ -158,6 +158,7 @@ T.Control {
 
         Behavior on color { enabled: control.animationEnabled; ColorAnimation { duration: AntTheme.Primary.durationMid } }
     }
+    property var themeSource: AntTheme.AntCard
 
     objectName: '__AntCard__'
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset, implicitContentWidth + leftPadding + rightPadding)

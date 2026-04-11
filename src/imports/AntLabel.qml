@@ -7,15 +7,15 @@ T.Label {
 
     readonly property bool hovered: __mouseArea.containsMouse
     property real borderWidth: 1
-    property color colorText: themeSource.colorText
-    property color colorTextDisabled: themeSource.colorTextDisabled
-    property color colorTextHover: themeSource.colorTextHover
-    property color colorBg: themeSource.colorBg
-    property color colorBgDisabled: themeSource.colorBgDisabled
-    property color colorBgHover: themeSource.colorBgHover
-    property color colorBorder: themeSource.colorBorder
-    property color colorBorderDisabled: themeSource.colorBorderDisabled
-    property color colorBorderHover: themeSource.colorBorderHover
+    property color colorText: control.themeSource.colorText
+    property color colorTextDisabled: control.themeSource.colorTextDisabled
+    property color colorTextHover: control.themeSource.colorTextHover
+    property color colorBg: control.themeSource.colorBg
+    property color colorBgDisabled: control.themeSource.colorBgDisabled
+    property color colorBgHover: control.themeSource.colorBgHover
+    property color colorBorder: control.themeSource.colorBorder
+    property color colorBorderDisabled: control.themeSource.colorBorderDisabled
+    property color colorBorderHover: control.themeSource.colorBorderHover
     property AntRadius radiusBg: AntRadius { all: 4 }
     property alias cursorShape: __mouseArea.cursorShape
     property var themeSource: AntTheme.AntLabel
@@ -23,10 +23,10 @@ T.Label {
     objectName: '__AntLabel__'
     renderType: AntTheme.textRenderType
     color: !control.enabled ? control.colorTextDisabled : (control.hovered ? control.colorTextHover : control.colorText)
-    linkColor: !control.enabled ? themeSource.colorTextDisabled : themeSource.colorLinkText
+    linkColor: !control.enabled ? control.themeSource.colorTextDisabled : control.themeSource.colorLinkText
     font {
-        family: themeSource.fontFamily
-        pixelSize: parseInt(themeSource.fontSize)
+        family: control.themeSource.fontFamily
+        pixelSize: parseInt(control.themeSource.fontSize)
     }
     background: AntRectangleInternal {
         color: !control.enabled ? control.colorBgDisabled : (control.hovered ? control.colorBgHover : control.colorBg)

@@ -21,13 +21,14 @@ Item {
     property bool danger: false
     property var formatter: (text) => text
 
-    property color colorItemText: enabled ? AntTheme.AntInput.colorText : AntTheme.AntInput.colorTextDisabled
-    property color colorItemBorder: enabled ? AntTheme.AntInput.colorBorder : AntTheme.AntInput.colorBorderDisabled
-    property color colorItemBorderActive: enabled ? AntTheme.AntInput.colorBorderHover : AntTheme.AntInput.colorBorderDisabled
-    property color colorItemBg: enabled ? AntTheme.AntInput.colorBg : AntTheme.AntInput.colorBgDisabled
-    property AntRadius radiusBg: AntRadius { all: AntTheme.AntInput.radiusBg }
+    property color colorItemText: enabled ? control.themeSource.colorText : control.themeSource.colorTextDisabled
+    property color colorItemBorder: enabled ? control.themeSource.colorBorder : control.themeSource.colorBorderDisabled
+    property color colorItemBorderActive: enabled ? control.themeSource.colorBorderHover : control.themeSource.colorBorderDisabled
+    property color colorItemBg: enabled ? control.themeSource.colorBg : control.themeSource.colorBgDisabled
+    property AntRadius radiusBg: AntRadius { all: control.themeSource.radiusBg }
 
     property Component dividerDelegate: Item { }
+    property var themeSource: AntTheme.AntInput
 
     objectName: '__AntInputOnce__'
     width: __row.width
@@ -51,7 +52,7 @@ Item {
             enabled: control.enabled
             danger: control.danger
             colorText: control.colorItemText
-            colorBorder: danger ? (active ? AntTheme.AntInput.colorErrorBorderHover : AntTheme.AntInput.colorErrorBorder) : (active ? control.colorItemBorderActive : control.colorItemBorder)
+            colorBorder: danger ? (active ? control.themeSource.colorErrorBorderHover : control.themeSource.colorErrorBorder) : (active ? control.colorItemBorderActive : control.colorItemBorder)
             colorBg: control.colorItemBg
             radiusBg: control.radiusBg
             validator: control.itemValidator

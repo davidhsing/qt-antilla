@@ -217,6 +217,7 @@ AntPopup {
             sourceComponent: control.contentDelegate
         }
     }
+
     Component.onCompleted: AntApi.setPopupAllowAutoFlip(this);
 
     QtObject {

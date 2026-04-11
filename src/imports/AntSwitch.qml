@@ -14,19 +14,19 @@ T.Switch {
     property var checkedIconSource: 0 ?? ''
     property var uncheckedIconSource: 0 ?? ''
     property AntRadius radiusBg: AntRadius { all: control.implicitIndicatorHeight / 2 }
-    property color colorHandle: AntTheme.AntSwitch.colorHandle
+    property color colorHandle: control.themeSource.colorHandle
     property color colorBg: {
         if (!enabled)
-            return checked ? AntTheme.AntSwitch.colorBgCheckedDisabled : AntTheme.AntSwitch.colorBgDisabled;
+            return checked ? control.themeSource.colorBgCheckedDisabled : control.themeSource.colorBgDisabled;
 
         if (checked)
-            return control.down ? AntTheme.AntSwitch.colorBgCheckedActive :
-                                  control.hovered ? AntTheme.AntSwitch.colorBgCheckedHover :
-                                                    AntTheme.AntSwitch.colorBgChecked;
+            return control.down ? control.themeSource.colorBgCheckedActive :
+                                  control.hovered ? control.themeSource.colorBgCheckedHover :
+                                                    control.themeSource.colorBgChecked;
         else
-            return control.down ? AntTheme.AntSwitch.colorBgActive :
-                                  control.hovered ? AntTheme.AntSwitch.colorBgHover :
-                                                    AntTheme.AntSwitch.colorBg;
+            return control.down ? control.themeSource.colorBgActive :
+                                  control.hovered ? control.themeSource.colorBgHover :
+                                                    control.themeSource.colorBg;
     }
     property string ariaConstrual: ''
     property Component handleDelegate: Rectangle {
@@ -50,13 +50,14 @@ T.Switch {
             }
         }
     }
+    property var themeSource: AntTheme.AntSwitch
 
     objectName: '__AntSwitch__'
     width: implicitIndicatorWidth + leftPadding + rightPadding
     height: implicitIndicatorHeight + topPadding + bottomPadding
     font {
-        family: AntTheme.AntSwitch.fontFamily
-        pixelSize: AntTheme.AntSwitch.fontSize - 2
+        family: control.themeSource.fontFamily
+        pixelSize: control.themeSource.fontSize
     }
     indicator: Item {
         implicitWidth: __bg.width
@@ -71,7 +72,7 @@ T.Switch {
             visible: control.effectEnabled
             color: 'transparent'
             border.width: 0
-            border.color: control.enabled ? AntTheme.AntSwitch.colorBgHover : 'transparent'
+            border.color: control.enabled ? control.themeSource.colorBgHover : 'transparent'
             opacity: 0.2
 
             ParallelAnimation {

@@ -29,11 +29,12 @@ Item {
     property var locationCallback: () => {
         return generateAudioLocation();
     }
-    property color colorBar: AntTheme.AntAudioDiagnosis.colorBar
-    property color colorTrack: AntTheme.AntAudioDiagnosis.colorTrack
-    property color colorIconRecording: AntTheme.AntAudioDiagnosis.colorIconRecording
-    property color colorIconStopped: AntTheme.AntAudioDiagnosis.colorIconStopped
-    property color colorIconMuted: AntTheme.AntAudioDiagnosis.colorIconMuted
+    property color colorBar: control.themeSource.colorBar
+    property color colorTrack: control.themeSource.colorTrack
+    property color colorIconRecording: control.themeSource.colorIconRecording
+    property color colorIconStopped: control.themeSource.colorIconStopped
+    property color colorIconMuted: control.themeSource.colorIconMuted
+    property var themeSource: AntTheme.AntAudioDiagnosis
 
     objectName: '__AntAudioDiagnosis__'
     implicitWidth: 200

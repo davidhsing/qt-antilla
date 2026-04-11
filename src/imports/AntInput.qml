@@ -15,11 +15,11 @@ T.TextField {
     property bool animationEnabled: AntTheme.animationEnabled
     readonly property bool active: hovered || activeFocus
     property var iconSource: 0 ?? ''
-    property int iconSize: themeSource.fontIconSize
+    property int iconSize: control.themeSource.fontIconSize
     property int iconPosition: AntInput.PositionLeft
     property var clearable: false ?? ''
     property var clearIconSource: AntIcon.CloseCircleFilled ?? ''
-    property int clearIconSize: themeSource.fontClearIconSize
+    property int clearIconSize: control.themeSource.fontClearIconSize
     property int clearIconPosition: AntInput.PositionRight
     property int clearLeftMargin: 5
     property int clearRightMargin: 5
@@ -41,11 +41,11 @@ T.TextField {
         }
     }
     property bool danger: false
-    property color colorIcon: enabled ? themeSource.colorIcon : themeSource.colorIconDisabled
-    property color colorText: enabled ? themeSource.colorText : themeSource.colorTextDisabled
-    property color colorBorder: danger ? (active ? themeSource.colorErrorBorderHover : themeSource.colorErrorBorder) : ((!enabled || (readOnly && control.readOnlyBg)) ? themeSource.colorBorderDisabled : (active ? themeSource.colorBorderHover : themeSource.colorBorder))
-    property color colorBg: (!enabled || (readOnly && control.readOnlyBg)) ? themeSource.colorBgDisabled : themeSource.colorBg
-    property AntRadius radiusBg: AntRadius { all: themeSource.radiusBg }
+    property color colorIcon: enabled ? control.themeSource.colorIcon : control.themeSource.colorIconDisabled
+    property color colorText: enabled ? control.themeSource.colorText : control.themeSource.colorTextDisabled
+    property color colorBorder: danger ? (active ? control.themeSource.colorErrorBorderHover : control.themeSource.colorErrorBorder) : ((!enabled || (readOnly && control.readOnlyBg)) ? control.themeSource.colorBorderDisabled : (active ? control.themeSource.colorBorderHover : control.themeSource.colorBorder))
+    property color colorBg: (!enabled || (readOnly && control.readOnlyBg)) ? control.themeSource.colorBgDisabled : control.themeSource.colorBg
+    property AntRadius radiusBg: AntRadius { all: control.themeSource.radiusBg }
     property string ariaConstrual: ''
     property var themeSource: AntTheme.AntInput
 
@@ -84,7 +84,7 @@ T.TextField {
     }
     property Component bgDelegate: AntRectangleInternal {
         color: control.colorBg
-        border.color: (!enabled || (readOnly && control.readOnlyBg)) ? themeSource.colorBorderDisabled : control.colorBorder
+        border.color: (!enabled || (readOnly && control.readOnlyBg)) ? control.themeSource.colorBorderDisabled : control.colorBorder
         radius: control.radiusBg.all
         topLeftRadius: control.radiusBg.topLeft
         topRightRadius: control.radiusBg.topRight
@@ -100,12 +100,12 @@ T.TextField {
     implicitWidth: contentWidth + leftPadding + rightPadding
     implicitHeight: contentHeight + topPadding + bottomPadding
     color: colorText
-    placeholderTextColor: enabled ? themeSource.colorPlaceholderText : themeSource.colorPlaceholderTextDisabled
-    selectedTextColor: themeSource.colorTextSelected
-    selectionColor: themeSource.colorSelection
+    placeholderTextColor: enabled ? control.themeSource.colorPlaceholderText : control.themeSource.colorPlaceholderTextDisabled
+    selectedTextColor: control.themeSource.colorTextSelected
+    selectionColor: control.themeSource.colorSelection
     font {
-        family: themeSource.fontFamily
-        pixelSize: themeSource.fontSize
+        family: control.themeSource.fontFamily
+        pixelSize: control.themeSource.fontSize
     }
     background: Loader {
         sourceComponent: control.bgDelegate

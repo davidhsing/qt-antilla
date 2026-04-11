@@ -16,10 +16,11 @@ T.ToolTip {
     property bool arrowVisible: false
     property int arrowOffset: 4
     property int position: AntToolTip.PositionTop
-    property color colorShadow: AntTheme.AntToolTip.colorShadow
-    property color colorText: AntTheme.AntToolTip.colorText
-    property color colorBg: AntTheme.isDark ? AntTheme.AntToolTip.colorBgDark : AntTheme.AntToolTip.colorBg
-    property AntRadius radiusBg: AntRadius { all: AntTheme.AntToolTip.radiusBg }
+    property color colorShadow: control.themeSource.colorShadow
+    property color colorText: control.themeSource.colorText
+    property color colorBg: AntTheme.isDark ? control.themeSource.colorBgDark : control.themeSource.colorBg
+    property AntRadius radiusBg: AntRadius { all: control.themeSource.radiusBg }
+    property var themeSource: AntTheme.AntToolTip
 
     component Arrow: Canvas {
         onWidthChanged: requestPaint();
@@ -90,8 +91,8 @@ T.ToolTip {
     delay: 500
     padding: 0
     font {
-        family: AntTheme.AntToolTip.fontFamily
-        pixelSize: AntTheme.AntToolTip.fontSize
+        family: control.themeSource.fontFamily
+        pixelSize: control.themeSource.fontSize
     }
     enter: Transition {
         NumberAnimation { property: 'opacity'; from: 0.0; to: 1.0; duration: control.animationEnabled ? AntTheme.Primary.durationMid : 0 }

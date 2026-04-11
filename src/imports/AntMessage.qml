@@ -27,13 +27,13 @@ Item {
     property int bgBottomPadding: 12
     property int bgLeftPadding: 12
     property int bgRightPadding: 12
-    property color colorMessage: AntTheme.AntMessage.colorMessage
-    property color colorBg: AntTheme.isDark ? AntTheme.AntMessage.colorBgDark : AntTheme.AntMessage.colorBg
-    property color colorBgShadow: AntTheme.AntMessage.colorBgShadow
-    property AntRadius radiusBg: AntRadius { all: AntTheme.AntMessage.radiusBg }
+    property color colorMessage: control.themeSource.colorMessage
+    property color colorBg: AntTheme.isDark ? control.themeSource.colorBgDark : control.themeSource.colorBg
+    property color colorBgShadow: control.themeSource.colorBgShadow
+    property AntRadius radiusBg: AntRadius { all: control.themeSource.radiusBg }
     property font messageFont: Qt.font({
-        family: AntTheme.AntMessage.fontFamily,
-        pixelSize: AntTheme.AntMessage.fontSize
+        family: control.themeSource.fontFamily,
+        pixelSize: control.themeSource.fontSize
     })
     property int messageSpacing: 8
 
@@ -44,6 +44,7 @@ Item {
         horizontalAlignment: Text.AlignHCenter
         wrapMode: Text.WrapAnywhere
     }
+    property var themeSource: AntTheme.AntMessage
 
     objectName: '__AntMessage__'
 
@@ -207,7 +208,7 @@ Item {
                                 animationEnabled: control.animationEnabled
                                 hoverCursorShape: Qt.PointingHandCursor
                                 iconSource: AntIcon.CloseOutlined
-                                colorIcon: hovered ? AntTheme.AntMessage.colorCloseHover : AntTheme.AntMessage.colorClose
+                                colorIcon: hovered ? control.themeSource.colorCloseHover : control.themeSource.colorClose
                                 onClicked: {
                                     __timer.stop();
                                     __rootItem.removeSelf();

@@ -41,14 +41,14 @@ AntPopover {
 
             Loader {
                 id: __confirmLoader
-                active: control.confirmText !== ''
+                active: !!control.confirmText
                 visible: active
                 sourceComponent: control.confirmDelegate
             }
 
             Loader {
                 id: __cancelLoader
-                active: control.cancelText !== ''
+                active: !!control.cancelText
                 visible: active
                 sourceComponent: control.cancelDelegate
             }
@@ -56,5 +56,4 @@ AntPopover {
     }
 
     objectName: '__AntPopconfirm__'
-    themeSource: AntTheme.AntPopconfirm
 }

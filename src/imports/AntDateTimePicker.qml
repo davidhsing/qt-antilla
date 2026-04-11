@@ -42,8 +42,8 @@ AntInput {
     property int visualQuarter: control.currentQuarter
     property var locale: Qt.locale()
     property string format: 'yyyy-MM-dd hh:mm:ss'
-    property AntRadius radiusItemBg: AntRadius { all: themeSource.radiusItemBg }
-    property AntRadius radiusPopupBg: AntRadius { all: themeSource.radiusPopupBg }
+    property AntRadius radiusItemBg: AntRadius { all: control.themeSource.radiusItemBg }
+    property AntRadius radiusPopupBg: AntRadius { all: control.themeSource.radiusPopupBg }
 
     property Component dayDelegate: AntButton {
         padding: 0

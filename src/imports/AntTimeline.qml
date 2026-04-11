@@ -19,19 +19,19 @@ Item {
     property int defaultLineWidth: 1
     property string defaultTimeFormat: 'yyyy-MM-dd'
     property int defaultContentFormat: Text.AutoText
-    property color colorNode: AntTheme.AntTimeline.colorNode
-    property color colorNodeBg: AntTheme.AntTimeline.colorNodeBg
-    property color colorLine: AntTheme.AntTimeline.colorLine
+    property color colorNode: control.themeSource.colorNode
+    property color colorNodeBg: control.themeSource.colorNodeBg
+    property color colorLine: control.themeSource.colorLine
     property font timeFont: Qt.font({
-        family: AntTheme.AntTimeline.fontFamily,
-        pixelSize: AntTheme.AntTimeline.fontSize
+        family: control.themeSource.fontFamily,
+        pixelSize: control.themeSource.fontSize
     })
-    property color colorTimeText: AntTheme.AntTimeline.colorTimeText
+    property color colorTimeText: control.themeSource.colorTimeText
     property font contentFont: Qt.font({
-        family: AntTheme.AntTimeline.fontFamily,
-        pixelSize: AntTheme.AntTimeline.fontSize
+        family: control.themeSource.fontFamily,
+        pixelSize: control.themeSource.fontSize
     })
-    property color colorContentText: AntTheme.AntTimeline.colorContentText
+    property color colorContentText: control.themeSource.colorContentText
     property Component nodeDelegate: Component {
         Item {
             height: __loading.active ? __loading.height : __icon.active ? __icon.height : defaultNodeSize
@@ -116,6 +116,7 @@ Item {
             horizontalAlignment: onLeft ? Text.AlignRight : Text.AlignLeft
         }
     }
+    property var themeSource: AntTheme.AntTimeline
 
     objectName: '__AntTimeline__'
     onInitModelChanged: {

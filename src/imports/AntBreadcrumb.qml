@@ -16,16 +16,16 @@ Item {
     property string separator: '/'
     property int spacing: 4
     property font titleFont
-    property int defaultIconSize: AntTheme.AntBreadcrumb.fontIconSize
+    property int defaultIconSize: control.themeSource.fontIconSize
     property int defaultMenuWidth: 120
-    property AntRadius radiusItemBg: AntRadius { all: AntTheme.AntBreadcrumb.radiusItemBg }
+    property AntRadius radiusItemBg: AntRadius { all: control.themeSource.radiusItemBg }
 
     property Component itemDelegate: AntRectangleInternal {
         id: __itemDelegate
 
         implicitWidth: __itemRow.implicitWidth + 8
         implicitHeight: Math.max(__icon.implicitHeight, __text.implicitHeight) + 4
-        color: (isCurrent || !__hoverHandler.hovered || !control.allowHoverTap) ? AntTheme.AntBreadcrumb.colorBgLast : AntTheme.AntBreadcrumb.colorBg;
+        color: (isCurrent || !__hoverHandler.hovered || !control.allowHoverTap) ? control.themeSource.colorBgLast : control.themeSource.colorBg;
         radius: control.radiusItemBg.all
         topLeftRadius: control.radiusItemBg.topLeft
         topRightRadius: control.radiusItemBg.topRight
@@ -49,7 +49,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 iconSize: model.iconSize
                 iconSource: model.loading ? AntIcon.LoadingOutlined : model.iconSource
-                colorIcon: (isCurrent || __hoverHandler.hovered) ? AntTheme.AntBreadcrumb.colorIconLast : AntTheme.AntBreadcrumb.colorIcon;
+                colorIcon: (isCurrent || __hoverHandler.hovered) ? control.themeSource.colorIconLast : control.themeSource.colorIcon;
                 verticalAlignment: Text.AlignVCenter
 
                 NumberAnimation on rotation {
@@ -84,7 +84,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 active: __itemDelegate.menuItem.length > 0
                 sourceComponent: AntIconText {
-                    color: isCurrent || __hoverHandler.hovered ? AntTheme.AntBreadcrumb.colorIconLast : AntTheme.AntBreadcrumb.colorIcon;
+                    color: isCurrent || __hoverHandler.hovered ? control.themeSource.colorIconLast : control.themeSource.colorIcon;
                     iconSource: AntIcon.DownOutlined
                     verticalAlignment: Text.AlignVCenter
 
@@ -142,14 +142,15 @@ Item {
     }
     property Component separatorDelegate: AntText {
         text: model.separator ?? ''
-        color: AntTheme.AntBreadcrumb.colorIcon
+        color: control.themeSource.colorIcon
     }
+    property var themeSource: AntTheme.AntBreadcrumb
 
     objectName: '__AntBreadcrumb__'
     height: 30
     titleFont {
-        family: AntTheme.AntBreadcrumb.fontFamily
-        pixelSize: AntTheme.AntBreadcrumb.fontTextSize
+        family: control.themeSource.fontFamily
+        pixelSize: control.themeSource.fontTextSize
     }
     onInitModelChanged: reset();
 

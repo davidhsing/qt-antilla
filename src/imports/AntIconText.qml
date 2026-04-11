@@ -10,13 +10,14 @@ AntText {
     property alias colorIcon: control.colorText
     property alias colorIconHover: control.colorTextHover
     property string ariaConstrual: text
+    property var themeSource: AntTheme.AntIconText
 
     objectName: '__AntIconText__'
     width: __iconLoader.active ? (__iconLoader.implicitWidth + leftPadding + rightPadding): implicitWidth
     height: __iconLoader.active ? (__iconLoader.implicitHeight + topPadding + bottomPadding) : implicitHeight
     text: __iconLoader.active ? '' : String.fromCharCode(iconSource)
     font.family: 'Antilla-Icons'
-    font.pixelSize: AntTheme.AntIconText.fontSize
+    font.pixelSize: control.themeSource.fontSize
 
     Loader {
         id: __iconLoader

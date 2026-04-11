@@ -512,7 +512,6 @@ void AntThemePrivate::registerDefaultComponentTheme(const QString &componentName
             ADD_COMPONENT_CASE(AntMultiSelect)
             ADD_COMPONENT_CASE(AntDateTimePicker)
             ADD_COMPONENT_CASE(AntNotification)
-            ADD_COMPONENT_CASE(AntPopconfirm)
             ADD_COMPONENT_CASE(AntLabel)
             ADD_COMPONENT_CASE(AntModal)
             ADD_COMPONENT_CASE(AntText)

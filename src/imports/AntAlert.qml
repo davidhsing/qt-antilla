@@ -39,7 +39,7 @@ Item {
     property bool descriptionVisible: !!control.descriptionText
     property string descriptionText: ''
     property bool extraVisible: true
-    property AntRadius radiusBg: AntRadius { all: AntTheme.AntAlert.radiusBg }
+    property AntRadius radiusBg: AntRadius { all: control.themeSource.radiusBg }
     property real contentRowSpacing: 10
     property real contentColumnSpacing: 8
     property var closeAlign: control.marqueeEnabled ? Qt.AlignRight : Qt.AlignTop | Qt.AlignRight
@@ -62,35 +62,35 @@ Item {
         }
     }
 
-    property color colorBorder: AntTheme.AntAlert.colorBorder
+    property color colorBorder: control.themeSource.colorBorder
     property color colorIcon: {
         switch (type) {
             case AntAlert.TypeInfo: return AntTheme.Primary.colorInfo
             case AntAlert.TypeWarning: return AntTheme.Primary.colorWarning
             case AntAlert.TypeSuccess: return AntTheme.Primary.colorSuccess
             case AntAlert.TypeError: return AntTheme.Primary.colorError
-            default: return AntTheme.AntAlert.colorIcon
+            default: return control.themeSource.colorIcon
         }
     }
-    property color colorTitle: AntTheme.AntAlert.colorTitle
-    property color colorDescription: AntTheme.AntAlert.colorDescription
-    property color colorMarquee: AntTheme.AntAlert.colorMarquee
+    property color colorTitle: control.themeSource.colorTitle
+    property color colorDescription: control.themeSource.colorDescription
+    property color colorMarquee: control.themeSource.colorMarquee
 
     // 字体属性
     property font titleFont: Qt.font({
-        family: AntTheme.AntAlert.titleFontFamily,
-        pixelSize: parseInt(AntTheme.AntAlert.titleFontSize),
+        family: control.themeSource.titleFontFamily,
+        pixelSize: parseInt(control.themeSource.titleFontSize),
     })
     property font descriptionFont: Qt.font({
-        family: AntTheme.AntAlert.descriptionFontFamily,
-        pixelSize: parseInt(AntTheme.AntAlert.descriptionFontSize)
+        family: control.themeSource.descriptionFontFamily,
+        pixelSize: parseInt(control.themeSource.descriptionFontSize)
     })
     property font marqueeFont: Qt.font({
-        family: AntTheme.AntAlert.marqueeFontFamily,
-        pixelSize: parseInt(AntTheme.AntAlert.marqueeFontSize)
+        family: control.themeSource.marqueeFontFamily,
+        pixelSize: parseInt(control.themeSource.marqueeFontSize)
     })
 
-    // Margin properties
+    // 边距属性
     property AntMargin marginIcon: AntMargin { all: 0 }
     property AntMargin marginContent: AntMargin { left: 16 }
     property AntMargin marginExtra: AntMargin { top: 4; right: 6 }
@@ -119,13 +119,11 @@ Item {
     property Component closeDelegate: AntIconButton {
         iconSource: AntIcon.CloseOutlined
         iconSize: 14
-        colorIcon: AntTheme.AntAlert.colorClose
+        colorIcon: control.themeSource.colorClose
         type: AntIconButton.TypeLink
         visible: control.closable
         onClicked: control.close()
     }
-
-    // 背景委托
     property Component bgDelegate: AntRectangleInternal {
         anchors.fill: parent
         color: control.colorBg
@@ -141,6 +139,7 @@ Item {
         Behavior on color { enabled: control.animationEnabled; ColorAnimation { duration: AntTheme.Primary.durationFast } }
         Behavior on border.color { enabled: control.animationEnabled; ColorAnimation { duration: AntTheme.Primary.durationFast } }
     }
+    property var themeSource: AntTheme.AntAlert
 
     signal closed()
 

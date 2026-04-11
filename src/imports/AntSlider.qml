@@ -43,26 +43,26 @@ Item {
     readonly property bool hovered: __sliderLoader.item ? __sliderLoader.item.hovered : (__multiHandleArea ? __multiHandleArea.containsMouse : false)
     property int snapMode: AntSlider.SnapOnRelease
     property int orientation: Qt.Horizontal
-    property int fontMarkSize: AntTheme.AntSlider.fontMarkSize
-    property color colorBg: (enabled && hovered) ? AntTheme.AntSlider.colorBgHover : AntTheme.AntSlider.colorBg
-    property color colorHandle: AntTheme.AntSlider.colorHandle
+    property int fontMarkSize: control.themeSource.fontMarkSize
+    property color colorBg: (enabled && hovered) ? control.themeSource.colorBgHover : control.themeSource.colorBg
+    property color colorHandle: control.themeSource.colorHandle
     property color colorTrack: {
         if (!control.enabled) {
-            return AntTheme.AntSlider.colorTrackDisabled;
+            return control.themeSource.colorTrackDisabled;
         }
         if (AntTheme.isDark) {
-            return control.hovered ? AntTheme.AntSlider.colorTrackHoverDark : AntTheme.AntSlider.colorTrackDark;
+            return control.hovered ? control.themeSource.colorTrackHoverDark : control.themeSource.colorTrackDark;
         } else {
-            return control.hovered ? AntTheme.AntSlider.colorTrackHover : AntTheme.AntSlider.colorTrack;
+            return control.hovered ? control.themeSource.colorTrackHover : control.themeSource.colorTrack;
         }
     }
-    property AntRadius radiusBg: AntRadius { all: AntTheme.AntSlider.radiusBg }
+    property AntRadius radiusBg: AntRadius { all: control.themeSource.radiusBg }
     property bool handleToolTipEnabled: false
     property bool handleToolTipAlwaysVisible: false
     property int handleToolTipPosition: (control.orientation === Qt.Horizontal) ? AntToolTip.PositionTop : AntToolTip.PositionRight
     property bool markVisible: false
-    property color colorMarkLine: AntTheme.AntSlider.colorMarkLine
-    property color colorMarkText: AntTheme.AntSlider.colorMarkText
+    property color colorMarkLine: control.themeSource.colorMarkLine
+    property color colorMarkText: control.themeSource.colorMarkText
     property Component handleToolTipDelegate: AntToolTip {
         arrowVisible: true
         delay: 100
@@ -81,12 +81,12 @@ Item {
         border.color: {
             if (control.enabled) {
                 if (AntTheme.isDark) {
-                    return active || __selected ? AntTheme.AntSlider.colorHandleBorderHoverDark : AntTheme.AntSlider.colorHandleBorderDark;
+                    return active || __selected ? control.themeSource.colorHandleBorderHoverDark : control.themeSource.colorHandleBorderDark;
                 } else {
-                    return active || __selected ? AntTheme.AntSlider.colorHandleBorderHover : AntTheme.AntSlider.colorHandleBorder;
+                    return active || __selected ? control.themeSource.colorHandleBorderHover : control.themeSource.colorHandleBorder;
                 }
             } else {
-                return AntTheme.AntSlider.colorHandleBorderDisabled;
+                return control.themeSource.colorHandleBorderDisabled;
             }
         }
         border.width: active || __selected ? 4 : 2
@@ -238,6 +238,7 @@ Item {
         }
     }
     property string ariaConstrual: ''
+    property var themeSource: AntTheme.AntSlider
 
     objectName: '__AntSlider__'
     implicitWidth: (control.orientation === Qt.Horizontal) ? 400 : (control.markVisible ? 32 : 24)
@@ -391,12 +392,12 @@ Item {
                 border.color: {
                     if (control.enabled) {
                         if (AntTheme.isDark) {
-                            return active || __selected ? AntTheme.AntSlider.colorHandleBorderHoverDark : AntTheme.AntSlider.colorHandleBorderDark;
+                            return active || __selected ? control.themeSource.colorHandleBorderHoverDark : control.themeSource.colorHandleBorderDark;
                         } else {
-                            return active || __selected ? AntTheme.AntSlider.colorHandleBorderHover : AntTheme.AntSlider.colorHandleBorder;
+                            return active || __selected ? control.themeSource.colorHandleBorderHover : control.themeSource.colorHandleBorder;
                         }
                     } else {
-                        return AntTheme.AntSlider.colorHandleBorderDisabled;
+                        return control.themeSource.colorHandleBorderDisabled;
                     }
                 }
                 border.width: active || __selected ? 4 : 2

@@ -59,16 +59,16 @@ Item {
     property bool titleVisible: !!control.titleText
     property string titleText: ''
     property font titleFont: Qt.font({
-        family: AntTheme.AntResult.fontTitleFamily,
-        pixelSize: AntTheme.AntResult.fontTitleSize
+        family: control.themeSource.fontTitleFamily,
+        pixelSize: control.themeSource.fontTitleSize
     })
 
     // Description properties
     property bool descriptionVisible: !!control.descriptionText
     property string descriptionText: ''
     property font descriptionFont: Qt.font({
-        family: AntTheme.AntResult.fontDescriptionFamily,
-        pixelSize: AntTheme.AntResult.fontDescriptionSize
+        family: control.themeSource.fontDescriptionFamily,
+        pixelSize: control.themeSource.fontDescriptionSize
     })
 
     // Action properties
@@ -78,8 +78,8 @@ Item {
     property bool footerVisible: true
 
     // Background properties
-    property color colorBg: AntTheme.AntResult.colorBg
-    property AntRadius radiusBg: AntRadius { all: AntTheme.AntResult.radiusBg }
+    property color colorBg: control.themeSource.colorBg
+    property AntRadius radiusBg: AntRadius { all: control.themeSource.radiusBg }
 
     // Margin properties
     property AntMargin marginExtra: AntMargin { all: 0 }
@@ -128,33 +128,27 @@ Item {
             }
         }
     }
-
     property Component extraDelegate: Item { }
-
     property Component titleDelegate: AntText {
         text: control.titleText
         font: control.titleFont
-        color: AntTheme.AntResult.colorTitle
+        color: control.themeSource.colorTitle
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         visible: !!control.titleText
     }
-
     property Component descriptionDelegate: AntText {
         text: control.descriptionText
         font: control.descriptionFont
-        color: AntTheme.AntResult.colorDescription
+        color: control.themeSource.colorDescription
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         visible: !!control.descriptionText
     }
-
     property Component actionDelegate: Item { }
-
     property Component footerDelegate: Item { }
-
     property Component bgDelegate: AntRectangleInternal {
-        border.color: AntTheme.AntResult.colorBorder
+        border.color: control.themeSource.colorBorder
         border.width: 1
         color: control.colorBg
         radius: control.radiusBg.all
@@ -163,6 +157,7 @@ Item {
         bottomLeftRadius: control.radiusBg.bottomLeft
         bottomRightRadius: control.radiusBg.bottomRight
     }
+    property var themeSource: AntTheme.AntResult
 
     objectName: '__AntResult__'
     implicitWidth: Math.max(__bgLoader.implicitWidth, __mainLayout.implicitWidth)

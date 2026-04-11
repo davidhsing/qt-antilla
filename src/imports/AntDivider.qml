@@ -20,8 +20,8 @@ Item {
     property bool titleVisible: !!control.titleText
     property string titleText: ''
     property font titleFont: Qt.font({
-        family: themeSource.fontFamily,
-        pixelSize: parseInt(themeSource.fontSize)
+        family: control.themeSource.fontFamily,
+        pixelSize: parseInt(control.themeSource.fontSize)
     })
     property int titleAlign: AntDivider.AlignLeft
     property int titlePadding: 20
@@ -30,8 +30,8 @@ Item {
     property real lineWidth: 1
     property list<real> dashPattern: [4, 2]
     property int orientation: Qt.Horizontal
-    property color colorText: themeSource.colorText
-    property color colorSplit: themeSource.colorSplit
+    property color colorText: control.themeSource.colorText
+    property color colorSplit: control.themeSource.colorSplit
     property var themeSource: AntTheme.AntDivider
 
     property Component titleDelegate: AntText {

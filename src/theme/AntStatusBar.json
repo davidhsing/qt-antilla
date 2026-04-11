@@ -3,6 +3,6 @@
         "colorBg": "@colorBgContainer",
         "colorDivider": "@colorBorderSecondary",
         "colorText": "@colorTextSecondary",
-        "fontSize": "@fontPrimarySize"
+        "fontSize": "$subtract(@fontPrimarySize, 2)"
     }
 }

@@ -22,21 +22,21 @@ AntSelect {
     readonly property alias tagCount: __tagListModel.count
     property int maxTagCount: -1
     property int tagSpacing: 5
-    property color colorTagText: themeSource.colorTagText
-    property color colorTagBg: themeSource.colorTagBg
-    property AntRadius radiusTagBg: AntRadius { all: themeSource.radiusTagBg }
-    property AntRadius radiusPopupBg: AntRadius { all: themeSource.radiusPopupBg }
+    property color colorTagText: control.themeSource.colorTagText
+    property color colorTagBg: control.themeSource.colorTagBg
+    property AntRadius radiusTagBg: AntRadius { all: control.themeSource.radiusTagBg }
+    property AntRadius radiusPopupBg: AntRadius { all: control.themeSource.radiusPopupBg }
     property var activeValue: []
 
     property Component prefixDelegate: AntText {
         font: control.font
         text: control.prefix
-        color: control.themeSource.colorText
+        color: control.themeSource.colorPrefixText
     }
     property Component suffixDelegate: AntText {
         font: control.font
         text: control.suffix
-        color: control.themeSource.colorText
+        color: control.themeSource.colorSuffixText
     }
     property Component tagDelegate: AntRectangleInternal {
         id: __tag
@@ -76,7 +76,7 @@ AntSelect {
                 id: __closeIcon
                 anchors.verticalCenter: parent.verticalCenter
                 colorIcon: __hoverHander.hovered ? control.themeSource.colorTagCloseHover : control.themeSource.colorTagClose
-                iconSize: control.themeSource.fontSize - 2
+                iconSize: control.themeSource.fontCloseSize
                 iconSource: AntIcon.CloseOutlined
                 verticalAlignment: Text.AlignVCenter
 
@@ -165,8 +165,8 @@ AntSelect {
     objectName: '__AntMultiSelect__'
     themeSource: AntTheme.AntMultiSelect
     font {
-        family: themeSource.fontFamily
-        pixelSize: themeSource.fontSize
+        family: control.themeSource.fontFamily
+        pixelSize: control.themeSource.fontSize
     }
     leftPadding: 2
     clearable: false

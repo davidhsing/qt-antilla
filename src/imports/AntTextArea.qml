@@ -31,9 +31,9 @@ Item {
     property alias colorPlaceholderText: __textArea.placeholderTextColor
     property alias colorSelectedText: __textArea.selectedTextColor
     property alias colorSelection: __textArea.selectionColor
-    property color colorBorder: danger ? (active ? themeSource.colorErrorBorderHover : themeSource.colorErrorBorder) : ((!enabled || (readOnly && control.readOnlyBg)) ? themeSource.colorBorderDisabled : (active ? themeSource.colorBorderHover : themeSource.colorBorder))
-    property color colorBg: (!enabled || (readOnly && control.readOnlyBg)) ? themeSource.colorBgDisabled : themeSource.colorBg
-    property AntRadius radiusBg: AntRadius { all: themeSource.radiusBg }
+    property color colorBorder: danger ? (active ? control.themeSource.colorErrorBorderHover : control.themeSource.colorErrorBorder) : ((!enabled || (readOnly && control.readOnlyBg)) ? control.themeSource.colorBorderDisabled : (active ? control.themeSource.colorBorderHover : control.themeSource.colorBorder))
+    property color colorBg: (!enabled || (readOnly && control.readOnlyBg)) ? control.themeSource.colorBgDisabled : control.themeSource.colorBg
+    property AntRadius radiusBg: AntRadius { all: control.themeSource.radiusBg }
     property string ariaConstrual: ''
     property var themeSource: AntTheme.AntTextArea
 
@@ -43,7 +43,7 @@ Item {
 
     property Component bgDelegate: AntRectangleInternal {
         color: control.colorBg
-        border.color: (!enabled || (readOnly && control.readOnlyBg)) ? themeSource.colorBorderDisabled : control.colorBorder
+        border.color: (!enabled || (readOnly && control.readOnlyBg)) ? control.themeSource.colorBorderDisabled : control.colorBorder
         radius: control.radiusBg.all
         topLeftRadius: control.radiusBg.topLeft
         topRightRadius: control.radiusBg.topRight

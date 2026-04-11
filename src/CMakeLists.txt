@@ -278,7 +278,6 @@ qt_add_resources(${PROJECT_NAME} "theme"
         theme/AntLabel.json
         theme/AntModal.json
         theme/AntNotification.json
-        theme/AntPopconfirm.json
         theme/AntText.json
         theme/AntTextArea.json
         theme/AntTransfer.json

@@ -4,8 +4,7 @@ import QtQuick.Effects
 Item {
     id: control
 
-    enum EffectType
-    {
+    enum EffectType {
         TypeNone,
         TypeOpacity,
         TypeBlurry,
@@ -20,14 +19,12 @@ Item {
 
     property Item fromItem
     property Item toItem
-    property var startCallback:
-        () => {
-            control.visible = true;
-        }
-    property var endCallback:
-        () => {
-            control.visible = false;
-        }
+    property var startCallback: () => {
+        control.visible = true;
+    }
+    property var endCallback: () => {
+        control.visible = false;
+    }
     property int type: AntSwitchEffect.TypeNone
     property int duration: 800
     readonly property real animationTime: __private.inAnimation

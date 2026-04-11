@@ -18,12 +18,12 @@ T.Drawer {
     property bool titleVisible: !!control.titleText
     property string titleText: ''
     property font titleFont: Qt.font({
-        family: AntTheme.AntDrawer.fontFamily,
-        pixelSize: AntTheme.AntDrawer.fontSizeTitle
+        family: control.themeSource.fontFamily,
+        pixelSize: control.themeSource.fontSizeTitle
     })
-    property color colorTitle: AntTheme.AntDrawer.colorTitle
-    property color colorBg: AntTheme.AntDrawer.colorBg
-    property color colorOverlay: AntTheme.AntDrawer.colorOverlay
+    property color colorTitle: control.themeSource.colorTitle
+    property color colorBg: control.themeSource.colorBg
+    property color colorOverlay: control.themeSource.colorOverlay
 
     property Component closeDelegate: AntCaptionButton {
         topPadding: 2
@@ -32,7 +32,7 @@ T.Drawer {
         rightPadding: 4
         anchors.verticalCenter: parent.verticalCenter
         animationEnabled: control.animationEnabled
-        radiusBg.all: AntTheme.AntDrawer.radiusButtonBg
+        radiusBg.all: control.themeSource.radiusButtonBg
         iconSource: AntIcon.CloseOutlined
         hoverCursorShape: Qt.PointingHandCursor
         onClicked: {
@@ -84,6 +84,7 @@ T.Drawer {
     }
 
     property Component contentDelegate: Item { }
+    property var themeSource: AntTheme.AntDrawer
 
     objectName: '__AntDrawer__'
     width: edge == Qt.LeftEdge || edge == Qt.RightEdge ? drawerSize : parent.width
@@ -98,7 +99,7 @@ T.Drawer {
         AntShadow {
             anchors.fill: __rect
             source: __rect
-            shadowColor: AntTheme.AntDrawer.colorShadow
+            shadowColor: control.themeSource.colorShadow
         }
 
         Rectangle {

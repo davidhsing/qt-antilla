@@ -12,34 +12,34 @@ T.Popup {
     property var stepModel: []
     property Item currentTarget: null
     property int currentStep: 0
-    property color colorOverlay: AntTheme.AntTour.colorOverlay
+    property color colorOverlay: control.themeSource.colorOverlay
     property bool arrowVisible: true
     property int arrowWidth: 16
     property int arrowHeight: 8
     property int focusMargin: 5
     property int focusRadius: 2
     property int stepCardWidth: 250
-    property AntRadius radiusStepCard: AntRadius { all: AntTheme.AntTour.radiusCard }
-    property color colorStepCard: AntTheme.AntTour.colorBg
+    property AntRadius radiusStepCard: AntRadius { all: control.themeSource.radiusCard }
+    property color colorStepCard: control.themeSource.colorBg
     property font stepTitleFont: Qt.font({
         bold: true,
-        family: AntTheme.AntTour.fontFamily,
-        pixelSize: AntTheme.AntTour.fontSizeTitle
+        family: control.themeSource.fontFamily,
+        pixelSize: control.themeSource.fontSizeTitle
     })
-    property color colorStepTitle: AntTheme.AntTour.colorText
+    property color colorStepTitle: control.themeSource.colorText
     property font stepDescriptionFont: Qt.font({
-        family: AntTheme.AntTour.fontFamily,
-        pixelSize: AntTheme.AntTour.fontSizeDescription
+        family: control.themeSource.fontFamily,
+        pixelSize: control.themeSource.fontSizeDescription
     })
-    property color colorStepDescription: AntTheme.AntTour.colorText
+    property color colorStepDescription: control.themeSource.colorText
     property font indicatorFont: Qt.font({
-        family: AntTheme.AntTour.fontFamily,
-        pixelSize: AntTheme.AntTour.fontSizeIndicator
+        family: control.themeSource.fontFamily,
+        pixelSize: control.themeSource.fontSizeIndicator
     })
-    property color colorIndicator: AntTheme.AntTour.colorText
+    property color colorIndicator: control.themeSource.colorText
     property font buttonFont: Qt.font({
-        family: AntTheme.AntTour.fontFamily,
-        pixelSize: AntTheme.AntTour.fontSizeButton
+        family: control.themeSource.fontFamily,
+        pixelSize: control.themeSource.fontSizeButton
     })
     property Component arrowDelegate: Canvas {
         id: __arrowDelegate
@@ -77,7 +77,7 @@ T.Popup {
         leftPadding: 4
         rightPadding: 4
         animationEnabled: control.animationEnabled
-        radiusBg.all: AntTheme.AntTour.radiusButtonBg
+        radiusBg.all: control.themeSource.radiusButtonBg
         iconSource: AntIcon.CloseOutlined
         hoverCursorShape: Qt.PointingHandCursor
         onClicked: {
@@ -198,134 +198,17 @@ T.Popup {
         font: control.indicatorFont
         color: control.colorIndicator
     }
+    property var themeSource: AntTheme.AntTour
 
-    function gotoStep(step: int) {
-        if (stepModel.length > step) {
-            currentStep = step;
-            currentTarget = stepModel[control.currentStep].target;
-        }
-    }
-
-    function resetStep() {
-        currentStep = 0;
-        if (stepModel.length > currentStep) {
-            currentTarget = stepModel[control.currentStep].target;
-        }
-    }
-
-    function appendStep(object) {
-        stepModel.push(object);
-        stepModelChanged();
-    }
-
-    function close() {
-        if (!visible || __private.isClosing) return;
-        if (animationEnabled) {
-            __private.startClosing();
-        } else {
-            visible = false;
-        }
-    }
-
+    objectName: '__AntTourStep__'
     x: 0
     y: 0
-    objectName: '__AntTourStep__'
-    onStepModelChanged: {
-        resetStep();
-        __private.recalcPosition();
-    }
-    onCurrentTargetChanged: __private.recalcPosition();
-    onFocusMarginChanged: {
-        __private.recalcPosition();
-    }
-    onFocusRadiusChanged: {
-        __private.repaint();
-    }
-    onAboutToShow: {
-        __private.recalcPosition();
-        opacity = 1.0;
-    }
-    onAboutToHide: {
-        if (animationEnabled && !__private.isClosing && opacity > 0) {
-            visible = true;
-            __private.startClosing();
-        }
-    }
-    enter: Transition {
-        NumberAnimation {
-            property: 'opacity';
-            from: 0.0
-            to: 1.0
-            duration: control.animationEnabled ? AntTheme.Primary.durationMid : 0
-        }
-    }
     exit: null
     focus: true
     modal: !penetrationEvent
-    dim: true
     closePolicy: maskClosable ? T.Popup.CloseOnEscape | T.Popup.CloseOnPressOutside : T.Popup.NoAutoClose
+    dim: true
     parent: T.Overlay.overlay
-    T.Overlay.modal: Item {
-        Canvas {
-            id: __canvas
-            anchors.fill: parent
-            opacity: control.opacity
-            onPaint: {
-                const ctx = getContext('2d');
-                ctx.clearRect(0, 0, width, height);
-
-                ctx.save();
-                ctx.fillStyle = control.colorOverlay;
-                ctx.fillRect(0, 0, width, height);
-
-                ctx.globalCompositeOperation = 'destination-out';
-                ctx.fillStyle = '#fff';
-
-                const rect = Qt.rect(__private.focusX, __private.focusY, __private.focusWidth, __private.focusHeight);
-                ctx.beginPath();
-                ctx.moveTo(rect.x + control.focusRadius, rect.y);
-                ctx.lineTo(rect.x + rect.width - control.focusRadius, rect.y);
-                ctx.arcTo(rect.x + rect.width, rect.y, rect.x + rect.width, rect.y + control.focusRadius, control.focusRadius);
-                ctx.lineTo(rect.x + rect.width, rect.y + rect.height - control.focusRadius);
-                ctx.arcTo(rect.x + rect.width, rect.y + rect.height, rect.x + rect.width - control.focusRadius, rect.y + rect.height, control.focusRadius);
-                ctx.lineTo(rect.x + control.focusRadius, rect.y + rect.height);
-                ctx.arcTo(rect.x, rect.y + rect.height, rect.x, rect.y + rect.height - control.focusRadius, control.focusRadius);
-                ctx.lineTo(rect.x, rect.y + control.focusRadius);
-                ctx.arcTo(rect.x, rect.y, rect.x + control.focusRadius, rect.y, control.focusRadius);
-                ctx.closePath();
-                ctx.fill();
-
-                ctx.restore();
-            }
-        }
-
-        Connections {
-            target: __private
-            function onRepaint() {
-                __canvas.requestPaint();
-            }
-        }
-
-        Item {
-            id: __eventArea
-            x: __private.focusX
-            y: __private.focusY
-            width: __private.focusWidth
-            height: __private.focusHeight
-            visible: false
-        }
-
-        /*! 禁止 currentTarget 外的滚动 */
-        WheelHandler {
-            onWheel:
-                event => {
-                    if (!__eventArea.contains(Qt.point(event.x, event.y))) {
-                        event.accepted = true;
-                    }
-                }
-        }
-    }
-    T.Overlay.modeless: T.Overlay.modal
     background: Item {
         Item {
             id: __anchor
@@ -388,6 +271,98 @@ T.Popup {
             }
         }
     }
+    enter: Transition {
+        NumberAnimation {
+            property: 'opacity';
+            from: 0.0
+            to: 1.0
+            duration: control.animationEnabled ? AntTheme.Primary.durationMid : 0
+        }
+    }
+
+    onStepModelChanged: {
+        resetStep();
+        __private.recalcPosition();
+    }
+    onCurrentTargetChanged: __private.recalcPosition();
+    onFocusMarginChanged: {
+        __private.recalcPosition();
+    }
+    onFocusRadiusChanged: {
+        __private.repaint();
+    }
+    onAboutToShow: {
+        __private.recalcPosition();
+        opacity = 1.0;
+    }
+    onAboutToHide: {
+        if (animationEnabled && !__private.isClosing && opacity > 0) {
+            visible = true;
+            __private.startClosing();
+        }
+    }
+
+    T.Overlay.modal: Item {
+        Canvas {
+            id: __canvas
+            anchors.fill: parent
+            opacity: control.opacity
+            onPaint: {
+                const ctx = getContext('2d');
+                ctx.clearRect(0, 0, width, height);
+
+                ctx.save();
+                ctx.fillStyle = control.colorOverlay;
+                ctx.fillRect(0, 0, width, height);
+
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.fillStyle = '#fff';
+
+                const rect = Qt.rect(__private.focusX, __private.focusY, __private.focusWidth, __private.focusHeight);
+                ctx.beginPath();
+                ctx.moveTo(rect.x + control.focusRadius, rect.y);
+                ctx.lineTo(rect.x + rect.width - control.focusRadius, rect.y);
+                ctx.arcTo(rect.x + rect.width, rect.y, rect.x + rect.width, rect.y + control.focusRadius, control.focusRadius);
+                ctx.lineTo(rect.x + rect.width, rect.y + rect.height - control.focusRadius);
+                ctx.arcTo(rect.x + rect.width, rect.y + rect.height, rect.x + rect.width - control.focusRadius, rect.y + rect.height, control.focusRadius);
+                ctx.lineTo(rect.x + control.focusRadius, rect.y + rect.height);
+                ctx.arcTo(rect.x, rect.y + rect.height, rect.x, rect.y + rect.height - control.focusRadius, control.focusRadius);
+                ctx.lineTo(rect.x, rect.y + control.focusRadius);
+                ctx.arcTo(rect.x, rect.y, rect.x + control.focusRadius, rect.y, control.focusRadius);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.restore();
+            }
+        }
+
+        Connections {
+            target: __private
+            function onRepaint() {
+                __canvas.requestPaint();
+            }
+        }
+
+        Item {
+            id: __eventArea
+            x: __private.focusX
+            y: __private.focusY
+            width: __private.focusWidth
+            height: __private.focusHeight
+            visible: false
+        }
+
+        /*! 禁止 currentTarget 外的滚动 */
+        WheelHandler {
+            onWheel:
+                event => {
+                    if (!__eventArea.contains(Qt.point(event.x, event.y))) {
+                        event.accepted = true;
+                    }
+                }
+        }
+    }
+    T.Overlay.modeless: T.Overlay.modal
 
     NumberAnimation {
         running: __private.isClosing
@@ -401,6 +376,34 @@ T.Popup {
             __private.isClosing = false;
             control.resetStep();
             control.visible = false;
+        }
+    }
+
+    function gotoStep(step: int) {
+        if (stepModel.length > step) {
+            currentStep = step;
+            currentTarget = stepModel[control.currentStep].target;
+        }
+    }
+
+    function resetStep() {
+        currentStep = 0;
+        if (stepModel.length > currentStep) {
+            currentTarget = stepModel[control.currentStep].target;
+        }
+    }
+
+    function appendStep(object) {
+        stepModel.push(object);
+        stepModelChanged();
+    }
+
+    function close() {
+        if (!visible || __private.isClosing) return;
+        if (animationEnabled) {
+            __private.startClosing();
+        } else {
+            visible = false;
         }
     }
 

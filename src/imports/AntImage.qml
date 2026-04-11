@@ -14,6 +14,7 @@ Image {
     property var placeholder: ''
     property var items: []
     property string previewText: qsTr('预览')
+    property var themeSource: AntTheme.AntImage
 
     objectName: '__AntImage__'
     onSourceChanged: {
@@ -73,15 +74,15 @@ Image {
 
                 AntIconText {
                     anchors.verticalCenter: parent.verticalCenter
-                    colorIcon: AntTheme.AntImage.colorText
+                    colorIcon: control.themeSource.colorText
                     iconSource: AntIcon.EyeOutlined
-                    iconSize: AntTheme.AntImage.fontSize
+                    iconSize: control.themeSource.fontSize
                 }
 
                 AntText {
                     anchors.verticalCenter: parent.verticalCenter
                     text: control.previewText
-                    color: AntTheme.AntImage.colorText
+                    color: control.themeSource.colorText
                 }
             }
 

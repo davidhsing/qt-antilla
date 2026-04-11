@@ -29,12 +29,12 @@ Item {
     property int indicatorPosition: AntCarousel.PositionBottom
     property int indicatorSpacing: 6
     property bool arrowVisible: false
-    property AntRadius radiusIndicator: AntRadius { all: AntTheme.AntCarousel.radiusIndicator }
+    property AntRadius radiusIndicator: AntRadius { all: control.themeSource.radiusIndicator }
     property Component contentDelegate: Item { }
     property Component indicatorDelegate: AntRectangleInternal {
         width: isHorizontal ? __width : __height
         height: isHorizontal ? __height : __width
-        color: isCurrent ? AntTheme.AntCarousel.colorIndicatorActive : (hovered ? AntTheme.AntCarousel.colorIndicatorHover : AntTheme.AntCarousel.colorIndicator)
+        color: isCurrent ? control.themeSource.colorIndicatorActive : (hovered ? control.themeSource.colorIndicatorHover : control.themeSource.colorIndicator)
         radius: control.radiusIndicator.all
         topLeftRadius: control.radiusIndicator.topLeft
         topRightRadius: control.radiusIndicator.topRight
@@ -69,7 +69,7 @@ Item {
         animationEnabled: control.animationEnabled
         iconSource: __private.isHorizontal ? AntIcon.LeftOutlined : AntIcon.UpOutlined
         iconSize: 20
-        colorIcon: hovered ? AntTheme.AntCarousel.colorArrowHover : AntTheme.AntCarousel.colorArrow
+        colorIcon: hovered ? control.themeSource.colorArrowHover : control.themeSource.colorArrow
         type: AntButton.TypeLink
         onClicked: control.switchToPrev();
     }
@@ -78,10 +78,11 @@ Item {
         animationEnabled: control.animationEnabled
         iconSource: __private.isHorizontal ? AntIcon.RightOutlined : AntIcon.DownOutlined
         iconSize: 20
-        colorIcon: hovered ? AntTheme.AntCarousel.colorArrowHover : AntTheme.AntCarousel.colorArrow
+        colorIcon: hovered ? control.themeSource.colorArrowHover : control.themeSource.colorArrow
         type: AntButton.TypeLink
         onClicked: control.switchToNext();
     }
+    property var themeSource: AntTheme.AntCarousel
 
     objectName: '__AntCarousel__'
     onInfiniteChanged: __private.updateModel();

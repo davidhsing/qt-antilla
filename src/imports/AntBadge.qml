@@ -30,17 +30,13 @@ Item {
     property alias colorBorder: __border.border.color
     property color colorText: 'white'
 
-    property bool __parentIsLayout: parent instanceof Row || parent instanceof Column || parent instanceof Grid ||
-                                    parent instanceof RowLayout || parent instanceof ColumnLayout || parent instanceof GridLayout ||
-                                    parent instanceof Flow
-
     objectName: '__AntBadge__'
     width: __badge.width
     height: __badge.height
-    anchors.left: __parentIsLayout ? undefined : parent.right
-    anchors.leftMargin: __parentIsLayout ? 0 : -width / 2
-    anchors.bottom: __parentIsLayout ? undefined : parent.top
-    anchors.bottomMargin: __parentIsLayout ? 0 : -height / 2
+    anchors.left: __private.isLayoutParent ? undefined : parent.right
+    anchors.leftMargin: __private.isLayoutParent ? 0 : -width / 2
+    anchors.bottom: __private.isLayoutParent ? undefined : parent.top
+    anchors.bottomMargin: __private.isLayoutParent ? 0 : -height / 2
 
     onCountChanged: {
         const max = Math.min(count, overflowCount);
@@ -100,6 +96,9 @@ Item {
         property var colorArray: AntThemeFunctions.genColor(presetColor, !AntTheme.isDark, AntTheme.Primary.colorBgBase)
         property int lastCount: control.count
         property bool isNumber: control.iconSource === 0 || control.iconSource === ''
+        property bool isLayoutParent: parent instanceof Row || parent instanceof Column || parent instanceof Grid ||
+                                      parent instanceof RowLayout || parent instanceof ColumnLayout || parent instanceof GridLayout ||
+                                      parent instanceof Flow
     }
 
     Rectangle {

@@ -39,21 +39,22 @@ Item {
     property int tooltipArrowOffset: 4
     property int tooltipPosition: AntToolTip.PositionTop
     property var tooltipIconSource: AntIcon.QuestionCircleOutlined
-    property int tooltipIconSize: AntTheme.AntFormItem.fontTooltipIconSize
+    property int tooltipIconSize: control.themeSource.fontTooltipIconSize
     property string tooltipText: ''
-    property int tooltipTextSize: AntTheme.AntFormItem.fontTooltipTextSize
-    property color colorTooltipIcon: AntTheme.AntFormItem.colorTooltipIcon
-    property color colorTooltipIconHover: AntTheme.AntFormItem.colorTooltipIconHover
-    property color colorTooltipText: AntTheme.AntFormItem.colorTooltipText
+    property int tooltipTextSize: control.themeSource.fontTooltipTextSize
+    property color colorTooltipIcon: control.themeSource.colorTooltipIcon
+    property color colorTooltipIconHover: control.themeSource.colorTooltipIconHover
+    property color colorTooltipText: control.themeSource.colorTooltipText
 
     // 验证相关
     property var validator: null    // 接受无参数函数: () => ({valid: bool, message: string}) | bool | undefined
 
     // 主题
-    property color colorLabelText: AntTheme.AntFormItem.colorLabelText
-    property color colorLabelRequired: AntTheme.AntFormItem.colorLabelRequired
-    property color colorFeedbackSuccess: AntTheme.AntFormItem.colorFeedbackSuccess
-    property color colorFeedbackError: AntTheme.AntFormItem.colorFeedbackError
+    property color colorLabelText: control.themeSource.colorLabelText
+    property color colorLabelRequired: control.themeSource.colorLabelRequired
+    property color colorFeedbackSuccess: control.themeSource.colorFeedbackSuccess
+    property color colorFeedbackError: control.themeSource.colorFeedbackError
+    property var themeSource: AntTheme.AntFormItem
 
     // 默认内容
     default property alias contentDelegate: __contentItem.data
@@ -220,12 +221,12 @@ Item {
             // 必填星号
             AntText {
                 Layout.alignment: Qt.AlignVCenter
-                Layout.topMargin: parseInt(AntTheme.AntFormItem.fontLabelSize) / 3
+                Layout.topMargin: parseInt(control.themeSource.fontLabelSize) / 3
                 text: '*'
                 color: control.colorLabelRequired
                 font {
-                    family: AntTheme.AntFormItem.fontLabelFamily
-                    pixelSize: AntTheme.AntFormItem.fontLabelSize
+                    family: control.themeSource.fontLabelFamily
+                    pixelSize: control.themeSource.fontLabelSize
                 }
                 verticalAlignment: Text.AlignVCenter
                 visible: control.required
@@ -238,8 +239,8 @@ Item {
                 text: control.labelText + (control.colonVisible ? control.colonText : '')
                 color: control.colorLabelText
                 font {
-                    family: AntTheme.AntFormItem.fontLabelFamily
-                    pixelSize: AntTheme.AntFormItem.fontLabelSize
+                    family: control.themeSource.fontLabelFamily
+                    pixelSize: control.themeSource.fontLabelSize
                 }
                 verticalAlignment: Text.AlignVCenter
                 visible: !!control.labelText
@@ -286,12 +287,12 @@ Item {
                     case AntFormItem.ValidationError:
                         return control.colorFeedbackError;
                     default:
-                        return AntTheme.AntFormItem.colorFeedbackNormal;
+                        return control.themeSource.colorFeedbackNormal;
                 }
             }
             font {
-                family: AntTheme.AntFormItem.fontFeedbackFamily
-                pixelSize: AntTheme.AntFormItem.fontFeedbackSize
+                family: control.themeSource.fontFeedbackFamily
+                pixelSize: control.themeSource.fontFeedbackSize
             }
             visible: !!__private.feedbackText || control.keepFeedbackPlace
 

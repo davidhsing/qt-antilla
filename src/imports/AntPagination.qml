@@ -41,8 +41,8 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             text: control.quickJumperPrefix
             font {
-                family: AntTheme.AntCopyableText.fontFamily
-                pixelSize: AntTheme.AntCopyableText.fontSize
+                family: control.themeSource.fontFamily
+                pixelSize: control.themeSource.fontSize
             }
             color: AntTheme.Primary.colorTextBase
             visible: !!control.quickJumperPrefix
@@ -72,6 +72,7 @@ Item {
             visible: !!control.quickJumperSuffix
         }
     }
+    property var themeSource: AntTheme.AntPagination
 
     objectName: '__AntPagination__'
     implicitWidth: __row.width
@@ -97,20 +98,20 @@ Item {
         font.bold: checked
         colorText: {
             if (enabled) {
-                return checked ? AntTheme.AntPagination.colorButtonTextActive : AntTheme.AntPagination.colorButtonText;
+                return checked ? control.themeSource.colorButtonTextActive : control.themeSource.colorButtonText;
             }
-            return AntTheme.AntPagination.colorButtonTextDisabled;
+            return control.themeSource.colorButtonTextDisabled;
         }
         colorBg: {
             if (enabled) {
                 if (checked) {
-                    return AntTheme.AntPagination.colorButtonBg;
+                    return control.themeSource.colorButtonBg;
                 }
-                return down ? AntTheme.AntPagination.colorButtonBgActive : (hovered ? AntTheme.AntPagination.colorButtonBgHover : AntTheme.AntPagination.colorButtonBg);
+                return down ? control.themeSource.colorButtonBgActive : (hovered ? control.themeSource.colorButtonBgHover : control.themeSource.colorButtonBg);
             }
-            return checked ? AntTheme.AntPagination.colorButtonBgDisabled : 'transparent';
+            return checked ? control.themeSource.colorButtonBgDisabled : 'transparent';
         }
-        colorBorder: checked ? AntTheme.AntPagination.colorBorderActive : 'transparent'
+        colorBorder: checked ? control.themeSource.colorBorderActive : 'transparent'
         onClicked: {
             control.currentPageIndex = pageIndex;
         }
@@ -189,7 +190,7 @@ Item {
             enabled: control.enabled && !__actionRoot.disabled
             effectEnabled: false
             colorBorder: 'transparent'
-            colorBg: enabled ? (down ? AntTheme.AntPagination.colorActionBgActive : (hovered ? AntTheme.AntPagination.colorActionBgHover : AntTheme.AntPagination.colorActionBg)) : AntTheme.AntPagination.colorActionBg
+            colorBg: enabled ? (down ? control.themeSource.colorActionBgActive : (hovered ? control.themeSource.colorActionBgHover : control.themeSource.colorActionBg)) : control.themeSource.colorActionBg
             onClicked: __actionRoot.clicked();
 
             AntToolTip {

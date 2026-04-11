@@ -45,19 +45,19 @@ Item {
     property int bgLeftPadding: 12
     property int bgRightPadding: 12
     property int iconSpacing: 8
-    property color colorTitle: AntTheme.AntNotification.colorTitle
-    property color colorDescription: AntTheme.AntNotification.colorDescription
-    property color colorBg: AntTheme.isDark ? AntTheme.AntNotification.colorBgDark : AntTheme.AntNotification.colorBg
-    property color colorBgShadow: AntTheme.AntNotification.colorBgShadow
-    property AntRadius radiusBg: AntRadius { all: AntTheme.AntNotification.radiusBg }
+    property color colorTitle: control.themeSource.colorTitle
+    property color colorDescription: control.themeSource.colorDescription
+    property color colorBg: AntTheme.isDark ? control.themeSource.colorBgDark : control.themeSource.colorBg
+    property color colorBgShadow: control.themeSource.colorBgShadow
+    property AntRadius radiusBg: AntRadius { all: control.themeSource.radiusBg }
     property font titleFont: Qt.font({
-        family: AntTheme.AntNotification.titleFontFamily,
-        pixelSize: parseInt(AntTheme.AntNotification.titleFontSize),
+        family: control.themeSource.titleFontFamily,
+        pixelSize: parseInt(control.themeSource.titleFontSize),
         bold: true
     })
     property font descriptionFont: Qt.font({
-        family: AntTheme.AntNotification.descriptionFontFamily,
-        pixelSize: parseInt(AntTheme.AntNotification.descriptionFontSize)
+        family: control.themeSource.descriptionFontFamily,
+        pixelSize: parseInt(control.themeSource.descriptionFontSize)
     })
     property int descriptionSpacing: 10
 
@@ -76,6 +76,7 @@ Item {
         horizontalAlignment: Text.AlignLeft
         wrapMode: Text.WrapAnywhere
     }
+    property var themeSource: AntTheme.AntNotification
 
     objectName: '__AntNotification__'
 
@@ -342,7 +343,7 @@ Item {
                                 animationEnabled: control.animationEnabled
                                 hoverCursorShape: Qt.PointingHandCursor
                                 iconSource: AntIcon.CloseOutlined
-                                colorIcon: hovered ? AntTheme.AntNotification.colorCloseHover : AntTheme.AntNotification.colorClose
+                                colorIcon: hovered ? control.themeSource.colorCloseHover : control.themeSource.colorClose
                                 onClicked: {
                                     __timer.stop();
                                     __rootItem.removeSelf();

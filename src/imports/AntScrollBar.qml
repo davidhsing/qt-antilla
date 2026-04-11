@@ -7,39 +7,40 @@ T.ScrollBar {
 
     property bool animationEnabled: AntTheme.animationEnabled
     property int minimumHandleSize: 24
-    property color colorBar: control.pressed ? AntTheme.AntScrollBar.colorBarActive : (control.hovered ? AntTheme.AntScrollBar.colorBarHover : AntTheme.AntScrollBar.colorBar)
-    property color colorBg: control.pressed ? AntTheme.AntScrollBar.colorBgActive : (control.hovered ? AntTheme.AntScrollBar.colorBgHover : AntTheme.AntScrollBar.colorBg)
+    property color colorBar: control.pressed ? control.themeSource.colorBarActive : (control.hovered ? control.themeSource.colorBarHover : control.themeSource.colorBar)
+    property color colorBg: control.pressed ? control.themeSource.colorBgActive : (control.hovered ? control.themeSource.colorBgHover : control.themeSource.colorBg)
     property string ariaConstrual: ''
+    property var themeSource: AntTheme.AntScrollBar
 
     objectName: '__AntScrollBar__'
-    width: control.orientation == Qt.Vertical ? 10 : parent.width
-    height: control.orientation == Qt.Horizontal ? 10 : parent.height
-    anchors.right: control.orientation == Qt.Vertical ? parent.right : undefined
-    anchors.bottom: control.orientation == Qt.Horizontal ? parent.bottom : undefined
-    leftPadding: control.orientation == Qt.Horizontal ? (leftInset + 10) : leftInset
-    rightPadding: control.orientation == Qt.Horizontal ? (rightInset + 10) : rightInset
-    topPadding: control.orientation == Qt.Vertical ? (topInset + 10) : topInset
-    bottomPadding: control.orientation == Qt.Vertical ? (bottomInset + 10) : bottomInset
+    width: control.orientation === Qt.Vertical ? 10 : parent.width
+    height: control.orientation === Qt.Horizontal ? 10 : parent.height
+    anchors.right: control.orientation === Qt.Vertical ? parent.right : undefined
+    anchors.bottom: control.orientation === Qt.Horizontal ? parent.bottom : undefined
+    leftPadding: control.orientation === Qt.Horizontal ? (leftInset + 10) : leftInset
+    rightPadding: control.orientation === Qt.Horizontal ? (rightInset + 10) : rightInset
+    topPadding: control.orientation === Qt.Vertical ? (topInset + 10) : topInset
+    bottomPadding: control.orientation === Qt.Vertical ? (bottomInset + 10) : bottomInset
     policy: T.ScrollBar.AlwaysOn
     minimumSize: {
-        if (control.orientation == Qt.Vertical) {
+        if (control.orientation === Qt.Vertical) {
             return (size * height < minimumHandleSize) ? minimumHandleSize / height : 0;
         } else {
             return (size * width < minimumHandleSize) ? minimumHandleSize / width : 0;
         }
     }
-    visible: (control.policy != T.ScrollBar.AlwaysOff) && control.size !== 1
+    visible: (control.policy !== T.ScrollBar.AlwaysOff) && control.size !== 1
     contentItem: Item {
         Rectangle {
             width: {
-                if (control.orientation == Qt.Vertical) {
+                if (control.orientation === Qt.Vertical) {
                     return __private.visible ? 6 : 2;
                 } else {
                     return parent.width;
                 }
             }
             height: {
-                if (control.orientation == Qt.Vertical) {
+                if (control.orientation === Qt.Vertical) {
                     return parent.height;
                 } else {
                     return __private.visible ? 6 : 2;
@@ -47,7 +48,7 @@ T.ScrollBar {
             }
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
-            radius: control.orientation == Qt.Vertical ? width / 2 : height / 2
+            radius: control.orientation === Qt.Vertical ? width / 2 : height / 2
             color: control.colorBar
             opacity: {
                 if (control.policy == T.ScrollBar.AlwaysOn) {
@@ -84,7 +85,7 @@ T.ScrollBar {
         signal clicked()
         property bool hovered: false
 
-        colorIcon: hovered ? AntTheme.AntScrollBar.colorIconHover : AntTheme.AntScrollBar.colorIcon
+        colorIcon: hovered ? control.themeSource.colorIconHover : control.themeSource.colorIcon
         opacity: __private.visible ? 1 : 0
 
         Behavior on opacity { enabled: control.animationEnabled; NumberAnimation { duration: AntTheme.Primary.durationFast } }
@@ -105,7 +106,7 @@ T.ScrollBar {
     }
 
     Loader {
-        active: control.orientation == Qt.Vertical
+        active: control.orientation === Qt.Vertical
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         sourceComponent: HoverIcon {
@@ -116,7 +117,7 @@ T.ScrollBar {
     }
 
     Loader {
-        active: control.orientation == Qt.Vertical
+        active: control.orientation === Qt.Vertical
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         sourceComponent: HoverIcon {
@@ -127,7 +128,7 @@ T.ScrollBar {
     }
 
     Loader {
-        active: control.orientation == Qt.Horizontal
+        active: control.orientation === Qt.Horizontal
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         sourceComponent: HoverIcon {
@@ -138,7 +139,7 @@ T.ScrollBar {
     }
 
     Loader {
-        active: control.orientation == Qt.Horizontal
+        active: control.orientation === Qt.Horizontal
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         sourceComponent: HoverIcon {

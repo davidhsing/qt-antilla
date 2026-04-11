@@ -17,17 +17,17 @@ Item {
     property int iconSize: 24
     /* 文字提示 */
     property font toolTipFont: Qt.font({
-        family: AntTheme.AntRate.fontFamily,
-        pixelSize: AntTheme.AntRate.fontSize
+        family: control.themeSource.fontFamily,
+        pixelSize: control.themeSource.fontSize
     })
     property bool toolTipVisible: false
     property list<string> toolTipTexts: []
-    property color colorFill: AntTheme.AntRate.colorFill
-    property color colorEmpty: AntTheme.AntRate.colorEmpty
-    property color colorHalf: AntTheme.AntRate.colorHalf
-    property color colorToolTipShadow: AntTheme.AntRate.colorToolTipShadow
-    property color colorToolTipText: AntTheme.AntRate.colorToolTipText
-    property color colorToolTipBg: AntTheme.isDark ? AntTheme.AntRate.colorToolTipBgDark : AntTheme.AntRate.colorToolTipBg
+    property color colorFill: control.themeSource.colorFill
+    property color colorEmpty: control.themeSource.colorEmpty
+    property color colorHalf: control.themeSource.colorHalf
+    property color colorToolTipShadow: control.themeSource.colorToolTipShadow
+    property color colorToolTipText: control.themeSource.colorToolTipText
+    property color colorToolTipBg: AntTheme.isDark ? control.themeSource.colorToolTipBgDark : control.themeSource.colorToolTipBg
     /* 允许半星 */
     property bool allowHalf: false
     property bool isDone: false
@@ -111,7 +111,7 @@ Item {
                 anchors.bottomMargin: -1
                 anchors.horizontalCenter: parent.horizontalCenter
                 color: control.colorToolTipBg
-                radius: AntTheme.AntRate.radiusToolTipBg
+                radius: control.themeSource.radiusToolTipBg
 
                 AntText {
                     id: __toolTipText
@@ -143,10 +143,10 @@ Item {
             }
         }
     }
-
     property Component halfRateHelper: ShaderEffect {
         fragmentShader: 'qrc:/Antilla/shaders/antrate.frag.qsb'
     }
+    property var themeSource: AntTheme.AntRate
 
     objectName: '__AntRate__'
     implicitWidth: __mouseArea.width

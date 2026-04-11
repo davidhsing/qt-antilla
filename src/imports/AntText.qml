@@ -5,9 +5,9 @@ Text {
     id: control
 
     readonly property bool hovered: __mouseArea.containsMouse
-    property color colorText: themeSource.colorText
-    property color colorTextDisabled: themeSource.colorTextDisabled
-    property color colorTextHover: themeSource.colorTextHover
+    property color colorText: control.themeSource.colorText
+    property color colorTextDisabled: control.themeSource.colorTextDisabled
+    property color colorTextHover: control.themeSource.colorTextHover
     property alias cursorShape: __mouseArea.cursorShape
     property var themeSource: AntTheme.AntText
 
@@ -15,8 +15,8 @@ Text {
     renderType: AntTheme.textRenderType
     color: !control.enabled ? control.colorTextDisabled : (control.hovered ? control.colorTextHover : control.colorText)
     font {
-        family: themeSource.fontFamily
-        pixelSize: parseInt(themeSource.fontSize)
+        family: control.themeSource.fontFamily
+        pixelSize: parseInt(control.themeSource.fontSize)
     }
 
     MouseArea {

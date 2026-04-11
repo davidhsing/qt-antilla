@@ -30,10 +30,10 @@ Item {
     property int radioWidth: 120
     property int radioHeight: 30
     property font font: Qt.font({
-        family: AntTheme.AntRadioBlock.fontFamily,
-        pixelSize: AntTheme.AntRadioBlock.fontSize
+        family: control.themeSource.fontFamily,
+        pixelSize: control.themeSource.fontSize
     })
-    property AntRadius radiusBg: AntRadius { all: AntTheme.AntRadioBlock.radiusBlockBg }
+    property AntRadius radiusBg: AntRadius { all: control.themeSource.radiusBlockBg }
     property Component toolTipDelegate: AntToolTip {
         text: toolTip.text ?? ''
         delay: toolTip.delay ?? 500
@@ -68,34 +68,34 @@ Item {
         type: AntButton.TypeDefault
         iconSource: modelData.iconSource ?? 0
         text: modelData.label ?? ''
-        colorBorder: (enabled && checked) ? AntTheme.AntRadioBlock.colorBlockBorderChecked :
-                                            AntTheme.AntRadioBlock.colorBlockBorder;
+        colorBorder: (enabled && checked) ? control.themeSource.colorBlockBorderChecked :
+                                            control.themeSource.colorBlockBorder;
         colorText: {
             if (enabled) {
                 if (control.type == AntRadioBlock.TypeFilled) {
-                    return checked ? AntTheme.AntRadioBlock.colorBlockTextFilledChecked :
-                                     hovered ? AntTheme.AntRadioBlock.colorBlockTextChecked :
-                                               AntTheme.AntRadioBlock.colorBlockText;
+                    return checked ? control.themeSource.colorBlockTextFilledChecked :
+                                     hovered ? control.themeSource.colorBlockTextChecked :
+                                               control.themeSource.colorBlockText;
                 } else {
-                    return (checked || hovered) ? AntTheme.AntRadioBlock.colorBlockTextChecked :
-                                                  AntTheme.AntRadioBlock.colorBlockText;
+                    return (checked || hovered) ? control.themeSource.colorBlockTextChecked :
+                                                  control.themeSource.colorBlockText;
                 }
             } else {
-                return AntTheme.AntRadioBlock.colorTextDisabled;
+                return control.themeSource.colorTextDisabled;
             }
         }
         colorBg: {
             if (enabled) {
                 if (control.type == AntRadioBlock.TypeFilled) {
-                    return down ? (checked ? AntTheme.AntRadioBlock.colorBlockBgActive : AntTheme.AntRadioBlock.colorBlockBg) :
-                                  hovered ? (checked ? AntTheme.AntRadioBlock.colorBlockBgHover : AntTheme.AntRadioBlock.colorBlockBg) :
-                                            checked ? AntTheme.AntRadioBlock.colorBlockBgChecked :
-                                                      AntTheme.AntRadioBlock.colorBlockBg;
+                    return down ? (checked ? control.themeSource.colorBlockBgActive : control.themeSource.colorBlockBg) :
+                                  hovered ? (checked ? control.themeSource.colorBlockBgHover : control.themeSource.colorBlockBg) :
+                                            checked ? control.themeSource.colorBlockBgChecked :
+                                                      control.themeSource.colorBlockBg;
                 } else {
-                    return AntTheme.AntRadioBlock.colorBlockBg;
+                    return control.themeSource.colorBlockBg;
                 }
             } else {
-                return checked ? AntTheme.AntRadioBlock.colorBlockBgCheckedDisabled : AntTheme.AntRadioBlock.colorBlockBgDisabled;
+                return checked ? control.themeSource.colorBlockBgCheckedDisabled : control.themeSource.colorBlockBgDisabled;
             }
         }
         checkable: true
@@ -108,7 +108,7 @@ Item {
                 visible: __rootItem.effectEnabled
                 color: 'transparent'
                 border.width: 0
-                border.color: __rootItem.enabled ? AntTheme.AntRadioBlock.colorBlockEffectBg : 'transparent'
+                border.color: __rootItem.enabled ? control.themeSource.colorBlockEffectBg : 'transparent'
                 opacity: 0.2
 
                 ParallelAnimation {
@@ -179,6 +179,7 @@ Item {
         }
     }
     property string ariaConstrual: ''
+    property var themeSource: AntTheme.AntRadioBlock
 
     objectName: '__AntRadioBlock__'
     implicitWidth: __loader.implicitWidth

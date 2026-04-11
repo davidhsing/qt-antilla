@@ -20,8 +20,8 @@ Item {
     property bool titleVisible: !!control.titleText
     property string titleText: ''
     property font titleFont: Qt.font({
-        family: AntTheme.AntGroupBox.fontFamily,
-        pixelSize: AntTheme.AntGroupBox.fontSize
+        family: control.themeSource.fontFamily,
+        pixelSize: control.themeSource.fontSize
     })
     property int titlePosition: AntGroupBox.PositionTop
     property int titleAlign: AntGroupBox.AlignLeft
@@ -34,10 +34,10 @@ Item {
     property int contentBottomMargin: contentMargins
     property int contentLeftMargin: contentMargins
     property int contentRightMargin: contentMargins
-    property color colorTitle: AntTheme.AntGroupBox.colorTitle
-    property color colorBorder: AntTheme.AntGroupBox.colorBorder
-    property color colorBg: AntTheme.AntGroupBox.colorBg
-    property AntRadius radiusBg: AntRadius { all: AntTheme.AntGroupBox.radiusBg }
+    property color colorTitle: control.themeSource.colorTitle
+    property color colorBorder: control.themeSource.colorBorder
+    property color colorBg: control.themeSource.colorBg
+    property AntRadius radiusBg: AntRadius { all: control.themeSource.radiusBg }
     property string ariaConstrual: titleText
 
     property Component titleDelegate: AntText {
@@ -73,6 +73,7 @@ Item {
         }
     }
 
+    property var themeSource: AntTheme.AntGroupBox
     default property alias content: __contentItem.data
 
     objectName: '__AntGroupBox__'

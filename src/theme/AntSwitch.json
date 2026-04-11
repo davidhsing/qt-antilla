@@ -1,7 +1,7 @@
 {
     "__style__": {
         "fontFamily": "@fontPrimaryFamily",
-        "fontSize": "@fontPrimarySize",
+        "fontSize": "$subtract(@fontPrimarySize, 2)",
         "colorText": "@colorTextPrimary",
         "colorHandle": "#ffffff",
         "colorBgDisabled": "$alpha(@colorTextQuaternary, 0.15)",

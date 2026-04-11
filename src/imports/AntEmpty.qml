@@ -40,10 +40,10 @@ Item {
     property string descriptionText: ''
     property int descriptionSpacing: 12
     property font descriptionFont: Qt.font({
-        family: AntTheme.AntEmpty.fontFamily,
-        pixelSize: AntTheme.AntEmpty.fontSize
+        family: control.themeSource.fontFamily,
+        pixelSize: control.themeSource.fontSize
     })
-    property color colorDescription: AntTheme.AntEmpty.colorDescription
+    property color colorDescription: control.themeSource.colorDescription
 
     property Component imageDelegate: Image {
         width: control.imageWidth
@@ -57,6 +57,7 @@ Item {
         color: control.colorDescription
         horizontalAlignment: Text.AlignHCenter
     }
+    property var themeSource: AntTheme.AntEmpty
 
     objectName: '__AntEmpty__'
     implicitWidth: 200

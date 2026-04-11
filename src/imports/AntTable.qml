@@ -25,20 +25,20 @@ AntRectangle {
     property var defaultCheckedKeys: []
     property bool columnHeaderVisible: true
     property font columnHeaderTitleFont: Qt.font({
-        family: AntTheme.AntTable.fontFamily,
-        pixelSize: AntTheme.AntTable.fontSize
+        family: control.themeSource.fontFamily,
+        pixelSize: control.themeSource.fontSize
     })
-    property color colorColumnHeaderTitle: AntTheme.AntTable.colorColumnHeaderTitle
-    property color colorColumnHeaderBg: AntTheme.AntTable.colorColumnHeaderBg
+    property color colorColumnHeaderTitle: control.themeSource.colorColumnHeaderTitle
+    property color colorColumnHeaderBg: control.themeSource.colorColumnHeaderBg
     property bool rowHeaderVisible: true
     property font rowHeaderTitleFont: Qt.font({
-        family: AntTheme.AntTable.fontFamily,
-        pixelSize: AntTheme.AntTable.fontSize
+        family: control.themeSource.fontFamily,
+        pixelSize: control.themeSource.fontSize
     })
-    property color colorRowHeaderTitle: AntTheme.AntTable.colorRowHeaderTitle
-    property color colorRowHeaderBg: AntTheme.AntTable.colorRowHeaderBg
-    property color colorGridLine: AntTheme.AntTable.colorGridLine
-    property color colorResizeBlockBg: AntTheme.AntTable.colorResizeBlockBg
+    property color colorRowHeaderTitle: control.themeSource.colorRowHeaderTitle
+    property color colorRowHeaderBg: control.themeSource.colorRowHeaderBg
+    property color colorGridLine: control.themeSource.colorGridLine
+    property color colorResizeBlockBg: control.themeSource.colorResizeBlockBg
     property string resizeBlockText: ''
 
     property Component columnHeaderDelegate: Item {
@@ -209,16 +209,16 @@ AntRectangle {
 
             AntIconText {
                 visible: sortDirections.indexOf('ascend') !== -1
-                colorIcon: sortMode === 'ascend' ? AntTheme.AntTable.colorIconHover : AntTheme.AntTable.colorIcon
+                colorIcon: sortMode === 'ascend' ? control.themeSource.colorIconHover : control.themeSource.colorIcon
                 iconSource: AntIcon.CaretUpOutlined
-                iconSize: AntTheme.AntTable.fontSize - 2
+                iconSize: control.themeSource.fontSize - 2
             }
 
             AntIconText {
                 visible: sortDirections.indexOf('descend') !== -1
-                colorIcon: sortMode === 'descend' ? AntTheme.AntTable.colorIconHover : AntTheme.AntTable.colorIcon
+                colorIcon: sortMode === 'descend' ? control.themeSource.colorIconHover : control.themeSource.colorIcon
                 iconSource: AntIcon.CaretDownOutlined
-                iconSize: AntTheme.AntTable.fontSize - 2
+                iconSize: control.themeSource.fontSize - 2
             }
         }
     }
@@ -230,7 +230,7 @@ AntRectangle {
             id: __headerFilterIcon
             anchors.centerIn: parent
             iconSource: AntIcon.SearchOutlined
-            colorIcon: hovered ? AntTheme.AntTable.colorIconHover : AntTheme.AntTable.colorIcon
+            colorIcon: hovered ? control.themeSource.colorIconHover : control.themeSource.colorIcon
             onClicked: {
                 __filterPopup.open();
             }
@@ -304,11 +304,12 @@ AntRectangle {
             Component.onCompleted: AntApi.setPopupAllowAutoFlip(this);
         }
     }
+    property var themeSource: AntTheme.AntTable
 
     objectName: '__AntTable__'
     clip: true
-    color: AntTheme.AntTable.colorBg
-    radius: AntTheme.AntTable.radiusBg
+    color: control.themeSource.colorBg
+    radius: control.themeSource.radiusBg
     onColumnsChanged: {
         let headerColumns = [];
         let headerRow = {};
@@ -702,8 +703,8 @@ AntRectangle {
         height: control.defaultColumnHeaderHeight
         anchors.left: control.rowHeaderVisible ? __rowHeaderViewBg.right : parent.left
         anchors.right: parent.right
-        topLeftRadius: control.rowHeaderVisible ? 0 : AntTheme.AntTable.radiusBg
-        topRightRadius: AntTheme.AntTable.radiusBg
+        topLeftRadius: control.rowHeaderVisible ? 0 : control.themeSource.radiusBg
+        topRightRadius: control.themeSource.radiusBg
         color: control.colorColumnHeaderBg
         visible: control.columnHeaderVisible
 
@@ -902,11 +903,11 @@ AntRectangle {
                 color: {
                     if (__private.checkedKeysMap.has(key)) {
                         if (row === __cellView.currentHoverRow) {
-                            return AntTheme.isDark ? AntTheme.AntTable.colorCellBgDarkHoverChecked : AntTheme.AntTable.colorCellBgHoverChecked;
+                            return AntTheme.isDark ? control.themeSource.colorCellBgDarkHoverChecked : control.themeSource.colorCellBgHoverChecked;
                         }
-                        return AntTheme.isDark ? AntTheme.AntTable.colorCellBgDarkChecked : AntTheme.AntTable.colorCellBgChecked;
+                        return AntTheme.isDark ? control.themeSource.colorCellBgDarkChecked : control.themeSource.colorCellBgChecked;
                     }
-                    return (row === __cellView.currentHoverRow) ? AntTheme.AntTable.colorCellBgHover : (control.alternatingRow && __rootItem.row % 2 !== 0 ? AntTheme.AntTable.colorCellBgHover : AntTheme.AntTable.colorCellBg);
+                    return (row === __cellView.currentHoverRow) ? control.themeSource.colorCellBgHover : (control.alternatingRow && __rootItem.row % 2 !== 0 ? control.themeSource.colorCellBgHover : control.themeSource.colorCellBg);
                 }
 
                 // Behavior on color { enabled: control.animationEnabled; ColorAnimation { duration: AntTheme.Primary.durationMid } }
@@ -1038,7 +1039,7 @@ AntRectangle {
         active: control.rowHeaderVisible && control.columnHeaderVisible
         sourceComponent: AntRectangle {
             color: control.colorResizeBlockBg
-            topLeftRadius: AntTheme.AntTable.radiusBg
+            topLeftRadius: control.themeSource.radiusBg
 
             ResizeArea {
                 width: parent.width

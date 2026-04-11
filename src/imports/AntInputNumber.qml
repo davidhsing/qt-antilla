@@ -29,7 +29,7 @@ Item {
     property var downIcon: AntIcon.DownOutlined || ''
     property font labelFont: Qt.font({
         family: 'Antilla-Icons',
-        pixelSize: themeSource.fontSize
+        pixelSize: control.themeSource.fontSize
     })
     property var beforeLabel: '' || []
     property var afterLabel: '' || []
@@ -42,11 +42,11 @@ Item {
     property int defaultHandlerWidth: 24
     property bool danger: false
     property alias colorText: __input.colorText
-    property color colorPrefix: themeSource.colorPrefix
-    property color colorSuffix: themeSource.colorSuffix
-    property color colorBeforeLabel: themeSource.colorBeforeLabel
-    property color colorAfterLabel: themeSource.colorAfterLabel
-    property AntRadius radiusBg: AntRadius { all: themeSource.radiusBg }
+    property color colorPrefix: control.themeSource.colorPrefix
+    property color colorSuffix: control.themeSource.colorSuffix
+    property color colorBeforeLabel: control.themeSource.colorBeforeLabel
+    property color colorAfterLabel: control.themeSource.colorAfterLabel
+    property AntRadius radiusBg: AntRadius { all: control.themeSource.radiusBg }
     property var themeSource: AntTheme.AntInputNumber
 
     property alias input: __input
@@ -57,7 +57,7 @@ Item {
         topLeftRadius: control.radiusBg.topLeft
         bottomLeftRadius: control.radiusBg.bottomLeft
         color: enabled ? control.themeSource.colorLabelBg : control.themeSource.colorLabelBgDisabled
-        border.color: danger ? (__input.active ? themeSource.colorErrorBorderHover : themeSource.colorErrorBorder) : (enabled ? control.themeSource.colorBorder : control.themeSource.colorBorderDisabled)
+        border.color: danger ? (__input.active ? control.themeSource.colorErrorBorderHover : control.themeSource.colorErrorBorder) : (enabled ? control.themeSource.colorBorder : control.themeSource.colorBorderDisabled)
 
         Behavior on color { enabled: control.animationEnabled; ColorAnimation { duration: AntTheme.Primary.durationFast } }
 
@@ -74,7 +74,7 @@ Item {
         topRightRadius: control.radiusBg.topRight
         bottomRightRadius: control.radiusBg.bottomRight
         color: enabled ? control.themeSource.colorLabelBg : control.themeSource.colorLabelBgDisabled
-        border.color: danger ? (__input.active ? themeSource.colorErrorBorderHover : themeSource.colorErrorBorder) : (enabled ? control.themeSource.colorBorder : control.themeSource.colorBorderDisabled)
+        border.color: danger ? (__input.active ? control.themeSource.colorErrorBorderHover : control.themeSource.colorErrorBorder) : (enabled ? control.themeSource.colorBorder : control.themeSource.colorBorderDisabled)
 
         Behavior on color { enabled: control.animationEnabled; ColorAnimation { duration: AntTheme.Primary.durationFast } }
 

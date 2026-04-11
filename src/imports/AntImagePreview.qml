@@ -50,8 +50,8 @@ AntPopup {
         iconSize: 20
         shape: AntButton.ShapeCircle
         type: AntButton.TypeDefault
-        colorIcon: AntTheme.AntImage.colorButtonTextHover
-        colorBg: hovered ? AntTheme.AntImage.colorButtonBgHover : AntTheme.AntImage.colorButtonBg
+        colorIcon: control.themeSource.colorButtonTextHover
+        colorBg: hovered ? control.themeSource.colorButtonBgHover : control.themeSource.colorButtonBg
         colorBorder: colorBg
         onClicked: control.close();
     }
@@ -65,11 +65,11 @@ AntPopup {
         shape: AntButton.ShapeCircle
         type: AntButton.TypeDefault
         hoverCursorShape: control.currentIndex <= 0 ? Qt.ForbiddenCursor : Qt.PointingHandCursor
-        colorIcon: control.currentIndex <= 0 ? AntTheme.AntImage.colorButtonText :
-                                               AntTheme.AntImage.colorButtonTextHover
+        colorIcon: control.currentIndex <= 0 ? control.themeSource.colorButtonText :
+                                               control.themeSource.colorButtonTextHover
         colorBg: control.currentIndex <= 0 ?
-                     'transparent' : hovered ? AntTheme.AntImage.colorButtonBgHover :
-                                               AntTheme.AntImage.colorButtonBg
+                     'transparent' : hovered ? control.themeSource.colorButtonBgHover :
+                                               control.themeSource.colorButtonBg
         colorBorder: 'transparent'
         onClicked: control.decrementCurrentIndex();
     }
@@ -83,17 +83,17 @@ AntPopup {
         shape: AntButton.ShapeCircle
         type: AntButton.TypeDefault
         hoverCursorShape: (control.currentIndex >= (control.count - 1)) ? Qt.ForbiddenCursor : Qt.PointingHandCursor
-        colorIcon: (control.currentIndex >= (control.count - 1)) ? AntTheme.AntImage.colorButtonText : AntTheme.AntImage.colorButtonTextHover
-        colorBg: (control.currentIndex >= (control.count - 1)) ? 'transparent' : (hovered ? AntTheme.AntImage.colorButtonBgHover : AntTheme.AntImage.colorButtonBg)
+        colorIcon: (control.currentIndex >= (control.count - 1)) ? control.themeSource.colorButtonText : control.themeSource.colorButtonTextHover
+        colorBg: (control.currentIndex >= (control.count - 1)) ? 'transparent' : (hovered ? control.themeSource.colorButtonBgHover : control.themeSource.colorButtonBg)
         colorBorder: 'transparent'
         onClicked: control.incrementCurrentIndex();
     }
     property Component indicatorDelegate: AntText {
-        color: AntTheme.AntImage.colorIndicatorText
+        color: control.themeSource.colorIndicatorText
         text: `${control.currentIndex + 1} / ${control.count}`
         font {
-            family: AntTheme.AntImage.fontFamily
-            pixelSize: AntTheme.AntImage.fontSize + 1
+            family: control.themeSource.fontFamily
+            pixelSize: control.themeSource.fontSize + 1
         }
     }
     property Component operationDelegate: MouseArea {
@@ -105,7 +105,7 @@ AntPopup {
             id: __operations
             anchors.fill: parent
             radius: height / 2
-            color: AntTheme.AntImage.colorOperationBg
+            color: control.themeSource.colorOperationBg
 
             Row {
                 anchors.centerIn: parent
@@ -114,7 +114,7 @@ AntPopup {
                     animationEnabled: control.animationEnabled
                     type: AntButton.TypeLink
                     iconSource: AntIcon.SwapOutlined
-                    colorIcon: hovered ? AntTheme.AntImage.colorButtonTextHover : AntTheme.AntImage.colorButtonText
+                    colorIcon: hovered ? control.themeSource.colorButtonTextHover : control.themeSource.colorButtonText
                     iconSize: 20
                     contentItem: AntIconText {
                         color: parent.colorIcon
@@ -135,7 +135,7 @@ AntPopup {
                     animationEnabled: control.animationEnabled
                     type: AntButton.TypeLink
                     iconSource: AntIcon.SwapOutlined
-                    colorIcon: hovered ? AntTheme.AntImage.colorButtonTextHover : AntTheme.AntImage.colorButtonText
+                    colorIcon: hovered ? control.themeSource.colorButtonTextHover : control.themeSource.colorButtonText
                     iconSize: 20
                     onClicked: control.flipX();
 
@@ -150,7 +150,7 @@ AntPopup {
                     animationEnabled: control.animationEnabled
                     type: AntButton.TypeLink
                     iconSource: AntIcon.RotateLeftOutlined
-                    colorIcon: hovered ? AntTheme.AntImage.colorButtonTextHover : AntTheme.AntImage.colorButtonText
+                    colorIcon: hovered ? control.themeSource.colorButtonTextHover : control.themeSource.colorButtonText
                     iconSize: 20
                     onClicked: control.rotate(-90);
 
@@ -165,7 +165,7 @@ AntPopup {
                     animationEnabled: control.animationEnabled
                     type: AntButton.TypeLink
                     iconSource: AntIcon.RotateRightOutlined
-                    colorIcon: hovered ? AntTheme.AntImage.colorButtonTextHover : AntTheme.AntImage.colorButtonText
+                    colorIcon: hovered ? control.themeSource.colorButtonTextHover : control.themeSource.colorButtonText
                     iconSize: 20
                     onClicked: control.rotate(90);
 
@@ -182,8 +182,8 @@ AntPopup {
                     iconSource: AntIcon.ZoomInOutlined
                     hoverCursorShape: control.currentScale < control.scaleMax ? Qt.PointingHandCursor : Qt.ForbiddenCursor
                     colorIcon: control.currentScale < control.scaleMax ?
-                        hovered ? AntTheme.AntImage.colorButtonTextHover :
-                            AntTheme.AntImage.colorButtonText : AntTheme.AntImage.colorButtonTextDisabled
+                        hovered ? control.themeSource.colorButtonTextHover :
+                            control.themeSource.colorButtonText : control.themeSource.colorButtonTextDisabled
                     iconSize: 20
                     onClicked: control.zoomIn();
 
@@ -200,8 +200,8 @@ AntPopup {
                     iconSource: AntIcon.ZoomOutOutlined
                     hoverCursorShape: control.currentScale > control.scaleMin ? Qt.PointingHandCursor : Qt.ForbiddenCursor
                     colorIcon: control.currentScale > control.scaleMin ?
-                                   hovered ? AntTheme.AntImage.colorButtonTextHover :
-                                             AntTheme.AntImage.colorButtonText : AntTheme.AntImage.colorButtonTextDisabled
+                                   hovered ? control.themeSource.colorButtonTextHover :
+                                             control.themeSource.colorButtonText : control.themeSource.colorButtonTextDisabled
                     iconSize: 20
                     onClicked: control.zoomOut();
 
@@ -214,6 +214,7 @@ AntPopup {
             }
         }
     }
+    property var themeSource: AntTheme.AntImage
 
     onItemsChanged:  {
         clear();

@@ -39,20 +39,20 @@ T.Control {
     property alias inputFont: __colorPickerPanel.inputFont
     property alias colorBg: __colorPickerPanel.colorBg
     property alias colorBorder: __colorPickerPanel.colorBorder
-    property color colorText: enabled ? themeSource.colorText : themeSource.colorTextDisabled
+    property color colorText: enabled ? control.themeSource.colorText : control.themeSource.colorTextDisabled
     property alias colorInput: __colorPickerPanel.colorInput
     property alias colorTitle: __colorPickerPanel.colorTitle
     property alias colorPresetIcon: __colorPickerPanel.colorPresetIcon
     property alias colorPresetText: __colorPickerPanel.colorPresetText
+    property alias popup: __popup
+    property alias panel: __colorPickerPanel
     property real previewWidth: 22
     property real previewHeight: 22
     property real previewLeftMargin: 0
     property real previewRightMargin: 0
     property real sizeRatio: 1.0
-    property AntRadius radiusTriggerBg: AntRadius { all: themeSource.radiusTriggerBg }
-    property AntRadius radiusPopupBg: AntRadius { all: themeSource.radiusPopupBg }
-    property alias popup: __popup
-    property alias panel: __colorPickerPanel
+    property AntRadius radiusTriggerBg: AntRadius { all: control.themeSource.radiusTriggerBg }
+    property AntRadius radiusPopupBg: AntRadius { all: control.themeSource.radiusPopupBg }
     property var themeSource: AntTheme.AntColorPicker
 
     property Component textDelegate: AntText {
@@ -144,11 +144,11 @@ T.Control {
         border.color: {
             if (control.enabled || control.forceState) {
                 if (control.danger) {
-                    return visualFocus ? themeSource.colorErrorBorderActive : (hovered ? themeSource.colorErrorBorderHover : themeSource.colorErrorBorder);
+                    return visualFocus ? control.themeSource.colorErrorBorderActive : (hovered ? control.themeSource.colorErrorBorderHover : control.themeSource.colorErrorBorder);
                 }
-                return visualFocus ? themeSource.colorBorderActive : (hovered ? themeSource.colorBorderHover : themeSource.colorBorder);
+                return visualFocus ? control.themeSource.colorBorderActive : (hovered ? control.themeSource.colorBorderHover : control.themeSource.colorBorder);
             }
-            return themeSource.colorBorderDisabled;
+            return control.themeSource.colorBorderDisabled;
         }
     }
 

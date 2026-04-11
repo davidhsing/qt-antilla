@@ -28,7 +28,7 @@ T.Button {
     property int hoverCursorShape: Qt.PointingHandCursor
     property int type: AntButton.TypeDefault
     property int shape: AntButton.ShapeDefault
-    property AntRadius radiusBg: AntRadius { all: AntTheme.AntButton.radiusBg }
+    property AntRadius radiusBg: AntRadius { all: control.themeSource.radiusBg }
     property color colorText: {
         if (enabled || control.forceState) {
             if (control.danger) {
@@ -40,26 +40,26 @@ T.Button {
                     case AntButton.TypeDashed:
                     case AntButton.TypeText:
                     case AntButton.TypeLink:
-                        return control.active ? AntTheme.AntButton.colorErrorTextActive : (control.hovered ? AntTheme.AntButton.colorErrorTextHover :  AntTheme.AntButton.colorError);
+                        return control.active ? control.themeSource.colorErrorTextActive : (control.hovered ? control.themeSource.colorErrorTextHover :  control.themeSource.colorError);
                 }
             }
             switch (control.type) {
                 case AntButton.TypeDefault:
-                    return control.active ? AntTheme.AntButton.colorTextActive : (control.hovered ? AntTheme.AntButton.colorTextHover : AntTheme.AntButton.colorTextDefault);
+                    return control.active ? control.themeSource.colorTextActive : (control.hovered ? control.themeSource.colorTextHover : control.themeSource.colorTextDefault);
                 case AntButton.TypeOutlined:
                 case AntButton.TypeDashed:
-                    return control.active ? AntTheme.AntButton.colorTextActive : (control.hovered ? AntTheme.AntButton.colorTextHover : AntTheme.AntButton.colorText);
+                    return control.active ? control.themeSource.colorTextActive : (control.hovered ? control.themeSource.colorTextHover : control.themeSource.colorText);
                 case AntButton.TypePrimary:
                     return 'white';
                 case AntButton.TypeFilled:
                 case AntButton.TypeText:
                 case AntButton.TypeLink:
-                    return control.active ? AntTheme.AntButton.colorTextActive : (control.hovered ? AntTheme.AntButton.colorTextHover : AntTheme.AntButton.colorText);
+                    return control.active ? control.themeSource.colorTextActive : (control.hovered ? control.themeSource.colorTextHover : control.themeSource.colorText);
                 default:
-                    return AntTheme.AntButton.colorText;
+                    return control.themeSource.colorText;
             }
         }
-        return AntTheme.AntButton.colorTextDisabled;
+        return control.themeSource.colorTextDisabled;
     }
     property color colorBg: {
         if (control.type === AntButton.TypeLink) {
@@ -69,42 +69,42 @@ T.Button {
             if (control.danger) {
                 switch (control.type) {
                     case AntButton.TypePrimary:
-                        return control.active ? AntTheme.AntButton.colorErrorBgActive: (control.hovered ? AntTheme.AntButton.colorErrorBgHover : AntTheme.AntButton.colorErrorBg);
+                        return control.active ? control.themeSource.colorErrorBgActive: (control.hovered ? control.themeSource.colorErrorBgHover : control.themeSource.colorErrorBg);
                     case AntButton.TypeFilled:
-                        return control.active ? AntTheme.AntButton.colorErrorFillBgActive: (control.hovered ? AntTheme.AntButton.colorErrorFillBgHover : AntTheme.AntButton.colorErrorFillBg);
+                        return control.active ? control.themeSource.colorErrorFillBgActive: (control.hovered ? control.themeSource.colorErrorFillBgHover : control.themeSource.colorErrorFillBg);
                     case AntButton.TypeText:
-                        return control.active ? AntTheme.AntButton.colorErrorFillBgActive: (control.hovered ? AntTheme.AntButton.colorErrorFillBg : 'transparent');
+                        return control.active ? control.themeSource.colorErrorFillBgActive: (control.hovered ? control.themeSource.colorErrorFillBg : 'transparent');
                     case AntButton.TypeDefault:
                     case AntButton.TypeOutlined:
                     case AntButton.TypeDashed:
-                        return control.active ? AntTheme.AntButton.colorBgActive: (control.hovered ? AntTheme.AntButton.colorBgHover : AntTheme.AntButton.colorBg);
-                    default: return AntTheme.AntButton.colorBg;
+                        return control.active ? control.themeSource.colorBgActive: (control.hovered ? control.themeSource.colorBgHover : control.themeSource.colorBg);
+                    default: return control.themeSource.colorBg;
                 }
             }
             switch (control.type) {
                 case AntButton.TypeDefault:
                 case AntButton.TypeOutlined:
                 case AntButton.TypeDashed:
-                    return control.active ? AntTheme.AntButton.colorBgActive : (control.hovered ? AntTheme.AntButton.colorBgHover : AntTheme.AntButton.colorBg);
+                    return control.active ? control.themeSource.colorBgActive : (control.hovered ? control.themeSource.colorBgHover : control.themeSource.colorBg);
                 case AntButton.TypePrimary:
-                    return control.active ? AntTheme.AntButton.colorPrimaryBgActive : (control.hovered ? AntTheme.AntButton.colorPrimaryBgHover : AntTheme.AntButton.colorPrimaryBg);
+                    return control.active ? control.themeSource.colorPrimaryBgActive : (control.hovered ? control.themeSource.colorPrimaryBgHover : control.themeSource.colorPrimaryBg);
                 case AntButton.TypeFilled:
                     if (AntTheme.isDark) {
-                        return control.active ? AntTheme.AntButton.colorFillBgDarkActive : (control.hovered ? AntTheme.AntButton.colorFillBgDarkHover : AntTheme.AntButton.colorFillBgDark);
+                        return control.active ? control.themeSource.colorFillBgDarkActive : (control.hovered ? control.themeSource.colorFillBgDarkHover : control.themeSource.colorFillBgDark);
                     } else {
-                        return control.active ? AntTheme.AntButton.colorFillBgActive : (control.hovered ? AntTheme.AntButton.colorFillBgHover : AntTheme.AntButton.colorFillBg);
+                        return control.active ? control.themeSource.colorFillBgActive : (control.hovered ? control.themeSource.colorFillBgHover : control.themeSource.colorFillBg);
                     }
                 case AntButton.TypeText:
                     if (AntTheme.isDark) {
-                        return control.active ? AntTheme.AntButton.colorFillBgDarkActive : (control.hovered ? AntTheme.AntButton.colorFillBgDarkHover : AntTheme.AntButton.colorTextBg);
+                        return control.active ? control.themeSource.colorFillBgDarkActive : (control.hovered ? control.themeSource.colorFillBgDarkHover : control.themeSource.colorTextBg);
                     } else {
-                        return control.active ? AntTheme.AntButton.colorTextBgActive : (control.hovered ? AntTheme.AntButton.colorTextBgHover : AntTheme.AntButton.colorTextBg);
+                        return control.active ? control.themeSource.colorTextBgActive : (control.hovered ? control.themeSource.colorTextBgHover : control.themeSource.colorTextBg);
                     }
                 default:
-                    return AntTheme.AntButton.colorBg;
+                    return control.themeSource.colorBg;
             }
         }
-        return AntTheme.AntButton.colorBgDisabled;
+        return control.themeSource.colorBgDisabled;
     }
     property color colorBorder: {
         if (type === AntButton.TypeLink) {
@@ -114,21 +114,22 @@ T.Button {
             if (control.danger) {
                 switch (control.type) {
                     case AntButton.TypeDefault:
-                        return (control.active || control.visualFocus) ? AntTheme.AntButton.colorBorderActive : (control.hovered ? AntTheme.AntButton.colorErrorBorderHover : AntTheme.AntButton.colorDefaultBorder);
+                        return (control.active || control.visualFocus) ? control.themeSource.colorBorderActive : (control.hovered ? control.themeSource.colorErrorBorderHover : control.themeSource.colorDefaultBorder);
                     default:
-                        return (control.active || control.visualFocus) ? AntTheme.AntButton.colorErrorBorderActive: (control.hovered ? AntTheme.AntButton.colorErrorBorderHover : AntTheme.AntButton.colorErrorBorder);
+                        return (control.active || control.visualFocus) ? control.themeSource.colorErrorBorderActive: (control.hovered ? control.themeSource.colorErrorBorderHover : control.themeSource.colorErrorBorder);
                 }
             }
             switch (control.type) {
                 case AntButton.TypeDefault:
-                    return (control.active || control.visualFocus) ? AntTheme.AntButton.colorBorderActive : (control.hovered ? AntTheme.AntButton.colorBorderHover : AntTheme.AntButton.colorDefaultBorder);
+                    return (control.active || control.visualFocus) ? control.themeSource.colorBorderActive : (control.hovered ? control.themeSource.colorBorderHover : control.themeSource.colorDefaultBorder);
                 default:
-                    return (control.active || control.visualFocus) ? AntTheme.AntButton.colorBorderActive : (control.hovered ? AntTheme.AntButton.colorBorderHover : AntTheme.AntButton.colorBorder);
+                    return (control.active || control.visualFocus) ? control.themeSource.colorBorderActive : (control.hovered ? control.themeSource.colorBorderHover : control.themeSource.colorBorder);
             }
         }
-        return AntTheme.AntButton.colorBorderDisabled;
+        return control.themeSource.colorBorderDisabled;
     }
     property string ariaConstrual: text
+    property var themeSource: AntTheme.AntButton
 
     objectName: '__AntButton__'
     implicitWidth: implicitContentWidth + leftPadding + rightPadding
@@ -137,13 +138,13 @@ T.Button {
     topPadding: 6
     bottomPadding: 6
     font {
-        family: AntTheme.AntButton.fontFamily
-        pixelSize: AntTheme.AntButton.fontSize
+        family: control.themeSource.fontFamily
+        pixelSize: control.themeSource.fontSize
     }
     contentItem: Text {
         text: control.text
         font: control.font
-        lineHeight: AntTheme.AntButton.fontLineHeight
+        lineHeight: control.themeSource.fontLineHeight
         color: control.colorText
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
@@ -165,7 +166,7 @@ T.Button {
             visible: control.effectEnabled && control.type !== AntButton.TypeLink
             color: 'transparent'
             border.width: 0
-            border.color: (control.enabled || control.forceState) ? AntTheme.AntButton.colorBorderHover : 'transparent'
+            border.color: (control.enabled || control.forceState) ? control.themeSource.colorBorderHover : 'transparent'
             opacity: 0.2
 
             ParallelAnimation {

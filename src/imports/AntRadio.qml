@@ -8,18 +8,19 @@ T.RadioButton {
     property bool animationEnabled: AntTheme.animationEnabled
     property bool effectEnabled: true
     property int hoverCursorShape: Qt.PointingHandCursor
-    property AntRadius radiusIndicator: AntRadius { all: AntTheme.AntRadio.radiusIndicator }
-    property color colorText: enabled ? AntTheme.AntRadio.colorText : AntTheme.AntRadio.colorTextDisabled
-    property color colorIndicator: enabled ? (checked ? AntTheme.AntRadio.colorIndicatorChecked : AntTheme.AntRadio.colorIndicator) : AntTheme.AntRadio.colorIndicatorDisabled
-    property color colorIndicatorBorder: (enabled && (hovered || checked)) ? AntTheme.AntRadio.colorIndicatorBorderChecked : AntTheme.AntRadio.colorIndicatorBorder
+    property AntRadius radiusIndicator: AntRadius { all: control.themeSource.radiusIndicator }
+    property color colorText: enabled ? control.themeSource.colorText : control.themeSource.colorTextDisabled
+    property color colorIndicator: enabled ? (checked ? control.themeSource.colorIndicatorChecked : control.themeSource.colorIndicator) : control.themeSource.colorIndicatorDisabled
+    property color colorIndicatorBorder: (enabled && (hovered || checked)) ? control.themeSource.colorIndicatorBorderChecked : control.themeSource.colorIndicatorBorder
     property string ariaConstrual: ''
+    property var themeSource: AntTheme.AntRadio
 
     objectName: '__AntRadio__'
     implicitWidth: implicitContentWidth + leftPadding + rightPadding
     implicitHeight: Math.max(implicitContentHeight, implicitIndicatorHeight) + topPadding + bottomPadding
     font {
-        family: AntTheme.AntRadio.fontFamily
-        pixelSize: AntTheme.AntRadio.fontSize
+        family: control.themeSource.fontFamily
+        pixelSize: control.themeSource.fontSize
     }
     spacing: 8
     indicator: Item {
@@ -37,7 +38,7 @@ T.RadioButton {
             visible: control.effectEnabled
             color: 'transparent'
             border.width: 0
-            border.color: control.enabled ? AntTheme.AntRadio.colorEffectBg : 'transparent'
+            border.color: control.enabled ? control.themeSource.colorEffectBg : 'transparent'
             opacity: 0.2
 
             ParallelAnimation {

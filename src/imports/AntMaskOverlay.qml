@@ -6,10 +6,11 @@ AntRectangle {
 
     property bool animationEnabled: AntTheme.animationEnabled
     property bool closable: false
+    property var themeSource: AntTheme.AntMaskOverlay
 
     objectName: '__AntMaskOverlay__'
     anchors.fill: parent
-    color: AntTheme.AntMaskOverlay.colorBg
+    color: control.themeSource.colorBg
     visible: false
 
     signal clicked()
