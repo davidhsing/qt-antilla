@@ -49,7 +49,7 @@ Rectangle {
             onEntered: hovered = true;
             onExited: hovered = false;
             onClicked: {
-                if (__cardComp.link.length != 0)
+                if (__cardComp.link.length !== 0)
                     Qt.openUrlExternally(link);
             }
 
@@ -293,7 +293,7 @@ Rectangle {
                 icon.iconSource: AntIcon.SkinOutlined
                 title.text: qsTr('Antilla-ThemeDesigner')
                 desc.text: qsTr('Antilla-ThemeDesigner 是专为「Antilla」打造的主题设计工具。')
-                link: 'https://github.com/davidhsing/qt-antilla-ThemeDesigner'
+                link: 'https://github.com/davidhsing/qt-antilla-designer'
             }
 
             MyText {

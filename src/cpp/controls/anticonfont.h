@@ -1635,6 +1635,11 @@ public:
         TargetOutlined = 0xf005,
         TrafficConeOutlined = 0xf006,
         SnowflakeOutlined = 0xf007,
+        PhotoOutlined = 0xf008,
+        LayoutBlockOutlined = 0xf009,
+        HeartHandshakeOutlined = 0xf00A,
+        FloppyOutlined = 0xf00B,
+        BulbLightOutlined = 0xf00C,
     };
     Q_ENUM(Type);
 
