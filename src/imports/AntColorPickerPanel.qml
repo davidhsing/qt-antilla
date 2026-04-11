@@ -36,7 +36,6 @@ T.Control {
     property color colorPresetIcon: themeSource.colorPresetIcon
     property color colorPresetText: themeSource.colorPresetText
     property AntRadius radiusBg: AntRadius { all: themeSource.radiusBg }
-
     property var themeSource: AntTheme.AntColorPicker
 
     property Component titleDelegate: AntText {

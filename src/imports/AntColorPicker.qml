@@ -10,6 +10,8 @@ T.Control {
 
     property bool animationEnabled: AntTheme.animationEnabled
     property bool active: hovered || visualFocus
+    property bool danger: false
+    property bool forceState: false
     readonly property alias value: __colorPickerPanel.value
     property color defaultValue: Qt.rgba(0, 0, 0, 0)
     property alias autoChange: __colorPickerPanel.autoChange
@@ -49,9 +51,9 @@ T.Control {
     property real sizeRatio: 1.0
     property AntRadius radiusTriggerBg: AntRadius { all: themeSource.radiusTriggerBg }
     property AntRadius radiusPopupBg: AntRadius { all: themeSource.radiusPopupBg }
-    property var themeSource: AntTheme.AntColorPicker
     property alias popup: __popup
     property alias panel: __colorPickerPanel
+    property var themeSource: AntTheme.AntColorPicker
 
     property Component textDelegate: AntText {
         padding: 4
@@ -139,7 +141,15 @@ T.Control {
         bottomLeftRadius: control.radiusTriggerBg.bottomLeft
         bottomRightRadius: control.radiusTriggerBg.bottomRight
         color: control.colorBg
-        border.color: control.colorBorder
+        border.color: {
+            if (control.enabled || control.forceState) {
+                if (control.danger) {
+                    return visualFocus ? themeSource.colorErrorBorderActive : (hovered ? themeSource.colorErrorBorderHover : themeSource.colorErrorBorder);
+                }
+                return visualFocus ? themeSource.colorBorderActive : (hovered ? themeSource.colorBorderHover : themeSource.colorBorder);
+            }
+            return themeSource.colorBorderDisabled;
+        }
     }
 
     HoverHandler {

@@ -29,6 +29,8 @@ Flickable {
 ------ | --- | :---: | ---
 animationEnabled | bool | AntTheme.animationEnabled | 是否开启动画
 active | bool | - | 是否处于激活状态
+danger | bool | false | 是否警示状态
+forceState | bool | false | 无禁用状态(即被禁用时不会更改颜色)
 value | color | '' | 当前的颜色值(autoChange为false时等于changeValue)
 defaultValue | color | Qt.rgba(0, 0, 0, 0) | 默认颜色值
 autoChange | bool | true | 默认颜色值
@@ -472,6 +474,7 @@ Column {
         ]
         presetsOrientation: orientatioRadio.currentCheckedValue
         presetsLayoutDirection: layoutDirectionRadio.currentCheckedValue
+        danger: true
     }
 }
             `
@@ -505,6 +508,7 @@ Column {
                     ]
                     presetsOrientation: orientatioRadio.currentCheckedValue
                     presetsLayoutDirection: layoutDirectionRadio.currentCheckedValue
+                    danger: true
                 }
             }
         }
