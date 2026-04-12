@@ -131,6 +131,9 @@ T.Control {
                 function handleMouse(mouse) {
                     __private.s = Math.max(0, Math.min(1, mouse.x / width));
                     __private.v = 1 - Math.max(0, Math.min(1, mouse.y / height));
+                    // 同步更新视觉位置
+                    __private.visualS = __private.s;
+                    __private.visualV = __private.v;
                     // 重置透明状态
                     __private.transparent = false;
                     // 如果透明度为 0，恢复为1确保颜色可见
