@@ -31,10 +31,11 @@ AntPopup {
             duration: control.animationEnabled ? AntTheme.Primary.durationMid : 0
         }
         NumberAnimation {
-            property: 'height'
-            from: 0
-            to: control.implicitHeight
-            easing.type: Easing.InOutQuad
+            target: control.contentItem
+            property: 'scale'
+            from: 0.01
+            to: 1.0
+            easing.type: Easing.OutCubic
             duration: control.animationEnabled ? AntTheme.Primary.durationMid : 0
         }
     }
@@ -47,13 +48,17 @@ AntPopup {
             duration: control.animationEnabled ? AntTheme.Primary.durationMid : 0
         }
         NumberAnimation {
-            property: 'height'
-            to: 0
-            easing.type: Easing.InOutQuad
-            duration: control.animationEnabled ? AntTheme.Primary.durationMid : 0
+            target: control.contentItem
+            property: 'scale'
+            to: 0.01
+            easing.type: Easing.InCubic
+            duration: control.animationEnabled ? AntTheme.Primary.durationFast : 0
         }
     }
     contentItem: AntMenu {
+        clip: true
+        transformOrigin: Item.Top
+        scale: 1.0
         initModel: control.initModel
         tooltipVisible: control.tooltipVisible
         popupMode: true
