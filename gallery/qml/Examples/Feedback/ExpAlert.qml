@@ -36,7 +36,7 @@ closable | bool | false | 是否显示关闭按钮
 delay | int | 0 | 正数表示启动延迟关闭
 type | enum | AntAlert.TypeInfo | 警告类型
 iconVisible | bool | - | 图标是否可见
-iconSize | int | 16 | 图标大小
+iconSize | int | 24 | 图标大小
 iconSource | var | - | 图标源
 titleVisible | bool | - | 标题是否可见
 titleText | string | '' | 标题文本内容
