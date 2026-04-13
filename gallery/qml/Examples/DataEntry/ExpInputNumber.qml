@@ -347,6 +347,23 @@ Column {
         formatter: (value) => value + '%'
         parser: (text) => text.replace('%', '')
     }
+
+    AntInputNumber {
+        id: floatInput
+        width: 200
+        value: 0
+        min: 0
+        max: 1
+        afterLabel: '%'
+        step: 0.01
+        precision: 2
+        formatter: (value) => {
+            return value * 100;
+        }
+        parser: (value) => {
+            return value / 100;
+        }
+    }
 }
             `
             exampleDelegate: Column {
@@ -366,6 +383,23 @@ Column {
                     max: 100
                     formatter: (value) => value + '%'
                     parser: (text) => text.replace('%', '')
+                }
+
+                AntInputNumber {
+                    id: floatInput
+                    width: 200
+                    value: 0
+                    min: 0
+                    max: 1
+                    afterLabel: '%'
+                    step: 0.01
+                    precision: 2
+                    formatter: (value) => {
+                        return value * 100;
+                    }
+                    parser: (value) => {
+                        return value / 100;
+                    }
                 }
             }
         }

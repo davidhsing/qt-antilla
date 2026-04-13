@@ -162,11 +162,15 @@ Item {
     onCurrentAfterLabelChanged: valueChanged();
     onCurrentBeforeLabelChanged: valueChanged();
     onValueChanged: {
-        const formatted = formatter(value);
-        if (formatted !== __input.text) {
-            __input.text = formatted;
+        let formatted = formatter(value);
+        if (typeof formatted === 'number') {
+            formatted = parseFloat(Number(formatted).toPrecision(12));
+        }
+        if (String(formatted) !== __input.text) {
+            __input.text = String(formatted);
         }
     }
+
     Component.onCompleted: valueChanged();
 
     Component {
@@ -274,6 +278,7 @@ Item {
             }
             onTextChanged: {
                 let v = control.parser(text);
+                v = parseFloat(Number(v).toFixed(control.precision));
                 if (v >= control.min && v <= control.max && v !== control.value) {
                     control.value = v;
                 }
@@ -350,11 +355,13 @@ Item {
     }
 
     function increase() {
-        value = value + step > max ? max : value + step;
+        let result = value + step > max ? max : value + step;
+        value = parseFloat(Number(result).toFixed(precision));
     }
 
     function decrease() {
-        value = value - step < min ? min : value - step;
+        let result = value - step < min ? min : value - step;
+        value = parseFloat(Number(result).toFixed(precision));
     }
 
     function getFullText() {
