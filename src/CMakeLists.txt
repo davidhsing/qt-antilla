@@ -22,109 +22,121 @@ qt_standard_project_setup(REQUIRES 6.5)
 #Determine if there is a private module present
 set(QT_NO_PRIVATE_MODULE_WARNING ON)
 set(QT_HAS_PRIVATE_MODULES FALSE)
-if(Qt6_VERSION VERSION_GREATER_EQUAL "6.10.0")
+if (Qt6_VERSION VERSION_GREATER_EQUAL "6.10.0")
     find_package(Qt6 6.10 COMPONENTS QuickPrivate QuickTemplates2Private OPTIONAL_COMPONENTS QmlAssetDownloaderPrivate)
-    if(Qt6QuickPrivate_FOUND AND Qt6QuickTemplates2Private_FOUND)
+    if (Qt6QuickPrivate_FOUND AND Qt6QuickTemplates2Private_FOUND)
         set(QT_HAS_PRIVATE_MODULES TRUE)
-    endif()
-else()
+    endif ()
+else ()
     get_target_property(QT_HAS_QUICK_PRIVATE Qt6::Quick _qt_module_has_private_headers)
     get_target_property(QT_HAS_QUICKTEMPLATES2_PRIVATE Qt6::QuickTemplates2 _qt_module_has_private_headers)
     get_target_property(QT_HAS_LABSQMLMODEL_PRIVATE Qt6::LabsQmlModels _qt_module_has_private_headers)
-    if(QT_HAS_QUICK_PRIVATE AND QT_HAS_QUICKTEMPLATES2_PRIVATE AND QT_HAS_LABSQMLMODEL_PRIVATE)
+    if (QT_HAS_QUICK_PRIVATE AND QT_HAS_QUICKTEMPLATES2_PRIVATE AND QT_HAS_LABSQMLMODEL_PRIVATE)
         set(QT_HAS_PRIVATE_MODULES TRUE)
-    endif()
-endif()
+    endif ()
+endif ()
 
 #Set header output dir.
-if(NOT ANTILLA_HEADER_OUTPUT_DIRECTORY)
-    if(BUILD_ANTILLA_IN_DEFAULT_LOCATION)
+if (NOT ANTILLA_HEADER_OUTPUT_DIRECTORY)
+    if (BUILD_ANTILLA_DEFAULT_LOCATION)
         set(ANTILLA_HEADER_OUTPUT_DIRECTORY ${Qt6_DIR}/../../../include)
-    else()
-        set(ANTILLA_HEADER_OUTPUT_DIRECTORY ${CMAKE_INSTALL_PREFIX}/install/include)
-    endif()
-endif()
+    else ()
+        if (CMAKE_BUILD_TYPE MATCHES "Debug")
+            set(ANTILLA_HEADER_OUTPUT_DIRECTORY ${CMAKE_INSTALL_PREFIX}/install/Debug/include)
+        else ()
+            set(ANTILLA_HEADER_OUTPUT_DIRECTORY ${CMAKE_INSTALL_PREFIX}/install/Release/include)
+        endif ()
+    endif ()
+endif ()
 
 #Set library output dir.
-if(NOT ANTILLA_LIBRARY_OUTPUT_DIRECTORY)
-    if(BUILD_ANTILLA_IN_DEFAULT_LOCATION)
-        set(ANTILLA_LIBRARY_OUTPUT_DIRECTORY ${Qt6_DIR}/../../../)
-        if(BUILD_ANTILLA_STATIC_LIBS)
-            set(ANTILLA_LIBRARY_OUTPUT_DIRECTORY ${Qt6_DIR}/../../../)
-        endif()
-    else()
-        set(ANTILLA_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_INSTALL_PREFIX}/install/lib)
-    endif()
-endif()
+if (NOT ANTILLA_LIB_OUTPUT_DIR)
+    if (BUILD_ANTILLA_DEFAULT_LOCATION)
+        set(ANTILLA_LIB_OUTPUT_DIR ${Qt6_DIR}/../../../)
+        if (BUILD_ANTILLA_STATIC_LIBS)
+            set(ANTILLA_LIB_OUTPUT_DIR ${Qt6_DIR}/../../../)
+        endif ()
+    else ()
+        if (CMAKE_BUILD_TYPE MATCHES "Debug")
+            set(ANTILLA_LIB_OUTPUT_DIR ${CMAKE_INSTALL_PREFIX}/install/Debug/lib)
+        else ()
+            set(ANTILLA_LIB_OUTPUT_DIR ${CMAKE_INSTALL_PREFIX}/install/Release/lib)
+        endif ()
+    endif ()
+endif ()
 
 #Set plugin output dir.
-if(NOT ANTILLA_PLUGIN_OUTPUT_DIRECTORY)
-    if(BUILD_ANTILLA_IN_DEFAULT_LOCATION)
+if (NOT ANTILLA_PLUGIN_OUTPUT_DIRECTORY)
+    if (BUILD_ANTILLA_DEFAULT_LOCATION)
         set(ANTILLA_PLUGIN_OUTPUT_DIRECTORY ${Qt6_DIR}/../../../qml/Antilla/Basic)
-    else()
-        set(ANTILLA_PLUGIN_OUTPUT_DIRECTORY ${CMAKE_INSTALL_PREFIX}/install/plugins/Antilla/Basic)
-    endif()
-endif()
+    else ()
+        if (CMAKE_BUILD_TYPE MATCHES "Debug")
+            set(ANTILLA_PLUGIN_OUTPUT_DIRECTORY ${CMAKE_INSTALL_PREFIX}/install/Debug/plugins/Antilla/Basic)
+        else ()
+            set(ANTILLA_PLUGIN_OUTPUT_DIRECTORY ${CMAKE_INSTALL_PREFIX}/install/Release/plugins/Antilla/Basic)
+        endif ()
+    endif ()
+endif ()
 
 #Set install dir.
-if(INSTALL_ANTILLA_IN_DEFAULT_LOCATION)
+if (INSTALL_ANTILLA_DEFAULT_LOCATION)
     set(CMAKE_INSTALL_PREFIX "${Qt6_DIR}/../../../" CACHE PATH "" FORCE)
-elseif(ANTILLA_INSTALL_DIRECTORY)
+elseif (ANTILLA_INSTALL_DIRECTORY)
     set(CMAKE_INSTALL_PREFIX "${ANTILLA_INSTALL_DIRECTORY}" CACHE PATH "" FORCE)
-endif()
+endif ()
 
 message(STATUS "The Qt has private module: ${QT_HAS_PRIVATE_MODULES}")
 message(STATUS "The Antilla header output dir: ${ANTILLA_HEADER_OUTPUT_DIRECTORY}")
-message(STATUS "The Antilla library output dir: ${ANTILLA_LIBRARY_OUTPUT_DIRECTORY}")
+message(STATUS "The Antilla library output dir: ${ANTILLA_LIB_OUTPUT_DIR}")
 message(STATUS "The Antilla plugin output dir: ${ANTILLA_PLUGIN_OUTPUT_DIRECTORY}")
 message(STATUS "The Antilla install dir: ${CMAKE_INSTALL_PREFIX}")
 
-if(BUILD_ANTILLA_STATIC_LIBS)
+if (BUILD_ANTILLA_STATIC_LIBS)
     set(PLUGIN_NAME AntillaBasicPlugin)
     qt_add_library(${PROJECT_NAME} STATIC)
-else()
+else ()
     set(PLUGIN_NAME antillabasicplugin)
     qt_add_library(${PROJECT_NAME} SHARED)
-endif()
+endif ()
 
 #Default is desktop platform
-if(NOT DEFINED BUILD_ANTILLA_ON_DESKTOP_PLATFORM)
-    set(BUILD_ANTILLA_ON_DESKTOP_PLATFORM ON)
-endif()
+if (NOT DEFINED BUILD_ANTILLA_DESKTOP_PLATFORM)
+    set(BUILD_ANTILLA_DESKTOP_PLATFORM ON)
+endif ()
 
 #Add windows RC
 set(ANTILLA_RC_FILE "")
-if(WIN32)
+if (WIN32)
     set(ANTILLA_RC_FILE ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}_Resource.rc)
     set(RC_NAME "")
-    if(BUILD_ANTILLA_STATIC_LIBS)
+    if (BUILD_ANTILLA_STATIC_LIBS)
         set(RC_NAME "${PROJECT_NAME}.lib")
-    else()
+    else ()
         set(RC_NAME "${PROJECT_NAME}.dll")
-    endif()
+    endif ()
     ant_add_win_rc(${PROJECT_NAME}
         COMMENTS "Modern UI-Kit for Qml { Design reference Ant-d }"
         NAME ${RC_NAME}
-        COMPANY "Antilla"
+        COMPANY "davidhsing"
         DESCRIPTION "https://github.com/davidhsing/qt-antilla"
         VERSION "${PROJECT_VERSION}"
         COPYRIGHT "Copyright (C) 2026 davidhsing. All rights reserved."
         OUTPUT_FILE "${ANTILLA_RC_FILE}"
     )
-endif()
+endif ()
 
-if(QT_KNOWN_POLICY_QTP0004)
+if (QT_KNOWN_POLICY_QTP0004)
     qt_policy(SET QTP0004 NEW)
-endif()
+endif ()
 
 set(QT_TREEMODEL_SOURCES "")
-if(QT_HAS_LABSQMLMODEL_PRIVATE)
+if (QT_HAS_LABSQMLMODEL_PRIVATE)
     set(QT_TREEMODEL_SOURCES
         cpp/models/qqmltreerow_p.h cpp/models/qqmltreerow.cpp
         cpp/models/qqmltreemodel_p.h cpp/models/qqmltreemodel.cpp
         cpp/models/qqmlabstractcolumnmodel_p.h cpp/models/qqmlabstractcolumnmodel.cpp
     )
-endif()
+endif ()
 
 qt_add_qml_module(${PROJECT_NAME}
     URI "Antilla.Basic"
@@ -319,25 +331,25 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     EXPORT_NAME "Basic"
     VERSION ${ANTILLA_VERSION}
     SOVERSION ${ANTILLA_VERSION_MAJOR}.${ANTILLA_VERSION_MINOR}
-    RUNTIME_OUTPUT_DIRECTORY ${ANTILLA_LIBRARY_OUTPUT_DIRECTORY}/bin
-    LIBRARY_OUTPUT_DIRECTORY ${ANTILLA_LIBRARY_OUTPUT_DIRECTORY}/lib
-    ARCHIVE_OUTPUT_DIRECTORY ${ANTILLA_LIBRARY_OUTPUT_DIRECTORY}/lib
+    RUNTIME_OUTPUT_DIRECTORY ${ANTILLA_LIB_OUTPUT_DIR}/bin
+    LIBRARY_OUTPUT_DIRECTORY ${ANTILLA_LIB_OUTPUT_DIR}/lib
+    ARCHIVE_OUTPUT_DIRECTORY ${ANTILLA_LIB_OUTPUT_DIR}/lib
 )
 
-if(MINGW)
+if (MINGW)
     set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")
     target_compile_options(${PROJECT_NAME} PRIVATE -Wa,-mbig-obj)
-elseif(MSVC)
+elseif (MSVC)
     set_target_properties(${PROJECT_NAME} PROPERTIES DEBUG_POSTFIX "d")
     target_compile_options(${PROJECT_NAME} PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/utf-8;/Zi>)
-endif()
+endif ()
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE
     BUILD_ANTILLA_LIB
     ANTILLA_LIBRARY_VERSION="${ANTILLA_VERSION}"
     $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>
     $<$<BOOL:${BUILD_ANTILLA_STATIC_LIBS}>:BUILD_ANTILLA_STATIC_LIBS>
-    $<$<BOOL:${BUILD_ANTILLA_ON_DESKTOP_PLATFORM}>:BUILD_ANTILLA_ON_DESKTOP_PLATFORM>
+    $<$<BOOL:${BUILD_ANTILLA_DESKTOP_PLATFORM}>:BUILD_ANTILLA_DESKTOP_PLATFORM>
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
@@ -345,8 +357,8 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt6::QuickPrivate
     Qt6::QuickTemplates2Private
     Qt6::Multimedia
-    $<$<BOOL:${BUILD_ANTILLA_ON_DESKTOP_PLATFORM}>:QWKCore>
-    $<$<BOOL:${BUILD_ANTILLA_ON_DESKTOP_PLATFORM}>:QWKQuick>
+    $<$<BOOL:${BUILD_ANTILLA_DESKTOP_PLATFORM}>:QWKCore>
+    $<$<BOOL:${BUILD_ANTILLA_DESKTOP_PLATFORM}>:QWKQuick>
 )
 
 include(GNUInstallDirs)
@@ -371,7 +383,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 )
 
 # < Qt6.10 include QtLabsQmlModels/private
-if(QT_HAS_LABSQMLMODEL_PRIVATE)
+if (QT_HAS_LABSQMLMODEL_PRIVATE)
     get_target_property(_module_name Qt6::LabsQmlModels _qt_module_include_name)
     get_target_property(_module_location Qt6::LabsQmlModels LOCATION)
     get_filename_component(_qt6_prefix "${_module_location}" DIRECTORY)
@@ -380,19 +392,19 @@ if(QT_HAS_LABSQMLMODEL_PRIVATE)
     target_include_directories(${PROJECT_NAME} PRIVATE ${_private_include_dir})
     target_compile_definitions(${PROJECT_NAME} PRIVATE QT_FEATURE_qml_tree_model=1)
     target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::LabsQmlModelsPrivate) # TreeModel
-endif()
+endif ()
 
 #Gen Antilla/include
-if(ANTILLA_HEADER_OUTPUT_DIRECTORY)
+if (ANTILLA_HEADER_OUTPUT_DIRECTORY)
     file(COPY cpp/antglobal.h cpp/antapp.h cpp/antdefinitions.h cpp/controls cpp/models cpp/theme cpp/utils
         DESTINATION ${ANTILLA_HEADER_OUTPUT_DIRECTORY}/Antilla
         FILES_MATCHING PATTERN "*.h"
         PATTERN "*_p.h" EXCLUDE
     )
-endif()
+endif ()
 
 #Set CMake config output dir
-set(ANTILLA_CMAKE_CONFIG_DIR ${ANTILLA_LIBRARY_OUTPUT_DIRECTORY}/lib/cmake)
+set(ANTILLA_CMAKE_CONFIG_DIR ${ANTILLA_LIB_OUTPUT_DIR}/lib/cmake)
 
 include(CMakePackageConfigHelpers)
 
@@ -425,7 +437,7 @@ install(TARGETS ${PLUGIN_NAME}
     LIBRARY DESTINATION ${ANTILLA_QML_INSTALL_DIR}/Basic
 )
 
-if(BUILD_ANTILLA_STATIC_LIBS)
+if (BUILD_ANTILLA_STATIC_LIBS)
     install(
         TARGETS ${ANTILLA_QML_OUTPUT_TARGETS} ${ANTILLA_THEME_OUTPUT_TARGETS}
         ${ANTILLA_RES_OUTPUT_TARGETS} ${ANTILLA_SHADERS_OUTPUT_TARGETS}
@@ -435,7 +447,7 @@ if(BUILD_ANTILLA_STATIC_LIBS)
         LIBRARY DESTINATION ${LIB_INSTALL_DIR}
         OBJECTS DESTINATION ${OBJ_INSTALL_DIR}
     )
-endif()
+endif ()
 
 install(
     DIRECTORY ${ANTILLA_HEADER_OUTPUT_DIRECTORY}/Antilla

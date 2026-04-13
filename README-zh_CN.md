@@ -73,7 +73,7 @@ or
 cmake -S . -B build -G "MinGW Makefiles"
 ```
 > [!IMPORTANT]
-> 默认情况下，`BUILD_ANTILLA_IN_DEFAULT_LOCATION=ON`:
+> 默认情况下，`BUILD_ANTILLA_DEFAULT_LOCATION=ON`:
 > - `headers` 将构建在 `[QtDir]/[QtVersion]/[Kit]/include/Antilla` 目录中。
 > - `*.dll/*.so` 将构建在 `[QtDir]/[QtVersion]/[Kit]/bin` 目录中。
 > - `*.lib` 将构建在 `[QtDir]/[QtVersion]/[Kit]/lib` 目录中。

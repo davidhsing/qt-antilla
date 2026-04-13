@@ -4,12 +4,12 @@ project(Qt-Antilla)
 
 option(BUILD_ANTILLA_GALLERY "Build Antilla Gallery." ON)
 option(BUILD_ANTILLA_STATIC_LIBS "Build Antilla as a static library." OFF)
-option(BUILD_ANTILLA_ON_DESKTOP_PLATFORM "Build Antilla on desktop platform (mobile platform set OFF)." ON)
-option(BUILD_ANTILLA_IN_DEFAULT_LOCATION "Build Antilla in default location[QtSDK Dir]." ON)
+option(BUILD_ANTILLA_DESKTOP_PLATFORM "Build Antilla on desktop platform (mobile platform set OFF)." ON)
+option(BUILD_ANTILLA_DEFAULT_LOCATION "Build Antilla in default location[QtSDK Dir]." ON)
 
 #Set Antilla output dir
 set(ANTILLA_HEADER_OUTPUT_DIRECTORY "" CACHE PATH "Antilla header output dir.")
-set(ANTILLA_LIBRARY_OUTPUT_DIRECTORY "" CACHE PATH "Antilla library output dir.")
+set(ANTILLA_LIB_OUTPUT_DIR "" CACHE PATH "Antilla library output dir.")
 set(ANTILLA_PLUGIN_OUTPUT_DIRECTORY "" CACHE PATH "Antilla plugin output dir (Must end with [Antilla/Basic]).")
 
 set(MACOS FALSE)
@@ -22,12 +22,12 @@ if(APPLE)
 endif()
 
 if(WIN32 OR MACOS OR LINUX)
-    set(BUILD_ANTILLA_ON_DESKTOP_PLATFORM ON)
+    set(BUILD_ANTILLA_DESKTOP_PLATFORM ON)
 else()
-    set(BUILD_ANTILLA_ON_DESKTOP_PLATFORM OFF)
+    set(BUILD_ANTILLA_DESKTOP_PLATFORM OFF)
 endif()
 
-if(BUILD_ANTILLA_ON_DESKTOP_PLATFORM)
+if(BUILD_ANTILLA_DESKTOP_PLATFORM)
     #Build QWindowKit
     set(QWINDOWKIT_BUILD_STATIC ON)
     set(QWINDOWKIT_BUILD_WIDGETS OFF)

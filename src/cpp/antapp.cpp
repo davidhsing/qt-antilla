@@ -1,5 +1,5 @@
 #include "antapp.h"
-#ifdef BUILD_ANTILLA_ON_DESKTOP_PLATFORM
+#ifdef BUILD_ANTILLA_DESKTOP_PLATFORM
 #include <QWKQuick/qwkquickglobal.h>
 #endif
 #include <QtGui/QFontDatabase>
@@ -13,7 +13,7 @@
 
 
 void AntApp::initialize(QQmlEngine* engine) {
-#ifdef BUILD_ANTILLA_ON_DESKTOP_PLATFORM
+#ifdef BUILD_ANTILLA_DESKTOP_PLATFORM
     QWK::registerTypes(engine);
 #endif
 
