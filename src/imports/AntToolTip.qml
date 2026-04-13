@@ -16,6 +16,7 @@ T.ToolTip {
     property bool arrowVisible: false
     property int arrowOffset: 4
     property int position: AntToolTip.PositionTop
+    property int textFormat: Text.PlainText
     property color colorShadow: control.themeSource.colorShadow
     property color colorText: control.themeSource.colorText
     property color colorBg: AntTheme.isDark ? control.themeSource.colorBgDark : control.themeSource.colorBg
@@ -152,11 +153,12 @@ T.ToolTip {
 
                 AntText {
                     id: __text
+                    anchors.centerIn: parent
                     text: control.text
                     font: control.font
                     color: control.colorText
+                    textFormat: control.textFormat
                     wrapMode: Text.Wrap
-                    anchors.centerIn: parent
                 }
             }
         }

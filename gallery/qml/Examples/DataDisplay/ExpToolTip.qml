@@ -26,6 +26,7 @@ animationEnabled | bool | AntTheme.animationEnabled | 是否开启动画
 arrowVisible | bool | false | 是否显示箭头
 arrowOffset | int | 4 | 箭尖到组件的偏移量
 position | enum | AntToolTip.PositionTop | 文字提示的位置(来自 AntToolTip)
+textFormat | enum | Text.PlainText | 文字提示的格式(来自 Text)
 colorText | color | - | 文本颜色
 colorBg | color | - | 背景颜色
 radiusBg | [AntRadius](internal://AntRadius) | - | 背景圆角半径
@@ -104,7 +105,7 @@ Column {
                 x: 0
                 visible: parent.hovered
                 arrowVisible: true
-                text: qsTr('箭头中心会自动指向 parent 的中心')
+                text: qsTr('箭头中心会自动指向 parent 的中心\n这里还会换行到下一行')
                 position: AntToolTip.PositionTop
             }
         }
@@ -176,7 +177,7 @@ Column {
                             x: 0
                             visible: parent.hovered
                             arrowVisible: true
-                            text: qsTr('箭头中心会自动指向 parent 的中心')
+                            text: qsTr('箭头中心会自动指向 parent 的中心\n这里还会换行到下一行')
                             position: AntToolTip.PositionTop
                         }
                     }
