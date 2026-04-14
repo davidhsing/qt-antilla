@@ -8,9 +8,9 @@ option(BUILD_ANTILLA_DESKTOP_PLATFORM "Build Antilla on desktop platform (mobile
 option(BUILD_ANTILLA_DEFAULT_LOCATION "Build Antilla in default location[QtSDK Dir]." ON)
 
 #Set Antilla output dir
-set(ANTILLA_HEADER_OUTPUT_DIRECTORY "" CACHE PATH "Antilla header output dir.")
+set(ANTILLA_HEADER_OUTPUT_DIR "" CACHE PATH "Antilla header output dir.")
 set(ANTILLA_LIB_OUTPUT_DIR "" CACHE PATH "Antilla library output dir.")
-set(ANTILLA_PLUGIN_OUTPUT_DIRECTORY "" CACHE PATH "Antilla plugin output dir (Must end with [Antilla/Basic]).")
+set(ANTILLA_PLUGIN_OUTPUT_DIR "" CACHE PATH "Antilla plugin output dir (Must end with [Antilla/Basic]).")
 
 set(MACOS FALSE)
 if(APPLE)
@@ -36,7 +36,20 @@ if(BUILD_ANTILLA_DESKTOP_PLATFORM)
     add_subdirectory(3rdparty/qwindowkit)
 endif()
 
-set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR})
+# Set default install prefix
+# Note: Use --prefix option when running cmake --install to specify custom install location
+# Example: cmake --install build/make/Debug --prefix build/install/Debug
+if(ANTILLA_INSTALL_DIRECTORY)
+    set(CMAKE_INSTALL_PREFIX "${ANTILLA_INSTALL_DIRECTORY}" CACHE PATH "Install prefix" FORCE)
+elseif(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+    # Default to build/install/<BuildType> using relative path from build directory
+    if(CMAKE_BUILD_TYPE MATCHES "Debug")
+        set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/../../install/Debug" CACHE PATH "Install prefix" FORCE)
+    else()
+        set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/../../install/Release" CACHE PATH "Install prefix" FORCE)
+    endif()
+endif()
+
 add_subdirectory(src)
 
 if(BUILD_ANTILLA_GALLERY)

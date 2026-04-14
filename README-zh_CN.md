@@ -59,25 +59,31 @@ git submodule update --remote --recursive
 "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Auxiliary\Build\vcvarsall.bat" x64
 ```
 
+#### Debug 构建
 ```shell
-cd Antilla
-cmake -S . -B build -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DBUILD_ANTILLA_STATIC_LIBS=OFF    # -DCMAKE_BUILD_TYPE=Debug
-cmake --build build --target all --parallel --config Release    # --config Debug
-# cmake --install build --prefix install
+cmake -S . -B build/make/Debug -G "Ninja" -DCMAKE_BUILD_TYPE=Debug -DBUILD_ANTILLA_DEFAULT_LOCATION=OFF -DINSTALL_ANTILLA_DEFAULT_LOCATION=OFF -DBUILD_ANTILLA_STATIC_LIBS=OFF
+cmake --build build/make/Debug --target all --parallel --config Debug
+# cmake --install build/make/Debug
 ```
 
-- 使用 Ninja/MinGW 构建
+#### Release 构建
 ```shell
-cmake -S . -B build -G "Ninja"
-or
-cmake -S . -B build -G "MinGW Makefiles"
+cmake -S . -B build/make/Release -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DBUILD_ANTILLA_DEFAULT_LOCATION=OFF -DINSTALL_ANTILLA_DEFAULT_LOCATION=OFF -DBUILD_ANTILLA_STATIC_LIBS=OFF
+cmake --build build/make/Release --target all --parallel --config Release
+# cmake --install build/make/Release
 ```
+
+#### 说明
+- The `BUILD_ANTILLA_DEFAULT_LOCATION`, `INSTALL_ANTILLA_DEFAULT_LOCATION`, `BUILD_ANTILLA_STATIC_LIBS` param is Antilla's own definition.
+
 > [!IMPORTANT]
 > 默认情况下，`BUILD_ANTILLA_DEFAULT_LOCATION=ON`:
 > - `headers` 将构建在 `[QtDir]/[QtVersion]/[Kit]/include/Antilla` 目录中。
 > - `*.dll/*.so` 将构建在 `[QtDir]/[QtVersion]/[Kit]/bin` 目录中。
 > - `*.lib` 将构建在 `[QtDir]/[QtVersion]/[Kit]/lib` 目录中。
 > - `plugin` 将构建在 `[QtDir]/[QtVersion]/[Kit]/qml/Antilla` 目录中。
+> - `qml` 将构建在 `[QtDir]/[QtVersion]/[Kit]/qml/Antilla` 目录中.
+> - `AntillaBasic[d].dll` 将构建在 `[QtDir]/[QtVersion]/[Kit]/bin` 目录中.
 
 - 安装
 ```shell

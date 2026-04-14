@@ -57,26 +57,31 @@ git submodule update --remote --recursive
 "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Auxiliary\Build\vcvarsall.bat" x64
 ```
 
+#### Debug build
 ```shell
-# cd Antilla
-cmake -S . -B build -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DBUILD_ANTILLA_STATIC_LIBS=OFF    # -DCMAKE_BUILD_TYPE=Debug
-cmake --build build --target all --parallel --config Release    # --config Debug
-# cmake --install build --prefix install
+cmake -S . -B build/make/Debug -G "Ninja" -DCMAKE_BUILD_TYPE=Debug -DBUILD_ANTILLA_DEFAULT_LOCATION=OFF -DINSTALL_ANTILLA_DEFAULT_LOCATION=OFF -DBUILD_ANTILLA_STATIC_LIBS=OFF
+cmake --build build/make/Debug --target all --parallel --config Debug
+# cmake --install build/make/Debug --prefix build/install/Debug
 ```
 
-- Build with Ninja/MinGW
+#### Release build
 ```shell
-cmake -S . -B build -G "Ninja"
-or
-cmake -S . -B build -G "MinGW Makefiles"
+cmake -S . -B build/make/Release -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DBUILD_ANTILLA_DEFAULT_LOCATION=OFF -DINSTALL_ANTILLA_DEFAULT_LOCATION=OFF -DBUILD_ANTILLA_STATIC_LIBS=OFF
+cmake --build build/make/Release --target all --parallel --config Release
+# cmake --install build/make/Release --prefix build/install/Release
 ```
+
+#### Note
+- The `BUILD_ANTILLA_DEFAULT_LOCATION`, `INSTALL_ANTILLA_DEFAULT_LOCATION`, `BUILD_ANTILLA_STATIC_LIBS` param is Antilla's own definition.
 
 > [!IMPORTANT]
 > By default, `BUILD_ANTILLA_DEFAULT_LOCATION=ON`:
-> - the `headers` will be built in the `[QtDir]/[QtVersion]/[Kit]/include/Antilla` directory.
-> - the `*.dll/*.so` will be built in the `[QtDir]/[QtVersion]/[Kit]/bin` directory.
-> - the `*.lib` will be built in the `[QtDir]/[QtVersion]/[Kit]/lib` directory.
-> - the `qmlplugin` will be built in the `[QtDir]/[QtVersion]/[Kit]/qml/Antilla` directory.
+> - The `headers` will be built in the `[QtDir]/[QtVersion]/[Kit]/include/Antilla` directory.
+> - The `*.dll/*.so` will be built in the `[QtDir]/[QtVersion]/[Kit]/bin` directory.
+> - The `*.lib` will be built in the `[QtDir]/[QtVersion]/[Kit]/lib` directory.
+> - The `qmlplugin` will be built in the `[QtDir]/[QtVersion]/[Kit]/qml/Antilla` directory.
+> - The `qml` directory will be built in the `[QtDir]/[QtVersion]/[Kit]/qml/Antilla`.
+> - The `AntillaBasic[d].dll` will be installed to `[QtDir]/[QtVersion]/[Kit]/bin`.
 
 - Install
 ```shell

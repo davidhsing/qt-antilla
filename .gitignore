@@ -74,7 +74,6 @@ CMakeLists.txt.user*
 
 # CMake generated files
 build
-install
 gallery/bin
 package
 CMakeCache.txt
