@@ -148,7 +148,7 @@ ariaConstrual | string | '' | 内容描述(提高可用性)
                             onEntered: hovered = true;
                             onExited: hovered = false;
                             onClicked: {
-                                AntApi.setClipbordText(`AntIcon.${rootItem.iconName}`);
+                                AntApi.setClipboardText(`AntIcon.${rootItem.iconName}`);
                                 message.success(`AntIcon.${rootItem.iconName} copied 🎉`);
                             }
                             property bool hovered: false

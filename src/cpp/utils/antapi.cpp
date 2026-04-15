@@ -16,26 +16,23 @@
 # include <Windows.h>
 #endif
 
+
 Q_LOGGING_CATEGORY(lcAntApi, "antilla.basic.api");
 
-AntApi::~AntApi()
-{
 
-}
+AntApi::~AntApi() = default;
 
-AntApi *AntApi::instance()
-{
-    static AntApi *ins = new AntApi;
+
+AntApi* AntApi::instance() {
+    static auto ins = new AntApi;
     return ins;
 }
 
-AntApi *AntApi::create(QQmlEngine *, QJSEngine *)
-{
+AntApi* AntApi::create(QQmlEngine*, QJSEngine*) {
     return instance();
 }
 
-void AntApi::setWindowStaysOnTopHint(QWindow *window, bool hint)
-{
+void AntApi::setWindowStaysOnTopHint(QWindow* window, const bool hint) {
     if (window) {
 #ifdef Q_OS_WIN
         HWND hwnd = reinterpret_cast<HWND>(window->winId());
@@ -50,21 +47,20 @@ void AntApi::setWindowStaysOnTopHint(QWindow *window, bool hint)
     }
 }
 
-void AntApi::setWindowState(QWindow *window, int state)
-{
+void AntApi::setWindowState(QWindow* window, int state) {
     if (window) {
 #ifdef Q_OS_WIN
         HWND hwnd = reinterpret_cast<HWND>(window->winId());
         switch (state) {
-        case Qt::WindowMinimized:
-            ::ShowWindow(hwnd, SW_MINIMIZE);
-            break;
-        case Qt::WindowMaximized:
-            ::ShowWindow(hwnd, SW_MAXIMIZE);
-            break;
-        default:
-            window->setWindowState(Qt::WindowState(state));
-            break;
+            case Qt::WindowMinimized:
+                ::ShowWindow(hwnd, SW_MINIMIZE);
+                break;
+            case Qt::WindowMaximized:
+                ::ShowWindow(hwnd, SW_MAXIMIZE);
+                break;
+            default:
+                window->setWindowState(Qt::WindowState(state));
+                break;
         }
 #else
         window->setWindowState(Qt::WindowState(state));
@@ -72,8 +68,7 @@ void AntApi::setWindowState(QWindow *window, int state)
     }
 }
 
-void AntApi::setPopupAllowAutoFlip(QObject *popup, bool allowVerticalFlip, bool allowHorizontalFlip)
-{
+void AntApi::setPopupAllowAutoFlip(QObject* popup, const bool allowVerticalFlip, const bool allowHorizontalFlip) {
     if (auto p = qobject_cast<QQuickPopup*>(popup)) {
         QQuickPopupPrivate::get(p)->allowVerticalFlip = allowVerticalFlip;
         QQuickPopupPrivate::get(p)->allowHorizontalFlip = allowHorizontalFlip;
@@ -82,55 +77,42 @@ void AntApi::setPopupAllowAutoFlip(QObject *popup, bool allowVerticalFlip, bool 
     }
 }
 
-QString AntApi::getClipbordText() const
-{
-    if (auto clipboard = QGuiApplication::clipboard()) {
+QString AntApi::getClipboardText() {
+    if (const auto clipboard = QGuiApplication::clipboard()) {
         return clipboard->text();
     }
-
     return QString();
 }
 
-bool AntApi::setClipbordText(const QString &text)
-{
-    if (auto clipboard = QGuiApplication::clipboard()) {
+bool AntApi::setClipboardText(const QString& text) {
+    if (const auto clipboard = QGuiApplication::clipboard()) {
         clipboard->setText(text);
         return true;
     }
-
     return false;
 }
 
-QString AntApi::readFileToString(const QString &fileName)
-{
+QString AntApi::readFileToString(const QString& fileName) {
     QString result;
-    QFile file(fileName);
-    if (file.open(QIODevice::ReadOnly)) {
+    if (QFile file(fileName); file.open(QIODevice::ReadOnly)) {
         result = file.readAll();
     } else {
         qCDebug(lcAntApi) << "Open file error:" << file.errorString();
     }
-
     return result;
 }
 
-int AntApi::getWeekNumber(const QDateTime &dateTime) const
-{
+int AntApi::getWeekNumber(const QDateTime& dateTime) {
     return dateTime.date().weekNumber();
 }
 
-QDateTime AntApi::dateFromString(const QString &dateTime, const QString &format) const
-{
+QDateTime AntApi::dateFromString(const QString& dateTime, const QString& format) {
     return QDateTime::fromString(dateTime, format);
 }
 
-void AntApi::openLocalUrl(const QString &local)
-{
+void AntApi::openLocalUrl(const QString& local) {
     QDesktopServices::openUrl(QUrl::fromLocalFile(local));
 }
 
-AntApi::AntApi(QObject *parent)
-    : QObject{parent}
-{
-
+AntApi::AntApi(QObject* parent) : QObject{parent} {
 }

@@ -172,7 +172,7 @@ Rectangle {
                     iconSize: AntTheme.Primary.fontPrimarySizeHeading4
                     iconSource: AntIcon.CopyOutlined
                     onClicked: {
-                        AntApi.setClipbordText(codeText.text);
+                        AntApi.setClipboardText(codeText.text);
                         message.success(qsTr('代码复制成功'))
                     }
                     AntToolTip {
