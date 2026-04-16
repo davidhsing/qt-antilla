@@ -22,10 +22,10 @@ Flickable {
 属性名 | 类型 | 默认值 | 描述
 ------ | --- | :---: | ---
 all | real | 0 | 统一设置四个边距
-left | real | 0 | 左边距
-top | real | 0 | 上边距
-right | real | 0 | 右边距
-bottom | real | 0 | 下边距
+left | real | NaN | 左边距
+top | real | NaN | 上边距
+right | real | NaN | 右边距
+bottom | real | NaN | 下边距
                        `)
         }
 

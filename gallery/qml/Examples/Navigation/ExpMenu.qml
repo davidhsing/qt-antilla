@@ -72,6 +72,7 @@ popupOffset | int | 4 | 弹窗之间的偏移
 popupMaxHeight | int | - | 弹窗最大高度
 defaultMenuIconSize | int | - | 默认菜单图标大小
 defaultMenuIconSpacing | int | 8 | 默认菜单图标间隔
+defaultMenuTextSize | int | - | 默认菜单文字大小
 defaultMenuWidth | int | 300 | 默认菜单宽度
 defaultMenuHieght | int | 40 | 默认菜单高度
 defaultMenuSpacing | int | 4 | 默认菜单间隔
@@ -79,6 +80,7 @@ defaultSelectedKey | list | [] | 初始选中的菜单项 key 数组
 initModel | list | [] | 初始菜单模型
 keepIconPlace | bool | true | 是否保留图标占位(即使没有图标)
 tooltipVisible | bool | false | 是否显示工具提示
+marginContent | [AntMargin](internal://AntMargin) | { all: 5; right: 8 } | 内容区边距
 colorBorder | color | - | 边框颜色
 scrollBar | AntScrollBar | - | 菜单滚动条
 radiusBg | [AntRadius](internal://AntRadius) | - | 背景圆角半径

@@ -9,7 +9,6 @@ Item {
 
     property bool animationEnabled: AntTheme.animationEnabled
     property bool borderVisible: false
-    property string ariaConstrual: ''
     property bool compactMode: false
     property int compactWidth: 50
     property bool popupMode: false
@@ -18,6 +17,7 @@ Item {
     property int popupMaxHeight: control.height
     property int defaultMenuIconSize: control.themeSource.fontSize
     property int defaultMenuIconSpacing: 8
+    property int defaultMenuTextSize: control.themeSource.fontSize
     property int defaultMenuWidth: 300
     property int defaultMenuHeight: 40
     property int defaultMenuSpacing: 4
@@ -25,10 +25,12 @@ Item {
     property var initModel: []
     property bool keepIconPlace: true
     property bool tooltipVisible: false
+    property AntMargin marginContent: AntMargin { all: 5; right: 8 }
     property alias scrollBar: __menuScrollBar
     property color colorBorder: control.themeSource.colorBorder
     property AntRadius radiusMenuBg: AntRadius { all: control.themeSource.radiusMenuBg }
     property AntRadius radiusPopupBg: AntRadius { all: control.themeSource.radiusPopupBg }
+    property string ariaConstrual: ''
 
     property Component menuIconDelegate: AntIconText {
         color: menuButton.colorText
@@ -116,7 +118,7 @@ Item {
 
     objectName: '__AntMenu__'
     implicitWidth: compactMode ? compactWidth : defaultMenuWidth
-    implicitHeight: __listView.contentHeight + __listView.anchors.topMargin + __listView.anchors.bottomMargin
+    implicitHeight: __listView.contentHeight + control.marginContent.top + control.marginContent.bottom
     clip: true
 
     onInitModelChanged: {
@@ -267,7 +269,7 @@ Item {
             property bool isCurrentParent: false
             property var layerPopup: null
 
-            function menuClicked() {
+            function handleMenuClick() {
                 control.menuClicked(view.menuDeep, menuKey, keyPath, model);
             }
 
@@ -275,7 +277,7 @@ Item {
                 if (__menuButton.expandedVisible) {
                     __menuButton.expanded = true;
                 }
-                __rootItem.menuClicked();
+                __rootItem.handleMenuClick();
             }
 
             /*! 查找当前菜单的根菜单 */
@@ -382,6 +384,7 @@ Item {
                     radiusBg: control.radiusMenuBg
                     text: (control.compactMode && __rootItem.view.menuDeep === 0) ? '' : __rootItem.menuLabel
                     checkable: true
+                    font.pixelSize: control.defaultMenuTextSize
                     iconSize: __rootItem.menuIconSize
                     iconSource: __rootItem.menuIconSource
                     iconSpacing: __rootItem.menuIconSpacing
@@ -401,7 +404,7 @@ Item {
                     contentDelegate: __rootItem.menuContentDelegate
                     bgDelegate: __rootItem.menuBgDelegate
                     onClicked: {
-                        __rootItem.menuClicked();
+                        __rootItem.handleMenuClick();
                         if (__rootItem.menuChildrenLength == 0) {
                             __private.selectedItem = __rootItem;
                             __rootItem.selectedCurrentParentMenu();
@@ -592,10 +595,12 @@ Item {
         id: __listView
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.rightMargin: 8
         anchors.top: parent.top
         anchors.bottom: parent.bottom
-        anchors.margins: 5
+        anchors.topMargin: control.marginContent.top
+        anchors.bottomMargin: control.marginContent.bottom
+        anchors.leftMargin: control.marginContent.left
+        anchors.rightMargin: control.marginContent.right
         boundsBehavior: Flickable.StopAtBounds
         model: []
         delegate: __menuDelegate

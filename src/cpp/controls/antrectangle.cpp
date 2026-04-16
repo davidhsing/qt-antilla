@@ -120,23 +120,11 @@ void AntMargin::setAll(const qreal all) {
     }
     m_all = all;
     emit allChanged();
-    // Update all if it is NaN (not set)
-    if (qIsNaN(m_top)) {
-        m_top = all;
-        emit topChanged();
-    }
-    if (qIsNaN(m_bottom)) {
-        m_bottom = all;
-        emit bottomChanged();
-    }
-    if (qIsNaN(m_left)) {
-        m_left = all;
-        emit leftChanged();
-    }
-    if (qIsNaN(m_right)) {
-        m_right = all;
-        emit rightChanged();
-    }
+    // Update all properties
+    setTop(m_all);
+    setBottom(m_all);
+    setLeft(m_all);
+    setRight(m_all);
 }
 
 qreal AntMargin::left() const {
