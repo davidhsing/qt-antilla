@@ -87,10 +87,10 @@ signals:
 
 private:
     qreal m_all = 0.;
-    qreal m_left = 0.;
-    qreal m_top = 0.;
-    qreal m_right = 0.;
-    qreal m_bottom = 0.;
+    qreal m_left = -1.;
+    qreal m_top = -1.;
+    qreal m_right = -1.;
+    qreal m_bottom = -1.;
 };
 
 class ANTILLA_EXPORT AntPen: public QObject {
