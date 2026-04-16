@@ -220,6 +220,7 @@ qt_add_qml_module(${PROJECT_NAME}
         imports/AntMaskOverlay.qml
         imports/AntResult.qml
         imports/AntShield.qml
+        imports/AntTrayIcon.qml
     SOURCES
         $<$<BOOL:${WIN32}>:${ANTILLA_RC_FILE}>
         cpp/antglobal.h

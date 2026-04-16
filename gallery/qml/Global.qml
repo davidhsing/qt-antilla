@@ -126,6 +126,13 @@ QtObject {
                     desc: qsTr('提供四方向的边距类型。')
                 },
                 {
+                    key: 'AntPreserve',
+                    label: qsTr('AntPreserve 保留区域'),
+                    source: './Examples/General/ExpPreserve.qml',
+                    addVersion: '0.7.0.0',
+                    desc: qsTr('提供边缘保留区域的类型，用于指定从某处到某处的保留距离。')
+                },
+                {
                     key: 'AntStatusBar',
                     label: qsTr('AntStatusBar 状态栏'),
                     source: './Examples/General/ExpStatusBar.qml',
@@ -203,6 +210,13 @@ QtObject {
                     label: qsTr('AntBreadcrumb 面包屑'),
                     source: './Examples/Navigation/ExpBreadcrumb.qml',
                     desc: qsTr('面包屑，显示当前页面在系统层级结构中的位置，并能向上返回。')
+                },
+                {
+                    key: 'AntTrayIcon',
+                    label: qsTr('AntTrayIcon 托盘图标'),
+                    source: './Examples/Navigation/ExpTrayIcon.qml',
+                    addVersion: '0.7.0.0',
+                    desc: qsTr('系统托盘区图标，配合 AntMenu 实现自定义样式的托盘菜单。')
                 }
             ]
         },

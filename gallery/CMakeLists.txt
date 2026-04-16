@@ -53,6 +53,7 @@ qt_add_qml_module(${PROJECT_NAME}
         qml/Examples/General/ExpPopup.qml
         qml/Examples/General/ExpRadius.qml
         qml/Examples/General/ExpMargin.qml
+        qml/Examples/General/ExpPreserve.qml
         qml/Examples/General/ExpText.qml
         qml/Examples/General/ExpButtonBlock.qml
         qml/Examples/General/ExpCaptionBar.qml
@@ -101,6 +102,7 @@ qt_add_qml_module(${PROJECT_NAME}
         qml/Examples/DataDisplay/ExpSpin.qml
         qml/Examples/Navigation/ExpMenu.qml
         qml/Examples/Navigation/ExpContextMenu.qml
+        qml/Examples/Navigation/ExpTrayIcon.qml
         qml/Examples/Navigation/ExpScrollBar.qml
         qml/Examples/Navigation/ExpPagination.qml
         qml/Examples/Navigation/ExpBreadcrumb.qml
