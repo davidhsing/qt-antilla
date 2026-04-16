@@ -120,34 +120,31 @@ void AntMargin::setAll(const qreal all) {
     }
     m_all = all;
     emit allChanged();
-    // Set all if it is negative
-    if (m_top < 0.) {
+    // Update all if it is NaN (not set)
+    if (qIsNaN(m_top)) {
+        m_top = all;
         emit topChanged();
     }
-    if (m_bottom < 0.) {
+    if (qIsNaN(m_bottom)) {
+        m_bottom = all;
         emit bottomChanged();
     }
-    if (m_left < 0.) {
+    if (qIsNaN(m_left)) {
+        m_left = all;
         emit leftChanged();
     }
-    if (m_right < 0.) {
+    if (qIsNaN(m_right)) {
+        m_right = all;
         emit rightChanged();
     }
 }
 
 qreal AntMargin::left() const {
-    if (m_left >= 0.) {
-        return m_left;
-    }
-    return m_all;
+    return qIsNaN(m_left) ? m_all : m_left;
 }
 
 void AntMargin::setLeft(const qreal left) {
     if (m_left == left) {
-        return;
-    }
-    if (left < 0) {
-        qmlWarning(this) << "left (" << left << ") cannot be less than 0.";
         return;
     }
     m_left = left;
@@ -155,18 +152,11 @@ void AntMargin::setLeft(const qreal left) {
 }
 
 qreal AntMargin::top() const {
-    if (m_top >= 0.) {
-        return m_top;
-    }
-    return m_all;
+    return qIsNaN(m_top) ? m_all : m_top;
 }
 
 void AntMargin::setTop(const qreal top) {
     if (m_top == top) {
-        return;
-    }
-    if (top < 0) {
-        qmlWarning(this) << "top (" << top << ") cannot be less than 0.";
         return;
     }
     m_top = top;
@@ -174,18 +164,11 @@ void AntMargin::setTop(const qreal top) {
 }
 
 qreal AntMargin::right() const {
-    if (m_right >= 0.) {
-        return m_right;
-    }
-    return m_all;
+    return qIsNaN(m_right) ? m_all : m_right;
 }
 
 void AntMargin::setRight(const qreal right) {
     if (m_right == right) {
-        return;
-    }
-    if (right < 0) {
-        qmlWarning(this) << "right (" << right << ") cannot be less than 0.";
         return;
     }
     m_right = right;
@@ -193,18 +176,11 @@ void AntMargin::setRight(const qreal right) {
 }
 
 qreal AntMargin::bottom() const {
-    if (m_bottom >= 0.) {
-        return m_bottom;
-    }
-    return m_all;
+    return qIsNaN(m_bottom) ? m_all : m_bottom;
 }
 
 void AntMargin::setBottom(const qreal bottom) {
     if (m_bottom == bottom) {
-        return;
-    }
-    if (bottom < 0) {
-        qmlWarning(this) << "bottom (" << bottom << ") cannot be less than 0.";
         return;
     }
     m_bottom = bottom;

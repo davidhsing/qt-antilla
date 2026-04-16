@@ -1,4 +1,6 @@
 #pragma once
+#include <limits>
+#include <QtGlobal>
 #include <QtQuick/QQuickPaintedItem>
 #include "../antglobal.h"
 #include "../antdefinitions.h"
@@ -87,10 +89,10 @@ signals:
 
 private:
     qreal m_all = 0.;
-    qreal m_left = -1.;
-    qreal m_top = -1.;
-    qreal m_right = -1.;
-    qreal m_bottom = -1.;
+    qreal m_left = std::numeric_limits<qreal>::quiet_NaN();
+    qreal m_top = std::numeric_limits<qreal>::quiet_NaN();
+    qreal m_right = std::numeric_limits<qreal>::quiet_NaN();
+    qreal m_bottom = std::numeric_limits<qreal>::quiet_NaN();
 };
 
 class ANTILLA_EXPORT AntPen: public QObject {
