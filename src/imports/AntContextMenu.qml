@@ -7,8 +7,9 @@ AntPopup {
     signal menuClicked(deep: int, key: string, keyPath: var, data: var)
 
     property bool animationEnabled: AntTheme.animationEnabled
-    property int defaultMenuIconSize: control.themeSource.fontSize
+    property int defaultMenuIconSize: control.themeSource.fontIconSize
     property int defaultMenuIconSpacing: 8
+    property int defaultMenuTextSize: control.themeSource.fontTextSize
     property int defaultMenuWidth: 140
     property int defaultMenuHeight: 30
     property int defaultMenuSpacing: 4
@@ -66,6 +67,7 @@ AntPopup {
         popupOffset: control.subMenuOffset
         defaultMenuIconSize: control.defaultMenuIconSize
         defaultMenuIconSpacing: control.defaultMenuIconSpacing
+        defaultMenuTextSize：control.defaultMenuTextSize
         defaultMenuWidth: control.defaultMenuWidth
         defaultMenuHeight: control.defaultMenuHeight
         defaultMenuSpacing: control.defaultMenuSpacing

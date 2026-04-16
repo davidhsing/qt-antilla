@@ -24,6 +24,7 @@ Flickable {
 animationEnabled | bool | true | 是否开启动画
 defaultMenuIconSize | int | - | 默认菜单图标大小
 defaultMenuIconSpacing | int | 8 | 默认菜单图标间隔
+defaultMenuTextSize | int | - | 默认菜单文字大小
 defaultMenuWidth | int | 140 | 默认菜单宽度
 defaultMenuHieght | int | 40 | 默认菜单高度
 defaultMenuSpacing | int | 4 | 默认菜单间隔
