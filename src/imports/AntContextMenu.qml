@@ -67,7 +67,7 @@ AntPopup {
         popupOffset: control.subMenuOffset
         defaultMenuIconSize: control.defaultMenuIconSize
         defaultMenuIconSpacing: control.defaultMenuIconSpacing
-        defaultMenuTextSize：control.defaultMenuTextSize
+        defaultMenuTextSize: control.defaultMenuTextSize
         defaultMenuWidth: control.defaultMenuWidth
         defaultMenuHeight: control.defaultMenuHeight
         defaultMenuSpacing: control.defaultMenuSpacing
