@@ -15,9 +15,9 @@ Item {
     property int popupWidth: 200
     property int popupOffset: 4
     property int popupMaxHeight: control.height
-    property int defaultMenuIconSize: control.themeSource.fontSize
+    property int defaultMenuIconSize: control.themeSource.fontIconSize
     property int defaultMenuIconSpacing: 8
-    property int defaultMenuTextSize: control.themeSource.fontSize
+    property int defaultMenuTextSize: control.themeSource.fontTextSize
     property int defaultMenuWidth: 300
     property int defaultMenuHeight: 40
     property int defaultMenuSpacing: 4
@@ -132,7 +132,7 @@ Item {
         id: __menuButtonImpl
 
         property var iconSource: 0 ?? ''
-        property int iconSize: control.themeSource.fontSize
+        property int iconSize: control.themeSource.fontIconSize
         property int iconSpacing: 5
         property int iconStart: 0
         property bool expanded: false

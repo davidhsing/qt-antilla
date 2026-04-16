@@ -1,7 +1,8 @@
 {
     "__style__": {
         "fontFamily": "@fontPrimaryFamily",
-        "fontSize": "@fontPrimarySizeHeading5",
+        "fontIconSize": "@fontPrimarySizeHeading5",
+        "fontTextSize": "@fontPrimarySize",
         "colorTextDisabled": "@colorPrimaryTextDisabled",
         "colorText": "@colorTextPrimary",
         "colorTextActive": "@colorPrimaryTextHover",
