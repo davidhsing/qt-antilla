@@ -771,27 +771,33 @@ Item {
     Accessible.onIncreaseAction: control.increase();
     Accessible.onDecreaseAction: control.decrease();
 
-    onInitialValueChanged: __private.fromValueUpdate();
+    onInitialValueChanged: {
+        if (__private.settingInitialValue) {
+            return;
+        }
+        __private.initialHandleCount = Array.isArray(initialValue) ? initialValue.length : 1;
+        __private.initHandles();
+        __private.fromValueUpdate();
+        // For editable mode with single/double handles, fromValueUpdate won't update UI
+        // because __sliderLoader is not active. We need to sync handlesValues directly.
+        if (control.editable && __private.initialHandleCount <= 2) {
+            __private.handlesValues = Array.isArray(initialValue) ? initialValue.slice() : [initialValue];
+            __private.updateMinMaxIndices();
+            control.handleCount = __private.handlesValues.length;
+        }
+    }
 
-    function decrease(index = 0) {
-        if (__private.initialHandleCount > 2) {
-            if (index >= 0 && index < __private.handlesValues.length) {
-                let newValue = Math.max(control.min, __private.handlesValues[index] - (control.stepSize > 0 ? control.stepSize : 1));
-                __private.updateHandleValue(index, newValue);
-                control.handleMoved(index, newValue);
-            }
-        } else {
-            if (__sliderLoader.item) {
-                if (__private.initialHandleCount === 2) {
-                    if (index === 0) {
-                        __sliderLoader.item.first.decrease();
-                    } else {
-                        __sliderLoader.item.second.decrease();
-                    }
-                } else {
-                    __sliderLoader.item.decrease();
-                }
-            }
+    function setInitialValue(value) {
+        __private.settingInitialValue = true;
+        control.initialValue = value;
+        __private.initialHandleCount = Array.isArray(value) ? value.length : 1;
+        __private.settingInitialValue = false;
+        // For editable mode with single/double handles, sync handlesValues
+        // This is needed because __sliderLoader is not active in editable mode
+        if (control.editable && __private.initialHandleCount <= 2) {
+            __private.handlesValues = Array.isArray(value) ? value.slice() : [value];
+            __private.updateMinMaxIndices();
+            control.handleCount = __private.handlesValues.length;
         }
     }
 
@@ -817,6 +823,28 @@ Item {
         }
     }
 
+    function decrease(index = 0) {
+        if (__private.initialHandleCount > 2) {
+            if (index >= 0 && index < __private.handlesValues.length) {
+                let newValue = Math.max(control.min, __private.handlesValues[index] - (control.stepSize > 0 ? control.stepSize : 1));
+                __private.updateHandleValue(index, newValue);
+                control.handleMoved(index, newValue);
+            }
+        } else {
+            if (__sliderLoader.item) {
+                if (__private.initialHandleCount === 2) {
+                    if (index === 0) {
+                        __sliderLoader.item.first.decrease();
+                    } else {
+                        __sliderLoader.item.second.decrease();
+                    }
+                } else {
+                    __sliderLoader.item.decrease();
+                }
+            }
+        }
+    }
+
     QtObject {
         id: __private
 
@@ -833,8 +861,11 @@ Item {
             active: false
         }
         property real handleSize: tempHandle.item ? tempHandle.item.implicitWidth : 14
+        property bool settingInitialValue: false
 
         function initHandles() {
+            // Clear existing handles first
+            clearHandles();
             if (Array.isArray(control.initialValue) && control.initialValue.length > 0) {
                 // Create a new array from initialValue, filtering out invalid values
                 let newValues = [];
@@ -980,6 +1011,15 @@ Item {
             }
             updateMinMaxIndices();
             control.handleDeleted(index);
+        }
+
+        function clearHandles() {
+            __private.handlesValues = [];
+            __private.selectedIndex = -1;
+            __private.minHandleIndex = -1;
+            __private.maxHandleIndex = -1;
+            __private.singleHandleVisualPosition = 0;
+            control.handleCount = 0;
         }
 
         function updateHandleValue(index, newValue) {

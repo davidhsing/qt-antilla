@@ -63,8 +63,9 @@ radiusBg | [AntRadius](internal://AntRadius) | - | 背景圆角半径
 ariaConstrual | string | '' | 内容描述(提高可用性)
 \n<br/>
 \n### 支持的函数：\n
-- \`decrease(index: int = 0)\` 将指定索引的滑块值减小 stepSize 或 0.1\n
+- \`setInitialValue(value)\` 重新设置初始化值\n
 - \`increase(index: int = 0)\` 将指定索引的滑块值增加 stepSize 或 0.1\n
+- \`decrease(index: int = 0)\` 将指定索引的滑块值减小 stepSize 或 0.1\n
 \n<br/>
 \n### 支持的信号：\n
 - \`handleAdded(index: int)\` 添加滑块时发出，index 为新滑块的索引\n
@@ -427,6 +428,11 @@ Column {
             text: parent.value.map(v => v.toFixed(0)).join(', ');
         }
     }
+
+    AntButton {
+        text: '设置初始化值'
+        onClicked: slider.setInitialValue([1, 3]);
+    }
 }
             `
             exampleDelegate: Column {
@@ -457,6 +463,11 @@ Column {
                         anchors.leftMargin: 10
                         text: parent.value.map(v => v.toFixed(0)).join(', ');
                     }
+                }
+
+                AntButton {
+                    text: '重设初始化值'
+                    onClicked: slider.setInitialValue([1, 3]);
                 }
             }
         }
