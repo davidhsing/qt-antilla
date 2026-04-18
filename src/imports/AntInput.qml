@@ -29,16 +29,14 @@ T.TextField {
     readonly property int leftClearIconPadding: {
         if (clearIconPosition === AntInput.PositionLeft) {
             return leftIconPadding > 0 ? (__private.clearIconSize + 5) : __private.clearIconSize;
-        } else {
-            return 0;
         }
+        return 0;
     }
     readonly property int rightClearIconPadding: {
         if (clearIconPosition === AntInput.PositionRight) {
             return rightIconPadding > 0 ? (__private.clearIconSize + 5) : __private.clearIconSize;
-        } else {
-            return 0;
         }
+        return 0;
     }
     property bool danger: false
     property color colorIcon: enabled ? control.themeSource.colorIcon : control.themeSource.colorIconDisabled
@@ -60,9 +58,8 @@ T.TextField {
         colorIcon: {
             if (control.enabled) {
                 return __tapHandler.pressed ? control.themeSource.colorClearIconActive : (__hoverHandler.hovered ? control.themeSource.colorClearIconHover : control.themeSource.colorClearIcon);
-            } else {
-                return control.themeSource.colorClearIconDisabled;
             }
+            return control.themeSource.colorClearIconDisabled;
         }
 
         Behavior on colorIcon { enabled: control.animationEnabled; ColorAnimation { duration: AntTheme.Primary.durationMid } }
@@ -131,16 +128,14 @@ T.TextField {
         anchors.left: {
             if (control.clearIconPosition === AntInput.PositionLeft) {
                 return __iconLoader.active && control.iconPosition === AntInput.PositionLeft ? __iconLoader.right : parent.left;
-            } else {
-                return undefined;
             }
+            return undefined;
         }
         anchors.right: {
             if (control.clearIconPosition === AntInput.PositionRight) {
                 return __iconLoader.active && control.iconPosition === AntInput.PositionRight ? __iconLoader.left : parent.right;
-            } else {
-                return undefined;
             }
+            return undefined;
         }
         anchors.leftMargin: control.clearLeftMargin
         anchors.rightMargin: control.clearRightMargin

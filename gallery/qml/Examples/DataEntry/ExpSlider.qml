@@ -410,6 +410,12 @@ Column {
         text: "当前滑块数: " + slider.handleCount
     }
 
+    AntSwitch {
+        id: switcher
+        checkedText: 'Danger'
+        uncheckedText: 'Normal'
+    }
+
     AntSlider {
         id: slider
         width: 500
@@ -417,6 +423,7 @@ Column {
         min: 0
         max: 20
         initialValue: [2, 5, 8]
+        danger: switcher.checked
         editable: true
         handleToolTipEnabled: true
         markVisible: true
@@ -446,6 +453,12 @@ Column {
                     }
                 }
 
+                AntSwitch {
+                    id: switcher
+                    checkedText: 'Danger'
+                    uncheckedText: 'Normal'
+                }
+
                 AntSlider {
                     id: slider
                     width: 500
@@ -453,6 +466,7 @@ Column {
                     min: 0
                     max: 20
                     initialValue: [2, 5, 8]
+                    danger: switcher.checked
                     editable: true
                     handleToolTipEnabled: true
                     markVisible: true

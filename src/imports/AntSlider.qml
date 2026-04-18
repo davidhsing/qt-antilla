@@ -37,6 +37,7 @@ Item {
         }
         return [0];
     }
+    property bool danger: false
     property bool editable: false
     property int minHandle: -1
     property int maxHandle: -1
@@ -44,17 +45,27 @@ Item {
     property int snapMode: AntSlider.SnapOnRelease
     property int orientation: Qt.Horizontal
     property int fontMarkSize: control.themeSource.fontMarkSize
-    property color colorBg: (enabled && hovered) ? control.themeSource.colorBgHover : control.themeSource.colorBg
+    property color colorBg: {
+        if (!control.enabled) {
+            return control.themeSource.colorBgDisabled;
+        }
+        if (control.danger) {
+            return control.hovered ? control.themeSource.colorErrorBgHover : control.themeSource.colorErrorBg;
+        }
+        return hovered ? control.themeSource.colorBgHover : control.themeSource.colorBg;
+    }
     property color colorHandle: control.themeSource.colorHandle
     property color colorTrack: {
         if (!control.enabled) {
             return control.themeSource.colorTrackDisabled;
         }
+        if (control.danger) {
+            return control.hovered ? control.themeSource.colorErrorTrackHover : control.themeSource.colorErrorTrack;
+        }
         if (AntTheme.isDark) {
             return control.hovered ? control.themeSource.colorTrackHoverDark : control.themeSource.colorTrackDark;
-        } else {
-            return control.hovered ? control.themeSource.colorTrackHover : control.themeSource.colorTrack;
         }
+        return control.hovered ? control.themeSource.colorTrackHover : control.themeSource.colorTrack;
     }
     property AntRadius radiusBg: AntRadius { all: control.themeSource.radiusBg }
     property bool handleToolTipEnabled: false
@@ -79,15 +90,13 @@ Item {
         radius: height / 2
         color: control.colorHandle
         border.color: {
-            if (control.enabled) {
-                if (AntTheme.isDark) {
-                    return active || __selected ? control.themeSource.colorHandleBorderHoverDark : control.themeSource.colorHandleBorderDark;
-                } else {
-                    return active || __selected ? control.themeSource.colorHandleBorderHover : control.themeSource.colorHandleBorder;
-                }
-            } else {
+            if (!control.enabled) {
                 return control.themeSource.colorHandleBorderDisabled;
             }
+            if (AntTheme.isDark) {
+                return active || __selected ? control.themeSource.colorHandleBorderHoverDark : control.themeSource.colorHandleBorderDark;
+            }
+            return active || __selected ? control.themeSource.colorHandleBorderHover : control.themeSource.colorHandleBorder;
         }
         border.width: active || __selected ? 4 : 2
 
