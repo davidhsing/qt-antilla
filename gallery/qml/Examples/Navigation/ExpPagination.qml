@@ -30,6 +30,8 @@ animationEnabled | bool | AntTheme.animationEnabled | 是否开启动画
 defaultButtonWidth | int | 32 | 按钮宽度
 defaultButtonHeight | int | 32 | 按钮高度
 defaultButtonSpacing | int | 8 | 按钮间隔
+defaultSelectWidth | int | 80 | 下拉选择框宽度
+defaultInputWidth | int | 50 | 输入框宽度
 currentPageIndex | int | 0 | 当前页索引
 total | int | 0 | 数据项总数
 pageTotal | int | - | 页总数
@@ -111,10 +113,10 @@ Column {
         currentPageIndex: 6
         total: 500
         pageSizeModel: [
-            { label: qsTr('10条每页'), value: 10 },
-            { label: qsTr('20条每页'), value: 20 },
-            { label: qsTr('30条每页'), value: 30 },
-            { label: qsTr('40条每页'), value: 40 }
+            { label: qsTr('10/页'), value: 10 },
+            { label: qsTr('20/页'), value: 20 },
+            { label: qsTr('30/页'), value: 30 },
+            { label: qsTr('40/页'), value: 40 }
         ]
     }
 
@@ -123,10 +125,10 @@ Column {
         currentPageIndex: 6
         total: 500
         pageSizeModel: [
-            { label: qsTr('10条每页'), value: 10 },
-            { label: qsTr('20条每页'), value: 20 },
-            { label: qsTr('30条每页'), value: 30 },
-            { label: qsTr('40条每页'), value: 40 }
+            { label: qsTr('10/页'), value: 10 },
+            { label: qsTr('20/页'), value: 20 },
+            { label: qsTr('30/页'), value: 30 },
+            { label: qsTr('40/页'), value: 40 }
         ]
     }
 }
@@ -138,10 +140,10 @@ Column {
                     currentPageIndex: 6
                     total: 500
                     pageSizeModel: [
-                        { label: qsTr('10条每页'), value: 10 },
-                        { label: qsTr('20条每页'), value: 20 },
-                        { label: qsTr('30条每页'), value: 30 },
-                        { label: qsTr('40条每页'), value: 40 }
+                        { label: qsTr('10/页'), value: 10 },
+                        { label: qsTr('20/页'), value: 20 },
+                        { label: qsTr('30/页'), value: 30 },
+                        { label: qsTr('40/页'), value: 40 }
                     ]
                 }
 
@@ -150,10 +152,10 @@ Column {
                     currentPageIndex: 6
                     total: 500
                     pageSizeModel: [
-                        { label: qsTr('10条每页'), value: 10 },
-                        { label: qsTr('20条每页'), value: 20 },
-                        { label: qsTr('30条每页'), value: 30 },
-                        { label: qsTr('40条每页'), value: 40 }
+                        { label: qsTr('10/页'), value: 10 },
+                        { label: qsTr('20/页'), value: 20 },
+                        { label: qsTr('30/页'), value: 30 },
+                        { label: qsTr('40/页'), value: 40 }
                     ]
                 }
             }
@@ -177,10 +179,10 @@ Column {
         total: 500
         quickJumperVisible: true
         pageSizeModel: [
-            { label: qsTr('10条每页'), value: 10 },
-            { label: qsTr('20条每页'), value: 20 },
-            { label: qsTr('30条每页'), value: 30 },
-            { label: qsTr('40条每页'), value: 40 }
+            { label: qsTr('10/页'), value: 10 },
+            { label: qsTr('20/页'), value: 20 },
+            { label: qsTr('30/页'), value: 30 },
+            { label: qsTr('40/页'), value: 40 }
         ]
     }
 
@@ -190,10 +192,10 @@ Column {
         total: 500
         quickJumperVisible: true
         pageSizeModel: [
-            { label: qsTr('10条每页'), value: 10 },
-            { label: qsTr('20条每页'), value: 20 },
-            { label: qsTr('30条每页'), value: 30 },
-            { label: qsTr('40条每页'), value: 40 }
+            { label: qsTr('10/页'), value: 10 },
+            { label: qsTr('20/页'), value: 20 },
+            { label: qsTr('30/页'), value: 30 },
+            { label: qsTr('40/页'), value: 40 }
         ]
     }
 }
@@ -206,10 +208,10 @@ Column {
                     total: 500
                     quickJumperVisible: true
                     pageSizeModel: [
-                        { label: qsTr('10条每页'), value: 10 },
-                        { label: qsTr('20条每页'), value: 20 },
-                        { label: qsTr('30条每页'), value: 30 },
-                        { label: qsTr('40条每页'), value: 40 }
+                        { label: qsTr('10/页'), value: 10 },
+                        { label: qsTr('20/页'), value: 20 },
+                        { label: qsTr('30/页'), value: 30 },
+                        { label: qsTr('40/页'), value: 40 }
                     ]
                 }
 
@@ -219,10 +221,10 @@ Column {
                     total: 500
                     quickJumperVisible: true
                     pageSizeModel: [
-                        { label: qsTr('10条每页'), value: 10 },
-                        { label: qsTr('20条每页'), value: 20 },
-                        { label: qsTr('30条每页'), value: 30 },
-                        { label: qsTr('40条每页'), value: 40 }
+                        { label: qsTr('10/页'), value: 10 },
+                        { label: qsTr('20/页'), value: 20 },
+                        { label: qsTr('30/页'), value: 30 },
+                        { label: qsTr('40/页'), value: 40 }
                     ]
                 }
             }
@@ -242,10 +244,10 @@ AntPagination {
     currentPageIndex: 2
     total: 500
     pageSizeModel: [
-        { label: qsTr('10条每页'), value: 10 },
-        { label: qsTr('20条每页'), value: 20 },
-        { label: qsTr('30条每页'), value: 30 },
-        { label: qsTr('40条每页'), value: 40 }
+        { label: qsTr('10/页'), value: 10 },
+        { label: qsTr('20/页'), value: 20 },
+        { label: qsTr('30/页'), value: 30 },
+        { label: qsTr('40/页'), value: 40 }
     ]
     prevButtonDelegate: AntButton {
         text: 'Previous'
@@ -263,10 +265,10 @@ AntPagination {
                 currentPageIndex: 2
                 total: 500
                 pageSizeModel: [
-                    { label: qsTr('10条每页'), value: 10 },
-                    { label: qsTr('20条每页'), value: 20 },
-                    { label: qsTr('30条每页'), value: 30 },
-                    { label: qsTr('40条每页'), value: 40 }
+                    { label: qsTr('10/页'), value: 10 },
+                    { label: qsTr('20/页'), value: 20 },
+                    { label: qsTr('30/页'), value: 30 },
+                    { label: qsTr('40/页'), value: 40 }
                 ]
                 prevButtonDelegate: AntButton {
                     text: 'Previous'

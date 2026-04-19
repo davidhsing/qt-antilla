@@ -8,6 +8,8 @@ Item {
     property int defaultButtonWidth: 28
     property int defaultButtonHeight: 28
     property int defaultButtonSpacing: 8
+    property int defaultSelectWidth: 80
+    property int defaultInputWidth: 50
     property int currentPageIndex: 0
     property int total: 0
     property int pageTotal: pageSize > 0 ? Math.ceil(total / pageSize) : 0
@@ -16,8 +18,8 @@ Item {
     property var pageSizeModel: []
     property string prevButtonTooltip: qsTr('上一页')
     property string nextButtonTooltip: qsTr('下一页')
-    property string prevMoreTooltip: qsTr('向前5页')
-    property string nextMoreTooltip: qsTr('向后5页')
+    property string prevMoreTooltip: qsTr('前5页')
+    property string nextMoreTooltip: qsTr('后5页')
     property bool quickJumperVisible: false
     property string quickJumperPrefix: qsTr('跳至')
     property string quickJumperSuffix: ''
@@ -49,11 +51,13 @@ Item {
         }
 
         AntInput {
-            width: 48
+            width: control.defaultInputWidth
+            height: control.defaultButtonHeight
             anchors.verticalCenter: parent.verticalCenter
             horizontalAlignment: AntInput.AlignHCenter
             animationEnabled: control.animationEnabled
             enabled: control.enabled
+            inputMethodHints: Qt.ImhDigitsOnly
             validator: IntValidator { top: 99999; bottom: 0 }
             onEditingFinished: {
                 control.gotoPageIndex(parseInt(text) - 1);
@@ -132,7 +136,7 @@ Item {
         enabled: control.enabled
         colorBg: 'transparent'
         colorBorder: 'transparent'
-        text: '•••'
+        iconSource: __moreRoot.isPrev ? AntIcon.DoubleLeftOutlined : AntIcon.DoubleRightOutlined
 
         property bool iconVisible: (enabled && (down || hovered))
         property bool isPrev: false
@@ -143,17 +147,6 @@ Item {
         SequentialAnimation {
             id: __seqAnimation
             alwaysRunToEnd: true
-            ScriptAction {
-                script: {
-                    if (__moreRoot.iconVisible) {
-                        __moreRoot.text = '';
-                        __moreRoot.iconSource = __moreRoot.isPrev ? AntIcon.DoubleLeftOutlined : AntIcon.DoubleRightOutlined;
-                    } else {
-                        __moreRoot.text = '•••'
-                        __moreRoot.iconSource = 0;
-                    }
-                }
-            }
             NumberAnimation {
                 target: __moreRoot
                 property: 'opacity'
@@ -270,8 +263,10 @@ Item {
             animationEnabled: control.animationEnabled
             clearable: false
             model: control.pageSizeModel
+            width: control.defaultSelectWidth
+            height: control.defaultButtonHeight
             visible: count > 0
-            onActivated: (index) => {
+            onActivated: () => {
                 control.pageSize = currentValue;
             }
         }

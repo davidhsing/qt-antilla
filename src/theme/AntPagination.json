@@ -1,7 +1,7 @@
 {
     "__style__": {
         "fontFamily": "@fontPrimaryFamily",
-        "fontSize": "@fontPrimarySize",
+        "fontSize": "$subtract(@fontPrimarySize, 1)",
         "colorButtonText": "@colorTextPrimary",
         "colorButtonTextActive": "@colorPrimaryTextActive",
         "colorButtonTextDisabled": "@colorPrimaryTextDisabled",
