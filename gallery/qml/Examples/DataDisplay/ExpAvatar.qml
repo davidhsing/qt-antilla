@@ -34,7 +34,9 @@ textSize | enum | AntAvatar.SizeFixed | 文本大小模式(来自 AntAvatar)
 textGap | int | 4 | 文本距离两侧单位像素(文本头像时生效)
 colorBg | color | - | 背景颜色
 colorIcon | color | - | 图标颜色(图标头像时生效)
+colorIconHover | color | - | 图标悬停颜色(图标头像时生效)
 colorText | color | - |文本颜色(文本头像时生效)
+colorTextHover | color | - | 文本悬停颜色(文本头像时生效)
 radiusBg | [AntRadius](internal://AntRadius) | - | 背景圆角半径
 \n **注意** \`[iconSource/imageSource/textSource]\`只需提供一种即可
                        `)

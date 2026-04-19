@@ -25,7 +25,9 @@ Item {
     property int textGap: 4
     property color colorBg: AntTheme.Primary.colorTextQuaternary
     property color colorIcon: 'white'
+    property color colorIconHover: 'white'
     property color colorText: 'white'
+    property color colorTextHover: 'white'
     property AntRadius radiusBg: AntRadius { all: control.width / 2 }
 
     objectName: '__AntAvatar__'
@@ -51,6 +53,7 @@ Item {
                 iconSource: control.iconSource
                 iconSize: control.size * 0.7
                 colorIcon: control.colorIcon
+                colorIconHover: control.colorIconHover
             }
         }
     }
@@ -131,8 +134,9 @@ Item {
             AntText {
                 id: __textSource
                 anchors.centerIn: parent
-                color: control.colorText
                 text: control.textSource
+                color: control.colorText
+                colorTextHover: control.colorTextHover
                 smooth: true
                 font: control.textFont
 
@@ -149,12 +153,13 @@ Item {
     Loader {
         id: __loader
         sourceComponent: {
-            if (control.iconSource !== 0 && control.iconSource !== '')
+            if (control.iconSource !== 0 && control.iconSource !== '') {
                 return __iconImpl;
-            else if ((typeof control.imageSource == 'string' && control.imageSource !== '') || (typeof control.imageSource == 'object' && control.imageSource.toString() !== ''))
+            } else if ((typeof control.imageSource == 'string' && control.imageSource !== '') || (typeof control.imageSource == 'object' && control.imageSource.toString() !== '')) {
                 return __imageImpl;
-            else
+            } else {
                 return __textImpl;
+            }
         }
     }
 }
