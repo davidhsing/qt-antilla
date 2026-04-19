@@ -88,6 +88,13 @@ QtObject {
                     desc: qsTr('AntIconButton 的变体，用于将多个按钮组织成块，类似 AntRadioBlock。')
                 },
                 {
+                    key: 'AntMouseBlurArea',
+                    label: qsTr('AntMouseBlurArea 鼠标失焦区域'),
+                    source: './Examples/General/ExpMouseBlurArea.qml',
+                    addVersion: '0.7.0.0',
+                    desc: qsTr('鼠标失焦区域，用于在点击空白处时使输入框等控件失去焦点。')
+                },
+                {
                     key: 'AntMouseMoveArea',
                     label: qsTr('AntMouseMoveArea 鼠标移动区域'),
                     source: './Examples/General/ExpMouseMoveArea.qml',

@@ -162,6 +162,7 @@ qt_add_qml_module(${PROJECT_NAME}
         imports/AntDivider.qml
         imports/AntSwitch.qml
         imports/AntScrollBar.qml
+        imports/AntMouseBlurArea.qml
         imports/AntMouseMoveArea.qml
         imports/AntMouseResizeArea.qml
         imports/AntAcrylic.qml
