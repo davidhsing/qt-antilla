@@ -21,19 +21,20 @@ Item {
     property real min: 0
     property real max: 100
     property real stepSize: 1.0
-    property var initialValue: 0
+    property var initValue: 0
     property int handleCount: 0
     readonly property var value: {
-        if (__private.handlesValues.length > 0) {
-            return __private.handlesValues;
-        }
-        // For single/double handle modes, get values from the actual slider
-        if (__sliderLoader.item) {
-            if (__private.initialHandleCount === 2) {
+        // For single/double handle modes in non-editable mode, get values from the actual slider
+        if (!control.editable && __sliderLoader.item) {
+            if (__private.initHandleCount === 2) {
                 return [__sliderLoader.item.first.value, __sliderLoader.item.second.value];
             } else {
                 return [__sliderLoader.item.value];
             }
+        }
+        // For editable mode or multi-handle mode, return handlesValues
+        if (__private.handlesValues.length > 0) {
+            return __private.handlesValues;
         }
         return [0];
     }
@@ -144,14 +145,14 @@ Item {
             id: __hoverHandler
             cursorShape: control.hoverCursorShape
             // Only handle hover in multi-handle mode to avoid blocking T.Slider's drag
-            enabled: __private.initialHandleCount > 2
+            enabled: __private.initHandleCount > 2
         }
 
         TapHandler {
             id: __tapHandler
-            enabled: __private.initialHandleCount > 2
+            enabled: __private.initHandleCount > 2
             onTapped: {
-                if (__private.initialHandleCount > 2) {
+                if (__private.initHandleCount > 2) {
                     __private.selectHandle(handleIndex);
                 }
             }
@@ -165,12 +166,12 @@ Item {
             hoverEnabled: true
             acceptedButtons: Qt.NoButton
             cursorShape: control.hoverCursorShape
-            enabled: __private.initialHandleCount <= 2
+            enabled: __private.initHandleCount <= 2
             visible: enabled
         }
 
         Keys.onPressed: (event) => {
-            if (control.editable && __private.initialHandleCount > 2 && __selected && (event.key === Qt.Key_Delete || event.key === Qt.Key_Backspace)) {
+            if (control.editable && __private.initHandleCount > 2 && __selected && (event.key === Qt.Key_Delete || event.key === Qt.Key_Backspace)) {
                 __private.deleteHandle(handleIndex);
                 event.accepted = true;
             }
@@ -182,7 +183,7 @@ Item {
             active: control.handleToolTipEnabled
             visible: active
             onLoaded: item.parent = __handleItem;
-            property bool handleHovered: __private.initialHandleCount > 2 ? __hoverHandler.hovered : __hoverArea.containsMouse
+            property bool handleHovered: __private.initHandleCount > 2 ? __hoverHandler.hovered : __hoverArea.containsMouse
             property alias handlePressed: __handleItem.down
             property alias handleValue: __handleItem.__handleValue
             property int handleIndex: __handleItem.handleIndex
@@ -211,9 +212,28 @@ Item {
                 color: colorTrack
                 radius: parent.radius
 
+                // Determine mode: 0=single, 1=range, 2=multi (editable mode)
+                property int __mode: {
+                    // RangeSlider (non-editable double handle)
+                    if (slider && slider.first && slider.second && !control.editable) return 1;
+                    // Single Slider (non-editable single handle)
+                    if (slider && slider.visualPosition !== undefined && !control.editable) return 0;
+                    // Multi-handle (editable mode)
+                    if (control.editable && __private.handlesValues.length >= 2) return 2;
+                    return 0;
+                }
+
                 property real __trackX: {
                     if (control.orientation === Qt.Horizontal) {
-                        return __private.minHandleIndex >= 0 ? (__private.getHandleVisualPosition(__private.minHandleIndex) * parent.width) : 0;
+                        // RangeSlider: use first handle position
+                        if (__mode === 1) return slider.first.visualPosition * parent.width;
+                        // Single Slider: from left to handle
+                        if (__mode === 0 && slider && slider.visualPosition !== undefined) return 0;
+                        // Multi-handle: from first handle
+                        if (__mode === 2 && __private.minHandleIndex >= 0) {
+                            return __private.getHandleVisualPosition(__private.minHandleIndex) * parent.width;
+                        }
+                        return 0;
                     }
                     return 0;
                 }
@@ -221,14 +241,27 @@ Item {
                     if (control.orientation === Qt.Horizontal) {
                         return 0;
                     }
-                    return __private.maxHandleIndex >= 0 ? (__private.getHandleVisualPosition(__private.maxHandleIndex) * parent.height) : 0;
+                    // RangeSlider: from second handle to top
+                    if (__mode === 1) return slider.second.visualPosition * parent.height;
+                    // Single Slider: from top to handle
+                    if (__mode === 0 && slider && slider.visualPosition !== undefined) return slider.visualPosition * parent.height;
+                    // Multi-handle: from last handle to top
+                    if (__mode === 2 && __private.maxHandleIndex >= 0) {
+                        return __private.getHandleVisualPosition(__private.maxHandleIndex) * parent.height;
+                    }
+                    return parent.height;
                 }
                 property real __trackWidth: {
                     if (control.orientation === Qt.Horizontal) {
-                        if (__private.minHandleIndex >= 0 && __private.maxHandleIndex >= 0) {
-                            return __private.getHandleVisualPosition(__private.maxHandleIndex) * parent.width - __trackX;
+                        // RangeSlider: between first and second
+                        if (__mode === 1) return (slider.second.visualPosition - slider.first.visualPosition) * parent.width;
+                        // Single Slider: from left to handle
+                        if (__mode === 0 && slider && slider.visualPosition !== undefined) return slider.visualPosition * parent.width;
+                        // Multi-handle: between first and last
+                        if (__mode === 2 && __private.minHandleIndex >= 0 && __private.maxHandleIndex >= 0) {
+                            return (__private.getHandleVisualPosition(__private.maxHandleIndex) - __private.getHandleVisualPosition(__private.minHandleIndex)) * parent.width;
                         }
-                        return __private.singleHandleVisualPosition * parent.width;
+                        return 0;
                     }
                     return parent.width;
                 }
@@ -236,10 +269,15 @@ Item {
                     if (control.orientation === Qt.Horizontal) {
                         return parent.height;
                     }
-                    if (__private.minHandleIndex >= 0 && __private.maxHandleIndex >= 0) {
-                        return __private.getHandleVisualPosition(__private.minHandleIndex) * parent.height - __trackY;
+                    // RangeSlider: between second and first
+                    if (__mode === 1) return (slider.first.visualPosition - slider.second.visualPosition) * parent.height;
+                    // Single Slider: from handle to bottom
+                    if (__mode === 0 && slider && slider.visualPosition !== undefined) return (1.0 - slider.visualPosition) * parent.height;
+                    // Multi-handle: between last and first
+                    if (__mode === 2 && __private.minHandleIndex >= 0 && __private.maxHandleIndex >= 0) {
+                        return (__private.getHandleVisualPosition(__private.minHandleIndex) - __private.getHandleVisualPosition(__private.maxHandleIndex)) * parent.height;
                     }
-                    return (1.0 - __private.singleHandleVisualPosition) * parent.height;
+                    return 0;
                 }
 
                 Behavior on color { enabled: control.animationEnabled; ColorAnimation { duration: AntTheme.Primary.durationFast } }
@@ -255,7 +293,7 @@ Item {
 
     // Force init when component is completed to ensure proper initialization
     Component.onCompleted: {
-        if (__private.initialHandleCount > 2 && __private.handlesValues.length === 0) {
+        if (__private.initHandleCount > 2 && __private.handlesValues.length === 0) {
             __private.initHandles();
         }
     }
@@ -264,7 +302,7 @@ Item {
     Item {
         id: __multiHandleContainer
         anchors.fill: parent
-        visible: control.editable || __private.initialHandleCount > 2
+        visible: control.editable || __private.initHandleCount > 2
 
         Item {
             id: __sliderRoot
@@ -374,6 +412,13 @@ Item {
             anchors.fill: parent
             hoverEnabled: true
             acceptedButtons: Qt.LeftButton
+            onPressed: (mouse) => {
+                mouse.accepted = true;
+                // Clear selection timer when clicking on the track area
+                if (control.editable && __private.selectedIndex >= 0) {
+                    __private.selectedIndex = -1;
+                }
+            }
             onClicked: (mouse) => {
                 if (control.editable) {
                     let pos = control.orientation === Qt.Horizontal ?
@@ -388,7 +433,7 @@ Item {
 
         // Handles repeater
         Repeater {
-            model: (control.editable || __private.initialHandleCount > 2) ? __private.handlesValues.length : 0
+            model: (control.editable || __private.initHandleCount > 2) ? __private.handlesValues.length : 0
 
             Rectangle {
                 id: __handleItemMulti
@@ -417,6 +462,17 @@ Item {
                 property bool __selected: __private.selectedIndex === index
                 property real __handleValue: __private.handlesValues[index]
                 property real __visualPosition: (__handleValue - control.min) / (control.max - control.min)
+
+                // Force update when selectedIndex changes
+                Connections {
+                    target: __private
+                    function onSelectedIndexChanged() {
+                        // Trigger re-evaluation of __selected
+                        Qt.callLater(() => {
+                            // Force property update
+                        });
+                    }
+                }
                 property real __handleX: {
                     if (control.orientation === Qt.Horizontal) {
                         return __visualPosition * (__sliderRoot.availableWidth - width);
@@ -466,6 +522,8 @@ Item {
                     }
                     onPositionChanged: (mouse) => {
                         mouse.accepted = true;
+                        // Restart the timer on position change (user is still interacting)
+                        __private.startClearTimer();
                         // Use mouse position relative to the slider root (not the handle)
                         let globalMouse = mapToGlobal(mouseX, mouseY);
                         let sliderLocal = __sliderRoot.mapFromGlobal(globalMouse.x, globalMouse.y);
@@ -482,13 +540,16 @@ Item {
                 }
 
                 Keys.onPressed: (event) => {
-                    if (control.editable && __selected && (event.key === Qt.Key_Delete || event.key === Qt.Key_Backspace)) {
-                        __private.deleteHandle(handleIndex);
-                        event.accepted = true;
+                    if (control.editable && __selected) {
+                        // Restart timer on any key press if this handle is selected
+                        __private.startClearTimer();
+                        if (event.key === Qt.Key_Delete || event.key === Qt.Key_Backspace) {
+                            __private.deleteHandle(handleIndex);
+                            event.accepted = true;
+                        }
                     }
                 }
 
-                focus: __selected
                 activeFocusOnTab: true
 
                 Loader {
@@ -768,8 +829,8 @@ Item {
     Loader {
         id: __sliderLoader
         anchors.fill: parent
-        sourceComponent: (__private.initialHandleCount === 2) ? __rangeSliderComponent : __sliderComponent
-        active: __private.initialHandleCount <= 2 && !control.editable
+        sourceComponent: (__private.initHandleCount === 2) ? __rangeSliderComponent : __sliderComponent
+        active: __private.initHandleCount <= 2 && !control.editable
         visible: active
         onLoaded: __private.fromValueUpdate();
     }
@@ -780,30 +841,30 @@ Item {
     Accessible.onIncreaseAction: control.increase();
     Accessible.onDecreaseAction: control.decrease();
 
-    onInitialValueChanged: {
-        if (__private.settingInitialValue) {
+    onInitValueChanged: {
+        if (__private.settingInitValue) {
             return;
         }
-        __private.initialHandleCount = Array.isArray(initialValue) ? initialValue.length : 1;
+        __private.initHandleCount = Array.isArray(initValue) ? initValue.length : 1;
         __private.initHandles();
         __private.fromValueUpdate();
         // For editable mode with single/double handles, fromValueUpdate won't update UI
         // because __sliderLoader is not active. We need to sync handlesValues directly.
-        if (control.editable && __private.initialHandleCount <= 2) {
-            __private.handlesValues = Array.isArray(initialValue) ? initialValue.slice() : [initialValue];
+        if (control.editable && __private.initHandleCount <= 2) {
+            __private.handlesValues = Array.isArray(initValue) ? initValue.slice() : [initValue];
             __private.updateMinMaxIndices();
             control.handleCount = __private.handlesValues.length;
         }
     }
 
-    function setInitialValue(value) {
-        __private.settingInitialValue = true;
-        control.initialValue = value;
-        __private.initialHandleCount = Array.isArray(value) ? value.length : 1;
-        __private.settingInitialValue = false;
+    function setInitValue(value) {
+        __private.settingInitValue = true;
+        control.initValue = value;
+        __private.initHandleCount = Array.isArray(value) ? value.length : 1;
+        __private.settingInitValue = false;
         // For editable mode with single/double handles, sync handlesValues
         // This is needed because __sliderLoader is not active in editable mode
-        if (control.editable && __private.initialHandleCount <= 2) {
+        if (control.editable && __private.initHandleCount <= 2) {
             __private.handlesValues = Array.isArray(value) ? value.slice() : [value];
             __private.updateMinMaxIndices();
             control.handleCount = __private.handlesValues.length;
@@ -811,7 +872,7 @@ Item {
     }
 
     function increase(index = 0) {
-        if (__private.initialHandleCount > 2) {
+        if (__private.initHandleCount > 2) {
             if (index >= 0 && index < __private.handlesValues.length) {
                 let newValue = Math.min(control.max, __private.handlesValues[index] + (control.stepSize > 0 ? control.stepSize : 1));
                 __private.updateHandleValue(index, newValue);
@@ -819,7 +880,7 @@ Item {
             }
         } else {
             if (__sliderLoader.item) {
-                if (__private.initialHandleCount === 2) {
+                if (__private.initHandleCount === 2) {
                     if (index === 0) {
                         __sliderLoader.item.first.increase();
                     } else {
@@ -833,7 +894,7 @@ Item {
     }
 
     function decrease(index = 0) {
-        if (__private.initialHandleCount > 2) {
+        if (__private.initHandleCount > 2) {
             if (index >= 0 && index < __private.handlesValues.length) {
                 let newValue = Math.max(control.min, __private.handlesValues[index] - (control.stepSize > 0 ? control.stepSize : 1));
                 __private.updateHandleValue(index, newValue);
@@ -841,7 +902,7 @@ Item {
             }
         } else {
             if (__sliderLoader.item) {
-                if (__private.initialHandleCount === 2) {
+                if (__private.initHandleCount === 2) {
                     if (index === 0) {
                         __sliderLoader.item.first.decrease();
                     } else {
@@ -863,23 +924,39 @@ Item {
         property int maxHandleIndex: -1
         property real singleHandleVisualPosition: 0
         // 0: single handle, 2: double handle (RangeSlider), >2: multi-handle
-        property int initialHandleCount: Array.isArray(control.initialValue) ? control.initialValue.length : 1
+        property int initHandleCount: Array.isArray(control.initValue) ? control.initValue.length : 1
         // Create a temporary handle to get its size for mark calculations
         property Item tempHandle: Loader {
             sourceComponent: control.handleDelegate
             active: false
         }
         property real handleSize: tempHandle.item ? tempHandle.item.implicitWidth : 14
-        property bool settingInitialValue: false
+        property bool settingInitValue: false
+        property Timer __clearSelectionTimer: Timer {
+            id: __globalClearTimer
+            interval: 2000
+            repeat: false
+            onTriggered: {
+                if (control.editable && __private.selectedIndex >= 0) {
+                    __private.selectedIndex = -1;
+                }
+            }
+        }
+
+        function startClearTimer() {
+            if (control.editable) {
+                __globalClearTimer.restart();
+            }
+        }
 
         function initHandles() {
             // Clear existing handles first
             clearHandles();
-            if (Array.isArray(control.initialValue) && control.initialValue.length > 0) {
-                // Create a new array from initialValue, filtering out invalid values
+            if (Array.isArray(control.initValue) && control.initValue.length > 0) {
+                // Create a new array from initValue, filtering out invalid values
                 let newValues = [];
-                for (let i = 0; i < control.initialValue.length; i++) {
-                    let val = control.initialValue[i];
+                for (let i = 0; i < control.initValue.length; i++) {
+                    let val = control.initValue[i];
                     // Only add valid numbers
                     if (val !== undefined && val !== null && !isNaN(Number(val))) {
                         newValues.push(Number(val));
@@ -893,7 +970,7 @@ Item {
                 __private.handlesValues = newValues;
             } else {
                 // Handle non-array or empty array case
-                let val = Array.isArray(control.initialValue) ? control.initialValue[0] : control.initialValue;
+                let val = Array.isArray(control.initValue) ? control.initValue[0] : control.initValue;
                 if (val === undefined || val === null || isNaN(Number(val))) {
                     val = control.min;
                 }
@@ -904,14 +981,14 @@ Item {
         }
 
         function fromValueUpdate() {
-            if (__private.initialHandleCount > 2) {
+            if (__private.initHandleCount > 2) {
                 initHandles();
             } else {
                 if (__sliderLoader.item) {
-                    if (__private.initialHandleCount === 2) {
-                        if (Array.isArray(control.initialValue) && control.initialValue.length >= 2) {
-                            let val1 = control.initialValue[0];
-                            let val2 = control.initialValue[1];
+                    if (__private.initHandleCount === 2) {
+                        if (Array.isArray(control.initValue) && control.initValue.length >= 2) {
+                            let val1 = control.initValue[0];
+                            let val2 = control.initValue[1];
                             // Validate values
                             if (val1 === undefined || val1 === null || isNaN(Number(val1))) {
                                 val1 = control.min;
@@ -923,7 +1000,7 @@ Item {
                         }
                     } else {
                         // Single handle mode
-                        let val = Array.isArray(control.initialValue) && control.initialValue.length > 0  ? control.initialValue[0] : control.initialValue;
+                        let val = Array.isArray(control.initValue) && control.initValue.length > 0  ? control.initValue[0] : control.initValue;
                         // Validate value
                         if (val === undefined || val === null || isNaN(Number(val))) {
                             val = control.min;
@@ -1063,6 +1140,8 @@ Item {
         function selectHandle(index) {
             if (index >= 0 && index < __private.handlesValues.length) {
                 __private.selectedIndex = index;
+                // Start the clear selection timer
+                startClearTimer();
             }
         }
 
@@ -1090,7 +1169,7 @@ Item {
         }
 
         Component.onCompleted: {
-            if (__private.initialHandleCount > 2 && __private.handlesValues.length === 0) {
+            if (__private.initHandleCount > 2 && __private.handlesValues.length === 0) {
                 initHandles();
             }
         }

@@ -104,7 +104,7 @@ radiusBg | [AntRadius](internal://AntRadius) | - | 背景圆角
                             height: 30
                             min: -1
                             max: 100
-                            initialValue: -1
+                            initValue: -1
                         }
                     }
 
@@ -245,7 +245,7 @@ radiusBg | [AntRadius](internal://AntRadius) | - | 背景圆角
                         height: 30
                         min: -1
                         max: 100
-                        initialValue: -1
+                        initValue: -1
                     }
                 }
 

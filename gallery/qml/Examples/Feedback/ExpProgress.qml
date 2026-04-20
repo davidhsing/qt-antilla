@@ -583,7 +583,7 @@ Column {
             height: 30
             min: 1
             max: 100
-            initialValue: 8
+            initValue: 8
             stepSize: 1
         }
 
@@ -597,7 +597,7 @@ Column {
             height: 30
             min: 0
             max: 40
-            initialValue: 4
+            initValue: 4
             stepSize: 4
             snapMode: AntSlider.SnapAlways
         }
@@ -612,7 +612,7 @@ Column {
             height: 30
             min: 4
             max: 40
-            initialValue: 8
+            initValue: 8
             stepSize: 1
         }
     }
@@ -711,7 +711,7 @@ Column {
                         height: 30
                         min: 1
                         max: 100
-                        initialValue: 8
+                        initValue: 8
                         stepSize: 1
                     }
 
@@ -725,7 +725,7 @@ Column {
                         height: 30
                         min: 0
                         max: 40
-                        initialValue: 4
+                        initValue: 4
                         stepSize: 4
                         snapMode: AntSlider.SnapAlways
                     }
@@ -740,7 +740,7 @@ Column {
                         height: 30
                         min: 4
                         max: 40
-                        initialValue: 8
+                        initValue: 8
                         stepSize: 1
                     }
                 }

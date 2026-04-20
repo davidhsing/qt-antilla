@@ -52,7 +52,7 @@ Column {
         id: shadowOpacitySlider
         width: 150
         height: 30
-        initialValue: 1.0
+        initValue: 1.0
         min: 0.0
         max: 1.0
         stepSize: 0.1
@@ -69,7 +69,7 @@ Column {
         id: shadowScaleSlider
         width: 150
         height: 30
-        initialValue: 1.0
+        initValue: 1.0
         min: 1.0
         max: 1.5
         stepSize: 0.01
@@ -86,7 +86,7 @@ Column {
         id: shadowVerticalOffsetSlider
         width: 150
         height: 30
-        initialValue: 0
+        initValue: 0
         min: -100
         max: 100
         stepSize: 1
@@ -103,7 +103,7 @@ Column {
         id: shadowHorizontalOffsetSlider
         width: 150
         height: 30
-        initialValue: 0
+        initValue: 0
         min: -100
         max: 100
         stepSize: 1
@@ -216,7 +216,7 @@ Column {
                     id: shadowOpacitySlider
                     width: 150
                     height: 30
-                    initialValue: 0.5
+                    initValue: 0.5
                     min: 0.0
                     max: 1.0
                     stepSize: 0.1
@@ -233,7 +233,7 @@ Column {
                     id: shadowScaleSlider
                     width: 150
                     height: 30
-                    initialValue: 1.0
+                    initValue: 1.0
                     min: 1.0
                     max: 1.5
                     stepSize: 0.01
@@ -250,7 +250,7 @@ Column {
                     id: shadowVerticalOffsetSlider
                     width: 150
                     height: 30
-                    initialValue: 0
+                    initValue: 0
                     min: -100
                     max: 100
                     stepSize: 1
@@ -267,7 +267,7 @@ Column {
                     id: shadowHorizontalOffsetSlider
                     width: 150
                     height: 30
-                    initialValue: 0
+                    initValue: 0
                     min: -100
                     max: 100
                     stepSize: 1

@@ -78,7 +78,7 @@ Column {
         min: 0
         max: 20
         stepSize: 1
-        initialValue: 1
+        initValue: 1
 
         AntCopyableText {
             anchors.verticalCenter: parent.verticalCenter
@@ -191,7 +191,7 @@ Column {
                     min: 0
                     max: 20
                     stepSize: 1
-                    initialValue: 1
+                    initValue: 1
 
                     AntCopyableText {
                         anchors.verticalCenter: parent.verticalCenter

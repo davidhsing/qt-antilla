@@ -64,7 +64,7 @@ Column {
         min: 0.0
         max: 1.0
         stepSize: 0.01
-        initialValue: 0.65
+        initValue: 0.65
 
         AntCopyableText {
             anchors.verticalCenter: parent.verticalCenter
@@ -81,7 +81,7 @@ Column {
         min: 0.0
         max: 1.0
         stepSize: 0.01
-        initialValue: 0.01
+        initValue: 0.01
 
         AntCopyableText {
             anchors.verticalCenter: parent.verticalCenter
@@ -98,7 +98,7 @@ Column {
         min: 0
         max: 128
         stepSize: 1
-        initialValue: 32
+        initValue: 32
 
         AntCopyableText {
             anchors.verticalCenter: parent.verticalCenter
@@ -152,7 +152,7 @@ Column {
                     min: 0.0
                     max: 1.0
                     stepSize: 0.01
-                    initialValue: 0.65
+                    initValue: 0.65
 
                     AntCopyableText {
                         anchors.verticalCenter: parent.verticalCenter
@@ -169,7 +169,7 @@ Column {
                     min: 0.0
                     max: 1.0
                     stepSize: 0.01
-                    initialValue: 0.01
+                    initValue: 0.01
 
                     AntCopyableText {
                         anchors.verticalCenter: parent.verticalCenter
@@ -186,7 +186,7 @@ Column {
                     min: 0
                     max: 128
                     stepSize: 1
-                    initialValue: 32
+                    initValue: 32
 
                     AntCopyableText {
                         anchors.verticalCenter: parent.verticalCenter

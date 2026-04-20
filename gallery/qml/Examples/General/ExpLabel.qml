@@ -76,7 +76,7 @@ cursorShape | enumeration | Qt.ArrowCursor | 鼠标光标形状
                             height: 30
                             min: 0
                             max: 30
-                            initialValue: 4
+                            initValue: 4
                         }
                     }
 
@@ -114,7 +114,7 @@ cursorShape | enumeration | Qt.ArrowCursor | 鼠标光标形状
                         height: 30
                         min: 0
                         max: 30
-                        initialValue: 4
+                        initValue: 4
                     }
                 }
 

@@ -111,7 +111,7 @@ Column {
             height: parent.height
             min: 0
             max: 3000
-            initialValue: 1500
+            initValue: 1500
         }
 
         AntText {
@@ -229,7 +229,7 @@ Column {
                         height: parent.height
                         min: 0
                         max: 3000
-                        initialValue: 1500
+                        initValue: 1500
                     }
 
                     AntText {

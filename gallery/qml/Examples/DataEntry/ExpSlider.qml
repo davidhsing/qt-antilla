@@ -40,7 +40,7 @@ hoverCursorShape | enum | Qt.PointingHandCursor | 悬浮时鼠标形状(来自 Q
 min | real | 0 | 最小值
 max | real | 100 | 最大值
 stepSize | real | 0.0 | 步长
-initialValue | number丨[number, ...] | 0丨[0, 0] | 设置滑块初始值，支持单值、双值或多值数组。单值或长度为1的数组为单滑块模式，长度为2的数组为双滑块模式，长度大于2的数组为多滑块编辑模式
+initValue | number丨[number, ...] | 0丨[0, 0] | 设置滑块初始值，支持单值、双值或多值数组。单值或长度为1的数组为单滑块模式，长度为2的数组为双滑块模式，长度大于2的数组为多滑块编辑模式
 handleCount | (readonly)int | - | 当前滑块数量
 value | (readonly)[number, ...] | - | 获取当前滑块值，始终返回数组形式
 editable | bool | false | 是否启用滑块编辑模式
@@ -63,7 +63,7 @@ radiusBg | [AntRadius](internal://AntRadius) | - | 背景圆角半径
 ariaConstrual | string | '' | 内容描述(提高可用性)
 \n<br/>
 \n### 支持的函数：\n
-- \`setInitialValue(value)\` 重新设置初始化值\n
+- \`setInitValue(value)\` 重新设置初始化值\n
 - \`increase(index: int = 0)\` 将指定索引的滑块值增加 stepSize 或 0.1\n
 - \`decrease(index: int = 0)\` 将指定索引的滑块值减小 stepSize 或 0.1\n
 \n<br/>
@@ -94,7 +94,7 @@ ariaConstrual | string | '' | 内容描述(提高可用性)
             width: parent.width
             desc: qsTr(`
 基本滑动条。\n
-通过 \`initialValue\` 设置初始值并决定滑块模式：\n
+通过 \`initValue\` 设置初始值并决定滑块模式：\n
 - 单值或长度为1的数组：单滑块模式\n
 - 长度为2的数组：双滑块模式\n
 - 长度大于2的数组：多滑块模式\n\n
@@ -110,7 +110,7 @@ Column {
     AntSlider {
         width: 300
         height: 30
-        initialValue: 50
+        initValue: 50
         handleToolTipEnabled: true
 
         AntCopyableText {
@@ -124,7 +124,7 @@ Column {
     AntSlider {
         width: 300
         height: 30
-        initialValue: [20, 50]
+        initValue: [20, 50]
 
         AntCopyableText {
             anchors.verticalCenter: parent.verticalCenter
@@ -140,7 +140,7 @@ Column {
     AntSlider {
         width: 300
         height: 30
-        initialValue: 50
+        initValue: 50
         enabled: false
     }
 }
@@ -149,7 +149,7 @@ Column {
                 AntSlider {
                     width: 300
                     height: 30
-                    initialValue: 50
+                    initValue: 50
                     handleToolTipEnabled: true
 
                     AntCopyableText {
@@ -163,7 +163,7 @@ Column {
                 AntSlider {
                     width: 300
                     height: 30
-                    initialValue: [20, 50]
+                    initValue: [20, 50]
                     handleToolTipEnabled: true
 
                     AntCopyableText {
@@ -180,7 +180,7 @@ Column {
                 AntSlider {
                     width: 300
                     height: 30
-                    initialValue: 50
+                    initValue: 50
                     enabled: false
                 }
             }
@@ -207,7 +207,7 @@ Row {
         height: 300
         min: 0
         max: 10
-        initialValue: 5
+        initValue: 5
         markVisible: true
         orientation: Qt.Vertical
 
@@ -222,7 +222,7 @@ Row {
     AntSlider {
         width: 30
         height: 300
-        initialValue: [20, 50]
+        initValue: [20, 50]
         orientation: Qt.Vertical
 
         AntCopyableText {
@@ -246,7 +246,7 @@ Row {
                     height: 300
                     min: 0
                     max: 10
-                    initialValue: 5
+                    initValue: 5
                     markVisible: true
                     orientation: Qt.Vertical
 
@@ -261,7 +261,7 @@ Row {
                 AntSlider {
                     width: 30
                     height: 300
-                    initialValue: [20, 50]
+                    initValue: [20, 50]
                     orientation: Qt.Vertical
 
                     AntCopyableText {
@@ -422,7 +422,7 @@ Column {
         height: 30
         min: 0
         max: 20
-        initialValue: [2, 5, 8]
+        initValue: [2, 5, 8]
         danger: switcher.checked
         editable: true
         handleToolTipEnabled: true
@@ -438,7 +438,7 @@ Column {
 
     AntButton {
         text: '设置初始化值'
-        onClicked: slider.setInitialValue([1, 3]);
+        onClicked: slider.setInitValue([1, 3]);
     }
 }
             `
@@ -465,7 +465,7 @@ Column {
                     height: 30
                     min: 0
                     max: 20
-                    initialValue: [2, 5, 8]
+                    initValue: [2, 5, 8]
                     danger: switcher.checked
                     editable: true
                     handleToolTipEnabled: true
@@ -481,7 +481,7 @@ Column {
 
                 AntButton {
                     text: '重设初始化值'
-                    onClicked: slider.setInitialValue([1, 3]);
+                    onClicked: slider.setInitValue([1, 3]);
                 }
             }
         }

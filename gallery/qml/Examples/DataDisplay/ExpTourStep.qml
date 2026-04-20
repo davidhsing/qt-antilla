@@ -345,7 +345,7 @@ Column {
             height: 30
             min: 0
             max: 30
-            initialValue: 5
+            initValue: 5
             handleToolTipDelegate: AntToolTip {
                 visible: handleHovered || handlePressed
                 text: marginSlider.value[0].toFixed(0)
@@ -453,7 +453,7 @@ Column {
                         height: 30
                         min: 0
                         max: 30
-                        initialValue: 5
+                        initValue: 5
                         handleToolTipDelegate: AntToolTip {
                             visible: handleHovered || handlePressed
                             text: marginSlider.value[0].toFixed(0)
