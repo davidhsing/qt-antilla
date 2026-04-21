@@ -242,17 +242,15 @@ Item {
                 Item {
                     id: __content
                     width: __rowLayout.width + control.bgLeftPadding + control.bgRightPadding
-                    height: 0
+                    height: __rowLayout.height + control.bgTopPadding + control.bgBottomPadding
                     opacity: 0
                     clip: true
 
                     Component.onCompleted: {
                         opacity = 1;
-                        height = Qt.binding(() => __rowLayout.height + control.bgTopPadding + control.bgBottomPadding);
                     }
 
                     Behavior on opacity { enabled: control.animationEnabled; NumberAnimation { duration: AntTheme.Primary.durationMid } }
-                    Behavior on height { enabled: control.animationEnabled; NumberAnimation { duration: AntTheme.Primary.durationMid } }
 
                     Timer {
                         id: __removeTimer
