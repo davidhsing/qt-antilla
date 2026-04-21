@@ -1645,6 +1645,8 @@ public:
         DirectionsOutlined = 0xf00f,
         ScreenOutlined = 0xf010,
         CommandOutlined = 0xf011,
+        PaywallOutlined = 0xf012,
+        CashRegisterOutlined = 0xf013,
     };
     Q_ENUM(Type);
 
