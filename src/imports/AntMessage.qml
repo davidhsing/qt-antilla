@@ -10,9 +10,9 @@ Item {
 
     enum MessageType {
         TypeNone = 0,
-        TypeSuccess = 1,
-        TypeWarning = 2,
-        TypeMessage = 3,
+        TypeInfo = 1,
+        TypeSuccess = 2,
+        TypeWarning = 3,
         TypeError = 4
     }
 
@@ -150,9 +150,9 @@ Item {
                                     return __rootItem.iconSource;
                                 }
                                 switch (type) {
+                                    case AntMessage.TypeInfo: return AntIcon.InfoCircleFilled;
                                     case AntMessage.TypeSuccess: return AntIcon.CheckCircleFilled;
                                     case AntMessage.TypeWarning: return AntIcon.ExclamationCircleFilled;
-                                    case AntMessage.TypeMessage: return AntIcon.ExclamationCircleFilled;
                                     case AntMessage.TypeError: return AntIcon.CloseCircleFilled;
                                     default: return 0;
                                 }
@@ -165,9 +165,9 @@ Item {
                                     return __rootItem.colorIcon;
                                 }
                                 switch (type) {
+                                    case AntMessage.TypeInfo: return AntTheme.Primary.colorInfo;
                                     case AntMessage.TypeSuccess: return AntTheme.Primary.colorSuccess;
                                     case AntMessage.TypeWarning: return AntTheme.Primary.colorWarning;
-                                    case AntMessage.TypeMessage: return AntTheme.Primary.colorInfo;
                                     case AntMessage.TypeError: return AntTheme.Primary.colorError;
                                     default: return AntTheme.Primary.colorInfo;
                                 }
@@ -252,15 +252,15 @@ Item {
     }
 
     function info(message: string, duration = 3000): void {
-        open({
+        control.open({
             'message': message,
-            'type': AntMessage.TypeMessage,
+            'type': AntMessage.TypeInfo,
             'duration': duration
         });
     }
 
     function success(message: string, duration = 3000): void {
-        open({
+        control.open({
             'message': message,
             'type': AntMessage.TypeSuccess,
             'duration': duration
@@ -268,7 +268,7 @@ Item {
     }
 
     function error(message: string, duration = 3000): void {
-        open({
+        control.open({
             'message': message,
             'type': AntMessage.TypeError,
             'duration': duration
@@ -276,7 +276,7 @@ Item {
     }
 
     function warning(message: string, duration = 3000): void {
-        open({
+        control.open({
             'message': message,
             'type': AntMessage.TypeWarning,
             'duration': duration
@@ -284,10 +284,10 @@ Item {
     }
 
     function loading(message: string, duration = 3000): void {
-        open({
+        control.open({
             'loading': true,
             'message': message,
-            'type': AntMessage.TypeMessage,
+            'type': AntMessage.TypeInfo,
             'duration': duration
         });
     }

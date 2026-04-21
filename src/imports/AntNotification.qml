@@ -21,16 +21,16 @@ Item {
 
     enum MessageType {
         TypeNone = 0,
-        TypeSuccess = 1,
-        TypeWarning = 2,
-        TypeMessage = 3,
+        TypeInfo = 1,
+        TypeSuccess = 2,
+        TypeWarning = 3,
         TypeError = 4
     }
 
     signal closed(key: string)
 
     property bool animationEnabled: AntTheme.animationEnabled
-    property int position: AntNotification.PositionTop
+    property int position: AntNotification.PositionTopRight
     property bool pauseOnHover: true
     property bool progressVisible: false
     property bool stackMode: true
@@ -132,6 +132,9 @@ Item {
             }
             if (!object.hasOwnProperty('maxWidth')) {
                 object.maxWidth = -1;
+            }
+            if (!object.hasOwnProperty('position')) {
+                object.position = AntNotification.PositionTopRight;
             }
             return object;
         }
@@ -275,9 +278,9 @@ Item {
                                 if (__rootItem.loading) return AntIcon.LoadingOutlined;
                                 if (__rootItem.iconSource != 0) return __rootItem.iconSource;
                                 switch (type) {
+                                    case AntNotification.TypeInfo: return AntIcon.InfoCircleFilled;
                                     case AntNotification.TypeSuccess: return AntIcon.CheckCircleFilled;
                                     case AntNotification.TypeWarning: return AntIcon.ExclamationCircleFilled;
-                                    case AntNotification.TypeMessage: return AntIcon.ExclamationCircleFilled;
                                     case AntNotification.TypeError: return AntIcon.CloseCircleFilled;
                                     default: return 0;
                                 }
@@ -286,9 +289,9 @@ Item {
                                 if (__rootItem.loading) return AntTheme.Primary.colorInfo;
                                 if (__rootItem.colorIcon !== '') return __rootItem.colorIcon;
                                 switch ((type)) {
+                                    case AntNotification.TypeInfo: return AntTheme.Primary.colorInfo;
                                     case AntNotification.TypeSuccess: return AntTheme.Primary.colorSuccess;
                                     case AntNotification.TypeWarning: return AntTheme.Primary.colorWarning;
-                                    case AntNotification.TypeMessage: return AntTheme.Primary.colorInfo;
                                     case AntNotification.TypeError: return AntTheme.Primary.colorError;
                                     default: return AntTheme.Primary.colorInfo;
                                 }
@@ -373,18 +376,18 @@ Item {
         }
     }
 
-    function info(title: string, description: string, duration = 4500, maxWidth = -1) {
-        open({
+    function info(title: string, description: string, duration = 4500, maxWidth = -1): void {
+        control.open({
             'title': title,
             'description': description,
-            'type': AntNotification.TypeMessage,
+            'type': AntNotification.TypeInfo,
             'duration': duration,
             'maxWidth': maxWidth
         });
     }
 
-    function success(title: string, description: string, duration = 4500, maxWidth = -1) {
-        open({
+    function success(title: string, description: string, duration = 4500, maxWidth = -1): void {
+        control.open({
             'title': title,
             'description': description,
             'type': AntNotification.TypeSuccess,
@@ -393,8 +396,8 @@ Item {
         });
     }
 
-    function error(title: string, description: string, duration = 4500, maxWidth = -1) {
-        open({
+    function error(title: string, description: string, duration = 4500, maxWidth = -1): void {
+        control.open({
             'title': title,
             'description': description,
             'type': AntNotification.TypeError,
@@ -403,8 +406,8 @@ Item {
         });
     }
 
-    function warning(title: string, description: string, duration = 4500, maxWidth = -1) {
-        open({
+    function warning(title: string, description: string, duration = 4500, maxWidth = -1): void {
+        control.open({
             'title': title,
             'description': description,
             'type': AntNotification.TypeWarning,
@@ -413,22 +416,22 @@ Item {
         });
     }
 
-    function loading(title: string, description: string, duration = 4500, maxWidth = -1) {
-        open({
+    function loading(title: string, description: string, duration = 4500, maxWidth = -1): void {
+        control.open({
             'loading': true,
             'title': title,
             'description': description,
-            'type': AntNotification.TypeMessage,
+            'type': AntNotification.TypeInfo,
             'duration': duration,
             'maxWidth': maxWidth
         });
     }
 
-    function open(object) {
+    function open(object): void {
         __listModel.insert(0, __private.initObject(object));
     }
 
-    function close(key: string) {
+    function close(key: string): void {
         for (let i = 0; i < __listModel.count; i++) {
             const object = __listModel.get(i);
             if (object.key && object.key === key) {
@@ -440,7 +443,7 @@ Item {
         }
     }
 
-    function clear() {
+    function clear(): void {
         __listModel.clear();
     }
 
@@ -454,7 +457,7 @@ Item {
         return undefined;
     }
 
-    function setProperty(key: string, property: string, value: var) {
+    function setProperty(key: string, property: string, value: var): void {
         for (let i = 0; i < __listModel.count; i++) {
             const object = __listModel.get(i);
             if (object.key && object.key === key) {

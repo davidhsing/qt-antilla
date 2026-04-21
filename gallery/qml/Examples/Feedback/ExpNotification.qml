@@ -32,7 +32,7 @@ Flickable {
 属性名 | 类型 | 默认值 | 描述
 ------ | --- | :---: | ---
 animationEnabled | bool | AntTheme.animationEnabled | 是否开启动画
-position | enum | AntNotification.PositionTop | 通知显示的位置(来自AntNotification)
+position | enum | AntNotification.PositionTopRight | 通知显示的位置(来自AntNotification)
 pauseOnHover | bool | true | 是否悬浮暂停超时
 progressVisible | bool | false | 是否显示进度条
 stackMode | bool | true | 堆叠模式(超过stackThreshold自动堆叠)

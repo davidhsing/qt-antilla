@@ -67,8 +67,8 @@ marginExtra | [AntMargin](internal://AntMargin) | { top: 4; right: 6 } | 额外�
 \n<br/>
 \n### 枚举：
 - \`AntAlert.TypeInfo\` 信息
-- \`AntAlert.TypeWarning\` 警告
 - \`AntAlert.TypeSuccess\` 成功
+- \`AntAlert.TypeWarning\` 警告
 - \`AntAlert.TypeError\` 错误
 - \`AntAlert.DirectionLeft\` 左侧
 - \`AntAlert.DirectionRight\` 右侧

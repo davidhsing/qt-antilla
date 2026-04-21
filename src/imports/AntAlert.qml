@@ -7,8 +7,8 @@ Item {
 
     enum AlertType {
         TypeInfo = 0,
-        TypeWarning = 1,
-        TypeSuccess = 2,
+        TypeSuccess = 1,
+        TypeWarning = 2,
         TypeError = 3
     }
 
@@ -28,8 +28,8 @@ Item {
     property var iconSource: {
         switch (type) {
             case AntAlert.TypeInfo: return AntIcon.InfoCircleFilled
-            case AntAlert.TypeWarning: return AntIcon.ExclamationCircleFilled
             case AntAlert.TypeSuccess: return AntIcon.CheckCircleFilled
+            case AntAlert.TypeWarning: return AntIcon.ExclamationCircleFilled
             case AntAlert.TypeError: return AntIcon.CloseCircleFilled
             default: return AntIcon.InfoCircleFilled
         }
@@ -55,8 +55,8 @@ Item {
     property color colorBg: {
         switch (type) {
             case AntAlert.TypeInfo: return AntTheme.Primary.colorInfoBg
-            case AntAlert.TypeWarning: return AntTheme.Primary.colorWarningBg
             case AntAlert.TypeSuccess: return AntTheme.Primary.colorSuccessBg
+            case AntAlert.TypeWarning: return AntTheme.Primary.colorWarningBg
             case AntAlert.TypeError: return AntTheme.Primary.colorErrorBg
             default: return AntTheme.Primary.colorInfoBg
         }
@@ -66,8 +66,8 @@ Item {
     property color colorIcon: {
         switch (type) {
             case AntAlert.TypeInfo: return AntTheme.Primary.colorInfo
-            case AntAlert.TypeWarning: return AntTheme.Primary.colorWarning
             case AntAlert.TypeSuccess: return AntTheme.Primary.colorSuccess
+            case AntAlert.TypeWarning: return AntTheme.Primary.colorWarning
             case AntAlert.TypeError: return AntTheme.Primary.colorError
             default: return control.themeSource.colorIcon
         }
