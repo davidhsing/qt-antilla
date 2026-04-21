@@ -1637,9 +1637,14 @@ public:
         SnowflakeOutlined = 0xf007,
         PhotoOutlined = 0xf008,
         LayoutBlockOutlined = 0xf009,
-        HeartHandshakeOutlined = 0xf00A,
-        FloppyOutlined = 0xf00B,
-        BulbLightOutlined = 0xf00C,
+        HeartHandshakeOutlined = 0xf00a,
+        FloppyOutlined = 0xf00b,
+        BulbLightOutlined = 0xf00c,
+        RotateRectOutlined = 0xf00d,
+        KeyboardOutlined = 0xf00e,
+        DirectionsOutlined = 0xf00f,
+        ScreenOutlined = 0xf010,
+        CommandOutlined = 0xf011,
     };
     Q_ENUM(Type);
 
@@ -1649,5 +1654,5 @@ public:
     static Q_INVOKABLE QVariantMap allIconNames();
 
 private:
-    AntIcon(QObject* parent = nullptr);
+    explicit AntIcon(QObject* parent = nullptr);
 };
