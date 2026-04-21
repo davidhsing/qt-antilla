@@ -79,7 +79,7 @@ Rectangle {
             id: __themeButton
             height: parent.height
             iconSource: AntTheme.isDark ? AntIcon.MoonOutlined : AntIcon.SunOutlined
-            iconSize: 14
+            iconSize: AntTheme.AntCaptionButton.fontSize
             colorIcon: control.winTitleColor
             enabled: control.themeButtonEnabled
             visible: control.themeButtonVisible
@@ -94,7 +94,7 @@ Rectangle {
             id: __topButton
             height: parent.height
             iconSource: AntIcon.PushpinOutlined
-            iconSize: 14
+            iconSize: AntTheme.AntCaptionButton.fontSize
             colorIcon: control.winTitleColor
             enabled: control.topButtonEnabled
             visible: control.topButtonVisible
@@ -125,7 +125,7 @@ Rectangle {
             height: parent.height
             forceState: true
             iconSource: AntIcon.LineOutlined
-            iconSize: 14
+            iconSize: AntTheme.AntCaptionButton.fontSize
             colorIcon: control.winTitleColor
             visible: control.minimizeButtonVisible
             ariaConstrual: qsTr('最小化')
@@ -138,7 +138,7 @@ Rectangle {
             id: __maximizeButton
             height: parent.height
             forceState: true
-            iconSize: 14
+            iconSize: AntTheme.AntCaptionButton.fontSize
             colorIcon: control.winTitleColor
             visible: control.maximizeButtonVisible
             ariaConstrual: qsTr('最大化')
@@ -167,7 +167,7 @@ Rectangle {
             id: __closeButton
             height: parent.height
             iconSource: AntIcon.CloseOutlined
-            iconSize: 14
+            iconSize: AntTheme.AntCaptionButton.fontSize
             colorIcon: control.winTitleColor
             visible: control.closeButtonVisible
             forceState: true
@@ -192,7 +192,7 @@ Rectangle {
             Layout.alignment: Qt.AlignVCenter
             forceState: true
             iconSource: AntIcon.ArrowLeftOutlined
-            iconSize: AntTheme.AntCaptionButton.fontSize + 2
+            iconSize: AntTheme.AntCaptionButton.fontSize
             colorIcon: control.winTitleColor
             enabled: control.returnButtonEnabled
             visible: control.returnButtonVisible

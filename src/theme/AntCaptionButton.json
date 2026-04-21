@@ -1,6 +1,6 @@
 {
     "__style__": {
-        "fontSize": "14",
+        "fontSize": "13",
         "colorIconDisabled": "@colorPrimaryTextDisabled",
         "colorIcon": "@colorTextPrimary",
         "colorIconHover": "@colorTextPrimary",
