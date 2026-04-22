@@ -75,7 +75,7 @@ maxWidth | int | 可选 | 通知宽度
 - \`error(title: string, description: string, duration = 4500, maxWidth = -1)\` 弹出一条 \`error\` 通知。\n
 - \`warning(title: string, description: string, duration = 4500, maxWidth = -1)\` 弹出一条 \`warning\` 通知。\n
 - \`loading(title: string, description: string, duration = 4500, maxWidth = -1)\` 弹出一条 \`loading\` 通知。\n
-- \`open(object: var)\` 弹出一条通知体为 \`{object}\` 的通知。\n
+- \`open(object: var)\` 弹出一条通知体为 \`{object}\` 的通知。除上面的参数外，还支持 \`type\`, \`position\`, \`progressVisible\`, \`closable\`\n
 - \`close(key: string)\` 关闭一条通知键为 \`key\` 的通知。\n
 - \`clear()\` 清空所有通知。\n
 - \`getNotification(key: string): object\` 获取通知键为 \`key\` 的通知对象 \`object\`。\n
@@ -533,9 +533,10 @@ Row {
 
         CodeBox {
             width: parent.width
-            descTitle: qsTr('显示进度条')
+            descTitle: qsTr('进度条和自定义位置')
             desc: qsTr(`
 通过 \`progressVisible\` 属性设置是否显示进度条。\n
+通过 \`position\` 属性设置自定义位置。\n
                        `)
             code: `
 import QtQuick
@@ -556,9 +557,25 @@ Row {
     }
 
     AntButton {
-        text: 'Show progress notification'
+        text: 'Show with progress'
         onClicked: {
             notification9.info('Notification Title', 'This is a show progress notification!');
+        }
+    }
+
+    AntButton {
+        text: 'Open different position'
+        type: AntButton.TypePrimary
+        onClicked: {
+            notification9.open({
+                title: 'Notification Title',
+                description: 'This is a different position notification!',
+                type: AntNotification.TypeSuccess,
+                closable: false,
+                maxWidth: 350,
+                position: AntNotification.PositionBottomRight,
+                progressVisible: false
+            });
         }
     }
 }
@@ -576,10 +593,26 @@ Row {
                 }
 
                 AntButton {
-                    text: 'Show progress notification'
+                    text: 'Show with progress'
                     type: AntButton.TypePrimary
                     onClicked: {
                         notification9.info('Notification Title', 'This is a show progress notification!');
+                    }
+                }
+
+                AntButton {
+                    text: 'Open different position'
+                    type: AntButton.TypePrimary
+                    onClicked: {
+                        notification9.open({
+                            title: 'Notification Title',
+                            description: 'This is a different position notification!',
+                            type: AntNotification.TypeSuccess,
+                            closable: false,
+                            maxWidth: 350,
+                            position: AntNotification.PositionBottomRight,
+                            progressVisible: false
+                        });
                     }
                 }
             }
@@ -625,7 +658,7 @@ Row {
     }
 
     AntText {
-        text: 'Enabled stackMode:'
+        text: 'StackMode:'
         anchors.verticalCenter: parent.verticalCenter
     }
 
@@ -637,7 +670,7 @@ Row {
 
     AntInputNumber {
         id: stackThresholdInput
-        width: 200
+        width: 160
         anchors.verticalCenter: parent.verticalCenter
         prefix: 'Threshold: '
         value: 5
@@ -647,6 +680,7 @@ Row {
 }
             `
             exampleDelegate: Row {
+                width: parent.width
                 spacing: 10
 
                 AntNotification {
@@ -673,7 +707,7 @@ Row {
                 }
 
                 AntText {
-                    text: 'Enabled stackMode:'
+                    text: 'StackMode:'
                     anchors.verticalCenter: parent.verticalCenter
                 }
 
@@ -685,7 +719,7 @@ Row {
 
                 AntInputNumber {
                     id: stackThresholdInput
-                    width: 200
+                    width: 160
                     anchors.verticalCenter: parent.verticalCenter
                     prefix: 'Threshold: '
                     value: 5

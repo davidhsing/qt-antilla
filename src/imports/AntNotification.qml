@@ -87,18 +87,26 @@ Item {
     QtObject {
         id: __private
 
-        property bool isLeft: control.position == AntNotification.PositionLeft ||
-                              control.position == AntNotification.PositionTopLeft ||
-                              control.position == AntNotification.PositionBottomLeft
-        property bool isRight: control.position == AntNotification.PositionRight ||
-                               control.position == AntNotification.PositionTopRight ||
-                               control.position == AntNotification.PositionBottomRight
-        property bool isTop: control.position == AntNotification.PositionTop ||
-                             control.position == AntNotification.PositionTopLeft ||
-                             control.position == AntNotification.PositionTopRight
-        property bool isBottom: control.position == AntNotification.PositionBottom ||
-                                control.position == AntNotification.PositionBottomLeft ||
-                                control.position == AntNotification.PositionBottomRight
+        function isLeftPosition(position) {
+            return position == AntNotification.PositionLeft || position == AntNotification.PositionTopLeft || position == AntNotification.PositionBottomLeft;
+        }
+
+        function isRightPosition(position) {
+            return position == AntNotification.PositionRight || position == AntNotification.PositionTopRight || position == AntNotification.PositionBottomRight;
+        }
+
+        function isTopPosition(position) {
+            return position == AntNotification.PositionTop || position == AntNotification.PositionTopLeft || position == AntNotification.PositionTopRight;
+        }
+
+        function isBottomPosition(position) {
+            return position == AntNotification.PositionBottom || position == AntNotification.PositionBottomLeft || position == AntNotification.PositionBottomRight;
+        }
+
+        property bool isLeft: isLeftPosition(control.position)
+        property bool isRight: isRightPosition(control.position)
+        property bool isTop: isTopPosition(control.position)
+        property bool isBottom: isBottomPosition(control.position)
 
         function initObject(object) {
             if (!object.hasOwnProperty('key')) {
@@ -134,43 +142,212 @@ Item {
                 object.maxWidth = -1;
             }
             if (!object.hasOwnProperty('position')) {
-                object.position = AntNotification.PositionTopRight;
+                object.position = control.position;
+            }
+            if (!object.hasOwnProperty('progressVisible')) {
+                object.progressVisible = control.progressVisible;
+            }
+            if (!object.hasOwnProperty('closable')) {
+                object.closable = control.closable;
             }
             return object;
         }
     }
 
-    ColumnLayout {
-        id: __columnLayout
-        anchors {
-            left: __private.isLeft ? parent.left : undefined
-            right: __private.isRight ? parent.right : undefined
-            top: __private.isTop ? parent.top : undefined
-            bottom: __private.isBottom ? parent.bottom : undefined
-            horizontalCenter: control.position == AntNotification.PositionTop||
-                              control.position == AntNotification.PositionBottom ? parent.horizontalCenter : undefined
-            verticalCenter: control.position == AntNotification.PositionLeft ||
-                            control.position == AntNotification.PositionRight ? parent.verticalCenter : undefined
-            margins: 10
-            topMargin: control.topMargin
+    Item {
+        id: __container
+        anchors.fill: parent
+
+        property bool __hasTopNotifications: false
+        property bool __hasTopLeftNotifications: false
+        property bool __hasTopRightNotifications: false
+        property bool __hasBottomNotifications: false
+        property bool __hasBottomLeftNotifications: false
+        property bool __hasBottomRightNotifications: false
+        property bool __hasLeftNotifications: false
+        property bool __hasRightNotifications: false
+
+        function __hasPosition(position) {
+            for (let i = 0; i < __listModel.count; i++) {
+                if (__listModel.get(i).position === position) {
+                    return true;
+                }
+            }
+            return false;
         }
-        spacing: 0
+
+        function __getLocalIndex(globalIndex, position) {
+            let localIndex = 0;
+            for (let i = 0; i < globalIndex; i++) {
+                if (__listModel.get(i).position === position) {
+                    localIndex++;
+                }
+            }
+            return localIndex;
+        }
+
+        Component.onCompleted: {
+            __updatePositionVisibility();
+        }
+
+        Connections {
+            target: __listModel
+            function onCountChanged() {
+                __container.__updatePositionVisibility();
+            }
+        }
+
+        function __updatePositionVisibility() {
+            __hasTopNotifications = __hasPosition(AntNotification.PositionTop);
+            __hasTopLeftNotifications = __hasPosition(AntNotification.PositionTopLeft);
+            __hasTopRightNotifications = __hasPosition(AntNotification.PositionTopRight);
+            __hasBottomNotifications = __hasPosition(AntNotification.PositionBottom);
+            __hasBottomLeftNotifications = __hasPosition(AntNotification.PositionBottomLeft);
+            __hasBottomRightNotifications = __hasPosition(AntNotification.PositionBottomRight);
+            __hasLeftNotifications = __hasPosition(AntNotification.PositionLeft);
+            __hasRightNotifications = __hasPosition(AntNotification.PositionRight);
+        }
+
+        // 顶部容器
+        ColumnLayout {
+            id: __topLayout
+            anchors {
+                top: parent.top
+                horizontalCenter: parent.horizontalCenter
+                margins: 10
+                topMargin: control.topMargin
+            }
+            spacing: 0
+            visible: __private.isTop || parent.__hasTopNotifications
+        }
+
+        // 顶部左侧容器
+        ColumnLayout {
+            id: __topLeftLayout
+            anchors {
+                top: parent.top
+                left: parent.left
+                margins: 10
+                topMargin: control.topMargin
+            }
+            spacing: 0
+            visible: __private.isLeft || parent.__hasTopLeftNotifications
+        }
+
+        // 顶部右侧容器
+        ColumnLayout {
+            id: __topRightLayout
+            anchors {
+                top: parent.top
+                right: parent.right
+                margins: 10
+                topMargin: control.topMargin
+            }
+            spacing: 0
+            visible: __private.isRight || parent.__hasTopRightNotifications
+        }
+
+        // 底部容器
+        ColumnLayout {
+            id: __bottomLayout
+            anchors {
+                bottom: parent.bottom
+                horizontalCenter: parent.horizontalCenter
+                margins: 10
+            }
+            spacing: 0
+            visible: __private.isBottom || parent.__hasBottomNotifications
+        }
+
+        // 底部左侧容器
+        ColumnLayout {
+            id: __bottomLeftLayout
+            anchors {
+                bottom: parent.bottom
+                left: parent.left
+                margins: 10
+            }
+            spacing: 0
+            visible: __private.isLeft || parent.__hasBottomLeftNotifications
+        }
+
+        // 底部右侧容器
+        ColumnLayout {
+            id: __bottomRightLayout
+            anchors {
+                bottom: parent.bottom
+                right: parent.right
+                margins: 10
+            }
+            spacing: 0
+            visible: __private.isRight || parent.__hasBottomRightNotifications
+        }
+
+        // 左侧容器
+        ColumnLayout {
+            id: __leftLayout
+            anchors {
+                left: parent.left
+                verticalCenter: parent.verticalCenter
+                margins: 10
+            }
+            spacing: 0
+            visible: __private.isLeft || parent.__hasLeftNotifications
+        }
+
+        // 右侧容器
+        ColumnLayout {
+            id: __rightLayout
+            anchors {
+                right: parent.right
+                verticalCenter: parent.verticalCenter
+                margins: 10
+            }
+            spacing: 0
+            visible: __private.isRight || parent.__hasRightNotifications
+        }
 
         Repeater {
             id: __repeater
-
-            property bool collapsed: control.stackMode && __listModel.count > control.stackThreshold && !__hoverHandler.hovered
-
             model: ListModel { id: __listModel }
+
+            property bool collapsed: false  // 暂时禁用堆叠模式，因为多位置堆叠比较复杂
+
             delegate: Item {
                 id: __rootItem
                 z: -index
+
+                parent: {
+                    switch (position) {
+                        case AntNotification.PositionTop:
+                            return __topLayout;
+                        case AntNotification.PositionTopLeft:
+                            return __topLeftLayout;
+                        case AntNotification.PositionTopRight:
+                            return __topRightLayout;
+                        case AntNotification.PositionBottom:
+                            return __bottomLayout;
+                        case AntNotification.PositionBottomLeft:
+                            return __bottomLeftLayout;
+                        case AntNotification.PositionBottomRight:
+                            return __bottomRightLayout;
+                        case AntNotification.PositionLeft:
+                            return __leftLayout;
+                        case AntNotification.PositionRight:
+                            return __rightLayout;
+                        default:
+                            return __topRightLayout;
+                    }
+                }
+
+                property int __localIndex: __container.__getLocalIndex(index, position)
+
                 Layout.preferredWidth: __content.width
                 Layout.preferredHeight: __content.height
-                Layout.leftMargin: __private.isLeft ? (-__content.width - 20) : 0
-                Layout.rightMargin: __private.isRight ? (-__content.width - 20) : 0
-                Layout.topMargin: index == 0 ? 0 : (__repeater.collapsed ? collapseTopMargin : control.spacing)
-                Layout.alignment: __private.isLeft ? Qt.AlignLeft : Qt.AlignRight
+                Layout.leftMargin: __private.isLeftPosition(position) ? (-__content.width - 20) : 0
+                Layout.rightMargin: __private.isRightPosition(position) ? (-__content.width - 20) : 0
+                Layout.topMargin: __localIndex == 0 ? 0 : (control.stackMode && __repeater.collapsed ? collapseTopMargin : control.spacing)
+                Layout.alignment: __private.isLeftPosition(position) ? Qt.AlignLeft : Qt.AlignRight
 
                 required property int index
                 required property string key
@@ -183,7 +360,11 @@ Item {
                 required property int iconSource
                 required property string colorIcon
                 required property int maxWidth
-                property real collapseTopMargin: index == 0 ? 10 : (index == 1 || index == 2) ? (10 - __content.height) : (- __content.height)
+                required property int position
+                required property bool progressVisible
+                required property bool closable
+
+                property real collapseTopMargin: __localIndex == 0 ? 10 : (__localIndex == 1 || __localIndex == 2) ? (10 - __content.height) : (- __content.height)
 
                 function removeSelf() {
                     __content.height = 0;
@@ -191,14 +372,14 @@ Item {
                 }
 
                 NumberAnimation on Layout.leftMargin {
-                    running: control.animationEnabled && __private.isLeft
+                    running: control.animationEnabled && __private.isLeftPosition(position)
                     to: 0
                     easing.type: Easing.OutQuad
                     duration: AntTheme.Primary.durationMid
                 }
 
                 NumberAnimation on Layout.rightMargin {
-                    running: control.animationEnabled && __private.isRight
+                    running: control.animationEnabled && __private.isRightPosition(position)
                     to: 0
                     duration: AntTheme.Primary.durationMid
                 }
@@ -207,7 +388,7 @@ Item {
 
                 Timer {
                     id: __timer
-                    running: control.pauseOnHover ? !__hoverHandler.hovered : true
+                    running: control.pauseOnHover ? !__rootItem.__hovered : true
                     interval: 25
                     repeat: true
                     onTriggered: {
@@ -219,6 +400,12 @@ Item {
                     }
                     property int time: 0
                 }
+
+                HoverHandler {
+                    id: __itemHoverHandler
+                }
+
+                property bool __hovered: __itemHoverHandler.hovered
 
                 AntShadow {
                     anchors.fill: __rootItem
@@ -334,7 +521,7 @@ Item {
                         Loader {
                             Layout.alignment: Qt.AlignTop
                             Layout.topMargin: 5
-                            active: control.closable
+                            active: __rootItem.closable
                             sourceComponent: AntCaptionButton {
                                 topPadding: 2
                                 bottomPadding: 2
@@ -358,7 +545,7 @@ Item {
                         height: 2
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.bottom: parent.bottom
-                        active: control.progressVisible
+                        active: __rootItem.progressVisible
                         sourceComponent: AntProgress {
                             percent: (__rootItem.duration - __timer.time) / __rootItem.duration * 100
                             animationEnabled: false
@@ -367,10 +554,6 @@ Item {
                     }
                 }
             }
-        }
-
-        HoverHandler {
-            id: __hoverHandler
         }
     }
 
