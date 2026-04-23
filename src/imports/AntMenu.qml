@@ -23,6 +23,7 @@ Item {
     property int defaultMenuSpacing: 4
     property var defaultSelectedKey: []
     property var initModel: []
+    property bool hoverToExpand: false
     property bool keepIconPlace: true
     property bool tooltipVisible: false
     property AntMargin marginContent: AntMargin { all: 5; right: 8 }
@@ -145,39 +146,31 @@ Item {
         property var contentDelegate: null
         property var bgDelegate: null
 
-        onClicked: {
-            if (expandedVisible)
-                expanded = !expanded;
-        }
         hoverCursorShape: (isGroup && !control.compactMode) ? Qt.ArrowCursor : Qt.PointingHandCursor
         animationEnabled: control.animationEnabled
         effectEnabled: false
         colorBorder: 'transparent'
         colorText: {
-            if (enabled) {
-                if (isGroup) {
-                    return (isCurrent && control.compactMode) ? control.themeSource.colorTextActive : control.themeSource.colorTextDisabled;
-                } else {
-                    return isCurrent ? control.themeSource.colorTextActive : control.themeSource.colorText;
-                }
-            } else {
+            if (!enabled) {
                 return control.themeSource.colorTextDisabled;
             }
+            if (isGroup) {
+                return (isCurrent && control.compactMode) ? control.themeSource.colorTextActive : control.themeSource.colorTextDisabled;
+            }
+            return isCurrent ? control.themeSource.colorTextActive : control.themeSource.colorText;
         }
         colorBg: {
-            if (enabled) {
-                if (isGroup)
-                    return (isCurrent && control.compactMode) ? control.themeSource.colorBgActive : control.themeSource.colorBgDisabled;
-                else if (isCurrent)
-                    return control.themeSource.colorBgActive;
-                else if (hovered) {
-                    return control.themeSource.colorBgHover;
-                } else {
-                    return control.themeSource.colorBg;
-                }
-            } else {
+            if (!enabled) {
                 return control.themeSource.colorBgDisabled;
             }
+            if (isGroup) {
+                return (isCurrent && control.compactMode) ? control.themeSource.colorBgActive : control.themeSource.colorBgDisabled;
+            } else if (isCurrent)
+                return control.themeSource.colorBgActive;
+            else if (hovered) {
+                return control.themeSource.colorBgHover;
+            }
+            return control.themeSource.colorBg;
         }
         contentItem: Loader {
             sourceComponent: __menuButtonImpl.contentDelegate
@@ -188,6 +181,11 @@ Item {
             sourceComponent: __menuButtonImpl.bgDelegate
             property alias model: __menuButtonImpl.model
             property alias menuButton: __menuButtonImpl
+        }
+        onClicked: {
+            if (expandedVisible) {
+                expanded = !expanded;
+            }
         }
     }
 
