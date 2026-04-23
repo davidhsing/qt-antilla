@@ -47,7 +47,7 @@ AntPopup {
     property bool footerVisible: true
     property bool confirmVisible: true
     property bool cancelVisible: true
-    property int widthRevision: -40
+    property int widthRevision: -50
     property int heightRevision: 40
     property AntRadius radiusCloseBg: AntRadius { all: control.themeSource.radiusCloseBg }
     property Component bgDelegate: AntRectangleInternal {
