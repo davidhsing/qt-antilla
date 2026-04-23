@@ -109,17 +109,17 @@ Item {
         property bool isBottom: isBottomPosition(control.position)
 
         function initObject(object) {
-            if (!object.hasOwnProperty('key')) {
+            if (!object.hasOwnProperty('key') || object.key === null) {
                 object.key = '';
+            }
+            if (!object.hasOwnProperty('title') || object.title === null) {
+                object.title = '';
+            }
+            if (!object.hasOwnProperty('description') || object.description === null) {
+                object.description = '';
             }
             if (!object.hasOwnProperty('loading')) {
                 object.loading = false;
-            }
-            if (!object.hasOwnProperty('title')) {
-                object.title = '';
-            }
-            if (!object.hasOwnProperty('description')) {
-                object.description = '';
             }
             if (!object.hasOwnProperty('type')) {
                 object.type = AntNotification.TypeNone;
