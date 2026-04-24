@@ -23,7 +23,7 @@ Item {
     property int defaultMenuSpacing: 4
     property var defaultSelectedKey: []
     property var initModel: []
-    property bool hoverToExpand: false
+    property bool hoverToExpand: control.popupMode
     property bool keepIconPlace: true
     property bool tooltipVisible: false
     property AntMargin marginContent: AntMargin { all: 5; right: 8 }
