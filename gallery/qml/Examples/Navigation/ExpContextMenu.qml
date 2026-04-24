@@ -29,7 +29,6 @@ defaultMenuWidth | int | 140 | 默认菜单宽度
 defaultMenuHieght | int | 40 | 默认菜单高度
 defaultMenuSpacing | int | 4 | 默认菜单间隔
 initModel | list | [] | 初始菜单模型
-hoverToExpand | bool | true | 鼠标悬停时是否展开(二级及以下)菜单(离开时折叠)
 keepIconPlace | bool | true | 是否保留图标占位(即使没有图标)
 tooltipVisible | bool | false | 是否显示工具提示
 subMenuOffset | int | -4 | 子菜单偏移
@@ -63,7 +62,7 @@ radiusMenuBg | [AntRadius](internal://AntRadius) | - | 背景圆角半径
             width: parent.width
             desc: qsTr(`
 使用方法大致等同于 \`AntMenu\`，区别是 \`AntContextMenu\` 内建为弹窗。\n
-使用 \`hoverToExpand\` 属性来控制是否悬停展开。
+子菜单在鼠标悬停时自动展开。
                        `)
             code: `
 import QtQuick
@@ -72,13 +71,6 @@ import Antilla.Basic
 Column {
     width: parent.width
     spacing: 16
-
-    AntSwitch {
-        id: hoverExpandSwitch
-        checkedText: 'Hover Expand'
-        uncheckedText: 'Disable Hover'
-        checked: true
-    }
 
     MouseArea {
         width: parent.width
@@ -92,7 +84,7 @@ Column {
                     contextMenu.open();
                 }
             }
-    
+
         AntContextMenu {
             id: contextMenu
             initModel: [
@@ -129,10 +121,9 @@ Column {
                 { type: 'divider' },
                 { key: 'Exit', label: 'Exit', iconSource: AntIcon.IcoMoonExit, keepIconPlace: true },
             ]
-            hoverToExpand: hoverExpandSwitch.checked
-            onMenuClicked: (deep, key, keyPath, data) => copyableText.append((hoverToExpand ? 'Hover/' : '') + 'Click: ' + key);
+            onMenuClicked: (deep, key, keyPath, data) => copyableText.append('Click: ' + key);
         }
-    
+
         AntCopyableText {
             id: copyableText
             anchors.fill: parent
@@ -145,13 +136,6 @@ Column {
             exampleDelegate: Column {
                 width: parent.width
                 spacing: 16
-
-                AntSwitch {
-                    id: hoverExpandSwitch
-                    checkedText: 'Hover Expand'
-                    uncheckedText: 'Disable Hover'
-                    checked: true
-                }
 
                 MouseArea {
                     width: parent.width
@@ -201,8 +185,7 @@ Column {
                             { type: 'divider' },
                             { key: 'Exit', label: 'Exit', iconSource: AntIcon.IcoMoonExit, keepIconPlace: true },
                         ]
-                        hoverToExpand: hoverExpandSwitch.checked
-                        onMenuClicked: (deep, key, keyPath, data) => copyableText.append((hoverToExpand ? 'Hover/' : '') + 'Click: ' + key);
+                        onMenuClicked: (deep, key, keyPath, data) => copyableText.append('Hover/Click: ' + key);
                     }
 
                     AntCopyableText {
