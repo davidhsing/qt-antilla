@@ -294,7 +294,7 @@ AntWindow {
             id: galleryMenu
             anchors.left: parent.left
             anchors.top: searchComponent.bottom
-            anchors.bottom: creatorButton.top
+            anchors.bottom: bottomButtonRow.top
             borderVisible: true
             tooltipVisible: true
             defaultMenuWidth: 300
@@ -368,7 +368,7 @@ AntWindow {
         AntDivider {
             width: galleryMenu.width
             height: 1
-            anchors.bottom: creatorButton.top
+            anchors.bottom: bottomButtonRow.top
         }
 
         Loader {
@@ -392,57 +392,67 @@ AntWindow {
             sourceComponent: SettingsPage { visible: settingsLoader.visible }
         }
 
-        AntIconButton {
-            id: creatorButton
-            width: galleryMenu.width
-            height: 40
-            anchors.bottom: aboutButton.top
-            type: AntButton.TypeText
-            radiusBg.all: 0
-            text: galleryMenu.compactMode ? '' : qsTr('创建')
-            colorText: AntTheme.Primary.colorTextBase
-            iconSize: galleryMenu.defaultMenuIconSize
-            iconSource: AntIcon.PlusCircleOutlined
-            onClicked: {
-                if (!creatorLoader.active)
-                    creatorLoader.active = true;
-                creatorLoader.visible = !creatorLoader.visible;
-            }
-        }
-
-        AntIconButton {
-            id: aboutButton
-            width: galleryMenu.width
-            height: 40
-            anchors.bottom: setttingsButton.top
-            type: AntButton.TypeText
-            radiusBg.all: 0
-            text: galleryMenu.compactMode ? '' : qsTr('关于')
-            colorText: AntTheme.Primary.colorTextBase
-            iconSize: galleryMenu.defaultMenuIconSize
-            iconSource: AntIcon.UserOutlined
-            onClicked: {
-                if (!aboutLoader.active)
-                    aboutLoader.active = true;
-                aboutLoader.visible = !aboutLoader.visible;
-            }
-        }
-
-        AntIconButton {
-            id: setttingsButton
-            width: galleryMenu.width
-            height: 40
+        RowLayout {
+            id: bottomButtonRow
             anchors.bottom: parent.bottom
-            type: AntButton.TypeText
-            radiusBg.all: 0
-            text: galleryMenu.compactMode ? '' : qsTr('设置')
-            colorText: AntTheme.Primary.colorTextBase
-            iconSize: galleryMenu.defaultMenuIconSize
-            iconSource: AntIcon.SettingOutlined
-            onClicked: {
-                if (!settingsLoader.active)
-                    settingsLoader.active = true;
-                settingsLoader.visible = !settingsLoader.visible;
+            width: galleryMenu.width
+            height: 50
+
+            AntIconButton {
+                id: setttingsButton
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                Layout.preferredWidth: 100
+                type: AntButton.TypeText
+                radiusBg.all: 0
+                text: galleryMenu.compactMode ? '' : qsTr('设置')
+                colorText: AntTheme.Primary.colorTextBase
+                iconSize: galleryMenu.defaultMenuIconSize
+                iconSource: AntIcon.SettingOutlined
+                onClicked: {
+                    if (!settingsLoader.active) {
+                        settingsLoader.active = true;
+                    }
+                    settingsLoader.visible = !settingsLoader.visible;
+                }
+            }
+
+            AntIconButton {
+                id: creatorButton
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                Layout.preferredWidth: 100
+                type: AntButton.TypeText
+                radiusBg.all: 0
+                text: galleryMenu.compactMode ? '' : qsTr('创建')
+                colorText: AntTheme.Primary.colorTextBase
+                iconSize: galleryMenu.defaultMenuIconSize
+                iconSource: AntIcon.PlusCircleOutlined
+                onClicked: {
+                    if (!creatorLoader.active) {
+                        creatorLoader.active = true;
+                    }
+                    creatorLoader.visible = !creatorLoader.visible;
+                }
+            }
+
+            AntIconButton {
+                id: aboutButton
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                Layout.preferredWidth: 100
+                type: AntButton.TypeText
+                radiusBg.all: 0
+                text: galleryMenu.compactMode ? '' : qsTr('关于')
+                colorText: AntTheme.Primary.colorTextBase
+                iconSize: galleryMenu.defaultMenuIconSize
+                iconSource: AntIcon.UserOutlined
+                onClicked: {
+                    if (!aboutLoader.active) {
+                        aboutLoader.active = true;
+                    }
+                    aboutLoader.visible = !aboutLoader.visible;
+                }
             }
         }
 
