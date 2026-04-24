@@ -401,6 +401,25 @@ Item {
                     labelDelegate: __rootItem.menuLabelDelegate
                     contentDelegate: __rootItem.menuContentDelegate
                     bgDelegate: __rootItem.menuBgDelegate
+                    onHoveredChanged: {
+                        if (control.hoverToExpand && __rootItem.menuChildrenLength > 0 && hovered) {
+                            __rootItem.handleMenuClick();
+                            if (__rootItem.menuControl.compactMode || __rootItem.menuControl.popupMode) {
+                                const h = __rootItem.layerPopup.topPadding +
+                                        __rootItem.layerPopup.bottomPadding +
+                                        __childrenListView.realHeight + 6;
+                                const pos = mapToItem(null, 0, 0);
+                                const pos2 = mapToItem(__rootItem.menuControl, 0, 0);
+                                if ((pos.y + h) > __private.window.height) {
+                                    __rootItem.layerPopup.y = Math.max(0, pos2.y - ((pos.y + h) - __private.window.height));
+                                } else {
+                                    __rootItem.layerPopup.y = pos2.y;
+                                }
+                                __rootItem.layerPopup.current = __childrenListView;
+                                __rootItem.layerPopup.open();
+                            }
+                        }
+                    }
                     onClicked: {
                         __rootItem.handleMenuClick();
                         if (__rootItem.menuChildrenLength == 0) {
@@ -514,9 +533,45 @@ Item {
             /*! 为每一层创建一个弹窗 */
             if (popupList[deep] === undefined) {
                 let parentPopup = deep > 0 ? popupList[deep - 1] : null;
-                popupList[deep] = __popupComponent.createObject(control, { parentPopup: parentPopup });
+                popupList[deep] = __popupComponent.createObject(control, {
+                    parentPopup: parentPopup,
+                    deep: deep
+                });
             }
             return popupList[deep];
+        }
+
+        // 获取指定 popup 的子 popup
+        function getChildPopup(popup) {
+            if (!popup) return null;
+            let popupDeep = popup.deep;
+            if (popupDeep !== undefined && popupList[popupDeep + 1] !== undefined) {
+                // 检查下一个层级的 popup 是否以当前 popup 为父级
+                let childPopup = popupList[popupDeep + 1];
+                if (childPopup.parentPopup === popup) {
+                    return childPopup;
+                }
+            }
+            return null;
+        }
+
+        // 检查是否有任何一个 popup 被 hover
+        function hasAnyPopupHovered() {
+            for (let i = 0; i < popupList.length; i++) {
+                if (popupList[i] && popupList[i].popupHoverHandler && popupList[i].popupHoverHandler.hovered) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // 关闭所有子菜单（包括 deep >= 0 的所有 popup）
+        function closeAllSubMenus() {
+            for (let i = 0; i < popupList.length; i++) {
+                if (popupList[i]) {
+                    popupList[i].close();
+                }
+            }
         }
 
         // 检查直接下级菜单项是否有图标的函数（不递归）  
@@ -559,7 +614,38 @@ Item {
             padding: 5
             animationEnabled: control.animationEnabled
             radiusBg: control.radiusPopupBg
-            contentItem: Item { clip: true }
+            contentItem: Item {
+                clip: true
+
+                HoverHandler {
+                    id: __popupHoverHandler
+                }
+
+                Timer {
+                    id: __hoverTimer
+                    interval: 100
+                    onTriggered: {
+                        if (control.hoverToExpand && !__popupHoverHandler.hovered) {
+                            // 检查是否有任何一个 popup 被 hover
+                            if (!__private.hasAnyPopupHovered()) {
+                                // 没有任何 popup 被鼠标 hover，关闭所有子菜单（deep > 0）
+                                __private.closeAllSubMenus();
+                            }
+                        }
+                    }
+                }
+
+                Connections {
+                    target: __popupHoverHandler
+                    function onHoveredChanged() {
+                        if (!__popupHoverHandler.hovered) {
+                            __hoverTimer.restart();
+                        } else {
+                            __hoverTimer.stop();
+                        }
+                    }
+                }
+            }
             onAboutToShow: {
                 let toX = control.width + control.popupOffset;
                 if (parentPopup) {
@@ -578,12 +664,22 @@ Item {
             }
             property var current: null
             property var parentPopup: null
+            property int deep: -1
+            property alias popupHoverHandler: __popupHoverHandler
             function closeWithParent() {
                 close();
                 let p = parentPopup;
                 while (p) {
                     p.close();
                     p = p.parentPopup;
+                }
+            }
+            function closeWithChildren() {
+                close();
+                let childPopup = __private.getChildPopup(this);
+                while (childPopup) {
+                    childPopup.close();
+                    childPopup = __private.getChildPopup(childPopup);
                 }
             }
         }

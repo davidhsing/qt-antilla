@@ -78,6 +78,7 @@ defaultMenuHieght | int | 40 | 默认菜单高度
 defaultMenuSpacing | int | 4 | 默认菜单间隔
 defaultSelectedKey | list | [] | 初始选中的菜单项 key 数组
 initModel | list | [] | 初始菜单模型
+hoverToExpand | bool | false | 鼠标悬停时是否展开(二级及以下)菜单(离开时折叠)
 keepIconPlace | bool | true | 是否保留图标占位(即使没有图标)
 tooltipVisible | bool | false | 是否显示工具提示
 marginContent | [AntMargin](internal://AntMargin) | { all: 5; right: 8 } | 内容区边距

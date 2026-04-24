@@ -15,6 +15,7 @@ AntPopup {
     property int defaultMenuSpacing: 4
     property int subMenuOffset: -4
     property var initModel: []
+    property bool hoverToExpand: true
     property bool keepIconPlace: true
     property bool tooltipVisible: false
     property AntRadius radiusMenuBg: AntRadius { all: AntTheme.Primary.radiusPrimary }
@@ -71,14 +72,14 @@ AntPopup {
         defaultMenuWidth: control.defaultMenuWidth
         defaultMenuHeight: control.defaultMenuHeight
         defaultMenuSpacing: control.defaultMenuSpacing
+        hoverToExpand: control.hoverToExpand
         keepIconPlace: control.keepIconPlace
-        onMenuClicked:
-            (deep, key, keyPath, data) => {
-                control.menuClicked(deep, key, keyPath, data);
-                if (!data.hasOwnProperty('children')) {
-                    close();
-                }
+        onMenuClicked: (deep, key, keyPath, data) => {
+            control.menuClicked(deep, key, keyPath, data);
+            if (!data.hasOwnProperty('children')) {
+                close();
             }
+        }
         menuIconDelegate: AntIconText {
             iconSize: menuButton.iconSize
             iconSource: menuButton.iconSource
