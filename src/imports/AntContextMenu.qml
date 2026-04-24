@@ -58,6 +58,7 @@ AntPopup {
         }
     }
     contentItem: AntMenu {
+        id: menu
         clip: true
         transformOrigin: Item.Top
         scale: 1.0

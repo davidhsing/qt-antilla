@@ -419,33 +419,37 @@ Item {
                     bgDelegate: __rootItem.menuBgDelegate
                     onHoveredChanged: {
                         if (control.hoverToExpand) {
-                            if (__rootItem.menuChildrenLength > 0 && hovered) {
-                                // 鼠标进入有子菜单的项，关闭比当前层级更深的所有菜单
-                                __private.closeInactiveMenus(view.menuDeep);
+                            if (hovered) {
                                 // 更新当前悬停项
                                 __private.hoveredMenuItem = __rootItem;
-                                __rootItem.handleMenuClick();
-                                if (__rootItem.menuControl.compactMode || __rootItem.menuControl.popupMode) {
-                                    const h = __rootItem.layerPopup.topPadding +
-                                            __rootItem.layerPopup.bottomPadding +
-                                            __childrenListView.realHeight + 6;
-                                    const pos = mapToItem(null, 0, 0);
-                                    const pos2 = mapToItem(__rootItem.menuControl, 0, 0);
-                                    if ((pos.y + h) > __private.window.height) {
-                                        __rootItem.layerPopup.y = Math.max(0, pos2.y - ((pos.y + h) - __private.window.height));
-                                    } else {
-                                        __rootItem.layerPopup.y = pos2.y;
+                                if (__rootItem.menuChildrenLength > 0) {
+                                    // 鼠标进入有子菜单的项，关闭比当前层级更深的所有菜单
+                                    __private.closeInactiveMenus(view.menuDeep);
+                                    __rootItem.handleMenuClick();
+                                    if (__rootItem.menuControl.compactMode || __rootItem.menuControl.popupMode) {
+                                        const h = __rootItem.layerPopup.topPadding +
+                                                __rootItem.layerPopup.bottomPadding +
+                                                __childrenListView.realHeight + 6;
+                                        const pos = mapToItem(null, 0, 0);
+                                        const pos2 = mapToItem(__rootItem.menuControl, 0, 0);
+                                        if ((pos.y + h) > __private.window.height) {
+                                            __rootItem.layerPopup.y = Math.max(0, pos2.y - ((pos.y + h) - __private.window.height));
+                                        } else {
+                                            __rootItem.layerPopup.y = pos2.y;
+                                        }
+                                        __rootItem.layerPopup.current = __childrenListView;
+                                        __rootItem.layerPopup.open();
                                     }
-                                    __rootItem.layerPopup.current = __childrenListView;
-                                    __rootItem.layerPopup.open();
+                                } else {
+                                    // 鼠标进入没有子菜单的项
+                                    // popupList[i] 对应的是 menuDeep = i+1 的菜单项打开的子菜单
+                                    // 所以要关闭从当前层级的子菜单开始的所有 popup
+                                    __private.closeInactiveMenus(view.menuDeep - 1);
                                 }
-                            } else if (hovered && __rootItem.menuChildrenLength === 0) {
-                                // 鼠标进入没有子菜单的项
-                                // popupList[i] 对应的是 menuDeep = i+1 的菜单项打开的子菜单
-                                // 所以要关闭从当前层级的子菜单开始的所有 popup
-                                __private.closeInactiveMenus(view.menuDeep - 1);
-                            } else if (!hovered) {
-                                // 鼠标离开当前项，延迟检查是否关闭子菜单
+                            } else if (!hovered && __private.hoveredMenuItem === __rootItem) {
+                                // 鼠标离开当前项，且当前项是悬停项，清除悬停项
+                                __private.hoveredMenuItem = null;
+                                // 延迟检查是否关闭子菜单
                                 if (__rootItem.layerPopup && __rootItem.layerPopup.opened && __rootItem.__hoverExitTimer) {
                                     // 停止之前的 timer（如果有）
                                     __rootItem.__hoverExitTimer.stop();
@@ -565,6 +569,29 @@ Item {
         property bool hasDirectIcon: false
         property var hoveredMenuItem: null  // 当前鼠标悬停的菜单项
         property var activeMenuPath: []    // 当前激活的菜单路径（每个元素是菜单项的 key）
+
+        Timer {
+            id: __hoverExitTimer
+            interval: 100
+            onTriggered: {
+                if (control.hoverToExpand && !__private.hoveredMenuItem) {
+                    // 鼠标没有悬停在任何菜单项上，关闭所有子菜单
+                    __private.closeAllSubMenus();
+                }
+            }
+        }
+
+        onHoveredMenuItemChanged: {
+            if (control.hoverToExpand) {
+                if (!hoveredMenuItem) {
+                    // 鼠标离开了所有菜单项，启动定时器关闭子菜单
+                    __hoverExitTimer.restart();
+                } else {
+                    // 鼠标悬停在某个菜单项上，停止定时器
+                    __hoverExitTimer.stop();
+                }
+            }
+        }
 
         function createPopupList(deep) {
             /*! 为每一层创建一个弹窗 */
@@ -877,5 +904,9 @@ Item {
     function clear() {
         __private.gotoMenuKey = '';
         __listView.model = [];
+    }
+
+    function closeAllSubMenus() {
+        __private.closeAllSubMenus();
     }
 }
