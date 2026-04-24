@@ -74,7 +74,7 @@ Item {
             x: menuButton.iconStart
             anchors.verticalCenter: parent.verticalCenter
             sourceComponent: menuButton.iconDelegate
-            active: control.keepIconPlace || __private.hasDirectIcon
+            active: menuButton.keepIconPlace || __private.hasDirectIcon
             visible: active
             property var model: __menuButton.model
             property alias menuButton: __menuContentItem.__menuButton
@@ -82,8 +82,8 @@ Item {
 
         Loader {
             id: __labelLoader
-            anchors.left: (control.keepIconPlace || __private.hasDirectIcon) ? __iconLoader.right : parent.left
-            anchors.leftMargin: (control.keepIconPlace || __private.hasDirectIcon) ? menuButton.iconSpacing : 0
+            anchors.left: (menuButton.keepIconPlace || __private.hasDirectIcon) ? __iconLoader.right : parent.left
+            anchors.leftMargin: (menuButton.keepIconPlace || __private.hasDirectIcon) ? menuButton.iconSpacing : 0
             anchors.right: menuButton.expandedVisible ? __expandedIcon.left : parent.right
             anchors.rightMargin: menuButton.iconSpacing
             anchors.verticalCenter: parent.verticalCenter
@@ -140,6 +140,7 @@ Item {
         property bool expandedVisible: false
         property bool isCurrent: false
         property bool isGroup: false
+        property bool keepIconPlace: false
         property var model: undefined
         property var iconDelegate: null
         property var labelDelegate: null
@@ -260,12 +261,26 @@ Item {
             property var menuLabelDelegate: model.labelDelegate ?? control.menuLabelDelegate
             property var menuContentDelegate: model.contentDelegate ?? control.menuContentDelegate
             property var menuBgDelegate: model.bgDelegate ?? control.menuBgDelegate
+            property bool menuKeepIconPlace: model.keepIconPlace !== undefined ? model.keepIconPlace : control.keepIconPlace
 
             property var parentMenu: view.menuDeep === 0 ? null : view.parentMenu
             property var keyPath: parentMenu ? [...parentMenu.keyPath, menuKey] : [menuKey]
             property bool isCurrent: __private.selectedItem === __rootItem || isCurrentParent
             property bool isCurrentParent: false
             property var layerPopup: null
+
+            Timer {
+                id: __hoverExitTimer
+                interval: 100
+                onTriggered: {
+                    // 检查是否鼠标进入了子菜单 popup
+                    if (__rootItem.layerPopup && __rootItem.layerPopup.popupHoverHandler &&
+                        !__rootItem.layerPopup.popupHoverHandler.hovered) {
+                        // 鼠标没有进入子菜单，关闭子菜单
+                        __rootItem.layerPopup.close();
+                    }
+                }
+            }
 
             function handleMenuClick() {
                 control.menuClicked(view.menuDeep, menuKey, keyPath, model);
@@ -387,6 +402,7 @@ Item {
                     iconSource: __rootItem.menuIconSource
                     iconSpacing: __rootItem.menuIconSpacing
                     iconStart: (control.compactMode && __rootItem.view.menuDeep === 0) ? (width - iconSize - leftPadding - rightPadding) / 2 : 0
+                    keepIconPlace: __rootItem.menuKeepIconPlace
                     expandedVisible: {
                         if (__rootItem.menuType == 'group' ||
                                 (control.compactMode && __rootItem.view.menuDeep === 0))
@@ -402,21 +418,38 @@ Item {
                     contentDelegate: __rootItem.menuContentDelegate
                     bgDelegate: __rootItem.menuBgDelegate
                     onHoveredChanged: {
-                        if (control.hoverToExpand && __rootItem.menuChildrenLength > 0 && hovered) {
-                            __rootItem.handleMenuClick();
-                            if (__rootItem.menuControl.compactMode || __rootItem.menuControl.popupMode) {
-                                const h = __rootItem.layerPopup.topPadding +
-                                        __rootItem.layerPopup.bottomPadding +
-                                        __childrenListView.realHeight + 6;
-                                const pos = mapToItem(null, 0, 0);
-                                const pos2 = mapToItem(__rootItem.menuControl, 0, 0);
-                                if ((pos.y + h) > __private.window.height) {
-                                    __rootItem.layerPopup.y = Math.max(0, pos2.y - ((pos.y + h) - __private.window.height));
-                                } else {
-                                    __rootItem.layerPopup.y = pos2.y;
+                        if (control.hoverToExpand) {
+                            if (__rootItem.menuChildrenLength > 0 && hovered) {
+                                // 鼠标进入有子菜单的项，关闭比当前层级更深的所有菜单
+                                __private.closeInactiveMenus(view.menuDeep);
+                                // 更新当前悬停项
+                                __private.hoveredMenuItem = __rootItem;
+                                __rootItem.handleMenuClick();
+                                if (__rootItem.menuControl.compactMode || __rootItem.menuControl.popupMode) {
+                                    const h = __rootItem.layerPopup.topPadding +
+                                            __rootItem.layerPopup.bottomPadding +
+                                            __childrenListView.realHeight + 6;
+                                    const pos = mapToItem(null, 0, 0);
+                                    const pos2 = mapToItem(__rootItem.menuControl, 0, 0);
+                                    if ((pos.y + h) > __private.window.height) {
+                                        __rootItem.layerPopup.y = Math.max(0, pos2.y - ((pos.y + h) - __private.window.height));
+                                    } else {
+                                        __rootItem.layerPopup.y = pos2.y;
+                                    }
+                                    __rootItem.layerPopup.current = __childrenListView;
+                                    __rootItem.layerPopup.open();
                                 }
-                                __rootItem.layerPopup.current = __childrenListView;
-                                __rootItem.layerPopup.open();
+                            } else if (hovered && __rootItem.menuChildrenLength === 0 && view.menuDeep === 0) {
+                                // 鼠标进入一级菜单中没有子菜单的项，关闭所有已打开的子菜单
+                                __private.closeAllSubMenus();
+                            } else if (!hovered) {
+                                // 鼠标离开当前项，延迟检查是否关闭子菜单
+                                if (__rootItem.layerPopup && __rootItem.layerPopup.opened && __rootItem.__hoverExitTimer) {
+                                    // 停止之前的 timer（如果有）
+                                    __rootItem.__hoverExitTimer.stop();
+                                    // 启动延迟检查，给用户时间移动到子菜单
+                                    __rootItem.__hoverExitTimer.restart();
+                                }
                             }
                         }
                     }
@@ -528,6 +561,8 @@ Item {
         property var selectedItem: null
         property var popupList: []
         property bool hasDirectIcon: false
+        property var hoveredMenuItem: null  // 当前鼠标悬停的菜单项
+        property var activeMenuPath: []    // 当前激活的菜单路径（每个元素是菜单项的 key）
 
         function createPopupList(deep) {
             /*! 为每一层创建一个弹窗 */
@@ -568,6 +603,15 @@ Item {
         // 关闭所有子菜单（包括 deep >= 0 的所有 popup）
         function closeAllSubMenus() {
             for (let i = 0; i < popupList.length; i++) {
+                if (popupList[i]) {
+                    popupList[i].close();
+                }
+            }
+        }
+
+        // 关闭不在激活路径上的菜单
+        function closeInactiveMenus(keepDeep) {
+            for (let i = keepDeep + 1; i < popupList.length; i++) {
                 if (popupList[i]) {
                     popupList[i].close();
                 }

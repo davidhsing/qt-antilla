@@ -113,7 +113,7 @@ AntPopup {
                 x: menuButton.iconStart
                 anchors.verticalCenter: parent.verticalCenter
                 sourceComponent: menuButton.iconDelegate
-                active: control.keepIconPlace || __private.hasDirectIcon
+                active: menuButton.keepIconPlace || __private.hasDirectIcon
                 visible: active
                 property var model: __menuButton.model
                 property alias menuButton: __menuContentItem.__menuButton
@@ -121,8 +121,8 @@ AntPopup {
 
             Loader {
                 id: __labelLoader
-                anchors.left: (control.keepIconPlace || __private.hasDirectIcon) ? __iconLoader.right : parent.left
-                anchors.leftMargin: (control.keepIconPlace || __private.hasDirectIcon) ? menuButton.iconSpacing : 0
+                anchors.left: (menuButton.keepIconPlace || __private.hasDirectIcon) ? __iconLoader.right : parent.left
+                anchors.leftMargin: (menuButton.keepIconPlace || __private.hasDirectIcon) ? menuButton.iconSpacing : 0
                 anchors.right: menuButton.expandedVisible ? __expandedIcon.left : parent.right
                 anchors.rightMargin: menuButton.iconSpacing
                 anchors.verticalCenter: parent.verticalCenter

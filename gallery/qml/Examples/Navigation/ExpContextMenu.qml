@@ -101,23 +101,33 @@ Column {
                     label: 'New',
                     iconSource: AntIcon.FileOutlined,
                     children: [
-                        { key: 'NewFolder', label: 'Folder', },
-                        { key: 'NewImage', label: 'Image File', },
-                        { key: 'NewText', label: 'Text File', },
+                        { key: 'NewFolder', label: 'Folder', keepIconPlace: false },
+                        { key: 'NewImage', label: 'Image File', keepIconPlace: false },
+                        { key: 'NewText', label: 'Text File', keepIconPlace: false },
                         {
                             key: 'NewText',
                             label: 'Other',
+                            keepIconPlace: false,
                             children: [
-                                { key: 'Other1', label: 'Other1', },
-                                { key: 'Other2', label: 'Other2', },
+                                { key: 'Other1', label: 'Other1', keepIconPlace: false },
+                                { key: 'Other2', label: 'Other2', keepIconPlace: false },
                             ]
                         }
                     ]
                 },
-                { key: 'Open', label: 'Open', iconSource: AntIcon.FormOutlined, },
-                { key: 'Save', label: 'Save', iconSource: AntIcon.SaveOutlined },
+                {
+                    key: 'Open',
+                    label: 'Open',
+                    iconSource: AntIcon.FormOutlined,
+                    children: [
+                        { key: 'OpenFolder', label: 'Folder', keepIconPlace: false },
+                        { key: 'OpenImage', label: 'Image File', keepIconPlace: false },
+                        { key: 'OpenText', label: 'Text File', keepIconPlace: false },
+                    ]
+                },
+                { key: 'Save', label: 'Save', iconSource: AntIcon.SaveOutlined, keepIconPlace: true },
                 { type: 'divider' },
-                { key: 'Exit', label: 'Exit', iconSource: AntIcon.IcoMoonExit },
+                { key: 'Exit', label: 'Exit', iconSource: AntIcon.IcoMoonExit, keepIconPlace: true },
             ]
             hoverToExpand: hoverExpandSwitch.checked
             onMenuClicked: (deep, key, keyPath, data) => copyableText.append((hoverToExpand ? 'Hover/' : '') + 'Click: ' + key);
@@ -163,23 +173,33 @@ Column {
                                 label: 'New',
                                 iconSource: AntIcon.FileOutlined,
                                 children: [
-                                    { key: 'NewFolder', label: 'Folder', },
-                                    { key: 'NewImage', label: 'Image File', },
-                                    { key: 'NewText', label: 'Text File', },
+                                    { key: 'NewFolder', label: 'Folder', keepIconPlace: false },
+                                    { key: 'NewImage', label: 'Image File', keepIconPlace: false },
+                                    { key: 'NewText', label: 'Text File', keepIconPlace: false },
                                     {
                                         key: 'NewText',
                                         label: 'Other',
+                                        keepIconPlace: false,
                                         children: [
-                                            { key: 'Other1', label: 'Other1', },
-                                            { key: 'Other2', label: 'Other2', },
+                                            { key: 'Other1', label: 'Other1', keepIconPlace: false },
+                                            { key: 'Other2', label: 'Other2', keepIconPlace: false },
                                         ]
                                     }
                                 ]
                             },
-                            { key: 'Open', label: 'Open', iconSource: AntIcon.FormOutlined, },
-                            { key: 'Save', label: 'Save', iconSource: AntIcon.SaveOutlined },
+                            {
+                                key: 'Open',
+                                label: 'Open',
+                                iconSource: AntIcon.FormOutlined,
+                                children: [
+                                    { key: 'OpenFolder', label: 'Folder', keepIconPlace: false },
+                                    { key: 'OpenImage', label: 'Image File', keepIconPlace: false },
+                                    { key: 'OpenText', label: 'Text File', keepIconPlace: false },
+                                ]
+                            },
+                            { key: 'Save', label: 'Save', iconSource: AntIcon.SaveOutlined, keepIconPlace: true },
                             { type: 'divider' },
-                            { key: 'Exit', label: 'Exit', iconSource: AntIcon.IcoMoonExit },
+                            { key: 'Exit', label: 'Exit', iconSource: AntIcon.IcoMoonExit, keepIconPlace: true },
                         ]
                         hoverToExpand: hoverExpandSwitch.checked
                         onMenuClicked: (deep, key, keyPath, data) => copyableText.append((hoverToExpand ? 'Hover/' : '') + 'Click: ' + key);
