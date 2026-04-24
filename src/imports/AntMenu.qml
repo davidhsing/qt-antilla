@@ -439,9 +439,11 @@ Item {
                                     __rootItem.layerPopup.current = __childrenListView;
                                     __rootItem.layerPopup.open();
                                 }
-                            } else if (hovered && __rootItem.menuChildrenLength === 0 && view.menuDeep === 0) {
-                                // 鼠标进入一级菜单中没有子菜单的项，关闭所有已打开的子菜单
-                                __private.closeAllSubMenus();
+                            } else if (hovered && __rootItem.menuChildrenLength === 0) {
+                                // 鼠标进入没有子菜单的项
+                                // popupList[i] 对应的是 menuDeep = i+1 的菜单项打开的子菜单
+                                // 所以要关闭从当前层级的子菜单开始的所有 popup
+                                __private.closeInactiveMenus(view.menuDeep - 1);
                             } else if (!hovered) {
                                 // 鼠标离开当前项，延迟检查是否关闭子菜单
                                 if (__rootItem.layerPopup && __rootItem.layerPopup.opened && __rootItem.__hoverExitTimer) {
