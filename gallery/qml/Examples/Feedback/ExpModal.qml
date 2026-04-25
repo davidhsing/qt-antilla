@@ -53,8 +53,10 @@ iconVisible | bool | - | 图标是否可见
 titleVisible | bool | - | 标题是否可见
 descriptionVisible | bool | - | 描述是否可见
 footerVisible | bool | true | 页脚是否可见
+confirmDanger | bool | false | 确认按钮是否为警示状态
 confirmType | int | AntButton.TypePrimary | 确认按钮类型(来自 AntButton)
 confirmVisible | bool | true | 确认按钮是否可见
+cancelDanger | bool | false | 取消按钮是否为警示状态
 cancelType | int | AntButton.TypeDefault | 取消按钮类型(来自 AntButton)
 cancelVisible | bool | true | 取消按钮是否可见
 widthRevision | int | -40 | 内容区宽度修正

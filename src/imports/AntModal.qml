@@ -45,8 +45,10 @@ AntPopup {
     property bool titleVisible: !!control.titleText
     property bool descriptionVisible: !!control.descriptionText
     property bool footerVisible: true
+    property bool confirmDanger: false
     property int confirmType: AntButton.TypePrimary
     property bool confirmVisible: true
+    property bool cancelDanger: false
     property int cancelType: AntButton.TypeDefault
     property bool cancelVisible: true
     property int widthRevision: -50
@@ -96,6 +98,7 @@ AntPopup {
     property Component confirmDelegate: AntButton {
         animationEnabled: control.animationEnabled
         text: control.confirmText
+        danger: control.confirmDanger
         type: control.confirmType
         visible: !!control.confirmText
         onClicked: control.confirmed();
@@ -103,6 +106,7 @@ AntPopup {
     property Component cancelDelegate: AntButton {
         animationEnabled: control.animationEnabled
         text: control.cancelText
+        danger: control.cancelDanger
         type: control.cancelType
         visible: !!control.cancelText
         onClicked: control.canceled();
