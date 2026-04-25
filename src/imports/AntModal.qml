@@ -20,7 +20,7 @@ AntPopup {
     property int position: AntModal.PositionCenter
     property int positionMargin: 120
     property bool closable: true
-    property bool maskClosable: true
+    property bool maskClosable: !control.modal
     property var iconSource: 0 || ''
     property int iconSize: 24
     property string titleText: ''
@@ -45,7 +45,9 @@ AntPopup {
     property bool titleVisible: !!control.titleText
     property bool descriptionVisible: !!control.descriptionText
     property bool footerVisible: true
+    property int confirmType: AntButton.TypePrimary
     property bool confirmVisible: true
+    property int cancelType: AntButton.TypeDefault
     property bool cancelVisible: true
     property int widthRevision: -50
     property int heightRevision: 40
@@ -94,14 +96,14 @@ AntPopup {
     property Component confirmDelegate: AntButton {
         animationEnabled: control.animationEnabled
         text: control.confirmText
-        type: AntButton.TypePrimary
+        type: control.confirmType
         visible: !!control.confirmText
         onClicked: control.confirmed();
     }
     property Component cancelDelegate: AntButton {
         animationEnabled: control.animationEnabled
         text: control.cancelText
-        type: AntButton.TypeDefault
+        type: control.cancelType
         visible: !!control.cancelText
         onClicked: control.canceled();
     }
@@ -220,7 +222,7 @@ AntPopup {
     implicitHeight: implicitBackgroundHeight + topInset + bottomInset
     modal: true
     focus: true
-    closePolicy: maskClosable ? T.Popup.CloseOnEscape | T.Popup.CloseOnPressOutside : T.Popup.NoAutoClose
+    closePolicy: control.maskClosable ? T.Popup.CloseOnEscape | T.Popup.CloseOnPressOutside : T.Popup.NoAutoClose
     enter: Transition {
         NumberAnimation {
             property: 'scale'
