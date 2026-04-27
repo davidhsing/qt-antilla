@@ -13,7 +13,7 @@ Item {
     enum ProgressStatus {
         StatusNormal = 0,
         StatusSuccess = 1,
-        StatusException = 2,
+        StatusError = 2,
         StatusActive = 3
     }
 
@@ -34,11 +34,16 @@ Item {
     })
     property bool infoVisible: true
     property int precision: 0
+    property bool indeterminate: false
+    property real indeterminateWidth: 0.25
     property var formatter: () => {
+        if (control.indeterminate) {
+            return '';
+        }
         switch (control.status) {
             case AntProgress.StatusSuccess:
                 return control.type === AntProgress.TypeLine ? AntIcon.CheckCircleFilled : AntIcon.CheckOutlined;
-            case AntProgress.StatusException:
+            case AntProgress.StatusError:
                 return control.type === AntProgress.TypeLine ? AntIcon.CloseCircleFilled : AntIcon.CloseOutlined;
             default:
                 return `${control.percent.toFixed(control.precision)}%`;
@@ -47,7 +52,7 @@ Item {
     property color colorBar: {
         switch (control.status) {
             case AntProgress.StatusSuccess: return control.themeSource.colorBarSuccess;
-            case AntProgress.StatusException: return control.themeSource.colorBarException;
+            case AntProgress.StatusError: return control.themeSource.colorBarException;
             case AntProgress.StatusNormal: return control.themeSource.colorBarNormal;
             case AntProgress.StatusActive : return control.themeSource.colorBarNormal;
             default: return control.themeSource.colorBarNormal;
@@ -57,7 +62,7 @@ Item {
     property color colorInfo: {
         switch (control.status) {
             case AntProgress.StatusSuccess: return control.themeSource.colorInfoSuccess;
-            case AntProgress.StatusException: return control.themeSource.colorInfoException;
+            case AntProgress.StatusError: return control.themeSource.colorInfoException;
             default: return control.themeSource.colorInfoNormal;
         }
     }
@@ -85,6 +90,8 @@ Item {
     onColorBarChanged: __canvas.requestPaint();
     onColorTrackChanged: __canvas.requestPaint();
     onColorInfoChanged: __canvas.requestPaint();
+    onIndeterminateChanged: __canvas.requestPaint();
+    onIndeterminateWidthChanged: __canvas.requestPaint();
 
     Behavior on percent { enabled: control.animationEnabled; NumberAnimation { duration: AntTheme.Primary.durationMid } }
     Behavior on colorBar { enabled: control.animationEnabled; ColorAnimation { duration: AntTheme.Primary.durationMid } }
@@ -101,13 +108,15 @@ Item {
         onWidthChanged: requestPaint();
         onHeightChanged: requestPaint();
         onActiveWidthChanged:  requestPaint();
+        onIndeterminatePositionChanged: requestPaint();
 
         property color activeColor: AntThemeFunctions.alpha(AntTheme.Primary.colorBgBase, 0.15)
         property real activeWidth: 0
         property real progressWidth: control.percent * 0.01 * width
+        property real indeterminatePosition: 0
 
         NumberAnimation on activeWidth {
-            running: control.type === AntProgress.TypeLine && control.status === AntProgress.StatusActive
+            running: control.type === AntProgress.TypeLine && control.status === AntProgress.StatusActive && !control.indeterminate
             from: 0
             to: __canvas.progressWidth
             loops: Animation.Infinite
@@ -115,7 +124,16 @@ Item {
             easing.type: Easing.OutQuint
         }
 
-        function createGradient(ctx) {
+        NumberAnimation on indeterminatePosition {
+            running: control.type === AntProgress.TypeLine && control.indeterminate
+            from: -control.indeterminateWidth
+            to: 1.0 + control.indeterminateWidth
+            loops: Animation.Infinite
+            duration: 3500
+            easing.type: Easing.Linear
+        }
+
+        function createGradient(ctx): var {
             let gradient = ctx.createLinearGradient(0, 0, width, height);
             Object.keys(control.gradientStops).forEach(stop => {
                 const percentage = parseFloat(stop) / 100;
@@ -124,11 +142,11 @@ Item {
             return gradient;
         }
 
-        function getCurrentColor(ctx) {
+        function getCurrentColor(ctx): color {
             return control.useGradient ? createGradient(ctx) : control.colorBar;
         }
 
-        function drawStrokeWithRadius(ctx, x, y, radius, startAngle, endAngle, color) {
+        function drawStrokeWithRadius(ctx, x, y, radius, startAngle, endAngle, color): void {
             ctx.beginPath();
             ctx.arc(x, y, radius, startAngle, endAngle);
             ctx.lineWidth = control.barThickness;
@@ -136,7 +154,7 @@ Item {
             ctx.stroke();
         }
 
-        function drawRoundLine(ctx, x, y, width, height, radius, color) {
+        function drawRoundLine(ctx, x, y, width, height, radius, color): void {
             ctx.beginPath();
             if (control.strokeLineCap === 'butt') {
                 ctx.moveTo(x, y + height / 2);
@@ -151,7 +169,7 @@ Item {
             ctx.stroke();
         }
 
-        function drawLine(ctx) {
+        function drawLine(ctx): void {
             const color = getCurrentColor(ctx);
             if (control.steps > 0) {
                 const stepWidth = (width - ((control.steps - 1) * control.gap)) / control.steps;
@@ -177,7 +195,14 @@ Item {
 
                 drawRoundLine(ctx, x, y, width, control.barThickness, radius, control.colorTrack);
 
-                if (progressWidth > 0) {
+                if (control.indeterminate) {
+                    /*! 不确定进度模式：绘制循环穿梭的高亮段 */
+                    const barWidth = Math.max(control.indeterminateWidth * width, 0);
+                    const posX = __canvas.indeterminatePosition * width;
+                    if (barWidth > 0) {
+                        drawRoundLine(ctx, posX, y, barWidth, control.barThickness, radius, color);
+                    }
+                } else if (progressWidth > 0) {
                     drawRoundLine(ctx, x, y, progressWidth, control.barThickness, radius, color);
                     /*! 绘制激活状态动画 */
                     if (control.status === AntProgress.StatusActive) {
@@ -187,7 +212,7 @@ Item {
             }
         }
 
-        function drawCircle(ctx, centerX, centerY, radius) {
+        function drawCircle(ctx, centerX, centerY, radius): void {
             /*! 确保绘制不会超出边界 */
             radius = Math.max(0, Math.min(radius, Math.min(width, height) / 2 - control.barThickness));
             const color = getCurrentColor(ctx);
@@ -231,7 +256,7 @@ Item {
             }
         }
 
-        function drawDashboard(ctx, centerX, centerY, radius) {
+        function drawDashboard(ctx, centerX, centerY, radius): void {
             radius = Math.max(0,Math.min(radius, Math.min(width, height) / 2 - control.barThickness));
             /* ! 计算开始和结束角度 */
             const gapRad = Math.min(Math.max(control.gapDegree, 0), 295) * Math.PI / 180;

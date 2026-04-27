@@ -42,6 +42,8 @@ formatter | function | - | 信息文本格式化器
 colorBar | color | - | 进度条颜色
 colorTrack | color | - | 进度条轨道颜色
 colorInfo | color | - | 进度条信息文本颜色
+indeterminate | bool | false | 是否启用不确定进度模式(仅条形进度条有效)
+indeterminateWidth | real | 0.25 | 不确定进度模式的高亮段宽度(0.0~1.0，占总宽度的百分比)
                        `)
         }
 
@@ -74,7 +76,7 @@ colorInfo | color | - | 进度条信息文本颜色
 通过 \`status\` 设置进度条状态，支持的状态：\n
 - 一般状态(默认){ AntProgress.StatusNormal }\n
 - 成功状态{ AntProgress.StatusSuccess }\n
-- 异常状态{ AntProgress.StatusException }\n
+- 异常状态{ AntProgress.StatusError }\n
 - 激活状态(仅条形进度条有效){ AntProgress.StatusActive }\n
                        `)
             code: `
@@ -87,7 +89,7 @@ Column {
 
     AntProgress { width: parent.width; percent: 30 }
     AntProgress { width: parent.width; percent: 50; status: AntProgress.StatusActive }
-    AntProgress { width: parent.width; percent: 70; status: AntProgress.StatusException }
+    AntProgress { width: parent.width; percent: 70; status: AntProgress.StatusError }
     AntProgress { width: parent.width; percent: 100; status: AntProgress.StatusSuccess }
     AntProgress { width: parent.width; percent: 50; infoVisible: false }
 }
@@ -97,7 +99,7 @@ Column {
 
                 AntProgress { width: parent.width; percent: 30 }
                 AntProgress { width: parent.width; percent: 50; status: AntProgress.StatusActive }
-                AntProgress { width: parent.width; percent: 70; status: AntProgress.StatusException }
+                AntProgress { width: parent.width; percent: 70; status: AntProgress.StatusError }
                 AntProgress { width: parent.width; percent: 100; status: AntProgress.StatusSuccess }
                 AntProgress { width: parent.width; percent: 50; infoVisible: false }
             }
@@ -118,7 +120,7 @@ Row {
     spacing: 10
 
     AntProgress { width: 120; height: width; type: AntProgress.TypeCircle; percent: 75 }
-    AntProgress { width: 120; height: width; type: AntProgress.TypeCircle; percent: 75; status: AntProgress.StatusException }
+    AntProgress { width: 120; height: width; type: AntProgress.TypeCircle; percent: 75; status: AntProgress.StatusError }
     AntProgress { width: 120; height: width; type: AntProgress.TypeCircle; percent: 100; status: AntProgress.StatusSuccess }
 }
             `
@@ -126,7 +128,7 @@ Row {
                 spacing: 10
 
                 AntProgress { width: 120; height: width; type: AntProgress.TypeCircle; percent: 75 }
-                AntProgress { width: 120; height: width; type: AntProgress.TypeCircle; percent: 75; status: AntProgress.StatusException }
+                AntProgress { width: 120; height: width; type: AntProgress.TypeCircle; percent: 75; status: AntProgress.StatusError }
                 AntProgress { width: 120; height: width; type: AntProgress.TypeCircle; percent: 100; status: AntProgress.StatusSuccess }
             }
         }
@@ -633,7 +635,7 @@ Column {
         AntProgress {
             width: 600
             height: Math.min(40, Math.max(barThickness, 16))
-            status: AntProgress.StatusException
+            status: AntProgress.StatusError
             barThickness: barThicknessSlider.value[0]
             percent: 75
             gap: gapCountSlider.value[0]
@@ -651,8 +653,8 @@ Column {
             type: AntProgress.TypeCircle
             barThickness: barThicknessSlider.value[0]
             percent: 75
-            gap: gapCountSlider.currentValue
-            steps: Math.round(stepCoutSlider.currentValue)
+            gap: gapCountSlider.value[0]
+            steps: Math.round(stepCoutSlider.value[0])
             currentStep: Math.floor(percent / 100 * steps)
         }
 
@@ -660,11 +662,11 @@ Column {
             width: 200
             height: width
             type: AntProgress.TypeCircle
-            status: AntProgress.StatusException
-            barThickness: barThicknessSlider.currentValue
+            status: AntProgress.StatusError
+            barThickness: barThicknessSlider.value[0]
             percent: 75
-            gap: gapCountSlider.currentValue
-            steps: Math.round(stepCoutSlider.currentValue)
+            gap: gapCountSlider.value[0]
+            steps: Math.round(stepCoutSlider.value[0])
             currentStep: Math.floor(percent / 100 * steps)
         }
     }
@@ -676,10 +678,10 @@ Column {
             width: 200
             height: width
             type: AntProgress.TypeDashboard
-            barThickness: barThicknessSlider.currentValue
+            barThickness: barThicknessSlider.value[0]
             percent: 75
-            gap: gapCountSlider.currentValue
-            steps: Math.round(stepCoutSlider.currentValue)
+            gap: gapCountSlider.value[0]
+            steps: Math.round(stepCoutSlider.value[0])
             currentStep: Math.floor(percent / 100 * steps)
         }
 
@@ -687,11 +689,11 @@ Column {
             width: 200
             height: width
             type: AntProgress.TypeDashboard
-            status: AntProgress.StatusException
-            barThickness: barThicknessSlider.currentValue
+            status: AntProgress.StatusError
+            barThickness: barThicknessSlider.value[0]
             percent: 75
-            gap: gapCountSlider.currentValue
-            steps: Math.round(stepCoutSlider.currentValue)
+            gap: gapCountSlider.value[0]
+            steps: Math.round(stepCoutSlider.value[0])
             currentStep: Math.floor(percent / 100 * steps)
         }
     }
@@ -702,7 +704,7 @@ Column {
 
                 Column {
                     AntCopyableText {
-                        text: `Custom step count: ${stepCoutSlider.currentValue}`
+                        text: `Custom step count: ${stepCoutSlider.value[0]}`
                     }
 
                     AntSlider {
@@ -716,7 +718,7 @@ Column {
                     }
 
                     AntCopyableText {
-                        text: `Custom gap: ${gapCountSlider.currentValue}`
+                        text: `Custom gap: ${gapCountSlider.value[0]}`
                     }
 
                     AntSlider {
@@ -731,7 +733,7 @@ Column {
                     }
 
                     AntCopyableText {
-                        text: `Custom bar thickness: ${barThicknessSlider.currentValue}`
+                        text: `Custom bar thickness: ${barThicknessSlider.value[0]}`
                     }
 
                     AntSlider {
@@ -751,21 +753,21 @@ Column {
                     AntProgress {
                         width: 600
                         height: Math.min(40, Math.max(barThickness, 16))
-                        barThickness: barThicknessSlider.currentValue
+                        barThickness: barThicknessSlider.value[0]
                         percent: 75
-                        gap: gapCountSlider.currentValue
-                        steps: Math.round(stepCoutSlider.currentValue)
+                        gap: gapCountSlider.value[0]
+                        steps: Math.round(stepCoutSlider.value[0])
                         currentStep: Math.floor(percent / 100 * steps)
                     }
 
                     AntProgress {
                         width: 600
                         height: Math.min(40, Math.max(barThickness, 16))
-                        status: AntProgress.StatusException
-                        barThickness: barThicknessSlider.currentValue
+                        status: AntProgress.StatusError
+                        barThickness: barThicknessSlider.value[0]
                         percent: 75
-                        gap: gapCountSlider.currentValue
-                        steps: Math.round(stepCoutSlider.currentValue)
+                        gap: gapCountSlider.value[0]
+                        steps: Math.round(stepCoutSlider.value[0])
                         currentStep: Math.floor(percent / 100 * steps)
                     }
                 }
@@ -777,10 +779,10 @@ Column {
                         width: 200
                         height: width
                         type: AntProgress.TypeCircle
-                        barThickness: barThicknessSlider.currentValue
+                        barThickness: barThicknessSlider.value[0]
                         percent: 75
-                        gap: gapCountSlider.currentValue
-                        steps: Math.round(stepCoutSlider.currentValue)
+                        gap: gapCountSlider.value[0]
+                        steps: Math.round(stepCoutSlider.value[0])
                         currentStep: Math.floor(percent / 100 * steps)
                     }
 
@@ -788,11 +790,11 @@ Column {
                         width: 200
                         height: width
                         type: AntProgress.TypeCircle
-                        status: AntProgress.StatusException
-                        barThickness: barThicknessSlider.currentValue
+                        status: AntProgress.StatusError
+                        barThickness: barThicknessSlider.value[0]
                         percent: 75
-                        gap: gapCountSlider.currentValue
-                        steps: Math.round(stepCoutSlider.currentValue)
+                        gap: gapCountSlider.value[0]
+                        steps: Math.round(stepCoutSlider.value[0])
                         currentStep: Math.floor(percent / 100 * steps)
                     }
                 }
@@ -804,10 +806,10 @@ Column {
                         width: 200
                         height: width
                         type: AntProgress.TypeDashboard
-                        barThickness: barThicknessSlider.currentValue
+                        barThickness: barThicknessSlider.value[0]
                         percent: 75
-                        gap: gapCountSlider.currentValue
-                        steps: Math.round(stepCoutSlider.currentValue)
+                        gap: gapCountSlider.value[0]
+                        steps: Math.round(stepCoutSlider.value[0])
                         currentStep: Math.floor(percent / 100 * steps)
                     }
 
@@ -815,13 +817,86 @@ Column {
                         width: 200
                         height: width
                         type: AntProgress.TypeDashboard
-                        status: AntProgress.StatusException
-                        barThickness: barThicknessSlider.currentValue
+                        status: AntProgress.StatusError
+                        barThickness: barThicknessSlider.value[0]
                         percent: 75
-                        gap: gapCountSlider.currentValue
-                        steps: Math.round(stepCoutSlider.currentValue)
+                        gap: gapCountSlider.value[0]
+                        steps: Math.round(stepCoutSlider.value[0])
                         currentStep: Math.floor(percent / 100 * steps)
                     }
+                }
+            }
+        }
+
+        CodeBox {
+            width: parent.width
+            descTitle: qsTr('不确定进度')
+            desc: qsTr(`
+在不确定进度模式下，进度条会显示一个循环穿梭的高亮段，用于表示任务正在进行但无法确定具体进度。\n
+通过 \`indeterminate\` 属性启用不确定进度模式。\n
+通过 \`indeterminateWidth\` 属性设置高亮段的宽度，值为 0.0~1.0 之间的百分比。\n
+适用场景：文件下载时服务器未返回长度、长时间运行的任务等。\n
+                       `)
+            code: `
+import QtQuick
+import Antilla.Basic
+
+Column {
+    width: parent.width
+    spacing: 15
+
+    AntProgress {
+        width: parent.width
+        indeterminate: true
+    }
+
+    AntProgress {
+        width: parent.width
+        indeterminate: true
+        indeterminateWidth: 0.15
+    }
+
+    AntProgress {
+        width: parent.width
+        indeterminate: true
+        indeterminateWidth: 0.5
+        status: AntProgress.StatusError
+    }
+
+    AntProgress {
+        width: parent.width
+        indeterminate: true
+        indeterminateWidth: 0.7
+        status: AntProgress.StatusSuccess
+    }
+}
+            `
+            exampleDelegate: Column {
+                spacing: 15
+
+                AntProgress {
+                    width: parent.width
+                    indeterminate: true
+                }
+
+                AntProgress {
+                    width: parent.width
+                    indeterminate: true
+                    indeterminateWidth: 0.15
+                }
+
+                AntProgress {
+                    width: parent.width
+                    indeterminate: true
+                    indeterminateWidth: 0.5
+                    status: AntProgress.StatusError
+                }
+
+                AntProgress {
+                    width: parent.width
+                    indeterminate: true
+                    indeterminateWidth: 0.7
+                    status: AntProgress.StatusSuccess
                 }
             }
         }
