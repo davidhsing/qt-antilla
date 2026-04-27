@@ -1647,6 +1647,9 @@ public:
         CommandOutlined = 0xf011,
         PaywallOutlined = 0xf012,
         CashRegisterOutlined = 0xf013,
+        SmartHomeOutlined = 0xf014,
+        BoxOutlined = 0xf015,
+        BookOpenOutlined = 0xf016,
     };
     Q_ENUM(Type);
 
